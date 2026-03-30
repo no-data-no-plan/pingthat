@@ -1,17 +1,126 @@
 ---
+import "../styles/global.css";
+import { tools, groups } from "../lib/tools";
 
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "PingThat",
+  url: "https://pingthat.dev",
+  description: "Free network tools for developers. Check your IP, test privacy, calculate subnets, decode JWTs. 100% client-side, no data collected.",
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+});
 ---
 
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free network tools for developers. Check your IP, test browser privacy, detect WebRTC leaks, calculate subnets, convert IPs, check password strength, decode JWTs. 100% client-side." />
+  <meta name="keywords" content="network tools, what is my ip, privacy check, webrtc leak test, subnet calculator, ip converter, password strength, jwt decoder, developer tools" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8761907366448308" crossorigin="anonymous"></script>
+
+  <title>PingThat — Network Tools for Developers</title>
+  <link rel="canonical" href="https://pingthat.dev/" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff2" as="font" type="font/woff2" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <meta property="og:title" content="PingThat — Network Tools for Developers" />
+  <meta property="og:description" content="Free network tools for developers. Check your IP, test privacy, decode JWTs. 100% client-side, no data collected." />
+  <meta property="og:url" content="https://pingthat.dev/" />
+  <meta property="og:site_name" content="PingThat" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PingThat — Network Tools for Developers" />
+  <meta name="twitter:description" content="Free network tools for developers. Check your IP, test privacy, decode JWTs. 100% client-side, no data collected." />
+
+  <script type="application/ld+json" set:html={jsonLd} />
+</head>
+<body>
+  <div class="min-h-screen" style="background: var(--color-bg); color: var(--color-text);">
+
+    <!-- Hero -->
+    <header class="px-6 py-16 sm:py-24 text-center max-w-3xl mx-auto">
+      <p class="text-[10px] uppercase tracking-[0.2em] mb-4 font-semibold" style="color: var(--color-accent);">Network Tools</p>
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4" style="color: var(--color-text);">
+        Ping, check, <em class="italic" style="color: var(--color-accent);">analyze</em>
+      </h1>
+      <p class="text-sm sm:text-base leading-relaxed" style="color: var(--color-text-muted);">
+        Network diagnostics and developer tools that run entirely in your browser. No data collected, no accounts, no tracking. Your information stays on your device.
+      </p>
+    </header>
+
+    <!-- Tool Grid -->
+    <main class="px-6 pb-16 max-w-5xl mx-auto">
+      {groups.map((group) => (
+        <section class="mb-12">
+          <div class="flex items-center gap-3 mb-5">
+            <h2 class="text-[10px] uppercase tracking-[0.15em] font-semibold" style="color: var(--color-accent);">
+              {group.label}
+            </h2>
+            <div class="flex-1 h-px" style="background: var(--color-border);"></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {group.ids.map((id) => {
+              const tool = tools.find(t => t.id === id);
+              if (!tool) return null;
+              return (
+                <a
+                  href={tool.path}
+                  class="card group block transition-all hover:border-[var(--color-accent)]"
+                  style="border: 1px solid var(--color-border);"
+                >
+                  <div class="card-body" style="padding: 20px;">
+                    <div class="flex items-start gap-3">
+                      <span
+                        class="text-xs flex items-center justify-center w-9 h-9 rounded-lg shrink-0 font-semibold"
+                        style="background: var(--color-accent-dim); color: var(--color-accent); border: 1px solid rgba(16,185,129,0.15); letter-spacing: -0.05em;"
+                      >
+                        {tool.icon}
+                      </span>
+                      <div class="flex-1 min-w-0">
+                        <h3 class="text-sm font-medium mb-1 group-hover:text-[var(--color-accent)] transition-colors" style="color: var(--color-text);">
+                          {tool.name}
+                        </h3>
+                        <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">
+                          {tool.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+
+      <!-- Bottom CTA -->
+      <section class="text-center py-12" style="border-top: 1px solid var(--color-border);">
+        <p class="text-[10px] uppercase tracking-[0.15em] mb-3" style="color: var(--color-text-dim);">
+          More tools coming soon
+        </p>
+        <p class="text-xs" style="color: var(--color-text-muted);">
+          DNS lookup, port scanner, SSL checker, HTTP headers, and more.
+        </p>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-6 py-4 flex justify-between text-[11px]" style="color: var(--color-text-dim); border-top: 1px solid var(--color-border);">
+      <span>PingThat — Network tools for developers</span>
+      <span>No data collected. 100% private.</span>
+    </footer>
+  </div>
+</body>
 </html>

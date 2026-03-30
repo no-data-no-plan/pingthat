@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PrivacyCheck from "../components/PrivacyCheck.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+---
+
+<Layout
+  title="Browser Privacy Check"
+  description="Check your browser's privacy settings, tracking protection, and fingerprint exposure. Free, instant, 100% client-side."
+  activeToolId="privacy-check"
+>
+  <PrivacyCheck client:only="svelte" />
+
+  <SeoContent
+    heading="About this tool"
+    text="This tool checks what information your browser exposes to websites. It tests Do Not Track, cookies, WebRTC leaks, canvas and audio fingerprinting, WebGL vendor, and hardware details. Everything runs locally in your browser."
+    relatedToolIds={["webrtc-leak-test", "my-ip"]}
+  />
+
+  <SeoBlock
+    heading="Understanding browser fingerprinting"
+    text="Websites can identify you without cookies by combining unique browser characteristics into a 'fingerprint'. Canvas rendering, WebGL vendor strings, installed fonts, screen resolution, and hardware specs all contribute to a unique identifier."
+    features={[
+      "Do Not Track and cookie settings",
+      "WebRTC leak detection",
+      "Canvas and audio fingerprint analysis",
+      "WebGL renderer identification",
+      "Hardware and platform exposure",
+      "Exportable privacy report",
+    ]}
+  />
+</Layout>

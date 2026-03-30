@@ -1,0 +1,24 @@
+---
+interface Props {
+  heading: string;
+  text: string;
+  features?: string[];
+}
+
+const { heading, text, features } = Astro.props;
+---
+
+<details class="px-8 py-4 border-t border-[var(--color-border)]" style="background: var(--color-bg);">
+  <summary class="cursor-pointer text-xs select-none" style="color: var(--color-amber); letter-spacing: 0.05em;">
+    {heading}
+  </summary>
+  <div class="mt-3 space-y-2 pb-2 text-xs" style="color: var(--color-text-muted);">
+    <p>{text}</p>
+    {features && features.length > 0 && (
+      <ul class="list-disc list-inside space-y-1">
+        {features.map((f) => <li>{f}</li>)}
+      </ul>
+    )}
+    <p class="text-[10px]" style="color: var(--color-text-dim);">100% free. No signup. No data collected anywhere.</p>
+  </div>
+</details>

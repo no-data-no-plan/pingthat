@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+import WebrtcLeakTest from "../components/WebrtcLeakTest.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+---
+
+<Layout
+  title="WebRTC Leak Test"
+  description="Check if WebRTC is leaking your real IP address. Detect local and public IPs exposed through ICE candidates."
+  activeToolId="webrtc-leak-test"
+>
+  <WebrtcLeakTest client:only="svelte" />
+
+  <SeoContent
+    heading="About this tool"
+    text="This tool creates a WebRTC peer connection and inspects ICE candidates to determine if your local (private) IP addresses are being leaked. Particularly important for VPN users who want to ensure their real IP is hidden."
+    relatedToolIds={["privacy-check", "my-ip"]}
+  />
+
+  <SeoBlock
+    heading="Why WebRTC leaks matter"
+    text="WebRTC can bypass VPN tunnels by using STUN servers to discover your real network interfaces. Even with a VPN active, websites may see your local IP (e.g., 192.168.x.x or 10.x.x.x), revealing your network configuration."
+    features={[
+      "STUN server ICE candidate analysis",
+      "IPv4 and IPv6 detection",
+      "Local vs public IP classification",
+      "mDNS candidate detection",
+      "Re-runnable on demand",
+    ]}
+  />
+</Layout>
