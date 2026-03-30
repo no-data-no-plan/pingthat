@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InfoTip from './InfoTip.svelte';
   let ipInput = $state("192.168.1.0");
   let cidr = $state(24);
 
@@ -116,7 +117,7 @@
           <input type="text" bind:value={ipInput} placeholder="192.168.1.0" style="width: 100%;" />
         </div>
         <div style="width: 100px;">
-          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">CIDR (/{cidr})</label>
+          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">CIDR (/{cidr}) <InfoTip text="Classless Inter-Domain Routing -- a compact notation for IP ranges. /24 = 256 addresses, /16 = 65,536 addresses." /></label>
           <input type="range" min="0" max="32" bind:value={cidr} style="width: 100%; accent-color: var(--color-accent);" />
         </div>
         <div style="width: 60px;">
@@ -130,11 +131,11 @@
     <!-- Results -->
     <div class="metrics-grid cols-2">
       <div class="metric">
-        <div class="metric-label">Network Address</div>
+        <div class="metric-label">Network Address <InfoTip text="The first address in the subnet. It identifies the network itself and cannot be assigned to a host." /></div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.networkAddress}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Broadcast Address</div>
+        <div class="metric-label">Broadcast Address <InfoTip text="The last address in the subnet. Packets sent here are delivered to all hosts on the network." /></div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.broadcastAddress}</div>
       </div>
       <div class="metric">
@@ -154,7 +155,7 @@
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.subnetMask}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Wildcard Mask</div>
+        <div class="metric-label">Wildcard Mask <InfoTip text="The inverse of the subnet mask. Used in ACLs and routing configs to specify which bits can vary." /></div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.wildcardMask}</div>
       </div>
       <div class="metric">

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InfoTip from './InfoTip.svelte';
   let password = $state("");
   let showPassword = $state(false);
   let copiedGenerated = $state(false);
@@ -185,7 +186,7 @@
     <div class="card-header">
       <span class="card-title">Enter Password</span>
       <div style="display: flex; gap: 8px;">
-        <button class="btn-secondary" onclick={generatePassword}>Generate Strong</button>
+        <button class="btn-secondary" onclick={generatePassword}>Generate Strong <InfoTip text="Uses crypto.getRandomValues for cryptographically secure randomness -- not Math.random." /></button>
         {#if password}
           <button class="btn-secondary" onclick={copyGenerated}>{copiedGenerated ? "Copied!" : "Copy"}</button>
         {/if}
@@ -228,7 +229,7 @@
         <!-- Stats -->
         <div class="metrics-grid cols-3" style="margin-bottom: 0;">
           <div class="metric">
-            <div class="metric-label">Entropy</div>
+            <div class="metric-label">Entropy <InfoTip text="A measure of randomness. More bits = harder to guess. 40 bits is weak, 60+ is strong, 80+ is very strong." /></div>
             <div class="metric-value" style="font-size: 16px;">{analysis.entropy} bits</div>
           </div>
           <div class="metric">
@@ -284,7 +285,7 @@
     <!-- Crack times -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Estimated Crack Time</span>
+        <span class="card-title">Estimated Crack Time <InfoTip text="1K/s = online attack (rate-limited login). 1B/s = offline GPU attack on stolen password hashes. Real-world speeds vary." /></span>
       </div>
       <div class="card-body" style="padding: 0;">
         {#each analysis.crackTimes as ct}

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InfoTip from './InfoTip.svelte';
   let token = $state("");
   let copiedSection = $state("");
 
@@ -129,7 +130,7 @@
       <!-- Header -->
       <div class="card" style="border-color: rgba(74, 143, 255, 0.3);">
         <div class="card-header" style="border-bottom-color: rgba(74, 143, 255, 0.15);">
-          <span class="card-title" style="color: var(--color-blue);">Header</span>
+          <span class="card-title" style="color: var(--color-blue);">Header <InfoTip text="Contains the signing algorithm (e.g. HS256, RS256) and token type. Tells the server how to verify the signature." /></span>
           <button class="btn-secondary" onclick={() => copySection(decoded!.headerRaw, "header")}>
             {copiedSection === "header" ? "Copied!" : "Copy"}
           </button>
@@ -142,7 +143,7 @@
       <!-- Payload -->
       <div class="card" style="border-color: rgba(62, 207, 142, 0.3);">
         <div class="card-header" style="border-bottom-color: rgba(62, 207, 142, 0.15);">
-          <span class="card-title" style="color: var(--color-green);">Payload</span>
+          <span class="card-title" style="color: var(--color-green);">Payload <InfoTip text="Contains claims -- data like subject (sub), expiration (exp), and issued-at (iat). Not encrypted, only base64-encoded." /></span>
           <div style="display: flex; gap: 8px; align-items: center;">
             {#if decoded.isExpired}
               <span class="badge badge-red">Expired</span>
@@ -160,7 +161,7 @@
       <!-- Signature -->
       <div class="card" style="border-color: rgba(255, 107, 107, 0.3);">
         <div class="card-header" style="border-bottom-color: rgba(255, 107, 107, 0.15);">
-          <span class="card-title" style="color: var(--color-red);">Signature</span>
+          <span class="card-title" style="color: var(--color-red);">Signature <InfoTip text="Created by signing header + payload with a secret key. Verifying it proves the token hasn't been tampered with." /></span>
           <button class="btn-secondary" onclick={() => copySection(decoded!.signature, "sig")}>
             {copiedSection === "sig" ? "Copied!" : "Copy"}
           </button>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import InfoTip from './InfoTip.svelte';
 
   interface IpResult {
     ip: string;
@@ -149,8 +150,12 @@
               <span style="font-size: 14px; font-weight: 500; color: var(--color-text); font-family: monospace;">
                 {result.ip}
               </span>
-              <span class="badge {result.type === 'Local' ? 'badge-red' : result.type === 'Public' ? 'badge-green' : result.type === 'mDNS' ? 'badge-amber' : 'badge-blue'}">
-                {result.type}
+              <span style="display: inline-flex; align-items: center; gap: 2px;">
+                <span class="badge {result.type === 'Local' ? 'badge-red' : result.type === 'Public' ? 'badge-green' : result.type === 'mDNS' ? 'badge-amber' : 'badge-blue'}">
+                  {result.type}
+                </span>
+                {#if result.type === 'Local'}<InfoTip text="A private/local IP address from your LAN. Exposing this through WebRTC can reveal your real network even behind a VPN." />{/if}
+                {#if result.type === 'Public'}<InfoTip text="Your public-facing IP address. This is normally visible to websites you visit." />{/if}
               </span>
             </div>
           {/each}
@@ -170,7 +175,7 @@
       <div class="card-body">
         <div style="font-size: 13px; color: var(--color-text-muted); line-height: 1.7;">
           <p style="margin-bottom: 12px;">
-            WebRTC (Web Real-Time Communication) enables peer-to-peer connections in browsers for video calls, file sharing, and more. During connection setup, it uses STUN/TURN servers to discover your network addresses.
+            WebRTC (Web Real-Time Communication) enables peer-to-peer connections in browsers for video calls, file sharing, and more. During connection setup, it uses STUN/TURN servers <InfoTip text="STUN servers help your browser discover its public IP by reflecting your connection info back to you. This is needed for peer-to-peer connections." /> to discover your network addresses.
           </p>
           <p style="margin-bottom: 12px;">
             A <strong style="color: var(--color-text);">WebRTC leak</strong> occurs when your browser reveals your local (private) IP address through ICE candidates, even when you're behind a VPN. This can expose your real network identity.

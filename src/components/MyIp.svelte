@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import InfoTip from './InfoTip.svelte';
 
   let ip = $state("");
   let city = $state("");
@@ -86,7 +87,7 @@
     <!-- IP Display -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Your Public IP</span>
+        <span class="card-title">Your Public IP <InfoTip text="Your public IP is the address websites see when you connect. It's different from your private/local IP used inside your home network." /></span>
         <button class="btn-secondary" onclick={copyIp}>
           {copied ? "Copied!" : "Copy IP"}
         </button>
@@ -110,7 +111,7 @@
         {/if}
       </div>
       <div class="metric">
-        <div class="metric-label">ISP / Organization</div>
+        <div class="metric-label">ISP / Organization <InfoTip text="Your Internet Service Provider -- the company that provides your internet connection (e.g. Comcast, Vodafone)." /></div>
         <div class="metric-value" style="font-size: 16px; word-break: break-word;">
           {isp || "Unknown"}
         </div>

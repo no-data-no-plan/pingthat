@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import InfoTip from './InfoTip.svelte';
 
   interface CheckItem {
     label: string;
@@ -197,6 +198,9 @@
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
               <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted);">
                 {check.label}
+                {#if check.label === "Canvas Fingerprint"}<InfoTip text="Websites draw hidden graphics and read the pixel data. Tiny rendering differences between devices create a unique ID." />{/if}
+                {#if check.label === "WebRTC Leak"}<InfoTip text="WebRTC can reveal your real local IP even behind a VPN, letting sites identify your network." />{/if}
+                {#if check.label === "Do Not Track"}<InfoTip text="A browser signal asking sites not to track you. Most websites ignore it entirely." />{/if}
               </span>
               {#if check.status === "safe"}
                 <span class="badge badge-green">Safe</span>

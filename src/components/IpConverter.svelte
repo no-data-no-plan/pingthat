@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InfoTip from './InfoTip.svelte';
   let input = $state("192.168.1.1");
   let copiedField = $state("");
 
@@ -135,17 +136,17 @@
       </div>
       <div class="card-body" style="padding: 0;">
         {#each [
-          { label: "Decimal", value: decimal, key: "decimal" },
-          { label: "Binary", value: binary, key: "binary" },
-          { label: "Hexadecimal", value: hex, key: "hex" },
-          { label: "Integer", value: integer, key: "integer" },
-          { label: "Octal", value: octal, key: "octal" },
-          { label: "IPv4-Mapped IPv6", value: ipv6Mapped, key: "ipv6" },
+          { label: "Decimal", value: decimal, key: "decimal", tip: "Standard dotted-decimal notation (0-255 per octet). The most common way to write IPv4 addresses." },
+          { label: "Binary", value: binary, key: "binary", tip: "Each octet as 8 bits. This is how routers actually process IP addresses." },
+          { label: "Hexadecimal", value: hex, key: "hex", tip: "Base-16 representation. Commonly used in low-level networking and packet analysis." },
+          { label: "Integer", value: integer, key: "integer", tip: "The IP as a single 32-bit number. Some APIs and databases store IPs this way for efficient lookups." },
+          { label: "Octal", value: octal, key: "octal", tip: "Base-8 representation. Rarely used directly, but some systems interpret leading-zero octets as octal." },
+          { label: "IPv4-Mapped IPv6", value: ipv6Mapped, key: "ipv6", tip: "An IPv6 address that embeds this IPv4 address, used for dual-stack compatibility." },
         ] as row}
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--color-border);">
             <div>
               <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">
-                {row.label}
+                {row.label} <InfoTip text={row.tip} />
               </div>
               <div style="font-size: 14px; font-weight: 500; color: var(--color-text); font-family: monospace; word-break: break-all;">
                 {row.value}
