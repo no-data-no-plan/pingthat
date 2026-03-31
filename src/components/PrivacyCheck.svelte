@@ -140,7 +140,7 @@
     items.push({ label: "Audio Fingerprint", value: audio, status: getStatus("Audio Fingerprint", audio) });
 
     const webgl = getWebGLVendor();
-    items.push({ label: "WebGL Vendor", value: webgl.length > 50 ? webgl.slice(0, 50) + "..." : webgl, status: getStatus("WebGL Vendor", webgl) });
+    items.push({ label: "WebGL Vendor", value: webgl, status: getStatus("WebGL Vendor", webgl) });
 
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     items.push({ label: "Timezone", value: tz, status: "note" });
