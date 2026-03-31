@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import JwtDecoder from "../../components/JwtDecoder.svelte";
+import SeoContent from "../../components/SeoContent.astro";
+import SeoBlock from "../../components/SeoBlock.astro";
+import { pageI18n } from "../../i18n/pages";
+
+const p = pageI18n["jwt-decoder"].es;
+---
+
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="jwt-decoder"
+  lang="es"
+>
+  <JwtDecoder client:load lang="es" />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["password-strength", "privacy-check"]}
+    lang="es"
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+    lang="es"
+  />
+</Layout>

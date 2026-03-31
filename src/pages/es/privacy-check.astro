@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PrivacyCheck from "../../components/PrivacyCheck.svelte";
+import SeoContent from "../../components/SeoContent.astro";
+import SeoBlock from "../../components/SeoBlock.astro";
+import { pageI18n } from "../../i18n/pages";
+
+const p = pageI18n["privacy-check"].es;
+---
+
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="privacy-check"
+  lang="es"
+>
+  <PrivacyCheck client:only="svelte" lang="es" />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["webrtc-leak-test", "my-ip"]}
+    lang="es"
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+    lang="es"
+  />
+</Layout>

@@ -1,5 +1,12 @@
 <script lang="ts">
   import InfoTip from './InfoTip.svelte';
+  import type { Lang } from '../i18n/index';
+  import { getSubnetCalculator } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getSubnetCalculator(lang));
+
   let ipInput = $state("192.168.1.0");
   let cidr = $state(24);
 
@@ -108,16 +115,16 @@
   <!-- Input -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">Input</span>
+      <span class="card-title">{t.input}</span>
     </div>
     <div class="card-body">
       <div style="display: flex; gap: 12px; align-items: end; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 160px;">
-          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">IP Address</label>
+          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">{t.ipAddress}</label>
           <input type="text" bind:value={ipInput} placeholder="192.168.1.0" style="width: 100%;" />
         </div>
         <div style="width: 100px;">
-          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">CIDR (/{cidr}) <InfoTip text="Classless Inter-Domain Routing -- a compact notation for IP ranges. /24 = 256 addresses, /16 = 65,536 addresses." /></label>
+          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">CIDR (/{cidr}) <InfoTip text={t.cidrTip} /></label>
           <input type="range" min="0" max="32" bind:value={cidr} style="width: 100%; accent-color: var(--color-accent);" />
         </div>
         <div style="width: 60px;">
@@ -131,48 +138,48 @@
     <!-- Results -->
     <div class="metrics-grid cols-2">
       <div class="metric">
-        <div class="metric-label">Network Address <InfoTip text="The first address in the subnet. It identifies the network itself and cannot be assigned to a host." /></div>
+        <div class="metric-label">{t.networkAddress} <InfoTip text={t.networkTip} /></div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.networkAddress}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Broadcast Address <InfoTip text="The last address in the subnet. Packets sent here are delivered to all hosts on the network." /></div>
+        <div class="metric-label">{t.broadcastAddress} <InfoTip text={t.broadcastTip} /></div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.broadcastAddress}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">First Host</div>
+        <div class="metric-label">{t.firstHost}</div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.firstHost}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Last Host</div>
+        <div class="metric-label">{t.lastHost}</div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.lastHost}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Total Hosts</div>
+        <div class="metric-label">{t.totalHosts}</div>
         <div class="metric-value" style="font-size: 16px;">{result.totalHosts.toLocaleString()}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Subnet Mask</div>
+        <div class="metric-label">{t.subnetMask}</div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.subnetMask}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Wildcard Mask <InfoTip text="The inverse of the subnet mask. Used in ACLs and routing configs to specify which bits can vary." /></div>
+        <div class="metric-label">{t.wildcardMask} <InfoTip text={t.wildcardTip} /></div>
         <div class="metric-value" style="font-size: 16px; font-family: monospace;">{result.wildcardMask}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">CIDR Notation</div>
+        <div class="metric-label">{t.cidrNotation}</div>
         <div class="metric-value" style="font-size: 16px;">{result.networkAddress}{result.cidrNotation}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">IP Class</div>
+        <div class="metric-label">{t.ipClass}</div>
         <div class="metric-value" style="font-size: 16px;">{result.ipClass}</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Private Address?</div>
+        <div class="metric-label">{t.privateAddress}</div>
         <div class="metric-value" style="font-size: 16px;">
           {#if result.isPrivate}
-            <span class="badge badge-green">Yes (Private)</span>
+            <span class="badge badge-green">{t.yesPrivate}</span>
           {:else}
-            <span class="badge badge-amber">No (Public)</span>
+            <span class="badge badge-amber">{t.noPublic}</span>
           {/if}
         </div>
       </div>
@@ -181,15 +188,15 @@
     <!-- Binary -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Binary Representation</span>
+        <span class="card-title">{t.binaryRepresentation}</span>
       </div>
       <div class="card-body" style="font-family: monospace; font-size: 13px; line-height: 2;">
         <div style="display: flex; gap: 12px;">
-          <span style="color: var(--color-text-muted); width: 80px; flex-shrink: 0;">IP:</span>
+          <span style="color: var(--color-text-muted); width: 80px; flex-shrink: 0;">{t.ip}:</span>
           <span style="color: var(--color-accent); word-break: break-all;">{result.binaryIp}</span>
         </div>
         <div style="display: flex; gap: 12px;">
-          <span style="color: var(--color-text-muted); width: 80px; flex-shrink: 0;">Mask:</span>
+          <span style="color: var(--color-text-muted); width: 80px; flex-shrink: 0;">{t.mask}:</span>
           <span style="color: var(--color-text); word-break: break-all;">{result.binaryMask}</span>
         </div>
       </div>
@@ -197,7 +204,7 @@
   {:else}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
-        <p style="color: var(--color-text-muted); font-size: 13px;">Enter a valid IPv4 address to calculate subnet details.</p>
+        <p style="color: var(--color-text-muted); font-size: 13px;">{t.enterValidIp}</p>
       </div>
     </div>
   {/if}
@@ -205,15 +212,15 @@
   <!-- Cheatsheet -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">Common Subnets</span>
+      <span class="card-title">{t.commonSubnets}</span>
     </div>
     <div class="card-body" style="padding: 0; overflow-x: auto;">
       <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
         <thead>
           <tr style="border-bottom: 1px solid var(--color-border);">
-            <th style="padding: 10px 16px; text-align: left; color: var(--color-text-muted); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">CIDR</th>
-            <th style="padding: 10px 16px; text-align: left; color: var(--color-text-muted); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">Subnet Mask</th>
-            <th style="padding: 10px 16px; text-align: right; color: var(--color-text-muted); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">Usable Hosts</th>
+            <th style="padding: 10px 16px; text-align: left; color: var(--color-text-muted); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">{t.cidr}</th>
+            <th style="padding: 10px 16px; text-align: left; color: var(--color-text-muted); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">{t.subnetMask}</th>
+            <th style="padding: 10px 16px; text-align: right; color: var(--color-text-muted); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">{t.usableHosts}</th>
           </tr>
         </thead>
         <tbody>

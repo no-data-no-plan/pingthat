@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import WebrtcLeakTest from "../../components/WebrtcLeakTest.svelte";
+import SeoContent from "../../components/SeoContent.astro";
+import SeoBlock from "../../components/SeoBlock.astro";
+import { pageI18n } from "../../i18n/pages";
+
+const p = pageI18n["webrtc-leak-test"].es;
+---
+
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="webrtc-leak-test"
+  lang="es"
+>
+  <WebrtcLeakTest client:only="svelte" lang="es" />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["privacy-check", "my-ip"]}
+    lang="es"
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+    lang="es"
+  />
+</Layout>

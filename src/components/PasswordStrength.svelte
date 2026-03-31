@@ -1,5 +1,12 @@
 <script lang="ts">
   import InfoTip from './InfoTip.svelte';
+  import type { Lang } from '../i18n/index';
+  import { getPasswordStrength } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getPasswordStrength(lang));
+
   let password = $state("");
   let showPassword = $state(false);
   let copiedGenerated = $state(false);
@@ -92,7 +99,7 @@
       if (length < 6) strength = Math.min(strength, 0);
     }
 
-    const labels = ["Very Weak", "Weak", "Fair", "Strong", "Very Strong"];
+    const labels = [t.veryWeak, t.weak, t.fair, t.strong, t.veryStrong];
     const strengthLabel = labels[Math.max(0, Math.min(4, strength))];
 
     // Crack times
@@ -105,33 +112,36 @@
     ];
 
     function formatTime(seconds: number): string {
-      if (seconds < 0.001) return "Instant";
-      if (seconds < 1) return "< 1 second";
-      if (seconds < 60) return `${Math.round(seconds)} seconds`;
-      if (seconds < 3600) return `${Math.round(seconds / 60)} minutes`;
-      if (seconds < 86400) return `${Math.round(seconds / 3600)} hours`;
-      if (seconds < 86400 * 365) return `${Math.round(seconds / 86400)} days`;
-      if (seconds < 86400 * 365 * 1000) return `${Math.round(seconds / (86400 * 365))} years`;
-      if (seconds < 86400 * 365 * 1e6) return `${(seconds / (86400 * 365 * 1000)).toFixed(0)}K years`;
-      if (seconds < 86400 * 365 * 1e9) return `${(seconds / (86400 * 365 * 1e6)).toFixed(0)}M years`;
-      return "Centuries+";
+      if (seconds < 0.001) return t.instant;
+      if (seconds < 1) return t.lessThan1Second;
+      if (seconds < 60) return `${Math.round(seconds)} ${t.seconds}`;
+      if (seconds < 3600) return `${Math.round(seconds / 60)} ${t.minutes}`;
+      if (seconds < 86400) return `${Math.round(seconds / 3600)} ${t.hours}`;
+      if (seconds < 86400 * 365) return `${Math.round(seconds / 86400)} ${t.days}`;
+      if (seconds < 86400 * 365 * 1000) {
+        const y = Math.round(seconds / (86400 * 365));
+        return `${y} ${y === 1 ? (lang === "es" ? "a\u00f1o" : "year") : t.years}`;
+      }
+      if (seconds < 86400 * 365 * 1e6) return `${(seconds / (86400 * 365 * 1000)).toFixed(0)}${lang === "es" ? " mil a\u00f1os" : "K years"}`;
+      if (seconds < 86400 * 365 * 1e9) return `${(seconds / (86400 * 365 * 1e6)).toFixed(0)}${lang === "es" ? "M a\u00f1os" : "M years"}`;
+      return t.centuriesPlus;
     }
 
     const crackTimes = speeds.map(({ speed, rate }) => ({
       speed,
-      time: isCommon ? "Instant (common)" : formatTime(combinations / rate / 2),
+      time: isCommon ? t.instantCommon : formatTime(combinations / rate / 2),
     }));
 
     // Tips
     const tips: string[] = [];
-    if (isCommon) tips.push("This is a commonly used password. Choose something unique.");
-    if (length < 12) tips.push("Use at least 12 characters for better security.");
-    if (uppercase === 0) tips.push("Add uppercase letters.");
-    if (lowercase === 0) tips.push("Add lowercase letters.");
-    if (digits === 0) tips.push("Add numbers.");
-    if (special === 0) tips.push("Add special characters (!@#$%...).");
-    if (hasRepeated) tips.push("Avoid repeated characters (aaa, 111).");
-    if (hasSequential) tips.push("Avoid sequential characters (abc, 123).");
+    if (isCommon) tips.push(t.tipCommon);
+    if (length < 12) tips.push(t.tipLength);
+    if (uppercase === 0) tips.push(t.tipUppercase);
+    if (lowercase === 0) tips.push(t.tipLowercase);
+    if (digits === 0) tips.push(t.tipDigits);
+    if (special === 0) tips.push(t.tipSpecial);
+    if (hasRepeated) tips.push(t.tipRepeated);
+    if (hasSequential) tips.push(t.tipSequential);
 
     return {
       length, uppercase, lowercase, digits, special,
@@ -178,32 +188,32 @@
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
   <!-- Privacy notice -->
   <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--color-accent-dim); border: 1px solid rgba(16, 185, 129, 0.2);">
-    <span style="font-size: 12px; color: var(--color-accent);">Your password never leaves your browser. All analysis is done locally.</span>
+    <span style="font-size: 12px; color: var(--color-accent);">{t.privacyNotice}</span>
   </div>
 
   <!-- Input -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">Enter Password</span>
+      <span class="card-title">{t.enterPassword}</span>
       <div style="display: flex; gap: 8px;">
-        <button class="btn-secondary" onclick={generatePassword}>Generate Strong <InfoTip text="Uses crypto.getRandomValues for cryptographically secure randomness -- not Math.random." /></button>
+        <button class="btn-secondary" onclick={generatePassword}>{t.generateStrong} <InfoTip text={t.generateTip} /></button>
         {#if password}
-          <button class="btn-secondary" onclick={copyGenerated}>{copiedGenerated ? "Copied!" : "Copy"}</button>
+          <button class="btn-secondary" onclick={copyGenerated}>{copiedGenerated ? t.copied : t.copy}</button>
         {/if}
       </div>
     </div>
     <div class="card-body">
       <div style="position: relative;">
         {#if showPassword}
-          <input type="text" bind:value={password} placeholder="Type or paste a password..." style="width: 100%; padding-right: 60px; font-family: monospace;" />
+          <input type="text" bind:value={password} placeholder={t.placeholderPassword} style="width: 100%; padding-right: 60px; font-family: monospace;" />
         {:else}
-          <input type="password" bind:value={password} placeholder="Type or paste a password..." style="width: 100%; padding-right: 60px;" />
+          <input type="password" bind:value={password} placeholder={t.placeholderPassword} style="width: 100%; padding-right: 60px;" />
         {/if}
         <button
           style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 11px; color: var(--color-text-muted);"
           onclick={() => (showPassword = !showPassword)}
         >
-          {showPassword ? "Hide" : "Show"}
+          {showPassword ? t.hide : t.show}
         </button>
       </div>
     </div>
@@ -213,7 +223,7 @@
     <!-- Strength meter -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Strength</span>
+        <span class="card-title">{t.strength}</span>
         <span class="badge" style="background: {strengthColors[analysis.strength]}20; color: {strengthColors[analysis.strength]}; border: 1px solid {strengthColors[analysis.strength]}33;">
           {analysis.strengthLabel}
         </span>
@@ -229,20 +239,20 @@
         <!-- Stats -->
         <div class="metrics-grid cols-3" style="margin-bottom: 0;">
           <div class="metric">
-            <div class="metric-label">Entropy <InfoTip text="A measure of randomness. More bits = harder to guess. 40 bits is weak, 60+ is strong, 80+ is very strong." /></div>
-            <div class="metric-value" style="font-size: 16px;">{analysis.entropy} bits</div>
+            <div class="metric-label">{t.entropy} <InfoTip text={t.entropyTip} /></div>
+            <div class="metric-value" style="font-size: 16px;">{analysis.entropy} {t.bits}</div>
           </div>
           <div class="metric">
-            <div class="metric-label">Length</div>
+            <div class="metric-label">{t.length}</div>
             <div class="metric-value" style="font-size: 16px;">{analysis.length}</div>
           </div>
           <div class="metric">
-            <div class="metric-label">Composition</div>
+            <div class="metric-label">{t.composition}</div>
             <div class="metric-sub" style="margin-top: 0; font-size: 11px; line-height: 1.6;">
               {#if analysis.uppercase > 0}<span style="color: var(--color-text);">A-Z: {analysis.uppercase}</span><br/>{/if}
               {#if analysis.lowercase > 0}<span style="color: var(--color-text);">a-z: {analysis.lowercase}</span><br/>{/if}
               {#if analysis.digits > 0}<span style="color: var(--color-text);">0-9: {analysis.digits}</span><br/>{/if}
-              {#if analysis.special > 0}<span style="color: var(--color-text);">Special: {analysis.special}</span>{/if}
+              {#if analysis.special > 0}<span style="color: var(--color-text);">{t.special}: {analysis.special}</span>{/if}
             </div>
           </div>
         </div>
@@ -252,29 +262,29 @@
     <!-- Checks -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Checks</span>
+        <span class="card-title">{t.checks}</span>
       </div>
       <div class="card-body" style="padding: 0;">
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; border-bottom: 1px solid var(--color-border);">
-          <span style="font-size: 13px; color: var(--color-text);">Common password?</span>
+          <span style="font-size: 13px; color: var(--color-text);">{t.commonPassword}</span>
           {#if analysis.isCommon}
-            <span class="badge badge-red">Yes</span>
+            <span class="badge badge-red">{lang === "es" ? "S\u00ed" : "Yes"}</span>
           {:else}
             <span class="badge badge-green">No</span>
           {/if}
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; border-bottom: 1px solid var(--color-border);">
-          <span style="font-size: 13px; color: var(--color-text);">Repeated characters?</span>
+          <span style="font-size: 13px; color: var(--color-text);">{t.repeatedChars}</span>
           {#if analysis.hasRepeated}
-            <span class="badge badge-amber">Yes</span>
+            <span class="badge badge-amber">{lang === "es" ? "S\u00ed" : "Yes"}</span>
           {:else}
             <span class="badge badge-green">No</span>
           {/if}
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
-          <span style="font-size: 13px; color: var(--color-text);">Sequential characters?</span>
+          <span style="font-size: 13px; color: var(--color-text);">{t.sequentialChars}</span>
           {#if analysis.hasSequential}
-            <span class="badge badge-amber">Yes</span>
+            <span class="badge badge-amber">{lang === "es" ? "S\u00ed" : "Yes"}</span>
           {:else}
             <span class="badge badge-green">No</span>
           {/if}
@@ -285,7 +295,7 @@
     <!-- Crack times -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Estimated Crack Time <InfoTip text="1K/s = online attack (rate-limited login). 1B/s = offline GPU attack on stolen password hashes. Real-world speeds vary." /></span>
+        <span class="card-title">{t.estimatedCrackTime} <InfoTip text={t.crackTimeTip} /></span>
       </div>
       <div class="card-body" style="padding: 0;">
         {#each analysis.crackTimes as ct}
@@ -301,7 +311,7 @@
     {#if analysis.tips.length > 0}
       <div class="card">
         <div class="card-header">
-          <span class="card-title">Tips to Improve</span>
+          <span class="card-title">{t.tipsToImprove}</span>
         </div>
         <div class="card-body">
           <ul style="list-style: none; padding: 0; margin: 0;">

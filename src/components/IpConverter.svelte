@@ -1,5 +1,12 @@
 <script lang="ts">
   import InfoTip from './InfoTip.svelte';
+  import type { Lang } from '../i18n/index';
+  import { getIpConverter } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getIpConverter(lang));
+
   let input = $state("192.168.1.1");
   let copiedField = $state("");
 
@@ -51,25 +58,25 @@
     // Binary dotted
     if (/^[01]+\.[01]+\.[01]+\.[01]+$/.test(trimmed)) {
       const o = parseBinary(trimmed);
-      if (o) return { octets: o, format: "Binary" };
+      if (o) return { octets: o, format: t.binary };
     }
 
     // Hex dotted
     if (/^(0x)?[0-9a-fA-F]+\.[0-9a-fA-F]+\.[0-9a-fA-F]+\.[0-9a-fA-F]+$/i.test(trimmed)) {
       const o = parseHex(trimmed);
-      if (o) return { octets: o, format: "Hexadecimal" };
+      if (o) return { octets: o, format: t.hexadecimal };
     }
 
     // Decimal dotted
     if (/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/.test(trimmed)) {
       const o = parseDecimalDotted(trimmed);
-      if (o) return { octets: o, format: "Decimal" };
+      if (o) return { octets: o, format: t.decimal };
     }
 
     // Hex prefix
     if (/^0x[0-9a-fA-F]+$/i.test(trimmed)) {
       const o = parseHex(trimmed);
-      if (o) return { octets: o, format: "Hexadecimal" };
+      if (o) return { octets: o, format: t.hexadecimal };
     }
 
     // Pure integer
@@ -77,11 +84,11 @@
       const n = parseInt(trimmed, 10);
       if (n > 255 && n <= 4294967295) {
         const o = parseInteger(trimmed);
-        if (o) return { octets: o, format: "Integer" };
+        if (o) return { octets: o, format: t.integer };
       }
       // Could be decimal dotted partial? No. Try as integer anyway.
       const o = parseInteger(trimmed);
-      if (o) return { octets: o, format: "Integer" };
+      if (o) return { octets: o, format: t.integer };
     }
 
     return null;
@@ -115,15 +122,15 @@
   <!-- Input -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">Input</span>
+      <span class="card-title">{t.input}</span>
       {#if parsed}
-        <span class="badge badge-accent">Detected: {parsed.format}</span>
+        <span class="badge badge-accent">{t.detected}: {parsed.format}</span>
       {/if}
     </div>
     <div class="card-body">
-      <input type="text" bind:value={input} placeholder="192.168.1.1 or binary, hex, integer..." style="width: 100%; font-family: monospace;" />
+      <input type="text" bind:value={input} placeholder={t.placeholder} style="width: 100%; font-family: monospace;" />
       <p style="font-size: 11px; color: var(--color-text-dim); margin-top: 8px;">
-        Enter an IP in any format: decimal dotted, binary, hex (0xC0A80101 or C0.A8.01.01), or integer.
+        {t.inputHint}
       </p>
     </div>
   </div>
@@ -132,16 +139,16 @@
     <!-- Conversions -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Conversions</span>
+        <span class="card-title">{t.conversions}</span>
       </div>
       <div class="card-body" style="padding: 0;">
         {#each [
-          { label: "Decimal", value: decimal, key: "decimal", tip: "Standard dotted-decimal notation (0-255 per octet). The most common way to write IPv4 addresses." },
-          { label: "Binary", value: binary, key: "binary", tip: "Each octet as 8 bits. This is how routers actually process IP addresses." },
-          { label: "Hexadecimal", value: hex, key: "hex", tip: "Base-16 representation. Commonly used in low-level networking and packet analysis." },
-          { label: "Integer", value: integer, key: "integer", tip: "The IP as a single 32-bit number. Some APIs and databases store IPs this way for efficient lookups." },
-          { label: "Octal", value: octal, key: "octal", tip: "Base-8 representation. Rarely used directly, but some systems interpret leading-zero octets as octal." },
-          { label: "IPv4-Mapped IPv6", value: ipv6Mapped, key: "ipv6", tip: "An IPv6 address that embeds this IPv4 address, used for dual-stack compatibility." },
+          { label: t.decimal, value: decimal, key: "decimal", tip: t.decimalTip },
+          { label: t.binary, value: binary, key: "binary", tip: t.binaryTip },
+          { label: t.hexadecimal, value: hex, key: "hex", tip: t.hexTip },
+          { label: t.integer, value: integer, key: "integer", tip: t.integerTip },
+          { label: t.octal, value: octal, key: "octal", tip: t.octalTip },
+          { label: t.ipv4MappedIpv6, value: ipv6Mapped, key: "ipv6", tip: t.ipv6Tip },
         ] as row}
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--color-border);">
             <div>
@@ -153,7 +160,7 @@
               </div>
             </div>
             <button class="btn-secondary" style="flex-shrink: 0; margin-left: 12px;" onclick={() => copy(row.value, row.key)}>
-              {copiedField === row.key ? "Copied!" : "Copy"}
+              {copiedField === row.key ? t.copied : t.copy}
             </button>
           </div>
         {/each}
@@ -162,7 +169,7 @@
   {:else}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
-        <p style="color: var(--color-text-muted); font-size: 13px;">Enter a valid IP address to see conversions.</p>
+        <p style="color: var(--color-text-muted); font-size: 13px;">{t.noIp}</p>
       </div>
     </div>
   {/if}

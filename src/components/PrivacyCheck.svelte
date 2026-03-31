@@ -1,6 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import InfoTip from './InfoTip.svelte';
+  import type { Lang } from '../i18n/index';
+  import { getPrivacyCheck } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getPrivacyCheck(lang));
 
   interface CheckItem {
     label: string;
@@ -14,15 +20,15 @@
 
   function getStatus(label: string, value: string): "safe" | "exposed" | "note" {
     const lower = value.toLowerCase();
-    if (label === "Do Not Track") return lower === "enabled" ? "safe" : "note";
-    if (label === "Cookies Enabled") return lower === "yes" ? "note" : "safe";
-    if (label === "WebRTC Leak") return lower.includes("no leak") ? "safe" : "exposed";
-    if (label === "Canvas Fingerprint") return "exposed";
-    if (label === "Audio Fingerprint") return lower === "not supported" ? "safe" : "exposed";
-    if (label === "WebGL Vendor") return lower === "not available" ? "safe" : "exposed";
-    if (label === "Hardware Concurrency") return "note";
-    if (label === "Device Memory") return lower === "not available" ? "safe" : "exposed";
-    if (label === "Touch Support") return "note";
+    if (label === t.doNotTrack) return lower === t.enabled.toLowerCase() ? "safe" : "note";
+    if (label === t.cookiesEnabled) return lower === t.yes.toLowerCase() ? "note" : "safe";
+    if (label === t.webrtcLeak) return lower.includes(t.noLeakDetected.toLowerCase()) ? "safe" : "exposed";
+    if (label === t.canvasFingerprint) return "exposed";
+    if (label === t.audioFingerprint) return lower === t.notSupported.toLowerCase() ? "safe" : "exposed";
+    if (label === t.webglVendor) return lower === t.notAvailable.toLowerCase() ? "safe" : "exposed";
+    if (label === t.hardwareConcurrency) return "note";
+    if (label === t.deviceMemory) return lower === t.notAvailable.toLowerCase() ? "safe" : "exposed";
+    if (label === t.touchSupport) return "note";
     return "note";
   }
 
@@ -41,12 +47,13 @@
             if (!resolved) {
               resolved = true;
               pc.close();
-              if (ips.length === 0) resolve("No leak detected");
+              if (ips.length === 0) resolve(t.noLeakDetected);
               else {
                 const hasLocal = ips.some(
                   (ip) => ip.startsWith("10.") || ip.startsWith("192.168.") || ip.startsWith("172.")
                 );
-                resolve(hasLocal ? `Leak: ${ips.join(", ")}` : "No leak detected");
+                const leakLabel = lang === "es" ? "Fuga" : "Leak";
+                resolve(hasLocal ? `${leakLabel}: ${ips.join(", ")}` : t.noLeakDetected);
               }
             }
             return;
@@ -64,11 +71,12 @@
           if (!resolved) {
             resolved = true;
             pc.close();
-            resolve(ips.length > 0 ? `Leak: ${ips.join(", ")}` : "No leak detected");
+            const leakLabel = lang === "es" ? "Fuga" : "Leak";
+            resolve(ips.length > 0 ? `${leakLabel}: ${ips.join(", ")}` : t.noLeakDetected);
           }
         }, 3000);
       } catch {
-        resolve("Not supported");
+        resolve(t.notSupported);
       }
     });
   }
@@ -79,7 +87,7 @@
       canvas.width = 200;
       canvas.height = 50;
       const ctx = canvas.getContext("2d");
-      if (!ctx) return "Not supported";
+      if (!ctx) return t.notSupported;
       ctx.textBaseline = "top";
       ctx.font = "14px Arial";
       ctx.fillStyle = "#f60";
@@ -94,7 +102,7 @@
       }
       return Math.abs(hash).toString(16).toUpperCase().padStart(8, "0");
     } catch {
-      return "Not supported";
+      return t.notSupported;
     }
   }
 
@@ -102,9 +110,9 @@
     try {
       const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       ctx.close();
-      return "Detectable";
+      return t.detectable;
     } catch {
-      return "Not supported";
+      return t.notSupported;
     }
   }
 
@@ -112,55 +120,55 @@
     try {
       const canvas = document.createElement("canvas");
       const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-      if (!gl) return "Not available";
+      if (!gl) return t.notAvailable;
       const debugInfo = (gl as WebGLRenderingContext).getExtension("WEBGL_debug_renderer_info");
-      if (!debugInfo) return "Hidden";
-      return (gl as WebGLRenderingContext).getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || "Unknown";
+      if (!debugInfo) return t.hidden;
+      return (gl as WebGLRenderingContext).getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || t.unknown;
     } catch {
-      return "Not available";
+      return t.notAvailable;
     }
   }
 
   onMount(async () => {
     const items: CheckItem[] = [];
 
-    const dnt = navigator.doNotTrack === "1" ? "Enabled" : "Disabled";
-    items.push({ label: "Do Not Track", value: dnt, status: getStatus("Do Not Track", dnt) });
+    const dnt = navigator.doNotTrack === "1" ? t.enabled : t.disabled;
+    items.push({ label: t.doNotTrack, value: dnt, status: getStatus(t.doNotTrack, dnt) });
 
-    const cookies = navigator.cookieEnabled ? "Yes" : "No";
-    items.push({ label: "Cookies Enabled", value: cookies, status: getStatus("Cookies Enabled", cookies) });
+    const cookies = navigator.cookieEnabled ? t.yes : t.no;
+    items.push({ label: t.cookiesEnabled, value: cookies, status: getStatus(t.cookiesEnabled, cookies) });
 
     const webrtc = await checkWebRTC();
-    items.push({ label: "WebRTC Leak", value: webrtc, status: getStatus("WebRTC Leak", webrtc) });
+    items.push({ label: t.webrtcLeak, value: webrtc, status: getStatus(t.webrtcLeak, webrtc) });
 
     const canvas = getCanvasFingerprint();
-    items.push({ label: "Canvas Fingerprint", value: canvas, status: getStatus("Canvas Fingerprint", canvas) });
+    items.push({ label: t.canvasFingerprint, value: canvas, status: getStatus(t.canvasFingerprint, canvas) });
 
     const audio = getAudioFingerprint();
-    items.push({ label: "Audio Fingerprint", value: audio, status: getStatus("Audio Fingerprint", audio) });
+    items.push({ label: t.audioFingerprint, value: audio, status: getStatus(t.audioFingerprint, audio) });
 
     const webgl = getWebGLVendor();
-    items.push({ label: "WebGL Vendor", value: webgl, status: getStatus("WebGL Vendor", webgl) });
+    items.push({ label: t.webglVendor, value: webgl, status: getStatus(t.webglVendor, webgl) });
 
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    items.push({ label: "Timezone", value: tz, status: "note" });
+    items.push({ label: t.timezone, value: tz, status: "note" });
 
     const screen = `${window.screen.width} x ${window.screen.height}`;
-    items.push({ label: "Screen Resolution", value: screen, status: "note" });
+    items.push({ label: t.screenResolution, value: screen, status: "note" });
 
-    items.push({ label: "Language", value: navigator.language || "Unknown", status: "note" });
+    items.push({ label: t.language, value: navigator.language || t.unknown, status: "note" });
 
-    const cores = navigator.hardwareConcurrency?.toString() || "Unknown";
-    items.push({ label: "Hardware Concurrency", value: `${cores} cores`, status: getStatus("Hardware Concurrency", cores) });
+    const cores = navigator.hardwareConcurrency?.toString() || t.unknown;
+    items.push({ label: t.hardwareConcurrency, value: `${cores} ${t.cores}`, status: getStatus(t.hardwareConcurrency, cores) });
 
     const mem = (navigator as any).deviceMemory;
-    const memStr = mem ? `${mem} GB` : "Not available";
-    items.push({ label: "Device Memory", value: memStr, status: getStatus("Device Memory", memStr) });
+    const memStr = mem ? `${mem} GB` : t.notAvailable;
+    items.push({ label: t.deviceMemory, value: memStr, status: getStatus(t.deviceMemory, memStr) });
 
     const touch = navigator.maxTouchPoints;
-    items.push({ label: "Touch Support", value: touch > 0 ? `Yes (${touch} points)` : "No", status: "note" });
+    items.push({ label: t.touchSupport, value: touch > 0 ? `${t.yes} (${touch} ${t.points})` : t.no, status: "note" });
 
-    items.push({ label: "Platform", value: navigator.platform || "Unknown", status: "note" });
+    items.push({ label: t.platform, value: navigator.platform || t.unknown, status: "note" });
 
     checks = items;
     loading = false;
@@ -168,7 +176,7 @@
 
   function copyReport() {
     const text = checks.map((c) => `${c.label}: ${c.value} [${c.status.toUpperCase()}]`).join("\n");
-    navigator.clipboard.writeText(`Browser Privacy Report - PingThat.dev\n${"=".repeat(40)}\n${text}`);
+    navigator.clipboard.writeText(`${t.clipboardTitle}\n${"=".repeat(40)}\n${text}`);
     copied = true;
     setTimeout(() => (copied = false), 1500);
   }
@@ -178,15 +186,15 @@
   {#if loading}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-text-muted); font-size: 13px;">Running privacy checks...</p>
+        <p style="color: var(--color-text-muted); font-size: 13px;">{t.runningChecks}</p>
       </div>
     </div>
   {:else}
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Privacy Report</span>
+        <span class="card-title">{t.privacyReport}</span>
         <button class="btn-secondary" onclick={copyReport}>
-          {copied ? "Copied!" : "Copy Report"}
+          {copied ? t.copied : t.copyReport}
         </button>
       </div>
     </div>
@@ -198,16 +206,16 @@
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
               <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted);">
                 {check.label}
-                {#if check.label === "Canvas Fingerprint"}<InfoTip text="Websites draw hidden graphics and read the pixel data. Tiny rendering differences between devices create a unique ID." />{/if}
-                {#if check.label === "WebRTC Leak"}<InfoTip text="WebRTC can reveal your real local IP even behind a VPN, letting sites identify your network." />{/if}
-                {#if check.label === "Do Not Track"}<InfoTip text="A browser signal asking sites not to track you. Most websites ignore it entirely." />{/if}
+                {#if check.label === t.canvasFingerprint}<InfoTip text={t.canvasTip} />{/if}
+                {#if check.label === t.webrtcLeak}<InfoTip text={t.webrtcTip} />{/if}
+                {#if check.label === t.doNotTrack}<InfoTip text={t.dntTip} />{/if}
               </span>
               {#if check.status === "safe"}
-                <span class="badge badge-green">Safe</span>
+                <span class="badge badge-green">{t.safe}</span>
               {:else if check.status === "exposed"}
-                <span class="badge badge-red">Exposed</span>
+                <span class="badge badge-red">{t.exposed}</span>
               {:else}
-                <span class="badge badge-amber">Note</span>
+                <span class="badge badge-amber">{t.note}</span>
               {/if}
             </div>
             <div style="font-size: 13px; font-weight: 500; color: var(--color-text); word-break: break-word;">

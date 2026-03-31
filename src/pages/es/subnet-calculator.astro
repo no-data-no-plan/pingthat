@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SubnetCalculator from "../../components/SubnetCalculator.svelte";
+import SeoContent from "../../components/SeoContent.astro";
+import SeoBlock from "../../components/SeoBlock.astro";
+import { pageI18n } from "../../i18n/pages";
+
+const p = pageI18n["subnet-calculator"].es;
+---
+
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="subnet-calculator"
+  lang="es"
+>
+  <SubnetCalculator client:load lang="es" />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["ip-converter", "my-ip"]}
+    lang="es"
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+    lang="es"
+  />
+</Layout>

@@ -2,18 +2,26 @@
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
 import { tools } from "../lib/tools";
+import type { Lang } from "../i18n/index";
+import { getCommon } from "../i18n/common";
 
 interface Props {
   title: string;
   description: string;
   activeToolId: string;
+  lang?: Lang;
 }
 
-const { title, description, activeToolId } = Astro.props;
+const { title, description, activeToolId, lang = "en" } = Astro.props;
+const c = getCommon(lang);
 
 const activeTool = tools.find(t => t.id === activeToolId);
 const keywords = activeTool?.keywords.join(", ") ?? "";
-const canonicalUrl = `https://pingthat.dev${activeTool?.path ?? Astro.url.pathname}`;
+const toolPath = activeTool?.path ?? Astro.url.pathname;
+const canonicalPath = lang === "es" ? `/es${toolPath}` : toolPath;
+const canonicalUrl = `https://pingthat.dev${canonicalPath}`;
+const enUrl = `https://pingthat.dev${toolPath}`;
+const esUrl = `https://pingthat.dev/es${toolPath}`;
 
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
@@ -34,7 +42,7 @@ const jsonLd = JSON.stringify({
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,6 +76,11 @@ const jsonLd = JSON.stringify({
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content="https://pingthat.dev/og-image.png" />
 
+  <!-- Hreflang alternates -->
+  <link rel="alternate" hreflang="en" href={enUrl} />
+  <link rel="alternate" hreflang="es" href={esUrl} />
+  <link rel="alternate" hreflang="x-default" href={enUrl} />
+
   <!-- JSON-LD -->
   <script type="application/ld+json" set:html={jsonLd} />
 
@@ -84,7 +97,7 @@ const jsonLd = JSON.stringify({
 <body>
   <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <Sidebar activeToolId={activeToolId} />
+    <Sidebar activeToolId={activeToolId} lang={lang} />
 
     <!-- Main content -->
     <div class="flex-1 flex flex-col min-w-0">
@@ -99,7 +112,10 @@ const jsonLd = JSON.stringify({
           </div>
         </div>
         <div class="flex items-center gap-3" style="min-height: 28px;">
-          <span class="hidden sm:inline badge badge-accent" style="min-width: 180px; text-align: center;">No data collected &middot; 100% private</span>
+          <a href={lang === "en" ? esUrl : enUrl} class="hidden sm:inline text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors" style="text-decoration: none; font-weight: 500;">
+            {lang === "en" ? "ES" : "EN"}
+          </a>
+          <span class="hidden sm:inline badge badge-accent" style="min-width: 180px; text-align: center;">{c.noDataCollectedPrivate}</span>
         </div>
       </header>
 
@@ -111,22 +127,22 @@ const jsonLd = JSON.stringify({
       <!-- Footer -->
       <footer class="px-6 py-4 border-t border-[var(--color-border)] text-[11px] text-[var(--color-text-dim)]">
         <div class="flex justify-between items-center mb-2">
-          <span>PingThat — Network tools for developers</span>
+          <span>{c.networkToolsForDevs}</span>
           <span class="flex items-center gap-2">
-            <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">Buy me a coffee</a>
+            <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">{c.buyMeACoffee}</a>
             <span style="color: var(--color-border);">&middot;</span>
-            <span>100% private</span>
+            <span>{c.private100}</span>
           </span>
         </div>
         <form action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
           <input type="hidden" name="app" value="PingThat" />
-          <input type="text" name="message" placeholder="Bug, idea, or feedback..." required
+          <input type="text" name="message" placeholder={c.feedbackPlaceholder} required
             class="flex-1 px-3 py-1.5 rounded text-[11px]"
             style="background: var(--color-surface2); border: 1px solid var(--color-border); color: var(--color-text); font-family: 'Inter', sans-serif;"
           />
           <button type="submit" class="px-3 py-1.5 rounded text-[10px] uppercase tracking-wider"
             style="background: var(--color-surface2); border: 1px solid var(--color-border); color: var(--color-text-muted); cursor: pointer;">
-            Send
+            {c.send}
           </button>
         </form>
       </footer>

@@ -1,11 +1,16 @@
 ---
+import type { Lang } from "../i18n/index";
+import { getCommon } from "../i18n/common";
+
 interface Props {
   heading: string;
   text: string;
   features?: string[];
+  lang?: Lang;
 }
 
-const { heading, text, features } = Astro.props;
+const { heading, text, features, lang = "en" } = Astro.props;
+const c = getCommon(lang);
 ---
 
 <details class="px-8 py-4 border-t border-[var(--color-border)]" style="background: var(--color-bg);">
@@ -19,6 +24,6 @@ const { heading, text, features } = Astro.props;
         {features.map((f) => <li>{f}</li>)}
       </ul>
     )}
-    <p class="text-[10px]" style="color: var(--color-text-dim);">100% free. No signup. No data collected anywhere.</p>
+    <p class="text-[10px]" style="color: var(--color-text-dim);">{c.noDataDisclaimer}</p>
   </div>
 </details>

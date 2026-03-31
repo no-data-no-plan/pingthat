@@ -1,5 +1,12 @@
 <script lang="ts">
   import InfoTip from './InfoTip.svelte';
+  import type { Lang } from '../i18n/index';
+  import { getJwtDecoder } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getJwtDecoder(lang));
+
   let token = $state("");
   let copiedSection = $state("");
 
@@ -56,7 +63,7 @@
 
     const parts = trimmed.split(".");
     if (parts.length !== 3) {
-      return { header: null, headerRaw: "", payload: null, payloadRaw: "", signature: "", isExpired: false, error: "Invalid JWT format. Expected 3 parts separated by dots." };
+      return { header: null, headerRaw: "", payload: null, payloadRaw: "", signature: "", isExpired: false, error: t.invalidFormat };
     }
 
     try {
@@ -77,7 +84,7 @@
         error: "",
       };
     } catch (e) {
-      return { header: null, headerRaw: "", payload: null, payloadRaw: "", signature: "", isExpired: false, error: "Failed to decode JWT. Check the format." };
+      return { header: null, headerRaw: "", payload: null, payloadRaw: "", signature: "", isExpired: false, error: t.decodeFailed };
     }
   });
 
@@ -93,19 +100,19 @@
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
   <!-- Privacy notice -->
   <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--color-accent-dim); border: 1px solid rgba(16, 185, 129, 0.2);">
-    <span style="font-size: 12px; color: var(--color-accent);">Your token never leaves your browser. All decoding is done locally.</span>
+    <span style="font-size: 12px; color: var(--color-accent);">{t.privacyNotice}</span>
   </div>
 
   <!-- Input -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">JWT Token</span>
-      <button class="btn-secondary" onclick={() => (token = sampleJwt)}>Load Example</button>
+      <span class="card-title">{t.jwtToken}</span>
+      <button class="btn-secondary" onclick={() => (token = sampleJwt)}>{t.loadExample}</button>
     </div>
     <div class="card-body">
       <textarea
         bind:value={token}
-        placeholder="Paste your JWT token here..."
+        placeholder={t.placeholder}
         rows="4"
         style="width: 100%; font-family: monospace; font-size: 12px; resize: vertical; background: var(--color-surface2); border: 1px solid var(--color-border2); border-radius: 8px; padding: 12px; color: var(--color-text);"
       ></textarea>
@@ -123,16 +130,16 @@
       <!-- Expiry badge -->
       {#if decoded.isExpired}
         <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--color-red-dim); border: 1px solid rgba(255, 107, 107, 0.2);">
-          <span style="font-size: 12px; color: var(--color-red);">This token is expired.</span>
+          <span style="font-size: 12px; color: var(--color-red);">{t.tokenExpired}</span>
         </div>
       {/if}
 
       <!-- Header -->
       <div class="card" style="border-color: rgba(74, 143, 255, 0.3);">
         <div class="card-header" style="border-bottom-color: rgba(74, 143, 255, 0.15);">
-          <span class="card-title" style="color: var(--color-blue);">Header <InfoTip text="Contains the signing algorithm (e.g. HS256, RS256) and token type. Tells the server how to verify the signature." /></span>
+          <span class="card-title" style="color: var(--color-blue);">{t.header} <InfoTip text={t.headerTip} /></span>
           <button class="btn-secondary" onclick={() => copySection(decoded!.headerRaw, "header")}>
-            {copiedSection === "header" ? "Copied!" : "Copy"}
+            {copiedSection === "header" ? t.copied : t.copy}
           </button>
         </div>
         <div class="card-body">
@@ -143,13 +150,13 @@
       <!-- Payload -->
       <div class="card" style="border-color: rgba(62, 207, 142, 0.3);">
         <div class="card-header" style="border-bottom-color: rgba(62, 207, 142, 0.15);">
-          <span class="card-title" style="color: var(--color-green);">Payload <InfoTip text="Contains claims -- data like subject (sub), expiration (exp), and issued-at (iat). Not encrypted, only base64-encoded." /></span>
+          <span class="card-title" style="color: var(--color-green);">{t.payload} <InfoTip text={t.payloadTip} /></span>
           <div style="display: flex; gap: 8px; align-items: center;">
             {#if decoded.isExpired}
-              <span class="badge badge-red">Expired</span>
+              <span class="badge badge-red">{t.expired}</span>
             {/if}
             <button class="btn-secondary" onclick={() => copySection(decoded!.payloadRaw, "payload")}>
-              {copiedSection === "payload" ? "Copied!" : "Copy"}
+              {copiedSection === "payload" ? t.copied : t.copy}
             </button>
           </div>
         </div>
@@ -161,9 +168,9 @@
       <!-- Signature -->
       <div class="card" style="border-color: rgba(255, 107, 107, 0.3);">
         <div class="card-header" style="border-bottom-color: rgba(255, 107, 107, 0.15);">
-          <span class="card-title" style="color: var(--color-red);">Signature <InfoTip text="Created by signing header + payload with a secret key. Verifying it proves the token hasn't been tampered with." /></span>
+          <span class="card-title" style="color: var(--color-red);">{t.signature} <InfoTip text={t.signatureTip} /></span>
           <button class="btn-secondary" onclick={() => copySection(decoded!.signature, "sig")}>
-            {copiedSection === "sig" ? "Copied!" : "Copy"}
+            {copiedSection === "sig" ? t.copied : t.copy}
           </button>
         </div>
         <div class="card-body">
@@ -171,7 +178,7 @@
             {decoded.signature}
           </p>
           <p style="font-size: 11px; color: var(--color-text-dim); margin-top: 8px;">
-            Signature verification requires the secret key, which is not done client-side for security.
+            {t.signatureNote}
           </p>
         </div>
       </div>

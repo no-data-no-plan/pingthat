@@ -1,6 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import InfoTip from './InfoTip.svelte';
+  import type { Lang } from '../i18n/index';
+  import { getWebrtcLeakTest } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getWebrtcLeakTest(lang));
 
   interface IpResult {
     ip: string;
@@ -22,6 +28,12 @@
       /^172\.(1[6-9]|2[0-9]|3[01])\./.test(ip)
     ) return "Local";
     return "Public";
+  }
+
+  function getTypeLabel(type: IpResult["type"]): string {
+    if (type === "Local") return t.local;
+    if (type === "Public") return t.public;
+    return type; // IPv6 and mDNS stay as-is (technical terms)
   }
 
   async function runTest() {
@@ -87,7 +99,7 @@
       pc.close();
       hasLeak = results.some((r) => r.type === "Local");
     } catch {
-      error = "Failed to run WebRTC test. Your browser may block this.";
+      error = t.errorMessage;
     }
 
     testing = false;
@@ -100,13 +112,13 @@
   {#if testing}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-text-muted); font-size: 13px;">Running WebRTC leak test...</p>
+        <p style="color: var(--color-text-muted); font-size: 13px;">{t.runningTest}</p>
       </div>
     </div>
   {:else if !supported}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-amber); font-size: 13px;">WebRTC is not supported in your browser.</p>
+        <p style="color: var(--color-amber); font-size: 13px;">{t.notSupported}</p>
       </div>
     </div>
   {:else if error}
@@ -121,17 +133,17 @@
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
         {#if hasLeak}
           <p style="font-size: 24px; font-weight: 700; color: var(--color-red); margin-bottom: 8px;">
-            Leak Detected!
+            {t.leakDetected}
           </p>
           <p style="font-size: 13px; color: var(--color-text-muted);">
-            WebRTC is exposing your local/private IP address. If you're using a VPN, your real IP may be visible.
+            {t.leakDescription}
           </p>
         {:else}
           <p style="font-size: 24px; font-weight: 700; color: var(--color-green); margin-bottom: 8px;">
-            No Leak Detected
+            {t.noLeak}
           </p>
           <p style="font-size: 13px; color: var(--color-text-muted);">
-            WebRTC is not exposing any private IP addresses. {results.length === 0 ? "No IPs were found in ICE candidates." : ""}
+            {t.noLeakDescription} {results.length === 0 ? t.noIpsFound : ""}
           </p>
         {/if}
       </div>
@@ -141,8 +153,8 @@
     {#if results.length > 0}
       <div class="card">
         <div class="card-header">
-          <span class="card-title">IPs Found ({results.length})</span>
-          <button class="btn-secondary" onclick={runTest}>Run Again</button>
+          <span class="card-title">{t.ipsFound} ({results.length})</span>
+          <button class="btn-secondary" onclick={runTest}>{t.runAgain}</button>
         </div>
         <div class="card-body" style="padding: 0;">
           {#each results as result}
@@ -152,10 +164,10 @@
               </span>
               <span style="display: inline-flex; align-items: center; gap: 2px;">
                 <span class="badge {result.type === 'Local' ? 'badge-red' : result.type === 'Public' ? 'badge-green' : result.type === 'mDNS' ? 'badge-amber' : 'badge-blue'}">
-                  {result.type}
+                  {getTypeLabel(result.type)}
                 </span>
-                {#if result.type === 'Local'}<InfoTip text="A private/local IP address from your LAN. Exposing this through WebRTC can reveal your real network even behind a VPN." />{/if}
-                {#if result.type === 'Public'}<InfoTip text="Your public-facing IP address. This is normally visible to websites you visit." />{/if}
+                {#if result.type === 'Local'}<InfoTip text={t.localTip} />{/if}
+                {#if result.type === 'Public'}<InfoTip text={t.publicTip} />{/if}
               </span>
             </div>
           {/each}
@@ -163,25 +175,25 @@
       </div>
     {:else}
       <div style="text-align: center;">
-        <button class="btn-primary" onclick={runTest}>Run Test Again</button>
+        <button class="btn-primary" onclick={runTest}>{t.runTestAgain}</button>
       </div>
     {/if}
 
     <!-- Explanation -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">What is a WebRTC leak?</span>
+        <span class="card-title">{t.whatIsWebrtcLeak}</span>
       </div>
       <div class="card-body">
         <div style="font-size: 13px; color: var(--color-text-muted); line-height: 1.7;">
           <p style="margin-bottom: 12px;">
-            WebRTC (Web Real-Time Communication) enables peer-to-peer connections in browsers for video calls, file sharing, and more. During connection setup, it uses STUN/TURN servers <InfoTip text="STUN servers help your browser discover its public IP by reflecting your connection info back to you. This is needed for peer-to-peer connections." /> to discover your network addresses.
+            {t.explanation1} <InfoTip text={t.stunTip} /> {t.explanation1End}
           </p>
           <p style="margin-bottom: 12px;">
-            A <strong style="color: var(--color-text);">WebRTC leak</strong> occurs when your browser reveals your local (private) IP address through ICE candidates, even when you're behind a VPN. This can expose your real network identity.
+            {t.explanation2Prefix}<strong style="color: var(--color-text);">{t.explanation2Bold}</strong>{t.explanation2Suffix}
           </p>
           <p>
-            <strong style="color: var(--color-text);">To prevent leaks:</strong> Use a browser extension that blocks WebRTC, disable WebRTC in browser settings (Firefox: <code style="color: var(--color-accent);">media.peerconnection.enabled = false</code>), or use a VPN with built-in WebRTC protection.
+            <strong style="color: var(--color-text);">{t.preventPrefix}</strong>{t.preventText}<code style="color: var(--color-accent);">{t.preventCode}</code>{t.preventEnd}
           </p>
         </div>
       </div>

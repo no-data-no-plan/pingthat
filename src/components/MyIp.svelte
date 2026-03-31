@@ -1,6 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import InfoTip from './InfoTip.svelte';
+  import type { Lang } from '../i18n/index';
+  import { getMyIp } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getMyIp(lang));
 
   let ip = $state("");
   let city = $state("");
@@ -21,10 +27,10 @@
   let userAgent = $state("");
 
   onMount(async () => {
-    language = navigator.language || "Unknown";
+    language = navigator.language || t.unknown;
     online = navigator.onLine;
-    platform = navigator.platform || "Unknown";
-    userAgent = navigator.userAgent || "Unknown";
+    platform = navigator.platform || t.unknown;
+    userAgent = navigator.userAgent || t.unknown;
 
     try {
       // Try ipapi.co first (has location data)
@@ -58,7 +64,7 @@
       // Both failed
     }
 
-    error = "Could not detect your IP address. Check your connection or try again.";
+    error = t.couldNotDetect;
     loading = false;
   });
 
@@ -74,7 +80,7 @@
   {#if loading}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-text-muted); font-size: 13px;">Detecting your IP address...</p>
+        <p style="color: var(--color-text-muted); font-size: 13px;">{t.detectingIp}</p>
       </div>
     </div>
   {:else if error}
@@ -87,9 +93,9 @@
     <!-- IP Display -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Your Public IP <InfoTip text="Your public IP is the address websites see when you connect. It's different from your private/local IP used inside your home network." /></span>
+        <span class="card-title">{t.yourPublicIp} <InfoTip text={t.publicIpTip} /></span>
         <button class="btn-secondary" onclick={copyIp}>
-          {copied ? "Copied!" : "Copy IP"}
+          {copied ? t.copied : t.copyIp}
         </button>
       </div>
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
@@ -102,30 +108,30 @@
     <!-- Location & Network -->
     <div class="metrics-grid cols-2">
       <div class="metric">
-        <div class="metric-label">Location</div>
+        <div class="metric-label">{t.location}</div>
         <div class="metric-value" style="font-size: 16px;">
-          {city && country ? `${city}, ${country}` : city || country || "Unknown"}
+          {city && country ? `${city}, ${country}` : city || country || t.unknown}
         </div>
         {#if region}
           <div class="metric-sub">{region}</div>
         {/if}
       </div>
       <div class="metric">
-        <div class="metric-label">ISP / Organization <InfoTip text="Your Internet Service Provider -- the company that provides your internet connection (e.g. Comcast, Vodafone)." /></div>
+        <div class="metric-label">{t.ispOrganization} <InfoTip text={t.ispTip} /></div>
         <div class="metric-value" style="font-size: 16px; word-break: break-word;">
-          {isp || "Unknown"}
+          {isp || t.unknown}
         </div>
       </div>
       <div class="metric">
-        <div class="metric-label">Timezone</div>
+        <div class="metric-label">{t.timezone}</div>
         <div class="metric-value" style="font-size: 16px;">
-          {timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown"}
+          {timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || t.unknown}
         </div>
       </div>
       <div class="metric">
-        <div class="metric-label">ASN</div>
+        <div class="metric-label">{t.asn}</div>
         <div class="metric-value" style="font-size: 16px;">
-          {asn || "Unknown"}
+          {asn || t.unknown}
         </div>
       </div>
     </div>
@@ -133,30 +139,30 @@
     <!-- Connection Info -->
     <div class="card">
       <div class="card-header">
-        <span class="card-title">Your Connection</span>
+        <span class="card-title">{t.yourConnection}</span>
       </div>
       <div class="card-body">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <div>
-            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">Language</div>
+            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">{t.language}</div>
             <div style="font-size: 14px; color: var(--color-text);">{language}</div>
           </div>
           <div>
-            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">Status</div>
+            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">{t.status}</div>
             <div style="font-size: 14px;">
               {#if online}
-                <span class="badge badge-green">Online</span>
+                <span class="badge badge-green">{t.online}</span>
               {:else}
-                <span class="badge badge-red">Offline</span>
+                <span class="badge badge-red">{t.offline}</span>
               {/if}
             </div>
           </div>
           <div>
-            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">Platform</div>
+            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">{t.platform}</div>
             <div style="font-size: 14px; color: var(--color-text);">{platform}</div>
           </div>
           <div>
-            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">Browser</div>
+            <div style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">{t.browser}</div>
             <div style="font-size: 12px; color: var(--color-text); word-break: break-word; line-height: 1.4;">{userAgent.slice(0, 80)}{userAgent.length > 80 ? '...' : ''}</div>
           </div>
         </div>

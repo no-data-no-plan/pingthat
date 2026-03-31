@@ -1,13 +1,19 @@
 ---
 import { tools } from "../lib/tools";
+import type { Lang } from "../i18n/index";
+import { getCommon } from "../i18n/common";
+import { toolNamesI18n } from "../i18n/pages";
 
 interface Props {
   heading: string;
   text: string;
   relatedToolIds: string[];
+  lang?: Lang;
 }
 
-const { heading, text, relatedToolIds } = Astro.props;
+const { heading, text, relatedToolIds, lang = "en" } = Astro.props;
+const c = getCommon(lang);
+const prefix = lang === "en" ? "" : `/${lang}`;
 const relatedTools = relatedToolIds
   .map((id) => tools.find((t) => t.id === id))
   .filter(Boolean) as typeof tools;
@@ -18,10 +24,10 @@ const relatedTools = relatedToolIds
   <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{text}</p>
   {relatedTools.length > 0 && (
     <div class="flex flex-wrap gap-2 mt-3">
-      <span class="text-[10px]" style="color: var(--color-text-dim);">Related:</span>
+      <span class="text-[10px]" style="color: var(--color-text-dim);">{c.related}</span>
       {relatedTools.map((tool) => (
-        <a href={tool.path} class="text-[10px] hover:underline" style="color: var(--color-accent);">
-          {tool.name}
+        <a href={`${prefix}${tool.path}`} class="text-[10px] hover:underline" style="color: var(--color-accent);">
+          {toolNamesI18n[tool.id]?.[lang] ?? tool.name}
         </a>
       ))}
     </div>
