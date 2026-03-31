@@ -68,9 +68,9 @@ export const pageI18n: Record<
       title: "Comprobaci\u00f3n de Privacidad del Navegador",
       description: "Comprueba la configuraci\u00f3n de privacidad de tu navegador, protecci\u00f3n contra rastreo y exposici\u00f3n de huella digital. Gratis, instant\u00e1neo, 100% en el cliente.",
       seoHeading: "Sobre esta herramienta",
-      seoText: "Esta herramienta comprueba qu\u00e9 informaci\u00f3n expone tu navegador a los sitios web. Analiza Do Not Track, cookies, fugas WebRTC, huella de canvas y audio, vendedor WebGL y detalles de hardware. Todo se ejecuta localmente en tu navegador.",
+      seoText: "Esta herramienta comprueba qu\u00e9 informaci\u00f3n expone tu navegador a los sitios web. Analiza Do Not Track, cookies, fugas WebRTC, huella de canvas y audio, fabricante WebGL y detalles de hardware. Todo se ejecuta localmente en tu navegador.",
       seoBlockHeading: "Entendiendo la huella digital del navegador",
-      seoBlockText: "Los sitios web pueden identificarte sin cookies combinando caracter\u00edsticas \u00fanicas del navegador en una 'huella digital'. El renderizado del canvas, las cadenas de vendedor WebGL, las fuentes instaladas, la resoluci\u00f3n de pantalla y las especificaciones de hardware contribuyen a un identificador \u00fanico.",
+      seoBlockText: "Los sitios web pueden identificarte sin cookies combinando caracter\u00edsticas \u00fanicas del navegador en una 'huella digital'. El renderizado del canvas, las cadenas de fabricante WebGL, las fuentes instaladas, la resoluci\u00f3n de pantalla y las especificaciones de hardware contribuyen a un identificador \u00fanico.",
       seoFeatures: [
         "Configuraci\u00f3n de Do Not Track y cookies",
         "Detecci\u00f3n de fugas WebRTC",
@@ -251,17 +251,17 @@ export const pageI18n: Record<
     },
     es: {
       title: "Decodificador JWT",
-      description: "Decodifica e inspecciona JSON Web Tokens \u2014 header, payload y firma. 100% en el cliente, tu token nunca sale de tu navegador.",
+      description: "Decodifica e inspecciona JSON Web Tokens \u2014 cabecera, payload y firma. 100% en el cliente, tu token nunca sale de tu navegador.",
       seoHeading: "Sobre esta herramienta",
-      seoText: "Pega un token JWT para decodificarlo e inspeccionar instant\u00e1neamente su header, payload y firma. Las marcas de tiempo (exp, iat, nbf) se convierten a fechas legibles. Los tokens expirados se se\u00f1alizan. Tu token nunca se env\u00eda a ning\u00fan sitio.",
+      seoText: "Pega un token JWT para decodificarlo e inspeccionar instant\u00e1neamente su cabecera, payload y firma. Las marcas de tiempo (exp, iat, nbf) se convierten a fechas legibles. Los tokens expirados se se\u00f1alizan. Tu token nunca se env\u00eda a ning\u00fan sitio.",
       seoBlockHeading: "Entendiendo los JSON Web Tokens",
-      seoBlockText: "Un JWT consiste en tres partes codificadas en Base64URL separadas por puntos: header (algoritmo y tipo), payload (claims como sujeto, expiraci\u00f3n y datos personalizados) y firma (verificaci\u00f3n criptogr\u00e1fica). Los JWT se usan ampliamente para autenticaci\u00f3n y autorizaci\u00f3n de APIs.",
+      seoBlockText: "Un JWT consiste en tres partes codificadas en Base64URL separadas por puntos: cabecera (algoritmo y tipo), payload (claims como sujeto, expiraci\u00f3n y datos personalizados) y firma (verificaci\u00f3n criptogr\u00e1fica). Los JWT se usan ampliamente para autenticaci\u00f3n y autorizaci\u00f3n de APIs.",
       seoFeatures: [
-        "Decodificaci\u00f3n del header (algoritmo, tipo)",
+        "Decodificaci\u00f3n de la cabecera (algoritmo, tipo)",
         "Inspecci\u00f3n del payload con JSON formateado",
         "Marcas de tiempo legibles",
         "Detecci\u00f3n de expiraci\u00f3n",
-        "Secciones con c\u00f3digo de colores (header, payload, firma)",
+        "Secciones con c\u00f3digo de colores (cabecera, payload, firma)",
         "Copiar secciones individuales",
         "Token de ejemplo para pruebas",
         "Privacidad ante todo: nada sale de tu navegador",
@@ -310,7 +310,7 @@ export const toolDescriptionsI18n: Record<string, Record<Lang, string>> = {
   },
   "jwt-decoder": {
     en: "Decode and inspect JSON Web Tokens \u2014 header, payload, and signature",
-    es: "Decodifica e inspecciona JSON Web Tokens \u2014 header, payload y firma",
+    es: "Decodifica e inspecciona JSON Web Tokens \u2014 cabecera, payload y firma",
   },
 };
 

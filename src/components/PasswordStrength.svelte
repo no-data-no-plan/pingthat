@@ -114,16 +114,16 @@
     function formatTime(seconds: number): string {
       if (seconds < 0.001) return t.instant;
       if (seconds < 1) return t.lessThan1Second;
-      if (seconds < 60) return `${Math.round(seconds)} ${t.seconds}`;
-      if (seconds < 3600) return `${Math.round(seconds / 60)} ${t.minutes}`;
-      if (seconds < 86400) return `${Math.round(seconds / 3600)} ${t.hours}`;
-      if (seconds < 86400 * 365) return `${Math.round(seconds / 86400)} ${t.days}`;
+      if (seconds < 60) { const n = Math.round(seconds); return `${n} ${n === 1 ? t.second : t.seconds}`; }
+      if (seconds < 3600) { const n = Math.round(seconds / 60); return `${n} ${n === 1 ? t.minute : t.minutes}`; }
+      if (seconds < 86400) { const n = Math.round(seconds / 3600); return `${n} ${n === 1 ? t.hour : t.hours}`; }
+      if (seconds < 86400 * 365) { const n = Math.round(seconds / 86400); return `${n} ${n === 1 ? t.day : t.days}`; }
       if (seconds < 86400 * 365 * 1000) {
         const y = Math.round(seconds / (86400 * 365));
-        return `${y} ${y === 1 ? (lang === "es" ? "a\u00f1o" : "year") : t.years}`;
+        return `${y} ${y === 1 ? t.year : t.years}`;
       }
-      if (seconds < 86400 * 365 * 1e6) return `${(seconds / (86400 * 365 * 1000)).toFixed(0)}${lang === "es" ? " mil a\u00f1os" : "K years"}`;
-      if (seconds < 86400 * 365 * 1e9) return `${(seconds / (86400 * 365 * 1e6)).toFixed(0)}${lang === "es" ? "M a\u00f1os" : "M years"}`;
+      if (seconds < 86400 * 365 * 1e6) return `${(seconds / (86400 * 365 * 1000)).toFixed(0)} ${t.kYears}`;
+      if (seconds < 86400 * 365 * 1e9) return `${(seconds / (86400 * 365 * 1e6)).toFixed(0)} ${t.mYears}`;
       return t.centuriesPlus;
     }
 

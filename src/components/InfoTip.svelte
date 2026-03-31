@@ -32,6 +32,7 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+    flex-shrink: 0;
     cursor: default;
     margin-left: 4px;
     -webkit-user-select: none;
