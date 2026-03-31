@@ -36,7 +36,6 @@ const jsonLd = JSON.stringify({
 <!doctype html>
 <html lang="en">
 <head>
-  <script is:inline>if(location.hostname.endsWith('.pages.dev'))location.replace('https://pingthat.dev'+location.pathname+location.search)</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
@@ -61,11 +60,13 @@ const jsonLd = JSON.stringify({
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content="PingThat" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://pingthat.dev/og-image.png" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={`${title} — PingThat`} />
   <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://pingthat.dev/og-image.png" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json" set:html={jsonLd} />
