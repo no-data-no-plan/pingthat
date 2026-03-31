@@ -162,7 +162,7 @@
               <span style="font-size: 14px; font-weight: 500; color: var(--color-text); font-family: monospace;">
                 {result.ip}
               </span>
-              <span style="display: inline-flex; align-items: center; gap: 2px;">
+              <span style="display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; white-space: nowrap;">
                 <span class="badge {result.type === 'Local' ? 'badge-red' : result.type === 'Public' ? 'badge-green' : result.type === 'mDNS' ? 'badge-amber' : 'badge-blue'}">
                   {getTypeLabel(result.type)}
                 </span>
