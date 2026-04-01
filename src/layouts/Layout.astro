@@ -136,6 +136,7 @@ const jsonLd = JSON.stringify({
         </div>
         <form action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
           <input type="hidden" name="app" value="PingThat" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
           <input type="text" name="message" placeholder={c.feedbackPlaceholder} required
             class="flex-1 px-3 py-1.5 rounded text-[11px]"
             style="background: var(--color-surface2); border: 1px solid var(--color-border); color: var(--color-text); font-family: 'Inter', sans-serif;"
