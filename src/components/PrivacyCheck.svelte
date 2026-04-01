@@ -50,7 +50,7 @@
               if (ips.length === 0) resolve(t.noLeakDetected);
               else {
                 const hasLocal = ips.some(
-                  (ip) => ip.startsWith("10.") || ip.startsWith("192.168.") || ip.startsWith("172.")
+                  (ip) => ip.startsWith("10.") || ip.startsWith("192.168.") || /^172\.(1[6-9]|2[0-9]|3[01])\./.test(ip)
                 );
                 const leakLabel = lang === "es" ? "Fuga" : "Leak";
                 resolve(hasLocal ? `${leakLabel}: ${ips.join(", ")}` : t.noLeakDetected);
@@ -61,7 +61,7 @@
           const match = /([0-9]{1,3}(\.[0-9]{1,3}){3})/.exec(e.candidate.candidate);
           if (match && !ips.includes(match[1])) {
             const ip = match[1];
-            if (ip.startsWith("10.") || ip.startsWith("192.168.") || ip.startsWith("172.")) {
+            if (ip.startsWith("10.") || ip.startsWith("192.168.") || /^172\.(1[6-9]|2[0-9]|3[01])\./.test(ip)) {
               ips.push(ip);
             }
           }

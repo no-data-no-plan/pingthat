@@ -51,8 +51,8 @@
     if (firstOctet < 128) return "A";
     if (firstOctet < 192) return "B";
     if (firstOctet < 224) return "C";
-    if (firstOctet < 240) return "D (Multicast)";
-    return "E (Reserved)";
+    if (firstOctet < 240) return lang === "es" ? "D (Multidifusión)" : "D (Multicast)";
+    return lang === "es" ? "E (Reservado)" : "E (Reserved)";
   }
 
   function isPrivateIp(octets: number[]): boolean {

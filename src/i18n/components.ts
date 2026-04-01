@@ -207,6 +207,8 @@ export const passwordStrengthI18n = {
     kYears: "K years",
     mYears: "M years",
     bits: "bits",
+    yes: "Yes",
+    no: "No",
   },
   es: {
     privacyNotice: "Tu contrase\u00f1a nunca sale de tu navegador. Todo el an\u00e1lisis se realiza localmente.",
@@ -264,6 +266,8 @@ export const passwordStrengthI18n = {
     kYears: "mil a\u00f1os",
     mYears: "M a\u00f1os",
     bits: "bits",
+    yes: "Sí",
+    no: "No",
   },
 } as const;
 
@@ -311,6 +315,7 @@ export const privacyCheckI18n = {
     hidden: "Hidden",
     cores: "cores",
     points: "points",
+    unknown: "Unknown",
   },
   es: {
     runningChecks: "Ejecutando comprobaciones de privacidad...",
@@ -350,6 +355,7 @@ export const privacyCheckI18n = {
     hidden: "Oculto",
     cores: "n\u00facleos",
     points: "puntos",
+    unknown: "Desconocido",
   },
 } as const;
 

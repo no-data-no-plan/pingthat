@@ -104,9 +104,10 @@
 
     // Crack times
     const combinations = Math.pow(charsetSize, length);
+    const es = lang === "es";
     const speeds = [
-      { speed: "1K/s (online)", rate: 1e3 },
-      { speed: "1M/s (fast hash)", rate: 1e6 },
+      { speed: es ? "1K/s (en línea)" : "1K/s (online)", rate: 1e3 },
+      { speed: es ? "1M/s (hash rápido)" : "1M/s (fast hash)", rate: 1e6 },
       { speed: "1B/s (GPU)", rate: 1e9 },
       { speed: "100B/s (cluster)", rate: 1e11 },
     ];
@@ -268,7 +269,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; border-bottom: 1px solid var(--color-border);">
           <span style="font-size: 13px; color: var(--color-text);">{t.commonPassword}</span>
           {#if analysis.isCommon}
-            <span class="badge badge-red">{lang === "es" ? "S\u00ed" : "Yes"}</span>
+            <span class="badge badge-red">{t.yes}</span>
           {:else}
             <span class="badge badge-green">No</span>
           {/if}
@@ -276,7 +277,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; border-bottom: 1px solid var(--color-border);">
           <span style="font-size: 13px; color: var(--color-text);">{t.repeatedChars}</span>
           {#if analysis.hasRepeated}
-            <span class="badge badge-amber">{lang === "es" ? "S\u00ed" : "Yes"}</span>
+            <span class="badge badge-amber">{t.yes}</span>
           {:else}
             <span class="badge badge-green">No</span>
           {/if}
@@ -284,7 +285,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
           <span style="font-size: 13px; color: var(--color-text);">{t.sequentialChars}</span>
           {#if analysis.hasSequential}
-            <span class="badge badge-amber">{lang === "es" ? "S\u00ed" : "Yes"}</span>
+            <span class="badge badge-amber">{t.yes}</span>
           {:else}
             <span class="badge badge-green">No</span>
           {/if}
