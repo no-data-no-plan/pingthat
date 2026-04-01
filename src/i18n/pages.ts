@@ -253,7 +253,7 @@ export const pageI18n: Record<
       title: "Decodificador JWT",
       description: "Decodifica e inspecciona JSON Web Tokens \u2014 cabecera, payload y firma. 100% en el cliente, tu token nunca sale de tu navegador.",
       seoHeading: "Sobre esta herramienta",
-      seoText: "Pega un token JWT para decodificarlo e inspeccionar instant\u00e1neamente su cabecera, payload y firma. Las marcas de tiempo (exp, iat, nbf) se convierten a fechas legibles. Los tokens expirados se se\u00f1alizan. Tu token nunca se env\u00eda a ning\u00fan sitio.",
+      seoText: "Pega un token JWT para decodificarlo e inspeccionar instant\u00e1neamente su cabecera, payload y firma. Las marcas de tiempo (exp, iat, nbf) se convierten a fechas legibles. Los tokens expirados se\u00f1alizan. Tu token nunca se env\u00eda a ning\u00fan sitio.",
       seoBlockHeading: "Entendiendo los JSON Web Tokens",
       seoBlockText: "Un JWT consiste en tres partes codificadas en Base64URL separadas por puntos: cabecera (algoritmo y tipo), payload (claims como sujeto, expiraci\u00f3n y datos personalizados) y firma (verificaci\u00f3n criptogr\u00e1fica). Los JWT se usan ampliamente para autenticaci\u00f3n y autorizaci\u00f3n de APIs.",
       seoFeatures: [
