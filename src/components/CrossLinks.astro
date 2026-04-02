@@ -1,0 +1,60 @@
+---
+import type { Lang } from "../i18n/index";
+
+interface Props {
+  exclude: string;
+  lang?: Lang;
+}
+
+const { exclude, lang = "en" } = Astro.props;
+
+const categories = [
+  { id: "dev", label: lang === "es" ? "Herramientas Dev" : "Dev Tools", apps: [
+    { name: "JSONCraft", url: "https://jsoncraft.dev", desc: lang === "es" ? "JSON, regex, base64, hashes" : "JSON, regex, base64, hashes" },
+    { name: "PingThat", url: "https://pingthat.dev", desc: lang === "es" ? "Ping, DNS, headers, puertos" : "Ping, DNS, headers, ports" },
+  ]},
+  { id: "images", label: lang === "es" ? "Imágenes" : "Images", apps: [
+    { name: "OpenImages", url: "https://openimages.app", desc: lang === "es" ? "Convertir, comprimir, redimensionar" : "Convert, compress, resize" },
+  ]},
+  { id: "pdf", label: "PDF", apps: [
+    { name: "OpenPDF", url: "https://openpdf.app", desc: lang === "es" ? "Leer, anotar, firmar, unir" : "Read, annotate, sign, merge" },
+  ]},
+  { id: "calculators", label: lang === "es" ? "Calculadoras" : "Calculators", apps: [
+    { name: "AllYouNeed", url: "https://allyouneed.dev", desc: lang === "es" ? "70+ herramientas gratuitas" : "70+ free tools" },
+  ]},
+  { id: "financial", label: lang === "es" ? "Finanzas" : "Financial", apps: [
+    { name: "CompoundVision", url: "https://compoundvision.app", desc: lang === "es" ? "Calculadoras financieras y portfolio" : "Financial calculators & portfolio" },
+  ]},
+];
+
+const visible = categories.filter(c => c.id !== exclude);
+---
+
+<div class="px-6 py-4">
+  <p class="text-[10px] font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted, #888);">
+    {lang === "es" ? "Más herramientas gratuitas" : "More free tools"}
+  </p>
+  <div class="flex flex-wrap gap-3">
+    {visible.map(cat => (
+      <div class="flex-1 min-w-[140px]">
+        <p class="text-[9px] uppercase tracking-wider mb-1" style="color: var(--color-text-muted, #666); opacity: 0.7;">
+          {cat.label}
+        </p>
+        {cat.apps.map(app => (
+          <a
+            href={app.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block text-xs py-1 transition-colors"
+            style="color: var(--color-text-secondary, #aaa);"
+            onmouseover="this.style.color='var(--color-accent)'"
+            onmouseout="this.style.color='var(--color-text-secondary, #aaa)'"
+          >
+            {app.name}
+            <span class="text-[10px] block" style="color: var(--color-text-muted, #666);">{app.desc}</span>
+          </a>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

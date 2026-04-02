@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
+import CrossLinks from "../components/CrossLinks.astro";
 import { tools } from "../lib/tools";
 import type { Lang } from "../i18n/index";
 import { getCommon } from "../i18n/common";
@@ -123,6 +124,7 @@ const jsonLd = JSON.stringify({
       <!-- Content -->
       <main id="main-content" class="flex-1">
         <slot />
+        <CrossLinks exclude="dev" lang={lang} />
       </main>
 
       <!-- Footer -->
