@@ -1,0 +1,33 @@
+---
+import "../styles/global.css";
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Page Not Found — PingThat</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      if (localStorage.getItem('pingthat-theme') === 'light') {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body class="flex items-center justify-center min-h-screen" style="background: var(--color-bg);">
+  <div class="text-center px-6">
+    <p class="text-6xl font-bold mb-4" style="color: var(--color-accent);">404</p>
+    <h1 class="text-xl font-semibold mb-2" style="color: var(--color-text);">Page not found</h1>
+    <p class="text-sm mb-6" style="color: var(--color-text-muted);">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="/" class="inline-block px-4 py-2 rounded text-sm font-medium transition-colors" style="background: var(--color-accent); color: #fff;">
+      Go Home
+    </a>
+  </div>
+</body>
+</html>
