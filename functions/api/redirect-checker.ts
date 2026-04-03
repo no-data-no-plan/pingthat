@@ -1,4 +1,4 @@
-import { isValidUrl, jsonResponse, errorResponse, parseBody } from "./_shared";
+import { isValidUrl, isBlockedHost, jsonResponse, errorResponse, parseBody } from "./_shared";
 
 export async function onRequestPost(context: { request: Request }) {
   const body = await parseBody(context.request);
@@ -30,9 +30,25 @@ export async function onRequestPost(context: { request: Request }) {
 
       if (!location || (res.status < 300 || res.status >= 400)) break;
 
-      // Resolve relative redirects
+      // Resolve relative redirects and validate against blocklist
       try {
-        current = new URL(location, current).href;
+        const nextUrl = new URL(location, current);
+        if (isBlockedHost(nextUrl.hostname)) {
+          chain.push({
+            url: nextUrl.href,
+            status: 0,
+            statusText: "Blocked",
+            location: null,
+          });
+          return jsonResponse({
+            originalUrl: target,
+            finalUrl: nextUrl.href,
+            redirectCount: chain.length - 1,
+            chain,
+            error: "Redirect to blocked host",
+          });
+        }
+        current = nextUrl.href;
       } catch {
         break;
       }
@@ -45,6 +61,6 @@ export async function onRequestPost(context: { request: Request }) {
       chain,
     });
   } catch (e: any) {
-    return errorResponse("Redirect check failed: " + (e.message || "Connection error"), 502);
+    return errorResponse("Redirect check failed", 502);
   }
 }

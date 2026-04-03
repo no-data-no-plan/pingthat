@@ -36,6 +36,6 @@ export async function onRequestPost(context: { request: Request }) {
       maxScore: Object.keys(security).length,
     });
   } catch (e: any) {
-    return errorResponse("Could not fetch headers: " + (e.message || "Connection failed"), 502);
+    return errorResponse("Could not fetch headers", 502);
   }
 }

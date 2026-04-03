@@ -47,6 +47,6 @@ export async function onRequestPost(context: { request: Request }) {
       rdapLink: data.links?.find((l: any) => l.rel === "self")?.href || null,
     });
   } catch (e: any) {
-    return errorResponse("WHOIS lookup failed: " + (e.message || "Connection error"), 502);
+    return errorResponse("WHOIS lookup failed", 502);
   }
 }

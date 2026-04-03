@@ -36,7 +36,7 @@ export async function onRequestPost(context: { request: Request }) {
       server: null,
       contentType: null,
       up: false,
-      error: e.message || "Connection failed",
+      error: "Connection failed",
     });
   }
 }

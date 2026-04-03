@@ -13,23 +13,41 @@ export function isValidUrl(input: string): string | null {
   }
 }
 
-function isBlockedHost(hostname: string): boolean {
+export function isBlockedHost(hostname: string): boolean {
+  const h = hostname.replace(/^\[|\]$/g, ""); // strip IPv6 brackets
   return (
-    hostname === "localhost" ||
-    hostname.startsWith("127.") ||
-    hostname.startsWith("10.") ||
-    hostname.startsWith("192.168.") ||
-    /^172\.(1[6-9]|2[0-9]|3[01])\./.test(hostname) ||
-    hostname === "0.0.0.0" ||
-    hostname.endsWith(".local") ||
-    hostname.endsWith(".internal")
+    h === "localhost" ||
+    h.startsWith("127.") ||
+    h.startsWith("10.") ||
+    h.startsWith("192.168.") ||
+    /^172\.(1[6-9]|2[0-9]|3[01])\./.test(h) ||
+    h.startsWith("0.") ||
+    h === "0.0.0.0" ||
+    h.startsWith("169.254.") ||
+    h === "::1" ||
+    h === "::ffff:127.0.0.1" ||
+    /^::ffff:(127\.|10\.|192\.168\.|0\.)/.test(h) ||
+    h.endsWith(".local") ||
+    h.endsWith(".internal") ||
+    h === "metadata.google.internal" ||
+    h === "metadata.internal"
   );
 }
+
+// TODO: Configure Cloudflare WAF rate limiting rule for /api/* endpoints
+// (e.g. 10 req/10s per IP, matching the CompoundVision setup)
+
+const CORS_HEADERS: Record<string, string> = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "https://pingthat.dev",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 
 export function jsonResponse(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: CORS_HEADERS,
   });
 }
 

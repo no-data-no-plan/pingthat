@@ -1,4 +1,4 @@
-import { isValidDomain, jsonResponse, errorResponse, parseBody } from "./_shared";
+import { isValidDomain, isBlockedHost, jsonResponse, errorResponse, parseBody } from "./_shared";
 
 export async function onRequestPost(context: { request: Request }) {
   const body = await parseBody(context.request);
@@ -6,6 +6,7 @@ export async function onRequestPost(context: { request: Request }) {
 
   const domain = body.domain.trim().toLowerCase();
   if (!isValidDomain(domain)) return errorResponse("Invalid domain");
+  if (isBlockedHost(domain)) return errorResponse("Blocked domain");
 
   try {
     // Check HTTPS connectivity
@@ -59,7 +60,7 @@ export async function onRequestPost(context: { request: Request }) {
       hsts: null,
       server: null,
       certificates: [],
-      error: e.message || "HTTPS connection failed",
+      error: "HTTPS connection failed",
     });
   }
 }
