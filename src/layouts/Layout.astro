@@ -24,22 +24,42 @@ const canonicalUrl = `https://pingthat.dev${canonicalPath}`;
 const enUrl = `https://pingthat.dev${toolPath}`;
 const esUrl = `https://pingthat.dev/es${toolPath}`;
 
-const jsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: title,
-  url: canonicalUrl,
-  description,
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  browserRequirements: "Requires a modern web browser",
-  isPartOf: {
-    "@type": "WebApplication",
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/es" || Astro.url.pathname === "/es/";
+
+const schemas: object[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: title,
+    url: canonicalUrl,
+    description,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Any",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    isPartOf: { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "PingThat", item: `https://pingthat.dev${lang === "es" ? "/es" : ""}` },
+      ...(!isHome ? [{ "@type": "ListItem", position: 2, name: title, item: canonicalUrl }] : []),
+    ],
+  },
+];
+
+if (isHome) {
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
     name: "PingThat",
     url: "https://pingthat.dev",
-  },
-});
+    description: "Free network tools: IP lookup, privacy check, WebRTC leak test, subnet calculator, JWT decoder and more.",
+    inLanguage: ["en", "es"],
+  });
+}
+
+const jsonLd = JSON.stringify(schemas);
 ---
 
 <!doctype html>
