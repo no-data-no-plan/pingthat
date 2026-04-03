@@ -14,11 +14,19 @@
 
   const types = ["A", "AAAA", "CNAME", "MX", "NS", "TXT", "SOA", "SRV"];
 
+  const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   async function lookup() {
     if (!domain.trim()) return;
     loading = true;
     error = "";
     results = [];
+
+    if (!domainRegex.test(domain.trim())) {
+      error = t.invalidDomain;
+      loading = false;
+      return;
+    }
 
     try {
       const res = await fetch(

@@ -58,9 +58,13 @@ export function errorResponse(message: string, status = 400): Response {
 export async function parseBody(request: Request): Promise<Record<string, unknown> | null> {
   try {
     const text = await request.text();
-    if (text.length > 1024) return null;
+    if (text.length > 1024) return { _tooLarge: true } as Record<string, unknown>;
     return JSON.parse(text);
   } catch {
     return null;
   }
+}
+
+export function isBodyTooLarge(body: Record<string, unknown> | null): body is Record<string, unknown> {
+  return body !== null && "_tooLarge" in body;
 }

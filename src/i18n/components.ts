@@ -491,8 +491,8 @@ export function getWebrtcLeakTest(lang: Lang) { return webrtcLeakTestI18n[lang];
 // ─── DnsLookup ──────────────────────────────────────────────────────────────
 
 export const dnsLookupI18n = {
-  en: { domainLabel: "Domain Name", placeholder: "example.com", recordType: "Record Type", lookup: "Lookup", looking: "Looking up...", results: "DNS Records", type: "Type", value: "Value", noRecords: "No DNS records found for this type.", lookupFailed: "DNS lookup failed. Check the domain and try again." },
-  es: { domainLabel: "Nombre de Dominio", placeholder: "ejemplo.com", recordType: "Tipo de Registro", lookup: "Buscar", looking: "Buscando...", results: "Registros DNS", type: "Tipo", value: "Valor", noRecords: "No se encontraron registros DNS para este tipo.", lookupFailed: "La b\u00fasqueda DNS fall\u00f3. Comprueba el dominio e int\u00e9ntalo de nuevo." },
+  en: { domainLabel: "Domain Name", placeholder: "example.com", recordType: "Record Type", lookup: "Lookup", looking: "Looking up...", results: "DNS Records", type: "Type", value: "Value", noRecords: "No DNS records found for this type.", lookupFailed: "DNS lookup failed. Check the domain and try again.", invalidDomain: "Invalid domain format. Enter a domain like example.com." },
+  es: { domainLabel: "Nombre de Dominio", placeholder: "ejemplo.com", recordType: "Tipo de Registro", lookup: "Buscar", looking: "Buscando...", results: "Registros DNS", type: "Tipo", value: "Valor", noRecords: "No se encontraron registros DNS para este tipo.", lookupFailed: "La b\u00fasqueda DNS fall\u00f3. Comprueba el dominio e int\u00e9ntalo de nuevo.", invalidDomain: "Formato de dominio no v\u00e1lido. Introduce un dominio como ejemplo.com." },
 } as const;
 export function getDnsLookup(lang: Lang) { return dnsLookupI18n[lang]; }
 

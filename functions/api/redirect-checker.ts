@@ -1,7 +1,8 @@
-import { isValidUrl, isBlockedHost, jsonResponse, errorResponse, parseBody } from "./_shared";
+import { isValidUrl, isBlockedHost, jsonResponse, errorResponse, parseBody, isBodyTooLarge } from "./_shared";
 
 export async function onRequestPost(context: { request: Request }) {
   const body = await parseBody(context.request);
+  if (isBodyTooLarge(body)) return errorResponse("Request body too large", 413);
   if (!body || typeof body.url !== "string") return errorResponse("Missing url");
 
   let target = isValidUrl(body.url);

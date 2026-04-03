@@ -1,7 +1,8 @@
-import { isValidDomain, isBlockedHost, jsonResponse, errorResponse, parseBody } from "./_shared";
+import { isValidDomain, isBlockedHost, jsonResponse, errorResponse, parseBody, isBodyTooLarge } from "./_shared";
 
 export async function onRequestPost(context: { request: Request }) {
   const body = await parseBody(context.request);
+  if (isBodyTooLarge(body)) return errorResponse("Request body too large", 413);
   if (!body || typeof body.domain !== "string") return errorResponse("Missing domain");
 
   const domain = body.domain.trim().toLowerCase();
