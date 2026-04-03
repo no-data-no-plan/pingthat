@@ -8,6 +8,14 @@
   <url><loc>https://pingthat.dev/ip-converter</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
   <url><loc>https://pingthat.dev/password-strength</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
   <url><loc>https://pingthat.dev/jwt-decoder</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
+  <url><loc>https://pingthat.dev/dns-lookup</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/ssl-checker</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/is-it-down</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/is-it-up</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/http-headers</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/whois-lookup</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/redirect-checker</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/url-parser</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
   <url><loc>https://pingthat.dev/es</loc><priority>0.9</priority><lastmod>2026-04-01</lastmod></url>
   <url><loc>https://pingthat.dev/es/my-ip</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
   <url><loc>https://pingthat.dev/es/privacy-check</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
@@ -16,4 +24,12 @@
   <url><loc>https://pingthat.dev/es/ip-converter</loc><priority>0.7</priority><lastmod>2026-04-01</lastmod></url>
   <url><loc>https://pingthat.dev/es/password-strength</loc><priority>0.7</priority><lastmod>2026-04-01</lastmod></url>
   <url><loc>https://pingthat.dev/es/jwt-decoder</loc><priority>0.7</priority><lastmod>2026-04-01</lastmod></url>
+  <url><loc>https://pingthat.dev/es/dns-lookup</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/es/ssl-checker</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/es/is-it-down</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/es/is-it-up</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/es/http-headers</loc><priority>0.7</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/es/whois-lookup</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/es/redirect-checker</loc><priority>0.7</priority><lastmod>2026-04-03</lastmod></url>
+  <url><loc>https://pingthat.dev/es/url-parser</loc><priority>0.7</priority><lastmod>2026-04-03</lastmod></url>
 </urlset>

@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import UrlParser from "../../components/UrlParser.svelte";
+import SeoContent from "../../components/SeoContent.astro";
+import SeoBlock from "../../components/SeoBlock.astro";
+import { pageI18n } from "../../i18n/pages";
+const p = pageI18n["url-parser"].es;
+---
+<Layout title={p.title} description={p.description} activeToolId="url-parser" lang="es">
+  <UrlParser client:only="svelte" lang="es" />
+  <SeoContent heading={p.seoHeading} text={p.seoText} relatedToolIds={["redirect-checker", "dns-lookup", "jwt-decoder"]} lang="es" />
+  <SeoBlock heading={p.seoBlockHeading} text={p.seoBlockText} features={p.seoFeatures} lang="es" />
+</Layout>

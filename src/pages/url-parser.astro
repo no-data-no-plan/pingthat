@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import UrlParser from "../components/UrlParser.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+---
+
+<Layout title="URL Parser Online Free" description="Parse and break down any URL into its components: protocol, host, path, query parameters, hash. Free." activeToolId="url-parser">
+  <UrlParser client:only="svelte" />
+  <SeoContent heading="About this tool" text="Paste any URL to instantly see its components: protocol, hostname, port, pathname, query string parameters, and hash fragment." relatedToolIds={["redirect-checker", "dns-lookup", "jwt-decoder"]} />
+  <SeoBlock heading="URL anatomy" text="A URL consists of protocol, host, port, path, query string, and fragment. Understanding URL structure is essential for web development and debugging." features={["Protocol, host, port detection", "Path breakdown", "Query parameter extraction", "Hash fragment display", "Copy individual components"]} />
+</Layout>

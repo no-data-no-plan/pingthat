@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import RedirectChecker from "../components/RedirectChecker.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+---
+
+<Layout title="Redirect Checker Online Free" description="Trace the full redirect chain of any URL. See every 301, 302 redirect with status codes. Free." activeToolId="redirect-checker">
+  <RedirectChecker client:only="svelte" />
+  <SeoContent heading="About this tool" text="Enter a URL to trace its complete redirect chain. See every hop with status codes, target URLs, and the final destination. Useful for debugging SEO redirects." relatedToolIds={["http-headers", "ssl-checker", "is-it-down"]} />
+  <SeoBlock heading="Understanding URL redirects" text="HTTP redirects (301, 302, 307, 308) tell browsers to request a different URL. Redirect chains can impact SEO and page load time." features={["Full redirect chain visualization", "Status codes for each hop", "Final destination URL", "Up to 10 redirect hops"]} />
+</Layout>

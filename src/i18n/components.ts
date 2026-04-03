@@ -486,3 +486,75 @@ export const webrtcLeakTestI18n = {
 } as const;
 
 export function getWebrtcLeakTest(lang: Lang) { return webrtcLeakTestI18n[lang]; }
+
+
+// ─── DnsLookup ──────────────────────────────────────────────────────────────
+
+export const dnsLookupI18n = {
+  en: { domainLabel: "Domain Name", placeholder: "example.com", recordType: "Record Type", lookup: "Lookup", looking: "Looking up...", results: "DNS Records", type: "Type", value: "Value", noRecords: "No DNS records found for this type.", lookupFailed: "DNS lookup failed. Check the domain and try again." },
+  es: { domainLabel: "Nombre de Dominio", placeholder: "ejemplo.com", recordType: "Tipo de Registro", lookup: "Buscar", looking: "Buscando...", results: "Registros DNS", type: "Tipo", value: "Valor", noRecords: "No se encontraron registros DNS para este tipo.", lookupFailed: "La b\u00fasqueda DNS fall\u00f3. Comprueba el dominio e int\u00e9ntalo de nuevo." },
+} as const;
+export function getDnsLookup(lang: Lang) { return dnsLookupI18n[lang]; }
+
+
+// ─── SslChecker ─────────────────────────────────────────────────────────────
+
+export const sslCheckerI18n = {
+  en: { domainLabel: "Domain", placeholder: "example.com", check: "Check SSL", checking: "Checking...", checkFailed: "SSL check failed. Try again.", sslStatus: "SSL/TLS Status", secure: "HTTPS Secure", insecure: "HTTPS Failed", notSet: "Not set (recommended)", certificates: "Certificates", issuer: "Issuer", validFrom: "Valid from", validUntil: "Valid until" },
+  es: { domainLabel: "Dominio", placeholder: "ejemplo.com", check: "Verificar SSL", checking: "Verificando...", checkFailed: "La verificaci\u00f3n SSL fall\u00f3. Int\u00e9ntalo de nuevo.", sslStatus: "Estado SSL/TLS", secure: "HTTPS Seguro", insecure: "HTTPS Fall\u00f3", notSet: "No configurado (recomendado)", certificates: "Certificados", issuer: "Emisor", validFrom: "V\u00e1lido desde", validUntil: "V\u00e1lido hasta" },
+} as const;
+export function getSslChecker(lang: Lang) { return sslCheckerI18n[lang]; }
+
+
+// ─── IsItDown ───────────────────────────────────────────────────────────────
+
+export const isItDownI18n = {
+  en: { urlLabel: "Website URL", placeholder: "example.com", check: "Check", checking: "Checking...", checkFailed: "Check failed. Try again.", itsUp: "It's Up!", itsDown: "It's Down!", siteResponding: "The website is responding normally.", siteNotResponding: "The website is not responding.", status: "Status" },
+  es: { urlLabel: "URL del Sitio Web", placeholder: "ejemplo.com", check: "Verificar", checking: "Verificando...", checkFailed: "La verificaci\u00f3n fall\u00f3. Int\u00e9ntalo de nuevo.", itsUp: "\u00a1Est\u00e1 Activa!", itsDown: "\u00a1Est\u00e1 Ca\u00edda!", siteResponding: "El sitio web est\u00e1 respondiendo normalmente.", siteNotResponding: "El sitio web no est\u00e1 respondiendo.", status: "Estado" },
+} as const;
+export function getIsItDown(lang: Lang) { return isItDownI18n[lang]; }
+
+
+// ─── IsItUp ─────────────────────────────────────────────────────────────────
+
+export const isItUpI18n = {
+  en: { urlLabel: "Website URL", placeholder: "example.com", check: "Check Status", checking: "Checking...", checkFailed: "Check failed. Try again.", statusReport: "Status Report", online: "Online", offline: "Offline", responseTime: "Response Time", httpStatus: "HTTP Status", fast: "Fast", moderate: "Moderate", slow: "Slow" },
+  es: { urlLabel: "URL del Sitio Web", placeholder: "ejemplo.com", check: "Verificar Estado", checking: "Verificando...", checkFailed: "La verificaci\u00f3n fall\u00f3. Int\u00e9ntalo de nuevo.", statusReport: "Informe de Estado", online: "En L\u00ednea", offline: "Sin Conexi\u00f3n", responseTime: "Tiempo de Respuesta", httpStatus: "Estado HTTP", fast: "R\u00e1pido", moderate: "Moderado", slow: "Lento" },
+} as const;
+export function getIsItUp(lang: Lang) { return isItUpI18n[lang]; }
+
+
+// ─── HttpHeaders ────────────────────────────────────────────────────────────
+
+export const httpHeadersI18n = {
+  en: { urlLabel: "Website URL", placeholder: "example.com", check: "Check Headers", checking: "Checking...", checkFailed: "Check failed. Try again.", securityScore: "Security Score", allHeaders: "All Headers", copy: "Copy" },
+  es: { urlLabel: "URL del Sitio Web", placeholder: "ejemplo.com", check: "Verificar Cabeceras", checking: "Verificando...", checkFailed: "La verificaci\u00f3n fall\u00f3. Int\u00e9ntalo de nuevo.", securityScore: "Puntuaci\u00f3n de Seguridad", allHeaders: "Todas las Cabeceras", copy: "Copiar" },
+} as const;
+export function getHttpHeaders(lang: Lang) { return httpHeadersI18n[lang]; }
+
+
+// ─── WhoisLookup ────────────────────────────────────────────────────────────
+
+export const whoisLookupI18n = {
+  en: { domainLabel: "Domain Name", placeholder: "example.com", lookup: "Lookup", looking: "Looking up...", lookupFailed: "WHOIS lookup failed. Try again.", domainInfo: "Domain Information", registrar: "Registrar", created: "Created", updated: "Updated", expires: "Expires", nameservers: "Nameservers", statuses: "Statuses", notFound: "Domain not found." },
+  es: { domainLabel: "Nombre de Dominio", placeholder: "ejemplo.com", lookup: "Buscar", looking: "Buscando...", lookupFailed: "La b\u00fasqueda WHOIS fall\u00f3. Int\u00e9ntalo de nuevo.", domainInfo: "Informaci\u00f3n del Dominio", registrar: "Registrador", created: "Creado", updated: "Actualizado", expires: "Expira", nameservers: "Nameservers", statuses: "Estados", notFound: "Dominio no encontrado." },
+} as const;
+export function getWhoisLookup(lang: Lang) { return whoisLookupI18n[lang]; }
+
+
+// ─── RedirectChecker ────────────────────────────────────────────────────────
+
+export const redirectCheckerI18n = {
+  en: { urlLabel: "URL to Check", placeholder: "example.com", check: "Check Redirects", checking: "Checking...", checkFailed: "Redirect check failed. Try again.", redirectChain: "Redirect Chain", redirect: "redirect", redirects: "redirects", finalUrl: "Final URL" },
+  es: { urlLabel: "URL a Verificar", placeholder: "ejemplo.com", check: "Verificar Redirecciones", checking: "Verificando...", checkFailed: "La verificaci\u00f3n de redirecciones fall\u00f3. Int\u00e9ntalo de nuevo.", redirectChain: "Cadena de Redirecciones", redirect: "redirecci\u00f3n", redirects: "redirecciones", finalUrl: "URL Final" },
+} as const;
+export function getRedirectChecker(lang: Lang) { return redirectCheckerI18n[lang]; }
+
+
+// ─── UrlParser ──────────────────────────────────────────────────────────────
+
+export const urlParserI18n = {
+  en: { urlLabel: "URL", placeholder: "https://example.com/path?key=value#section", parsedUrl: "Parsed URL", queryParams: "Query Parameters", invalidUrl: "Invalid URL. Enter a complete URL starting with http:// or https://.", defaultPort: "(default)", none: "(none)", copy: "Copy", sample: "Sample", clear: "Clear" },
+  es: { urlLabel: "URL", placeholder: "https://ejemplo.com/ruta?clave=valor#seccion", parsedUrl: "URL Analizada", queryParams: "Par\u00e1metros de Consulta", invalidUrl: "URL inv\u00e1lida. Introduce una URL completa que empiece con http:// o https://.", defaultPort: "(por defecto)", none: "(ninguno)", copy: "Copiar", sample: "Ejemplo", clear: "Limpiar" },
+} as const;
+export function getUrlParser(lang: Lang) { return urlParserI18n[lang]; }

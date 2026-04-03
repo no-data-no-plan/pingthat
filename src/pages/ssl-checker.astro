@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SslChecker from "../components/SslChecker.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+---
+
+<Layout title="SSL Certificate Checker Online Free" description="Check SSL/TLS status, HSTS headers, and certificate details for any domain. Free, instant." activeToolId="ssl-checker">
+  <SslChecker client:only="svelte" />
+  <SeoContent heading="About this tool" text="Enter a domain to check its SSL/TLS certificate status. See HTTPS connectivity, HSTS configuration, server info, and certificate transparency logs." relatedToolIds={["http-headers", "dns-lookup", "is-it-up"]} />
+  <SeoBlock heading="Why check SSL certificates?" text="SSL/TLS certificates encrypt traffic between browsers and servers. An expired or misconfigured certificate can cause security warnings and lost trust." features={["HTTPS connectivity check", "HSTS header detection", "Certificate transparency logs", "Response time measurement"]} />
+</Layout>

@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import HttpHeaders from "../../components/HttpHeaders.svelte";
+import SeoContent from "../../components/SeoContent.astro";
+import SeoBlock from "../../components/SeoBlock.astro";
+import { pageI18n } from "../../i18n/pages";
+const p = pageI18n["http-headers"].es;
+---
+<Layout title={p.title} description={p.description} activeToolId="http-headers" lang="es">
+  <HttpHeaders client:only="svelte" lang="es" />
+  <SeoContent heading={p.seoHeading} text={p.seoText} relatedToolIds={["ssl-checker", "redirect-checker", "is-it-up"]} lang="es" />
+  <SeoBlock heading={p.seoBlockHeading} text={p.seoBlockText} features={p.seoFeatures} lang="es" />
+</Layout>

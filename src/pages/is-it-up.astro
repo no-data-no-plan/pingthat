@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import IsItUp from "../components/IsItUp.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+---
+
+<Layout title="Website Status Checker — Uptime & Response Time" description="Check website status, response time, server info. Detailed uptime report. Free." activeToolId="is-it-up">
+  <IsItUp client:only="svelte" />
+  <SeoContent heading="About this tool" text="Enter a URL to get a detailed status report including response time, HTTP status, server software, and content type. Ideal for monitoring website health." relatedToolIds={["is-it-down", "http-headers", "ssl-checker"]} />
+  <SeoBlock heading="Understanding website status" text="Website status checking involves sending HTTP requests and analyzing the response. Response time under 300ms is fast, under 1 second is moderate, over that is slow." features={["Response time with rating", "HTTP status code and text", "Server software detection", "Content-Type header"]} />
+</Layout>

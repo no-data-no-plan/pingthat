@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import WhoisLookup from "../components/WhoisLookup.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+---
+
+<Layout title="WHOIS Lookup Online Free" description="Look up domain registration details, registrar, nameservers, and expiration dates. Free WHOIS via RDAP." activeToolId="whois-lookup">
+  <WhoisLookup client:only="svelte" />
+  <SeoContent heading="About this tool" text="Enter a domain to look up registration details via RDAP. See registrar, creation/expiration dates, nameservers, and domain statuses." relatedToolIds={["dns-lookup", "ssl-checker", "redirect-checker"]} />
+  <SeoBlock heading="How WHOIS/RDAP works" text="RDAP (Registration Data Access Protocol) is the modern replacement for WHOIS. It provides domain registration data in a structured JSON format." features={["Registrar identification", "Created, updated, expiration dates", "Nameserver listing", "Domain status codes"]} />
+</Layout>
