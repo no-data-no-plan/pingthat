@@ -1,0 +1,75 @@
+---
+import type { Lang } from "../i18n/index";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+
+const text = lang === "es"
+  ? {
+      message: "Este sitio usa cookies de Google AdSense para mostrar anuncios. Tus datos de las herramientas nunca salen de tu navegador.",
+      accept: "Aceptar",
+      reject: "Rechazar",
+      privacy: "Privacidad",
+    }
+  : {
+      message: "This site uses Google AdSense cookies to show ads. Your tool data never leaves your browser.",
+      accept: "Accept",
+      reject: "Decline",
+      privacy: "Privacy",
+    };
+---
+
+<div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-[9999] p-3 bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] shadow-lg">
+  <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 text-xs text-[var(--color-text-secondary)]">
+    <p class="flex-1">{text.message}</p>
+    <div class="flex gap-2 shrink-0">
+      <button id="cookie-accept" class="px-3 py-1.5 rounded bg-[var(--color-accent)] text-white text-xs font-medium hover:opacity-90 transition-opacity" style="cursor:pointer;">
+        {text.accept}
+      </button>
+      <button id="cookie-reject" class="px-3 py-1.5 rounded bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] text-xs font-medium hover:text-[var(--color-text-primary)] transition-colors" style="cursor:pointer;">
+        {text.reject}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  var consent = localStorage.getItem("cookie-consent");
+  var banner = document.getElementById("cookie-banner");
+
+  if (consent === null) {
+    if (banner) banner.classList.remove("hidden");
+  } else if (consent === "accepted") {
+    loadAdsense();
+  }
+
+  document.getElementById("cookie-accept")?.addEventListener("click", function() {
+    localStorage.setItem("cookie-consent", "accepted");
+    if (banner) banner.classList.add("hidden");
+    loadAdsense();
+  });
+
+  document.getElementById("cookie-reject")?.addEventListener("click", function() {
+    localStorage.setItem("cookie-consent", "rejected");
+    if (banner) banner.classList.add("hidden");
+  });
+
+  function loadAdsense() {
+    if (document.querySelector('script[src*="adsbygoogle"]')) return;
+    var s = document.createElement("script");
+    s.async = true;
+    s.crossOrigin = "anonymous";
+    s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8761907366448308";
+    document.head.appendChild(s);
+    s.onload = function() {
+      document.querySelectorAll(".adsbygoogle").forEach(function() {
+        try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+      });
+    };
+  }
+})();
+</script>

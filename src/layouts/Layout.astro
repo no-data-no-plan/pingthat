@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
 import CrossLinks from "../components/CrossLinks.astro";
+import CookieConsent from "../components/CookieConsent.astro";
 import { tools } from "../lib/tools";
 import type { Lang } from "../i18n/index";
 import { getCommon } from "../i18n/common";
@@ -71,7 +72,6 @@ const jsonLd = JSON.stringify(schemas);
   {keywords && <meta name="keywords" content={keywords} />}
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8761907366448308" crossorigin="anonymous"></script>
 
   <title>{title} — PingThat</title>
   <link rel="canonical" href={canonicalUrl} />
@@ -172,6 +172,8 @@ const jsonLd = JSON.stringify(schemas);
       </footer>
     </div>
   </div>
+
+  <CookieConsent lang={lang} />
 
   <!-- Mobile sidebar toggle -->
   <script>
