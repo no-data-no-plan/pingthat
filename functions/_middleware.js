@@ -1,6 +1,6 @@
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://adservice.google.es https://fundingchoicesmessages.google.com https://static.cloudflareinsights.com",
+  "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://adservice.google.es https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
   "img-src 'self' data: blob: https:",
