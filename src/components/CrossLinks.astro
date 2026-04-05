@@ -45,10 +45,7 @@ const visible = categories.filter(c => c.id !== exclude);
             href={app.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="block text-xs py-1 transition-colors"
-            style="color: var(--color-text-secondary, #aaa);"
-            onmouseover="this.style.color='var(--color-accent)'"
-            onmouseout="this.style.color='var(--color-text-secondary, #aaa)'"
+            class="cross-link block text-xs py-1 transition-colors"
           >
             {app.name}
             <span class="text-[10px] block" style="color: var(--color-text-muted, #666);">{app.desc}</span>
@@ -58,3 +55,12 @@ const visible = categories.filter(c => c.id !== exclude);
     ))}
   </div>
 </div>
+
+<style>
+  .cross-link {
+    color: var(--color-text-secondary, #aaa);
+  }
+  .cross-link:hover {
+    color: var(--color-accent);
+  }
+</style>

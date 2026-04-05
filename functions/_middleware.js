@@ -1,9 +1,12 @@
+// AdSense/Google image hosts — needed for ad creatives to render under tightened img-src
+const AD_IMG = "https://*.googlesyndication.com https://*.doubleclick.net https://*.googleusercontent.com https://*.gstatic.com https://*.google.com https://*.ggpht.com https://*.adtrafficquality.google";
+
 const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://adservice.google.es https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
-  "img-src 'self' data: blob: https:",
+  `img-src 'self' data: blob: ${AD_IMG}`,
   "connect-src 'self' https://pagead2.googlesyndication.com https://formspree.io https://ipapi.co https://api.ipify.org https://cloudflare-dns.com https://*.google.com https://*.adtrafficquality.google https://*.cloudflareinsights.com",
   "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://*.adtrafficquality.google",
   "worker-src 'self' blob:",
@@ -13,6 +16,35 @@ const CSP = [
   "frame-ancestors 'none'",
   "upgrade-insecure-requests",
 ].join('; ');
+
+const PERMISSIONS_POLICY = [
+  'accelerometer=()',
+  'ambient-light-sensor=()',
+  'autoplay=()',
+  'battery=()',
+  'camera=()',
+  'display-capture=()',
+  'document-domain=()',
+  'encrypted-media=()',
+  'fullscreen=(self)',
+  'gamepad=()',
+  'geolocation=()',
+  'gyroscope=()',
+  'hid=()',
+  'idle-detection=()',
+  'magnetometer=()',
+  'microphone=()',
+  'midi=()',
+  'payment=()',
+  'picture-in-picture=()',
+  'publickey-credentials-get=()',
+  'screen-wake-lock=()',
+  'serial=()',
+  'sync-xhr=(self)',
+  'usb=()',
+  'web-share=()',
+  'xr-spatial-tracking=()',
+].join(', ');
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
@@ -24,12 +56,16 @@ export async function onRequest(context) {
   }
   const response = await context.next();
   const newHeaders = new Headers(response.headers);
-  newHeaders.set('X-Frame-Options', 'SAMEORIGIN');
+  newHeaders.delete('Access-Control-Allow-Origin');
+  newHeaders.set('X-Frame-Options', 'DENY');
   newHeaders.set('X-Content-Type-Options', 'nosniff');
   newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  newHeaders.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  newHeaders.set('Permissions-Policy', PERMISSIONS_POLICY);
   newHeaders.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   newHeaders.set('Content-Security-Policy', CSP);
+  newHeaders.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  newHeaders.set('Cross-Origin-Resource-Policy', 'same-site');
+  newHeaders.set('X-Permitted-Cross-Domain-Policies', 'none');
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
