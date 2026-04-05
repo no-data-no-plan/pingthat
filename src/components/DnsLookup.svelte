@@ -11,6 +11,7 @@
   let results = $state<{ name: string; type: number; TTL: number; data: string }[]>([]);
   let loading = $state(false);
   let error = $state("");
+  let requestId = $state(0);
 
   const types = ["A", "AAAA", "CNAME", "MX", "NS", "TXT", "SOA", "SRV"];
 
@@ -18,6 +19,8 @@
 
   async function lookup() {
     if (!domain.trim()) return;
+    requestId++;
+    const myId = requestId;
     loading = true;
     error = "";
     results = [];
@@ -33,14 +36,23 @@
         `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain.trim())}&type=${recordType}`,
         { headers: { Accept: "application/dns-json" }, signal: AbortSignal.timeout(5000) }
       );
+      if (myId !== requestId) return;
       if (!res.ok) throw new Error("DNS query failed");
       const data = await res.json();
+      if (myId !== requestId) return;
       results = data.Answer || [];
       if (results.length === 0) error = t.noRecords;
-    } catch {
-      error = t.lookupFailed;
+    } catch (e: any) {
+      if (myId !== requestId) return;
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        error = lang === 'es'
+          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
+          : 'Request timed out. Please try again.';
+      } else {
+        error = t.lookupFailed;
+      }
     } finally {
-      loading = false;
+      if (myId === requestId) loading = false;
     }
   }
 

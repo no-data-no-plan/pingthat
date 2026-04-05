@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getSslChecker } from '../i18n/components';
+  import { isValidDomain, getValidationError } from '../lib/validation';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -10,18 +11,39 @@
   let loading = $state(false);
   let error = $state("");
   let result = $state<any>(null);
+  let requestId = $state(0);
 
   async function check() {
     if (!domain.trim()) return;
+    if (!isValidDomain(domain.trim())) {
+      error = getValidationError('domain', lang as 'en' | 'es');
+      result = null;
+      return;
+    }
+    requestId++;
+    const myId = requestId;
     loading = true; error = ""; result = null;
     try {
       const res = await fetch("/api/ssl-checker", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ domain: domain.trim() }), signal: AbortSignal.timeout(15000),
       });
+      if (myId !== requestId) return;
       const data = await res.json();
-      if (data.error && !data.httpsOk) { error = data.error; } else { result = data; }
-    } catch { error = t.checkFailed; } finally { loading = false; }
+      if (myId !== requestId) return;
+      if (data.error) { error = data.error; } else { result = data; }
+    } catch (e: any) {
+      if (myId !== requestId) return;
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        error = lang === 'es'
+          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
+          : 'Request timed out. Please try again.';
+      } else {
+        error = t.checkFailed;
+      }
+    } finally {
+      if (myId === requestId) loading = false;
+    }
   }
 </script>
 
@@ -41,7 +63,7 @@
       <div class="card-header"><span class="card-title">{t.sslStatus}</span></div>
       <div class="card-body space-y-2">
         <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 20px;">{result.httpsOk ? "\u2705" : "\u274C"}</span>
+          <span style="font-size: 20px;" role="img" aria-label={result.httpsOk ? (lang === 'es' ? 'Seguro' : 'Secure') : (lang === 'es' ? 'No seguro' : 'Not secure')}>{result.httpsOk ? "\u2705" : "\u274C"}</span>
           <span style="font-size: 16px; font-weight: 600;">{result.httpsOk ? t.secure : t.insecure}</span>
         </div>
         <div style="font-size: 13px; color: var(--color-text-muted);">

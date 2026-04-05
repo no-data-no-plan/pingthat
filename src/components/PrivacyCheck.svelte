@@ -174,6 +174,10 @@
     loading = false;
   });
 
+  const explainNote = $derived(lang === 'es'
+    ? 'Esta página muestra qué APIs del navegador están disponibles y podrían usarse para fingerprinting. "Detectable" no significa que te estén rastreando — solo que la capacidad existe.'
+    : 'This page shows which browser APIs are available and could be used for fingerprinting. "Detectable" does not mean you are being tracked — only that the capability exists.');
+
   function copyReport() {
     const text = checks.map((c) => `${c.label}: ${c.value} [${c.status.toUpperCase()}]`).join("\n");
     navigator.clipboard.writeText(`${t.clipboardTitle}\n${"=".repeat(40)}\n${text}`);
@@ -199,6 +203,13 @@
       </div>
     </div>
 
+    <!-- Explanatory note -->
+    <div class="card" style="border-color: var(--color-border); background: var(--color-surface);">
+      <div class="card-body" style="color: var(--color-text-muted); font-size: 12px; line-height: 1.5;">
+        {explainNote}
+      </div>
+    </div>
+
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px;">
       {#each checks as check}
         <div class="card">
@@ -213,7 +224,7 @@
               {#if check.status === "safe"}
                 <span class="badge badge-green">{t.safe}</span>
               {:else if check.status === "exposed"}
-                <span class="badge badge-red">{t.exposed}</span>
+                <span class="badge badge-amber">{t.exposed}</span>
               {:else}
                 <span class="badge badge-amber">{t.note}</span>
               {/if}

@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import { tools, groups } from "../lib/tools";
 import { getCommon } from "../i18n/common";
+import CookieConsent from "../components/CookieConsent.astro";
 
 const c = getCommon("en");
 
@@ -26,7 +27,6 @@ const jsonLd = JSON.stringify({
   <meta name="keywords" content="network tools, what is my ip, privacy check, webrtc leak test, subnet calculator, ip converter, password strength, jwt decoder, developer tools" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8761907366448308" crossorigin="anonymous"></script>
 
   <title>PingThat — Network Tools for Developers</title>
   <link rel="canonical" href="https://pingthat.dev/" />
@@ -130,8 +130,9 @@ const jsonLd = JSON.stringify({
     <!-- Footer -->
     <footer class="px-6 py-4 flex justify-between text-[11px]" style="color: var(--color-text-dim); border-top: 1px solid var(--color-border);">
       <span>{c.footerTagline}</span>
-      <span>{c.footerPrivacy}</span>
+      <span><a href="/privacy-policy" class="hover:text-[var(--color-accent)] transition-colors">{c.footerPrivacy}</a></span>
     </footer>
   </div>
+  <CookieConsent lang="en" />
 </body>
 </html>

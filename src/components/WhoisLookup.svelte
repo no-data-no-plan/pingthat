@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getWhoisLookup } from '../i18n/components';
+  import { isValidDomain, getValidationError } from '../lib/validation';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -10,18 +11,39 @@
   let loading = $state(false);
   let error = $state("");
   let result = $state<any>(null);
+  let requestId = $state(0);
 
   async function lookup() {
     if (!domain.trim()) return;
+    if (!isValidDomain(domain.trim())) {
+      error = getValidationError('domain', lang as 'en' | 'es');
+      result = null;
+      return;
+    }
+    requestId++;
+    const myId = requestId;
     loading = true; error = ""; result = null;
     try {
       const res = await fetch("/api/whois-lookup", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ domain: domain.trim() }), signal: AbortSignal.timeout(15000),
       });
+      if (myId !== requestId) return;
       const data = await res.json();
-      if (data.error && !data.found) { error = data.error; } else { result = data; }
-    } catch { error = t.lookupFailed; } finally { loading = false; }
+      if (myId !== requestId) return;
+      if (data.error) { error = data.error; } else { result = data; }
+    } catch (e: any) {
+      if (myId !== requestId) return;
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        error = lang === 'es'
+          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
+          : 'Request timed out. Please try again.';
+      } else {
+        error = t.lookupFailed;
+      }
+    } finally {
+      if (myId === requestId) loading = false;
+    }
   }
 
   function formatDate(d: string | null): string { return d ? new Date(d).toLocaleDateString() : "N/A"; }

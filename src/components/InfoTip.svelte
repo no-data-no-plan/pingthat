@@ -1,10 +1,12 @@
 <script lang="ts">
-  interface Props { text: string; }
-  let { text }: Props = $props();
+  interface Props { text: string; lang?: string; }
+  let { text, lang = 'en' }: Props = $props();
 
   let visible = $state(false);
   let iconEl: HTMLSpanElement | undefined = $state();
   let popupStyle = $state('');
+
+  const ariaLabel = $derived(lang === 'es' ? 'Más información' : 'More information');
 
   function show() {
     if (!iconEl) return;
@@ -18,12 +20,33 @@
   function hide() {
     visible = false;
   }
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      visible ? hide() : show();
+    } else if (e.key === 'Escape') {
+      hide();
+    }
+  }
 </script>
 
-<span class="info-tip" onmouseenter={show} onmouseleave={hide}>
-  <span class="info-tip-icon" bind:this={iconEl}>?</span>
+<span
+  class="info-tip"
+  bind:this={iconEl}
+  role="button"
+  tabindex="0"
+  aria-label={ariaLabel}
+  aria-expanded={visible}
+  onmouseenter={show}
+  onmouseleave={hide}
+  onfocus={show}
+  onblur={hide}
+  onkeydown={handleKeyDown}
+>
+  <span class="info-tip-icon">?</span>
   {#if visible}
-    <span class="info-tip-popup" style={popupStyle}>{text}</span>
+    <span class="info-tip-popup" style={popupStyle} role="tooltip">{text}</span>
   {/if}
 </span>
 
@@ -33,10 +56,16 @@
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
-    cursor: default;
+    cursor: pointer;
     margin-left: 4px;
     -webkit-user-select: none;
     user-select: none;
+    border-radius: 50%;
+  }
+
+  .info-tip:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 
   .info-tip-icon {
@@ -73,7 +102,8 @@
     pointer-events: none;
   }
 
-  .info-tip:hover .info-tip-icon {
+  .info-tip:hover .info-tip-icon,
+  .info-tip:focus-visible .info-tip-icon {
     color: var(--color-accent);
     border-color: var(--color-accent);
   }

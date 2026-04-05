@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Privacy Policy"
+  description="How PingThat handles your data. We do not store or track any user data. Third-party APIs used for IP geolocation and DNS queries disclosed here."
+  activeToolId=""
+  lang="en"
+>
+  <div class="px-6 sm:px-8 py-8 max-w-3xl mx-auto space-y-6 text-sm" style="color: var(--color-text);">
+    <div>
+      <div class="section-eyebrow">Privacy</div>
+      <div class="section-title">Privacy Policy</div>
+      <div class="section-sub">Last updated: 2026-04-05</div>
+    </div>
+
+    <div class="card">
+      <div class="card-body space-y-4" style="line-height: 1.6;">
+        <h2 class="text-base font-semibold" style="color: var(--color-text);">Summary</h2>
+        <p style="color: var(--color-text-muted);">
+          PingThat is a collection of network and developer tools that run entirely in your browser. We do not collect, store, or track personal data. We do not require accounts, and we do not log your queries.
+        </p>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Data we do <em>not</em> collect</h2>
+        <ul class="list-disc pl-5 space-y-1" style="color: var(--color-text-muted);">
+          <li>No analytics. No cookies for analytics or tracking.</li>
+          <li>No server-side logging of the values you enter into tools.</li>
+          <li>No account system — you don't provide us any identity.</li>
+        </ul>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Third-party services we use</h2>
+        <p style="color: var(--color-text-muted);">
+          Some tools need external APIs to function. When you use them, your input (e.g., domain name, IP address) is sent directly from your browser to the third party listed below. We do not proxy these requests.
+        </p>
+        <ul class="list-disc pl-5 space-y-2" style="color: var(--color-text-muted);">
+          <li><strong style="color: var(--color-text);">ipapi.co</strong> (US) — geolocation lookup. Your public IP is sent to retrieve city, country, ISP. Used by: "What Is My IP".</li>
+          <li><strong style="color: var(--color-text);">api.ipify.org</strong> (US) — fallback for public IP detection. Used by: "What Is My IP".</li>
+          <li><strong style="color: var(--color-text);">cloudflare-dns.com</strong> (Cloudflare, EU-based) — DNS-over-HTTPS queries. Used by: "DNS Lookup".</li>
+          <li><strong style="color: var(--color-text);">rdap.org</strong> — RDAP queries (modern WHOIS). Used by: "Whois Lookup".</li>
+          <li><strong style="color: var(--color-text);">crt.sh</strong> — Certificate Transparency logs. Used by: "SSL Checker".</li>
+          <li><strong style="color: var(--color-text);">formspree.io</strong> (EU) — feedback form submission. Only invoked when you submit the feedback form in the footer.</li>
+        </ul>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Advertising (Google AdSense)</h2>
+        <p style="color: var(--color-text-muted);">
+          We use Google AdSense to show advertisements. AdSense sets cookies and may use your IP address to serve personalized ads. These cookies are only loaded <em>after</em> you explicitly accept the consent banner. If you decline, no AdSense scripts are loaded.
+        </p>
+        <p style="color: var(--color-text-muted);">
+          More info: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" class="underline hover:text-[var(--color-accent)]">Google Ads privacy policy</a>.
+        </p>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Your rights (GDPR)</h2>
+        <p style="color: var(--color-text-muted);">
+          Because we store no personal data, there is nothing to access, delete, or export. You can withdraw consent for AdSense cookies at any time by clearing your browser's localStorage for this site — the consent banner will reappear on your next visit.
+        </p>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Contact</h2>
+        <p style="color: var(--color-text-muted);">
+          Questions? Use the feedback form in the footer.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

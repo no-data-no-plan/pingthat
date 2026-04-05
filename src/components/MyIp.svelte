@@ -26,11 +26,20 @@
   let platform = $state("");
   let userAgent = $state("");
 
+  // Privacy disclosure: this tool sends the user's public IP to third parties.
+  const privacyNoteText = $derived(lang === 'es'
+    ? 'Tu IP pública se envía a ipapi.co y api.ipify.org (EE.UU.) para obtener la geolocalización. '
+    : 'Your public IP is sent to ipapi.co and api.ipify.org (US) to retrieve geolocation. ');
+  const privacyLinkText = $derived(lang === 'es' ? 'Política de privacidad' : 'Privacy policy');
+  const privacyHref = $derived(lang === 'es' ? '/es/privacy-policy' : '/privacy-policy');
+
   onMount(async () => {
     language = navigator.language || t.unknown;
     online = navigator.onLine;
     platform = navigator.platform || t.unknown;
     userAgent = navigator.userAgent || t.unknown;
+
+    let timeoutHit = false;
 
     try {
       // Try ipapi.co first (has location data)
@@ -48,7 +57,10 @@
         loading = false;
         return;
       }
-    } catch {
+    } catch (e: any) {
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        timeoutHit = true;
+      }
       // Fallback to ipify
     }
 
@@ -60,11 +72,20 @@
         loading = false;
         return;
       }
-    } catch {
+    } catch (e: any) {
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        timeoutHit = true;
+      }
       // Both failed
     }
 
-    error = t.couldNotDetect;
+    if (timeoutHit) {
+      error = lang === 'es'
+        ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
+        : 'Request timed out. Please try again.';
+    } else {
+      error = t.couldNotDetect;
+    }
     loading = false;
   });
 
@@ -77,6 +98,12 @@
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
+  <div class="card" style="border-color: var(--color-yellow); background: rgba(234,179,8,0.05);">
+    <div class="card-body" style="color: var(--color-text-muted); font-size: 12px; line-height: 1.5;">
+      &#8505;&#65039; {privacyNoteText}<a href={privacyHref} class="underline hover:text-[var(--color-accent)]">{privacyLinkText}</a>.
+    </div>
+  </div>
+
   {#if loading}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">

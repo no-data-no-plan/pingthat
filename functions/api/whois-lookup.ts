@@ -22,7 +22,22 @@ export async function onRequestPost(context: { request: Request }) {
       });
     }
 
-    const data = await res.json() as any;
+    // Bound response body size to prevent memory exhaustion
+    const maxBytes = 200 * 1024; // 200 KB
+    const contentLength = res.headers.get("content-length");
+    if (contentLength && parseInt(contentLength, 10) > maxBytes) {
+      return errorResponse("Response too large", 502);
+    }
+    const text = await res.text();
+    if (text.length > maxBytes) {
+      return errorResponse("Response too large", 502);
+    }
+    let data: any;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return errorResponse("Invalid RDAP response", 502);
+    }
 
     const registrar = data.entities?.find((e: any) => e.roles?.includes("registrar"));
     const registrarName = registrar?.vcardArray?.[1]?.find((v: any) => v[0] === "fn")?.[3] || registrar?.handle || null;
@@ -48,6 +63,12 @@ export async function onRequestPost(context: { request: Request }) {
       rdapLink: data.links?.find((l: any) => l.rel === "self")?.href || null,
     });
   } catch (e: any) {
+    if (e?.name === "AbortError" || e?.message?.includes("timeout")) {
+      return errorResponse("Request timed out", 504);
+    }
+    if (e instanceof TypeError) {
+      return errorResponse("Could not reach target (DNS or network)", 502);
+    }
     return errorResponse("WHOIS lookup failed", 502);
   }
 }

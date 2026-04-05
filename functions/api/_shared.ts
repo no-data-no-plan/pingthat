@@ -68,3 +68,38 @@ export async function parseBody(request: Request): Promise<Record<string, unknow
 export function isBodyTooLarge(body: Record<string, unknown> | null): body is Record<string, unknown> {
   return body !== null && "_tooLarge" in body;
 }
+
+export type ManualRedirectResult =
+  | { response: Response; finalUrl: string }
+  | { error: string; status: number };
+
+export async function fetchWithManualRedirects(
+  initialUrl: string,
+  options: RequestInit,
+  maxRedirects = 5
+): Promise<ManualRedirectResult> {
+  let currentUrl = initialUrl;
+  for (let i = 0; i <= maxRedirects; i++) {
+    const res = await fetch(currentUrl, { ...options, redirect: "manual" });
+    if (res.status >= 300 && res.status < 400 && res.headers.get("location")) {
+      if (i === maxRedirects) return { error: "Too many redirects", status: 400 };
+      const loc = res.headers.get("location")!;
+      let nextUrl: URL;
+      try {
+        nextUrl = new URL(loc, currentUrl);
+      } catch {
+        return { error: "Invalid redirect target", status: 400 };
+      }
+      if (!["http:", "https:"].includes(nextUrl.protocol)) {
+        return { error: "Redirect to non-HTTP protocol", status: 400 };
+      }
+      if (isBlockedHost(nextUrl.hostname)) {
+        return { error: "Redirect to blocked host", status: 400 };
+      }
+      currentUrl = nextUrl.href;
+      continue;
+    }
+    return { response: res, finalUrl: currentUrl };
+  }
+  return { error: "Too many redirects", status: 400 };
+}

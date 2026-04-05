@@ -7,30 +7,35 @@ interface Props {
 
 const { lang = "en" } = Astro.props;
 
+const privacyHref = lang === "es" ? "/es/privacy-policy" : "/privacy-policy";
 const text = lang === "es"
   ? {
-      message: "Este sitio usa cookies de Google AdSense para mostrar anuncios. Tus datos de las herramientas nunca salen de tu navegador.",
+      message: "Usamos cookies de Google AdSense para mostrar anuncios personalizados. Tus datos de las herramientas se procesan localmente en el navegador.",
       accept: "Aceptar",
       reject: "Rechazar",
-      privacy: "Privacidad",
+      policy: "Política de privacidad",
     }
   : {
-      message: "This site uses Google AdSense cookies to show ads. Your tool data never leaves your browser.",
+      message: "We use Google AdSense cookies to serve personalized ads. Your tool data is processed locally in your browser.",
       accept: "Accept",
       reject: "Decline",
-      privacy: "Privacy",
+      policy: "Privacy policy",
     };
 ---
 
-<div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-[9999] p-3 bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] shadow-lg">
-  <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 text-xs text-[var(--color-text-secondary)]">
-    <p class="flex-1">{text.message}</p>
+<div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-[9999] p-3 border-t shadow-lg" style="background: var(--color-surface); border-color: var(--color-border);">
+  <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 text-xs" style="color: var(--color-text-muted);">
+    <p class="flex-1">
+      {text.message}
+      {" "}
+      <a href={privacyHref} class="underline hover:text-[var(--color-accent)]">{text.policy}</a>
+    </p>
     <div class="flex gap-2 shrink-0">
-      <button id="cookie-accept" class="px-3 py-1.5 rounded bg-[var(--color-accent)] text-white text-xs font-medium hover:opacity-90 transition-opacity" style="cursor:pointer;">
-        {text.accept}
-      </button>
-      <button id="cookie-reject" class="px-3 py-1.5 rounded bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] text-xs font-medium hover:text-[var(--color-text-primary)] transition-colors" style="cursor:pointer;">
+      <button id="cookie-reject" class="px-3 py-1.5 rounded text-xs font-medium transition-colors" style="background: var(--color-surface2); color: var(--color-text-muted); border: 1px solid var(--color-border); cursor:pointer;">
         {text.reject}
+      </button>
+      <button id="cookie-accept" class="px-3 py-1.5 rounded text-white text-xs font-medium hover:opacity-90 transition-opacity" style="background: var(--color-accent); cursor:pointer;">
+        {text.accept}
       </button>
     </div>
   </div>

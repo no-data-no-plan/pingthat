@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getHttpHeaders } from '../i18n/components';
+  import { isValidUrl, getValidationError } from '../lib/validation';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -10,18 +11,39 @@
   let loading = $state(false);
   let error = $state("");
   let result = $state<any>(null);
+  let requestId = $state(0);
 
   async function check() {
     if (!url.trim()) return;
+    if (!isValidUrl(url.trim())) {
+      error = getValidationError('url', lang as 'en' | 'es');
+      result = null;
+      return;
+    }
+    requestId++;
+    const myId = requestId;
     loading = true; error = ""; result = null;
     try {
       const res = await fetch("/api/http-headers", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: url.trim() }), signal: AbortSignal.timeout(15000),
       });
+      if (myId !== requestId) return;
       const data = await res.json();
+      if (myId !== requestId) return;
       if (data.error) { error = data.error; } else { result = data; }
-    } catch { error = t.checkFailed; } finally { loading = false; }
+    } catch (e: any) {
+      if (myId !== requestId) return;
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        error = lang === 'es'
+          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
+          : 'Request timed out. Please try again.';
+      } else {
+        error = t.checkFailed;
+      }
+    } finally {
+      if (myId === requestId) loading = false;
+    }
   }
 
   function copy(val: string) { navigator.clipboard.writeText(val); }
@@ -53,7 +75,7 @@
       <div class="card-body">
         {#each Object.entries(result.security) as [key, present]}
           <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--color-border);">
-            <span style="font-size: 14px;">{present ? "\u2705" : "\u274C"}</span>
+            <span style="font-size: 14px;" role="img" aria-label={present ? (lang === 'es' ? 'Presente' : 'Present') : (lang === 'es' ? 'Ausente' : 'Missing')}>{present ? "\u2705" : "\u274C"}</span>
             <span style="font-size: 13px; font-family: monospace;">{securityLabels[key]}</span>
           </div>
         {/each}

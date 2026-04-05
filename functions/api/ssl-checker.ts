@@ -1,4 +1,4 @@
-import { isValidDomain, isBlockedHost, jsonResponse, errorResponse, parseBody, isBodyTooLarge } from "./_shared";
+import { isValidDomain, isBlockedHost, jsonResponse, errorResponse, parseBody, isBodyTooLarge, fetchWithManualRedirects } from "./_shared";
 
 export async function onRequestPost(context: { request: Request }) {
   const body = await parseBody(context.request);
@@ -12,12 +12,28 @@ export async function onRequestPost(context: { request: Request }) {
   try {
     // Check HTTPS connectivity
     const start = Date.now();
-    const httpsRes = await fetch(`https://${domain}`, {
-      method: "HEAD",
-      redirect: "follow",
-      signal: AbortSignal.timeout(10000),
-      headers: { "User-Agent": "PingThat/1.0 (https://pingthat.dev)" },
-    });
+    const fetchResult = await fetchWithManualRedirects(
+      `https://${domain}`,
+      {
+        method: "HEAD",
+        signal: AbortSignal.timeout(10000),
+        headers: { "User-Agent": "PingThat/1.0 (https://pingthat.dev)" },
+      },
+      5
+    );
+    if ("error" in fetchResult) {
+      return jsonResponse({
+        domain,
+        httpsStatus: 0,
+        httpsOk: false,
+        responseTime: 0,
+        hsts: null,
+        server: null,
+        certificates: [],
+        error: fetchResult.error,
+      });
+    }
+    const httpsRes = fetchResult.response;
     const elapsed = Date.now() - start;
 
     const hsts = httpsRes.headers.get("strict-transport-security");
@@ -53,6 +69,12 @@ export async function onRequestPost(context: { request: Request }) {
       certificates: certs,
     });
   } catch (e: any) {
+    let errMsg = "HTTPS connection failed";
+    if (e?.name === "AbortError" || e?.message?.includes("timeout")) {
+      errMsg = "Request timed out";
+    } else if (e instanceof TypeError) {
+      errMsg = "Could not reach target (DNS or network)";
+    }
     return jsonResponse({
       domain,
       httpsStatus: 0,
@@ -61,7 +83,7 @@ export async function onRequestPost(context: { request: Request }) {
       hsts: null,
       server: null,
       certificates: [],
-      error: "HTTPS connection failed",
+      error: errMsg,
     });
   }
 }

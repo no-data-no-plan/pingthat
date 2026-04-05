@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Política de Privacidad"
+  description="Cómo PingThat trata tus datos. No almacenamos ni rastreamos datos de usuarios. APIs de terceros usadas para geolocalización y consultas DNS documentadas aquí."
+  activeToolId=""
+  lang="es"
+>
+  <div class="px-6 sm:px-8 py-8 max-w-3xl mx-auto space-y-6 text-sm" style="color: var(--color-text);">
+    <div>
+      <div class="section-eyebrow">Privacidad</div>
+      <div class="section-title">Política de Privacidad</div>
+      <div class="section-sub">Última actualización: 2026-04-05</div>
+    </div>
+
+    <div class="card">
+      <div class="card-body space-y-4" style="line-height: 1.6;">
+        <h2 class="text-base font-semibold" style="color: var(--color-text);">Resumen</h2>
+        <p style="color: var(--color-text-muted);">
+          PingThat es una colección de herramientas de red y desarrollo que se ejecutan íntegramente en tu navegador. No recogemos, almacenamos ni rastreamos datos personales. No requerimos cuentas y no registramos tus consultas.
+        </p>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Datos que <em>no</em> recogemos</h2>
+        <ul class="list-disc pl-5 space-y-1" style="color: var(--color-text-muted);">
+          <li>Sin analítica. Sin cookies de analítica o rastreo.</li>
+          <li>Sin registros en servidor de los valores que introduces en las herramientas.</li>
+          <li>Sin sistema de cuentas — no nos proporcionas ninguna identidad.</li>
+        </ul>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Servicios de terceros que usamos</h2>
+        <p style="color: var(--color-text-muted);">
+          Algunas herramientas necesitan APIs externas para funcionar. Cuando las usas, tu entrada (por ejemplo, nombre de dominio, dirección IP) se envía directamente desde tu navegador al tercero indicado abajo. No hacemos proxy de estas peticiones.
+        </p>
+        <ul class="list-disc pl-5 space-y-2" style="color: var(--color-text-muted);">
+          <li><strong style="color: var(--color-text);">ipapi.co</strong> (EE.UU.) — geolocalización. Tu IP pública se envía para obtener ciudad, país e ISP. Usado por: "Cuál Es Mi IP".</li>
+          <li><strong style="color: var(--color-text);">api.ipify.org</strong> (EE.UU.) — respaldo para detección de IP pública. Usado por: "Cuál Es Mi IP".</li>
+          <li><strong style="color: var(--color-text);">cloudflare-dns.com</strong> (Cloudflare, UE) — consultas DNS-over-HTTPS. Usado por: "Consulta DNS".</li>
+          <li><strong style="color: var(--color-text);">rdap.org</strong> — consultas RDAP (WHOIS moderno). Usado por: "Búsqueda Whois".</li>
+          <li><strong style="color: var(--color-text);">crt.sh</strong> — registros de Certificate Transparency. Usado por: "SSL Checker".</li>
+          <li><strong style="color: var(--color-text);">formspree.io</strong> (UE) — envío del formulario de feedback. Solo se invoca al enviar el formulario del footer.</li>
+        </ul>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Publicidad (Google AdSense)</h2>
+        <p style="color: var(--color-text-muted);">
+          Usamos Google AdSense para mostrar anuncios. AdSense establece cookies y puede usar tu dirección IP para servir anuncios personalizados. Estas cookies solo se cargan <em>después</em> de que aceptes el banner de consentimiento. Si rechazas, no se carga ningún script de AdSense.
+        </p>
+        <p style="color: var(--color-text-muted);">
+          Más información: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" class="underline hover:text-[var(--color-accent)]">Política de privacidad de Google Ads</a>.
+        </p>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Tus derechos (RGPD)</h2>
+        <p style="color: var(--color-text-muted);">
+          Como no almacenamos datos personales, no hay nada que acceder, eliminar o exportar. Puedes retirar el consentimiento para las cookies de AdSense en cualquier momento borrando el localStorage de este sitio en tu navegador — el banner reaparecerá en tu próxima visita.
+        </p>
+
+        <h2 class="text-base font-semibold pt-2" style="color: var(--color-text);">Contacto</h2>
+        <p style="color: var(--color-text-muted);">
+          ¿Preguntas? Usa el formulario de feedback del footer.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

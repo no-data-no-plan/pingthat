@@ -153,6 +153,10 @@
 
   let analysis = $derived(analyzePassword(password));
 
+  const entropyDisclaimer = $derived(lang === 'es'
+    ? 'Esta entropía asume caracteres aleatorios. Las contraseñas basadas en palabras del diccionario, patrones de teclado o fechas son mucho más débiles de lo que sugiere este número.'
+    : 'This entropy assumes random characters. Passwords based on dictionary words, keyboard patterns, or dates are far weaker than this number suggests.');
+
   const strengthColors = ["var(--color-red)", "#f97316", "var(--color-amber)", "var(--color-green)", "var(--color-accent)"];
 
   function generatePassword() {
@@ -256,6 +260,10 @@
               {#if analysis.special > 0}<span style="color: var(--color-text);">{t.special}: {analysis.special}</span>{/if}
             </div>
           </div>
+        </div>
+
+        <div class="mt-2 text-xs" style="color: var(--color-text-muted); line-height: 1.5; margin-top: 12px;">
+          ℹ️ {entropyDisclaimer}
         </div>
       </div>
     </div>

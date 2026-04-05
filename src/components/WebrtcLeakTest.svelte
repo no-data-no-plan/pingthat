@@ -106,6 +106,11 @@
   }
 
   onMount(runTest);
+
+  const disclaimerTitle = $derived(lang === 'es' ? 'Sobre este resultado' : 'About this result');
+  const disclaimerBody = $derived(lang === 'es'
+    ? '"Sin fugas detectadas" puede significar que tu VPN funciona correctamente O que WebRTC está bloqueado en tu navegador. Verifica con una herramienta independiente como ipleak.net si usas VPN.'
+    : '"No leak detected" can mean either your VPN is working OR that WebRTC is blocked by your browser. Verify with an independent tool like ipleak.net if you use a VPN.');
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
@@ -176,6 +181,17 @@
     {:else}
       <div style="text-align: center;">
         <button class="btn-primary" onclick={runTest}>{t.runTestAgain}</button>
+      </div>
+    {/if}
+
+    <!-- False-negative disclaimer -->
+    {#if !testing}
+      <div class="card" style="border-color: var(--color-amber); background: rgba(234,179,8,0.05);">
+        <div class="card-body" style="color: var(--color-text-muted); font-size: 12px; line-height: 1.5;">
+          <strong style="color: var(--color-text);">{disclaimerTitle}</strong>
+          <br />
+          {disclaimerBody}
+        </div>
       </div>
     {/if}
 

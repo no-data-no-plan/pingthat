@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getRedirectChecker } from '../i18n/components';
+  import { isValidUrl, getValidationError } from '../lib/validation';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -10,18 +11,39 @@
   let loading = $state(false);
   let error = $state("");
   let result = $state<any>(null);
+  let requestId = $state(0);
 
   async function check() {
     if (!url.trim()) return;
+    if (!isValidUrl(url.trim())) {
+      error = getValidationError('url', lang as 'en' | 'es');
+      result = null;
+      return;
+    }
+    requestId++;
+    const myId = requestId;
     loading = true; error = ""; result = null;
     try {
       const res = await fetch("/api/redirect-checker", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: url.trim() }), signal: AbortSignal.timeout(15000),
       });
+      if (myId !== requestId) return;
       const data = await res.json();
+      if (myId !== requestId) return;
       if (data.error) { error = data.error; } else { result = data; }
-    } catch { error = t.checkFailed; } finally { loading = false; }
+    } catch (e: any) {
+      if (myId !== requestId) return;
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        error = lang === 'es'
+          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
+          : 'Request timed out. Please try again.';
+      } else {
+        error = t.checkFailed;
+      }
+    } finally {
+      if (myId === requestId) loading = false;
+    }
   }
 
   function statusColor(status: number): string {

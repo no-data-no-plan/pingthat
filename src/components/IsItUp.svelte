@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getIsItUp } from '../i18n/components';
+  import { isValidUrl, getValidationError } from '../lib/validation';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -10,18 +11,39 @@
   let loading = $state(false);
   let error = $state("");
   let result = $state<any>(null);
+  let requestId = $state(0);
 
   async function check() {
     if (!url.trim()) return;
+    if (!isValidUrl(url.trim())) {
+      error = getValidationError('url', lang as 'en' | 'es');
+      result = null;
+      return;
+    }
+    requestId++;
+    const myId = requestId;
     loading = true; error = ""; result = null;
     try {
       const res = await fetch("/api/check-site", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: url.trim() }), signal: AbortSignal.timeout(15000),
       });
+      if (myId !== requestId) return;
       const data = await res.json();
-      if (data.error && !data.url) { error = data.error; } else { result = data; }
-    } catch { error = t.checkFailed; } finally { loading = false; }
+      if (myId !== requestId) return;
+      if (data.error) { error = data.error; } else { result = data; }
+    } catch (e: any) {
+      if (myId !== requestId) return;
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        error = lang === 'es'
+          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
+          : 'Request timed out. Please try again.';
+      } else {
+        error = t.checkFailed;
+      }
+    } finally {
+      if (myId === requestId) loading = false;
+    }
   }
 
   function ratingColor(ms: number): string {
@@ -53,7 +75,7 @@
       <div class="card-header"><span class="card-title">{t.statusReport}</span></div>
       <div class="card-body space-y-3">
         <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 20px;">{result.up ? "\u2705" : "\u274C"}</span>
+          <span style="font-size: 20px;" role="img" aria-label={result.up ? (lang === 'es' ? 'Activo' : 'Up') : (lang === 'es' ? 'Caído' : 'Down')}>{result.up ? "\u2705" : "\u274C"}</span>
           <span style="font-size: 16px; font-weight: 600;">{result.up ? t.online : t.offline}</span>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">

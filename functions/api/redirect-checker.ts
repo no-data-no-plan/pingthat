@@ -62,6 +62,12 @@ export async function onRequestPost(context: { request: Request }) {
       chain,
     });
   } catch (e: any) {
+    if (e?.name === "AbortError" || e?.message?.includes("timeout")) {
+      return errorResponse("Request timed out", 504);
+    }
+    if (e instanceof TypeError) {
+      return errorResponse("Could not reach target (DNS or network)", 502);
+    }
     return errorResponse("Redirect check failed", 502);
   }
 }

@@ -95,6 +95,11 @@
   }
 
   const sampleJwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE1MTYyNDI2MjIsInJvbGUiOiJhZG1pbiJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+  const noneAlgTitle = $derived(lang === 'es' ? 'Algoritmo "none" detectado' : '"none" algorithm detected');
+  const noneAlgBody = $derived(lang === 'es'
+    ? 'Este token usa alg=none, lo que significa que no tiene firma. Cualquiera puede haber creado o modificado las claims. No confíes en este token.'
+    : 'This token uses alg=none, meaning it has NO signature. Anyone could have created or modified the claims. Do not trust this token.');
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
@@ -131,6 +136,17 @@
       {#if decoded.isExpired}
         <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--color-red-dim); border: 1px solid rgba(255, 107, 107, 0.2);">
           <span style="font-size: 12px; color: var(--color-red);">{t.tokenExpired}</span>
+        </div>
+      {/if}
+
+      <!-- alg:none warning -->
+      {#if decoded?.header?.alg && String(decoded.header.alg).toLowerCase() === 'none'}
+        <div class="card" style="border-color: var(--color-red); background: rgba(239,68,68,0.05);">
+          <div class="card-body" style="color: var(--color-red); font-size: 13px; line-height: 1.5;">
+            <strong>⚠ {noneAlgTitle}</strong>
+            <br />
+            {noneAlgBody}
+          </div>
         </div>
       {/if}
 
