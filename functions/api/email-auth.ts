@@ -11,7 +11,7 @@ async function queryDns(name: string, type: string): Promise<string[]> {
       signal: AbortSignal.timeout(8000),
     }
   );
-  if (!res.ok) return [];
+  if (!res.ok) throw new Error(`DNS query failed: ${res.status}`);
   const data = await res.json() as any;
   const typeCode = type === "TXT" ? 16 : 0;
   return (data.Answer || [])
@@ -55,19 +55,24 @@ export async function onRequestPost(context: { request: Request }) {
     }
 
     // Query DKIM (try common selectors in parallel)
-    const dkimResults = await Promise.all(
-      DKIM_SELECTORS.map(async (selector) => {
-        const records = await queryDns(`${selector}._domainkey.${domain}`, "TXT");
-        const dkimRecord = records.find((r) => r.includes("v=DKIM1") || r.includes("k=rsa") || r.includes("p="));
-        return dkimRecord ? { selector, record: dkimRecord } : null;
-      })
-    );
-    const dkimSelectors = dkimResults.filter((r): r is { selector: string; record: string } => r !== null);
+    let dkimSelectors: { selector: string; record: string }[] = [];
     let dkimAssessment: "pass" | "warning" | "fail" = "fail";
-    if (dkimSelectors.length > 1) {
-      dkimAssessment = "pass";
-    } else if (dkimSelectors.length === 1) {
-      dkimAssessment = "warning";
+    try {
+      const dkimResults = await Promise.all(
+        DKIM_SELECTORS.map(async (selector) => {
+          const records = await queryDns(`${selector}._domainkey.${domain}`, "TXT");
+          const dkimRecord = records.find((r) => r.includes("v=DKIM1") || r.includes("k=rsa") || r.includes("p="));
+          return dkimRecord ? { selector, record: dkimRecord } : null;
+        })
+      );
+      dkimSelectors = dkimResults.filter((r): r is { selector: string; record: string } => r !== null);
+      if (dkimSelectors.length > 1) {
+        dkimAssessment = "pass";
+      } else if (dkimSelectors.length === 1) {
+        dkimAssessment = "warning";
+      }
+    } catch {
+      dkimAssessment = "fail";
     }
 
     return jsonResponse({
