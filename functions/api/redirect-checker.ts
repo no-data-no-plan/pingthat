@@ -34,7 +34,7 @@ export async function onRequestPost(context: { request: Request }) {
       // Resolve relative redirects and validate against blocklist
       try {
         const nextUrl = new URL(location, current);
-        if (isBlockedHost(nextUrl.hostname)) {
+        if (!['http:', 'https:'].includes(nextUrl.protocol) || isBlockedHost(nextUrl.hostname)) {
           chain.push({
             url: nextUrl.href,
             status: 0,

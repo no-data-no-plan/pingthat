@@ -21,9 +21,10 @@ const activeTool = tools.find(t => t.id === activeToolId);
 const keywords = activeTool?.keywords.join(", ") ?? "";
 const toolPath = activeTool?.path ?? Astro.url.pathname;
 const canonicalPath = lang === "es" ? `/es${toolPath}` : toolPath;
-const canonicalUrl = `https://pingthat.dev${canonicalPath}`;
-const enUrl = `https://pingthat.dev${toolPath}`;
-const esUrl = `https://pingthat.dev/es${toolPath}`;
+const withSlash = (p: string) => p.endsWith('/') ? p : p + '/';
+const canonicalUrl = `https://pingthat.dev${withSlash(canonicalPath)}`;
+const enUrl = `https://pingthat.dev${withSlash(toolPath)}`;
+const esUrl = `https://pingthat.dev${withSlash('/es' + toolPath)}`;
 
 const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/es" || Astro.url.pathname === "/es/";
 

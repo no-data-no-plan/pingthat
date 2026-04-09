@@ -60,7 +60,7 @@
 
       await new Promise<void>((resolve) => {
         pc.createDataChannel("");
-        pc.createOffer().then((offer) => pc.setLocalDescription(offer));
+        pc.createOffer().then((offer) => pc.setLocalDescription(offer)).catch(() => {});
 
         pc.onicecandidate = (e) => {
           if (!e.candidate) {

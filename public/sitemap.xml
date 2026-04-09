@@ -1,35 +1,310 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://pingthat.dev/</loc><priority>1.0</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/my-ip</loc><priority>0.9</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/privacy-check</loc><priority>0.9</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/webrtc-leak-test</loc><priority>0.9</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/subnet-calculator</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/ip-converter</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/password-strength</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/jwt-decoder</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/dns-lookup</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/ssl-checker</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/is-it-down</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/is-it-up</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/http-headers</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/whois-lookup</loc><priority>0.9</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/redirect-checker</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/url-parser</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es</loc><priority>0.9</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/my-ip</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/privacy-check</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/webrtc-leak-test</loc><priority>0.8</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/subnet-calculator</loc><priority>0.7</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/ip-converter</loc><priority>0.7</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/password-strength</loc><priority>0.7</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/jwt-decoder</loc><priority>0.7</priority><lastmod>2026-04-01</lastmod></url>
-  <url><loc>https://pingthat.dev/es/dns-lookup</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es/ssl-checker</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es/is-it-down</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es/is-it-up</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es/http-headers</loc><priority>0.7</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es/whois-lookup</loc><priority>0.8</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es/redirect-checker</loc><priority>0.7</priority><lastmod>2026-04-03</lastmod></url>
-  <url><loc>https://pingthat.dev/es/url-parser</loc><priority>0.7</priority><lastmod>2026-04-03</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://pingthat.dev/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/" />
+    <priority>1.0</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/my-ip/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/my-ip/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/my-ip/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/my-ip/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/privacy-check/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-check/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-check/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-check/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/webrtc-leak-test/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/webrtc-leak-test/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/webrtc-leak-test/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/webrtc-leak-test/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/subnet-calculator/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/subnet-calculator/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/subnet-calculator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/subnet-calculator/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/ip-converter/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ip-converter/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ip-converter/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ip-converter/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/password-strength/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/password-strength/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/password-strength/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/password-strength/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/jwt-decoder/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/jwt-decoder/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/jwt-decoder/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/jwt-decoder/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/dns-lookup/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/dns-lookup/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/dns-lookup/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/dns-lookup/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/ssl-checker/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ssl-checker/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ssl-checker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ssl-checker/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/is-it-down/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-down/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-down/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-down/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/is-it-up/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-up/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-up/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-up/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/http-headers/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/http-headers/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/http-headers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/http-headers/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/whois-lookup/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/whois-lookup/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/whois-lookup/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/whois-lookup/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/redirect-checker/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/redirect-checker/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/redirect-checker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/redirect-checker/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/url-parser/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/url-parser/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/url-parser/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/url-parser/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/privacy-policy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-policy/" />
+    <priority>0.3</priority>
+    <lastmod>2026-04-06</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/" />
+    <priority>0.9</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/my-ip/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/my-ip/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/my-ip/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/my-ip/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/privacy-check/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-check/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-check/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-check/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/webrtc-leak-test/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/webrtc-leak-test/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/webrtc-leak-test/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/webrtc-leak-test/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/subnet-calculator/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/subnet-calculator/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/subnet-calculator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/subnet-calculator/" />
+    <priority>0.7</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/ip-converter/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ip-converter/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ip-converter/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ip-converter/" />
+    <priority>0.7</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/password-strength/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/password-strength/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/password-strength/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/password-strength/" />
+    <priority>0.7</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/jwt-decoder/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/jwt-decoder/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/jwt-decoder/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/jwt-decoder/" />
+    <priority>0.7</priority>
+    <lastmod>2026-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/dns-lookup/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/dns-lookup/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/dns-lookup/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/dns-lookup/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/ssl-checker/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ssl-checker/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ssl-checker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ssl-checker/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/is-it-down/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-down/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-down/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-down/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/is-it-up/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-up/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-up/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-up/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/http-headers/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/http-headers/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/http-headers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/http-headers/" />
+    <priority>0.7</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/whois-lookup/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/whois-lookup/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/whois-lookup/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/whois-lookup/" />
+    <priority>0.8</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/redirect-checker/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/redirect-checker/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/redirect-checker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/redirect-checker/" />
+    <priority>0.7</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/url-parser/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/url-parser/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/url-parser/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/url-parser/" />
+    <priority>0.7</priority>
+    <lastmod>2026-04-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pingthat.dev/es/privacy-policy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-policy/" />
+    <priority>0.3</priority>
+    <lastmod>2026-04-06</lastmod>
+  </url>
 </urlset>

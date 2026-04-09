@@ -60,7 +60,7 @@ export async function onRequestPost(context: { request: Request }) {
       expires: events.expiration || null,
       nameservers,
       statuses,
-      rdapLink: data.links?.find((l: any) => l.rel === "self")?.href || null,
+      rdapLink: (() => { const href = data.links?.find((l: any) => l.rel === "self")?.href; return href && /^https?:\/\//.test(href) ? href : null; })(),
     });
   } catch (e: any) {
     if (e?.name === "AbortError" || e?.message?.includes("timeout")) {

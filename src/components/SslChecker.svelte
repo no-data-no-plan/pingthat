@@ -29,6 +29,12 @@
         body: JSON.stringify({ domain: domain.trim() }), signal: AbortSignal.timeout(15000),
       });
       if (myId !== requestId) return;
+      if (!res.ok) {
+        let msg = t.checkFailed;
+        try { const d = await res.json(); if (d?.error) msg = d.error; } catch {}
+        error = msg;
+        return;
+      }
       const data = await res.json();
       if (myId !== requestId) return;
       if (data.error) { error = data.error; } else { result = data; }
