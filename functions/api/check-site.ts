@@ -1,12 +1,23 @@
 import { isValidUrl, jsonResponse, errorResponse, parseBody, isBodyTooLarge, fetchWithManualRedirects } from "./_shared";
+import { getLang, getApiErrors } from "./_i18n";
 
 export async function onRequestPost(context: { request: Request }) {
+  const url = new URL(context.request.url);
+  const e = getApiErrors(getLang(url));
+
   const body = await parseBody(context.request);
-  if (isBodyTooLarge(body)) return errorResponse("Request body too large", 413);
-  if (!body || typeof body.url !== "string") return errorResponse("Missing url");
+  if (isBodyTooLarge(body)) return errorResponse(e.bodyTooLarge, 413);
+  if (!body || typeof body.url !== "string") return errorResponse(e.missingUrl);
 
   const target = isValidUrl(body.url);
-  if (!target) return errorResponse("Invalid or blocked URL");
+  if (!target) return errorResponse(e.invalidOrBlockedUrl);
+
+  const redirectI18n = {
+    tooManyRedirects: e.tooManyRedirects,
+    invalidRedirectTarget: e.invalidRedirectTarget,
+    redirectToNonHttp: e.redirectToNonHttp,
+    redirectToBlockedHost: e.redirectToBlockedHost,
+  };
 
   const start = Date.now();
   try {
@@ -17,7 +28,8 @@ export async function onRequestPost(context: { request: Request }) {
         signal: AbortSignal.timeout(10000),
         headers: { "User-Agent": "PingThat/1.0 (https://pingthat.dev)" },
       },
-      5
+      5,
+      redirectI18n
     );
     const elapsed = Date.now() - start;
     if ("error" in fetchResult) {
@@ -43,16 +55,16 @@ export async function onRequestPost(context: { request: Request }) {
       contentType: res.headers.get("content-type") || null,
       up: res.status < 500,
     });
-  } catch (e: any) {
+  } catch (err: any) {
     const elapsed = Date.now() - start;
-    let errMsg = "Connection failed";
-    let statusText = "Unreachable";
-    if (e?.name === "AbortError" || e?.message?.includes("timeout")) {
-      errMsg = "Request timed out";
-      statusText = "Timed out";
-    } else if (e instanceof TypeError) {
-      errMsg = "Could not reach target (DNS or network)";
-      statusText = "Unreachable";
+    let errMsg = e.connectionFailed;
+    let statusText = e.unreachable;
+    if (err?.name === "AbortError" || err?.message?.includes("timeout")) {
+      errMsg = e.requestTimedOut;
+      statusText = e.timedOut;
+    } else if (err instanceof TypeError) {
+      errMsg = e.dnsOrNetwork;
+      statusText = e.unreachable;
     }
     return jsonResponse({
       url: target,

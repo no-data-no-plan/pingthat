@@ -1,13 +1,24 @@
 import { isValidDomain, isBlockedHost, jsonResponse, errorResponse, parseBody, isBodyTooLarge, fetchWithManualRedirects } from "./_shared";
+import { getLang, getApiErrors } from "./_i18n";
 
 export async function onRequestPost(context: { request: Request }) {
+  const url = new URL(context.request.url);
+  const e = getApiErrors(getLang(url));
+
   const body = await parseBody(context.request);
-  if (isBodyTooLarge(body)) return errorResponse("Request body too large", 413);
-  if (!body || typeof body.domain !== "string") return errorResponse("Missing domain");
+  if (isBodyTooLarge(body)) return errorResponse(e.bodyTooLarge, 413);
+  if (!body || typeof body.domain !== "string") return errorResponse(e.missingDomain);
 
   const domain = body.domain.trim().toLowerCase();
-  if (!isValidDomain(domain)) return errorResponse("Invalid domain");
-  if (isBlockedHost(domain)) return errorResponse("Blocked domain");
+  if (!isValidDomain(domain)) return errorResponse(e.invalidDomain);
+  if (isBlockedHost(domain)) return errorResponse(e.blockedDomain);
+
+  const redirectI18n = {
+    tooManyRedirects: e.tooManyRedirects,
+    invalidRedirectTarget: e.invalidRedirectTarget,
+    redirectToNonHttp: e.redirectToNonHttp,
+    redirectToBlockedHost: e.redirectToBlockedHost,
+  };
 
   try {
     // Check HTTPS connectivity
@@ -19,7 +30,8 @@ export async function onRequestPost(context: { request: Request }) {
         signal: AbortSignal.timeout(10000),
         headers: { "User-Agent": "PingThat/1.0 (https://pingthat.dev)" },
       },
-      5
+      5,
+      redirectI18n
     );
     if ("error" in fetchResult) {
       return jsonResponse({
@@ -68,12 +80,12 @@ export async function onRequestPost(context: { request: Request }) {
       server: httpsRes.headers.get("server") || null,
       certificates: certs,
     });
-  } catch (e: any) {
-    let errMsg = "HTTPS connection failed";
-    if (e?.name === "AbortError" || e?.message?.includes("timeout")) {
-      errMsg = "Request timed out";
-    } else if (e instanceof TypeError) {
-      errMsg = "Could not reach target (DNS or network)";
+  } catch (err: any) {
+    let errMsg = e.httpsConnectionFailed;
+    if (err?.name === "AbortError" || err?.message?.includes("timeout")) {
+      errMsg = e.requestTimedOut;
+    } else if (err instanceof TypeError) {
+      errMsg = e.dnsOrNetwork;
     }
     return jsonResponse({
       domain,

@@ -7,16 +7,64 @@ import { toolNamesI18n, toolDescriptionsI18n, groupLabelsI18n } from "../../i18n
 
 const c = getCommon("es");
 
-const jsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "PingThat",
-  url: "https://pingthat.dev/es",
-  description: "Herramientas de red gratuitas para desarrolladores. Comprueba tu IP, analiza la privacidad, calcula subredes, decodifica JWTs. 100% en el cliente, sin recogida de datos.",
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-});
+const jsonLd = JSON.stringify([
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "PingThat",
+    url: "https://pingthat.dev/es",
+    description: "PingThat es una coleccion gratuita de 15 herramientas de red y seguridad — consulta DNS, verificador SSL, WHOIS, cabeceras HTTP, decodificador JWT — que se ejecutan en tu navegador sin rastreo.",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Any",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Cual es la mejor herramienta de consulta DNS online gratuita?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat ofrece una herramienta de consulta DNS gratuita como parte de su coleccion de 15 herramientas de red y seguridad. Devuelve registros A, AAAA, MX, NS, TXT y CNAME al instante. Todas las consultas se ejecutan en el navegador sin rastreo ni recopilacion de datos.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Como puedo comprobar si una web esta caida para todos?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat incluye una herramienta Is It Down que comprueba si un sitio web es accesible desde internet. Introduce cualquier URL para ver su estado HTTP, tiempo de respuesta y si esta caido para todos o solo para ti.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Existe un verificador de certificados SSL online gratuito?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat ofrece un verificador de certificados SSL gratuito que muestra el emisor, fecha de expiracion, validez de la cadena y detalles del protocolo. No requiere instalacion — se ejecuta directamente en tu navegador.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Que herramientas gratuitas puedo usar para comprobar cabeceras HTTP?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat incluye una herramienta de cabeceras HTTP que muestra todas las cabeceras de respuesta de cualquier URL, incluyendo cabeceras de seguridad como Content-Security-Policy, HSTS y X-Frame-Options. Los resultados se muestran al instante sin almacenar datos.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Puedo decodificar un token JWT online de forma segura?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Si. PingThat tiene un decodificador JWT que analiza y muestra la cabecera, payload y firma de cualquier token JWT. La decodificacion ocurre completamente en el cliente — tu token nunca sale de tu navegador y no se envian datos a ningun servidor.",
+        },
+      },
+    ],
+  },
+]);
 ---
 
 <!doctype html>
@@ -24,7 +72,7 @@ const jsonLd = JSON.stringify({
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Herramientas de red gratuitas para desarrolladores. Comprueba tu IP, analiza la privacidad del navegador, detecta fugas WebRTC, calcula subredes, convierte IPs, comprueba la fortaleza de contrase\u00f1as, decodifica JWTs. 100% en el cliente." />
+  <meta name="description" content="PingThat es una coleccion gratuita de 15 herramientas de red y seguridad — consulta DNS, verificador SSL, WHOIS, cabeceras HTTP, decodificador JWT — que se ejecutan en tu navegador sin rastreo." />
   <meta name="keywords" content="herramientas de red, cual es mi ip, comprobaci\u00f3n de privacidad, test fugas webrtc, calculadora de subredes, conversor de ip, fortaleza de contrase\u00f1as, decodificador jwt, herramientas para desarrolladores" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
@@ -41,14 +89,14 @@ const jsonLd = JSON.stringify({
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <meta property="og:title" content="PingThat — Herramientas de Red para Desarrolladores" />
-  <meta property="og:description" content="Herramientas de red gratuitas para desarrolladores. Comprueba tu IP, analiza la privacidad, decodifica JWTs. 100% en el cliente, sin recogida de datos." />
+  <meta property="og:description" content="PingThat es una coleccion gratuita de 15 herramientas de red y seguridad — consulta DNS, verificador SSL, WHOIS, cabeceras HTTP, decodificador JWT — que se ejecutan en tu navegador sin rastreo." />
   <meta property="og:url" content="https://pingthat.dev/es" />
   <meta property="og:site_name" content="PingThat" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://pingthat.dev/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PingThat — Herramientas de Red para Desarrolladores" />
-  <meta name="twitter:description" content="Herramientas de red gratuitas para desarrolladores. Comprueba tu IP, analiza la privacidad, decodifica JWTs. 100% en el cliente, sin recogida de datos." />
+  <meta name="twitter:description" content="PingThat es una coleccion gratuita de 15 herramientas de red y seguridad — consulta DNS, verificador SSL, WHOIS, cabeceras HTTP, decodificador JWT — que se ejecutan en tu navegador sin rastreo." />
   <meta name="twitter:image" content="https://pingthat.dev/og-image.png" />
 
   <script type="application/ld+json" set:html={jsonLd} />

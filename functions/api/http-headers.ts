@@ -1,4 +1,5 @@
 import { isValidUrl, jsonResponse, errorResponse, parseBody, isBodyTooLarge, fetchWithManualRedirects } from "./_shared";
+import { getLang, getApiErrors } from "./_i18n";
 
 const SAFE_HEADERS = new Set([
   'content-type', 'content-length', 'content-encoding', 'content-language',
@@ -14,12 +15,22 @@ const SAFE_HEADERS = new Set([
 ]);
 
 export async function onRequestPost(context: { request: Request }) {
+  const url = new URL(context.request.url);
+  const e = getApiErrors(getLang(url));
+
   const body = await parseBody(context.request);
-  if (isBodyTooLarge(body)) return errorResponse("Request body too large", 413);
-  if (!body || typeof body.url !== "string") return errorResponse("Missing url");
+  if (isBodyTooLarge(body)) return errorResponse(e.bodyTooLarge, 413);
+  if (!body || typeof body.url !== "string") return errorResponse(e.missingUrl);
 
   const target = isValidUrl(body.url);
-  if (!target) return errorResponse("Invalid or blocked URL");
+  if (!target) return errorResponse(e.invalidOrBlockedUrl);
+
+  const redirectI18n = {
+    tooManyRedirects: e.tooManyRedirects,
+    invalidRedirectTarget: e.invalidRedirectTarget,
+    redirectToNonHttp: e.redirectToNonHttp,
+    redirectToBlockedHost: e.redirectToBlockedHost,
+  };
 
   try {
     const fetchResult = await fetchWithManualRedirects(
@@ -29,7 +40,8 @@ export async function onRequestPost(context: { request: Request }) {
         signal: AbortSignal.timeout(10000),
         headers: { "User-Agent": "PingThat/1.0 (https://pingthat.dev)" },
       },
-      5
+      5,
+      redirectI18n
     );
     if ("error" in fetchResult) {
       return errorResponse(fetchResult.error, fetchResult.status);
@@ -68,13 +80,13 @@ export async function onRequestPost(context: { request: Request }) {
       securityScore: Object.values(security).filter(Boolean).length,
       maxScore: Object.keys(security).length,
     });
-  } catch (e: any) {
-    if (e?.name === "AbortError" || e?.message?.includes("timeout")) {
-      return errorResponse("Request timed out", 504);
+  } catch (err: any) {
+    if (err?.name === "AbortError" || err?.message?.includes("timeout")) {
+      return errorResponse(e.requestTimedOut, 504);
     }
-    if (e instanceof TypeError) {
-      return errorResponse("Could not reach target (DNS or network)", 502);
+    if (err instanceof TypeError) {
+      return errorResponse(e.dnsOrNetwork, 502);
     }
-    return errorResponse("Could not fetch headers", 502);
+    return errorResponse(e.couldNotFetchHeaders, 502);
   }
 }

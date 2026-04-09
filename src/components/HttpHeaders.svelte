@@ -3,6 +3,7 @@
   import { getHttpHeaders } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidUrl, getValidationError } from '../lib/validation';
+  import type { HttpHeadersResult } from '../lib/api-types';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -12,7 +13,7 @@
   let url = $state("");
   let loading = $state(false);
   let error = $state("");
-  let result = $state<any>(null);
+  let result = $state<HttpHeadersResult | null>(null);
   let requestId = $state(0);
 
   async function check() {
@@ -26,7 +27,7 @@
     const myId = requestId;
     loading = true; error = ""; result = null;
     try {
-      const res = await fetch("/api/http-headers", {
+      const res = await fetch(`/api/http-headers?lang=${lang}`, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: url.trim() }), signal: AbortSignal.timeout(15000),
       });

@@ -1,12 +1,16 @@
 import { isValidUrl, isBlockedHost, jsonResponse, errorResponse, parseBody, isBodyTooLarge } from "./_shared";
+import { getLang, getApiErrors } from "./_i18n";
 
 export async function onRequestPost(context: { request: Request }) {
+  const url = new URL(context.request.url);
+  const e = getApiErrors(getLang(url));
+
   const body = await parseBody(context.request);
-  if (isBodyTooLarge(body)) return errorResponse("Request body too large", 413);
-  if (!body || typeof body.url !== "string") return errorResponse("Missing url");
+  if (isBodyTooLarge(body)) return errorResponse(e.bodyTooLarge, 413);
+  if (!body || typeof body.url !== "string") return errorResponse(e.missingUrl);
 
   let target = isValidUrl(body.url);
-  if (!target) return errorResponse("Invalid or blocked URL");
+  if (!target) return errorResponse(e.invalidOrBlockedUrl);
 
   const chain: { url: string; status: number; statusText: string; location: string | null }[] = [];
   const maxRedirects = 10;
@@ -46,7 +50,7 @@ export async function onRequestPost(context: { request: Request }) {
             finalUrl: nextUrl.href,
             redirectCount: chain.length - 1,
             chain,
-            error: "Redirect to blocked host",
+            error: e.redirectToBlockedHost,
           });
         }
         current = nextUrl.href;
@@ -61,13 +65,13 @@ export async function onRequestPost(context: { request: Request }) {
       redirectCount: chain.length - 1,
       chain,
     });
-  } catch (e: any) {
-    if (e?.name === "AbortError" || e?.message?.includes("timeout")) {
-      return errorResponse("Request timed out", 504);
+  } catch (err: any) {
+    if (err?.name === "AbortError" || err?.message?.includes("timeout")) {
+      return errorResponse(e.requestTimedOut, 504);
     }
-    if (e instanceof TypeError) {
-      return errorResponse("Could not reach target (DNS or network)", 502);
+    if (err instanceof TypeError) {
+      return errorResponse(e.dnsOrNetwork, 502);
     }
-    return errorResponse("Redirect check failed", 502);
+    return errorResponse(e.redirectCheckFailed, 502);
   }
 }

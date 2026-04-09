@@ -73,33 +73,48 @@ export type ManualRedirectResult =
   | { response: Response; finalUrl: string }
   | { error: string; status: number };
 
+export interface RedirectI18n {
+  tooManyRedirects: string;
+  invalidRedirectTarget: string;
+  redirectToNonHttp: string;
+  redirectToBlockedHost: string;
+}
+
+const defaultRedirectI18n: RedirectI18n = {
+  tooManyRedirects: "Too many redirects",
+  invalidRedirectTarget: "Invalid redirect target",
+  redirectToNonHttp: "Redirect to non-HTTP protocol",
+  redirectToBlockedHost: "Redirect to blocked host",
+};
+
 export async function fetchWithManualRedirects(
   initialUrl: string,
   options: RequestInit,
-  maxRedirects = 5
+  maxRedirects = 5,
+  i18n: RedirectI18n = defaultRedirectI18n
 ): Promise<ManualRedirectResult> {
   let currentUrl = initialUrl;
   for (let i = 0; i <= maxRedirects; i++) {
     const res = await fetch(currentUrl, { ...options, redirect: "manual" });
     if (res.status >= 300 && res.status < 400 && res.headers.get("location")) {
-      if (i === maxRedirects) return { error: "Too many redirects", status: 400 };
+      if (i === maxRedirects) return { error: i18n.tooManyRedirects, status: 400 };
       const loc = res.headers.get("location")!;
       let nextUrl: URL;
       try {
         nextUrl = new URL(loc, currentUrl);
       } catch {
-        return { error: "Invalid redirect target", status: 400 };
+        return { error: i18n.invalidRedirectTarget, status: 400 };
       }
       if (!["http:", "https:"].includes(nextUrl.protocol)) {
-        return { error: "Redirect to non-HTTP protocol", status: 400 };
+        return { error: i18n.redirectToNonHttp, status: 400 };
       }
       if (isBlockedHost(nextUrl.hostname)) {
-        return { error: "Redirect to blocked host", status: 400 };
+        return { error: i18n.redirectToBlockedHost, status: 400 };
       }
       currentUrl = nextUrl.href;
       continue;
     }
     return { response: res, finalUrl: currentUrl };
   }
-  return { error: "Too many redirects", status: 400 };
+  return { error: i18n.tooManyRedirects, status: 400 };
 }

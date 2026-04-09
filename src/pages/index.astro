@@ -6,16 +6,64 @@ import CookieConsent from "../components/CookieConsent.astro";
 
 const c = getCommon("en");
 
-const jsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "PingThat",
-  url: "https://pingthat.dev",
-  description: "Free network tools for developers. Check your IP, test privacy, calculate subnets, decode JWTs. 100% client-side, no data collected.",
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-});
+const jsonLd = JSON.stringify([
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "PingThat",
+    url: "https://pingthat.dev",
+    description: "PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking.",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Any",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is the best free online DNS lookup tool?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat offers a free DNS lookup tool as part of its collection of 15 network and security tools. It returns A, AAAA, MX, NS, TXT, and CNAME records instantly. All lookups run in the browser with no tracking or data collection.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How can I check if a website is down for everyone?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat includes an Is It Down tool that checks whether a website is reachable from the internet. Enter any URL to see its HTTP status, response time, and whether the site is down for everyone or just you.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is there a free SSL certificate checker online?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat provides a free SSL certificate checker that shows certificate issuer, expiration date, chain validity, and protocol details. No installation required — it runs directly in your browser.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What free tools can I use to check HTTP headers?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "PingThat includes an HTTP Headers tool that displays all response headers for any URL, including security headers like Content-Security-Policy, HSTS, and X-Frame-Options. Results are shown instantly with no data stored.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can I decode a JWT token online safely?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. PingThat has a JWT decoder that parses and displays the header, payload, and signature of any JWT token. The decoding happens entirely client-side — your token never leaves your browser and no data is sent to any server.",
+        },
+      },
+    ],
+  },
+]);
 ---
 
 <!doctype html>
@@ -23,7 +71,7 @@ const jsonLd = JSON.stringify({
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free network tools for developers. Check your IP, test browser privacy, detect WebRTC leaks, calculate subnets, convert IPs, check password strength, decode JWTs. 100% client-side." />
+  <meta name="description" content="PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
   <meta name="keywords" content="network tools, what is my ip, privacy check, webrtc leak test, subnet calculator, ip converter, password strength, jwt decoder, developer tools" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
@@ -40,14 +88,14 @@ const jsonLd = JSON.stringify({
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <meta property="og:title" content="PingThat — Network Tools for Developers" />
-  <meta property="og:description" content="Free network tools for developers. Check your IP, test privacy, decode JWTs. 100% client-side, no data collected." />
+  <meta property="og:description" content="PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
   <meta property="og:url" content="https://pingthat.dev/" />
   <meta property="og:site_name" content="PingThat" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://pingthat.dev/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PingThat — Network Tools for Developers" />
-  <meta name="twitter:description" content="Free network tools for developers. Check your IP, test privacy, decode JWTs. 100% client-side, no data collected." />
+  <meta name="twitter:description" content="PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
   <meta name="twitter:image" content="https://pingthat.dev/og-image.png" />
 
   <script type="application/ld+json" set:html={jsonLd} />
