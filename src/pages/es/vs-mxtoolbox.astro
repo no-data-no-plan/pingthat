@@ -10,7 +10,7 @@ const faqSchema = {
       name: "Es PingThat una buena alternativa a MXToolbox?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "PingThat es una alternativa s\u00f3lida a MXToolbox para diagn\u00f3sticos de red generales como consultas DNS, verificaci\u00f3n de SSL, WHOIS e inspecci\u00f3n de cabeceras HTTP. Ofrece una interfaz m\u00e1s limpia, sin registro y sin l\u00edmites diarios. Sin embargo, MXToolbox es m\u00e1s adecuado para diagn\u00f3sticos espec\u00edficos de email (SPF, DKIM, DMARC, listas negras) y ofrece funciones de monitoreo que PingThat no tiene.",
+        text: "PingThat es una alternativa s\u00f3lida a MXToolbox para diagn\u00f3sticos de red generales como consultas DNS, verificaci\u00f3n de SSL, WHOIS e inspecci\u00f3n de cabeceras HTTP. Ofrece una interfaz m\u00e1s limpia, sin registro y sin l\u00edmites diarios. PingThat ahora tambi\u00e9n incluye una herramienta de Email Auth para validaci\u00f3n de registros SPF, DKIM y DMARC. Sin embargo, MXToolbox a\u00fan ofrece diagn\u00f3sticos de email m\u00e1s profundos (consultas MX, an\u00e1lisis de cabeceras de email, monitoreo de listas negras en 105+ listas, BIMI, MTA-STS) y funciones de monitoreo que PingThat no tiene.",
       },
     },
     {
@@ -18,7 +18,7 @@ const faqSchema = {
       name: "Qu\u00e9 ofrece MXToolbox que PingThat no tiene?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "MXToolbox ofrece m\u00e1s de 48 herramientas con diagn\u00f3sticos profundos de email: consultas MX, validaci\u00f3n SPF/DKIM/DMARC, monitoreo de listas negras en m\u00e1s de 105 listas, an\u00e1lisis de cabeceras de email, escaneo de puertos, ping/traceroute, informes de salud de dominio y una API. Tambi\u00e9n ofrece servicios de monitoreo y alertas (tier gratuito: 1 dominio, chequeos semanales).",
+        text: "MXToolbox ofrece m\u00e1s de 48 herramientas con diagn\u00f3sticos profundos de email: consultas MX, monitoreo de listas negras en m\u00e1s de 105 listas, an\u00e1lisis de cabeceras de email, validaci\u00f3n BIMI y MTA-STS, escaneo de puertos, ping/traceroute, informes de salud de dominio y una API. Aunque PingThat ahora cubre verificaciones de registros SPF/DKIM/DMARC con su herramienta Email Auth, MXToolbox profundiza m\u00e1s con diagn\u00f3sticos completos de entregabilidad de email y servicios de monitoreo/alertas (tier gratuito: 1 dominio, chequeos semanales).",
       },
     },
     {
@@ -98,7 +98,7 @@ const jsonLd = JSON.stringify(faqSchema);
               ["Conversor de IP", "S\u00ed", "No"],
               ["Mi direcci\u00f3n IP", "S\u00ed", "S\u00ed"],
               ["Consulta MX", "No", "S\u00ed"],
-              ["SPF / DKIM / DMARC", "No", "S\u00ed"],
+              ["SPF / DKIM / DMARC", "S\u00ed (herramienta Email Auth)", "S\u00ed"],
               ["Lista negra (blacklist)", "No", "S\u00ed (105+ listas)"],
               ["Analizador de cabeceras email", "No", "S\u00ed"],
               ["Escaneo de puertos", "No", "S\u00ed"],
@@ -178,6 +178,7 @@ const jsonLd = JSON.stringify(faqSchema);
             <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-accent);">Elige PingThat si necesitas:</h3>
             <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
               <li>Consultas r\u00e1pidas de DNS, SSL, WHOIS o cabeceras HTTP con una interfaz limpia</li>
+              <li>Validaci\u00f3n de registros SPF, DKIM y DMARC con la herramienta Email Auth</li>
               <li>Herramientas de desarrollo como decodificaci\u00f3n JWT, an\u00e1lisis de URL o c\u00e1lculo de subredes</li>
               <li>Herramientas de privacidad (test de fuga WebRTC, test de privacidad del navegador) sin rastreo</li>
               <li>Una experiencia r\u00e1pida y sin distracciones, sin registro ni muros de pago</li>
@@ -186,7 +187,7 @@ const jsonLd = JSON.stringify(faqSchema);
           <div>
             <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">Elige MXToolbox si necesitas:</h3>
             <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
-              <li>Diagn\u00f3sticos de entregabilidad de email (SPF, DKIM, DMARC, BIMI, MTA-STS)</li>
+              <li>Diagn\u00f3sticos profundos de entregabilidad de email m\u00e1s all\u00e1 de SPF/DKIM/DMARC (BIMI, MTA-STS, an\u00e1lisis de cabeceras de email)</li>
               <li>Monitoreo de listas negras en m\u00e1s de 105 listas</li>
               <li>Informes de salud de dominio con seguimiento hist\u00f3rico</li>
               <li>Monitoreo y alertas para dominios en producci\u00f3n</li>
@@ -211,7 +212,7 @@ const jsonLd = JSON.stringify(faqSchema);
             <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
           <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
-            PingThat es una alternativa s\u00f3lida para diagn\u00f3sticos de red generales como consultas DNS, verificaciones SSL, WHOIS e inspecci\u00f3n de cabeceras HTTP. Ofrece una interfaz m\u00e1s limpia, sin registro y sin l\u00edmites diarios. Sin embargo, MXToolbox es m\u00e1s adecuado para diagn\u00f3sticos espec\u00edficos de email (SPF, DKIM, DMARC, listas negras) y ofrece funciones de monitoreo que PingThat no tiene.
+            PingThat es una alternativa s\u00f3lida para diagn\u00f3sticos de red generales como consultas DNS, verificaciones SSL, WHOIS e inspecci\u00f3n de cabeceras HTTP. Ofrece una interfaz m\u00e1s limpia, sin registro y sin l\u00edmites diarios. PingThat ahora tambi\u00e9n incluye una herramienta de Email Auth para validaci\u00f3n de registros SPF, DKIM y DMARC. Sin embargo, MXToolbox a\u00fan ofrece diagn\u00f3sticos de email m\u00e1s profundos (consultas MX, an\u00e1lisis de cabeceras de email, monitoreo de listas negras en 105+ listas, BIMI, MTA-STS) y funciones de monitoreo que PingThat no tiene.
           </div>
         </details>
 
@@ -221,7 +222,7 @@ const jsonLd = JSON.stringify(faqSchema);
             <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
           <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
-            MXToolbox ofrece m\u00e1s de 48 herramientas con diagn\u00f3sticos profundos de email: consultas MX, validaci\u00f3n SPF/DKIM/DMARC, monitoreo de listas negras en m\u00e1s de 105 listas, an\u00e1lisis de cabeceras de email, escaneo de puertos, ping/traceroute, informes de salud de dominio y una API. Tambi\u00e9n ofrece servicios de monitoreo y alertas (tier gratuito: 1 dominio, chequeos semanales). Es un est\u00e1ndar de la industria desde aproximadamente 2004.
+            MXToolbox ofrece m\u00e1s de 48 herramientas con diagn\u00f3sticos profundos de email: consultas MX, monitoreo de listas negras en m\u00e1s de 105 listas, an\u00e1lisis de cabeceras de email, validaci\u00f3n BIMI y MTA-STS, escaneo de puertos, ping/traceroute, informes de salud de dominio y una API. Aunque PingThat ahora cubre verificaciones de registros SPF/DKIM/DMARC con su herramienta Email Auth, MXToolbox profundiza m\u00e1s con diagn\u00f3sticos completos de entregabilidad de email y servicios de monitoreo/alertas (tier gratuito: 1 dominio, chequeos semanales). Es un est\u00e1ndar de la industria desde aproximadamente 2004.
           </div>
         </details>
 
