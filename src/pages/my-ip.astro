@@ -3,30 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import MyIp from "../components/MyIp.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["my-ip"].en;
 ---
 
 <Layout
-  title="What Is My IP"
-  description="See your public IP address, location, ISP, and network details. Free, instant, no tracking."
+  title={p.title}
+  description={p.description}
   activeToolId="my-ip"
 >
   <MyIp client:only="svelte" />
 
   <SeoContent
-    heading="About this tool"
-    text="Instantly see your public IP address along with your approximate location, ISP, timezone, and connection details. We fetch your IP from public APIs and display it locally — no data is stored or logged."
+    heading={p.seoHeading}
+    text={p.seoText}
     relatedToolIds={["privacy-check", "webrtc-leak-test", "subnet-calculator"]}
   />
 
   <SeoBlock
-    heading="How does IP detection work?"
-    text="When you visit any website, your public IP address is visible to the server. This tool uses third-party APIs (ipapi.co and ipify.org) to retrieve your IP and associated geolocation data. The results are displayed in your browser and never stored."
-    features={[
-      "Public IPv4 address detection",
-      "Approximate geolocation (city, region, country)",
-      "ISP and organization identification",
-      "Timezone detection",
-      "Browser and connection info",
-    ]}
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
   />
 </Layout>

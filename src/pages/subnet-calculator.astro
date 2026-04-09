@@ -3,33 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import SubnetCalculator from "../components/SubnetCalculator.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["subnet-calculator"].en;
 ---
 
 <Layout
-  title="Subnet Calculator"
-  description="Calculate network address, broadcast address, host range, and more from CIDR notation. Free online subnet calculator."
+  title={p.title}
+  description={p.description}
   activeToolId="subnet-calculator"
 >
   <SubnetCalculator client:load />
 
   <SeoContent
-    heading="About this tool"
-    text="Enter an IP address and CIDR prefix length to instantly calculate network details including network address, broadcast address, host range, subnet mask, wildcard mask, and IP class. Includes a common subnet cheatsheet."
+    heading={p.seoHeading}
+    text={p.seoText}
     relatedToolIds={["ip-converter", "my-ip", "jwt-decoder"]}
   />
 
   <SeoBlock
-    heading="Understanding CIDR notation"
-    text="CIDR (Classless Inter-Domain Routing) notation combines an IP address with a prefix length (e.g., 192.168.1.0/24). The prefix length indicates how many bits of the address identify the network, with the remaining bits available for host addresses."
-    features={[
-      "Network and broadcast address calculation",
-      "First and last usable host",
-      "Total usable hosts count",
-      "Subnet mask and wildcard mask",
-      "IP class detection (A/B/C/D/E)",
-      "Private vs public address identification",
-      "Binary representation",
-      "Common subnet cheatsheet",
-    ]}
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
   />
 </Layout>

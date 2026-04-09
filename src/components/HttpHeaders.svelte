@@ -1,11 +1,13 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getHttpHeaders } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
   import { isValidUrl, getValidationError } from '../lib/validation';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
   const t = $derived(getHttpHeaders(lang));
+  const c = $derived(getCommon(lang));
 
   let url = $state("");
   let loading = $state(false);
@@ -41,9 +43,7 @@
     } catch (e: any) {
       if (myId !== requestId) return;
       if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
-        error = lang === 'es'
-          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
-          : 'Request timed out. Please try again.';
+        error = c.requestTimeout;
       } else {
         error = t.checkFailed;
       }
@@ -54,14 +54,14 @@
 
   function copy(val: string) { navigator.clipboard.writeText(val); }
 
-  const securityLabels: Record<string, string> = $derived({
+  const securityLabels: Record<string, string> = {
     hsts: "Strict-Transport-Security",
     csp: "Content-Security-Policy",
     xFrameOptions: "X-Frame-Options",
     xContentType: "X-Content-Type-Options",
     referrerPolicy: "Referrer-Policy",
     permissionsPolicy: "Permissions-Policy",
-  });
+  };
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
@@ -73,6 +73,7 @@
     </div>
   </div>
 
+  <div aria-live="polite" aria-atomic="true">
   {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
 
   {#if result}
@@ -101,4 +102,5 @@
       </div>
     </div>
   {/if}
+  </div>
 </div>

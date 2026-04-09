@@ -3,10 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import HttpHeaders from "../components/HttpHeaders.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["http-headers"].en;
 ---
 
-<Layout title="HTTP Header Checker Online Free" description="Inspect HTTP response headers and check security headers for any URL. Free, instant." activeToolId="http-headers">
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="http-headers"
+>
   <HttpHeaders client:only="svelte" />
-  <SeoContent heading="About this tool" text="Enter a URL to inspect all HTTP response headers. Get a security score based on HSTS, CSP, X-Frame-Options, and other security headers." relatedToolIds={["ssl-checker", "redirect-checker", "is-it-up"]} />
-  <SeoBlock heading="Why check HTTP headers?" text="HTTP headers control caching, security, content type, and more. Security headers like CSP and HSTS protect against XSS, clickjacking, and downgrade attacks." features={["All response headers displayed", "Security header analysis with score", "HSTS, CSP, X-Frame-Options check", "Copy individual header values"]} />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["ssl-checker", "redirect-checker", "is-it-up"]}
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+  />
 </Layout>

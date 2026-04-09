@@ -3,10 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import SslChecker from "../components/SslChecker.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["ssl-checker"].en;
 ---
 
-<Layout title="SSL Certificate Checker Online Free" description="Check SSL/TLS status, HSTS headers, and certificate details for any domain. Free, instant." activeToolId="ssl-checker">
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="ssl-checker"
+>
   <SslChecker client:only="svelte" />
-  <SeoContent heading="About this tool" text="Enter a domain to check its SSL/TLS certificate status. See HTTPS connectivity, HSTS configuration, server info, and certificate transparency logs." relatedToolIds={["http-headers", "dns-lookup", "is-it-up"]} />
-  <SeoBlock heading="Why check SSL certificates?" text="SSL/TLS certificates encrypt traffic between browsers and servers. An expired or misconfigured certificate can cause security warnings and lost trust." features={["HTTPS connectivity check", "HSTS header detection", "Certificate transparency logs", "Response time measurement"]} />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["http-headers", "dns-lookup", "is-it-up"]}
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+  />
 </Layout>

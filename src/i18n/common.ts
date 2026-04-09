@@ -15,6 +15,10 @@ const common = {
     show: "Show",
     hide: "Hide",
 
+    // Errors
+    requestTimeout: "Request timed out. Please try again.",
+    serverError: "Server error. Please try again later.",
+
     // Status
     yes: "Yes",
     no: "No",
@@ -62,6 +66,10 @@ const common = {
     generateStrong: "Generar Segura",
     show: "Mostrar",
     hide: "Ocultar",
+
+    // Errors
+    requestTimeout: "La petici\u00f3n ha tardado demasiado. Int\u00e9ntalo de nuevo.",
+    serverError: "Error del servidor. Int\u00e9ntalo m\u00e1s tarde.",
 
     // Status
     yes: "S\u00ed",

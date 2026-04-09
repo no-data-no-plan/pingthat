@@ -3,33 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import JwtDecoder from "../components/JwtDecoder.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["jwt-decoder"].en;
 ---
 
 <Layout
-  title="JWT Decoder"
-  description="Decode and inspect JSON Web Tokens — header, payload, and signature. 100% client-side, your token never leaves your browser."
+  title={p.title}
+  description={p.description}
   activeToolId="jwt-decoder"
 >
   <JwtDecoder client:load />
 
   <SeoContent
-    heading="About this tool"
-    text="Paste a JWT token to instantly decode and inspect its header, payload, and signature. Timestamps (exp, iat, nbf) are converted to human-readable dates. Expired tokens are flagged. Your token is never sent anywhere."
+    heading={p.seoHeading}
+    text={p.seoText}
     relatedToolIds={["password-strength", "privacy-check", "ip-converter"]}
   />
 
   <SeoBlock
-    heading="Understanding JSON Web Tokens"
-    text="A JWT consists of three Base64URL-encoded parts separated by dots: header (algorithm and type), payload (claims like subject, expiration, and custom data), and signature (cryptographic verification). JWTs are widely used for authentication and API authorization."
-    features={[
-      "Header decoding (algorithm, type)",
-      "Payload inspection with formatted JSON",
-      "Human-readable timestamps",
-      "Expiration detection",
-      "Color-coded sections (header, payload, signature)",
-      "Copy individual sections",
-      "Example token for testing",
-      "Privacy-first: nothing leaves your browser",
-    ]}
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
   />
 </Layout>

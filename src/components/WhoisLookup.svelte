@@ -1,11 +1,13 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getWhoisLookup } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
   import { isValidDomain, getValidationError } from '../lib/validation';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
   const t = $derived(getWhoisLookup(lang));
+  const c = $derived(getCommon(lang));
 
   let domain = $state("");
   let loading = $state(false);
@@ -41,9 +43,7 @@
     } catch (e: any) {
       if (myId !== requestId) return;
       if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
-        error = lang === 'es'
-          ? 'La petición ha tardado demasiado. Inténtalo de nuevo.'
-          : 'Request timed out. Please try again.';
+        error = c.requestTimeout;
       } else {
         error = t.lookupFailed;
       }
@@ -64,6 +64,7 @@
     </div>
   </div>
 
+  <div aria-live="polite" aria-atomic="true">
   {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
 
   {#if result?.found}
@@ -108,4 +109,5 @@
   {:else if result && !result.found}
     <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{result.error || t.notFound}</div></div>
   {/if}
+  </div>
 </div>

@@ -23,7 +23,7 @@ const text = lang === "es"
     };
 ---
 
-<div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-[9999] p-3 border-t shadow-lg" style="background: var(--color-surface); border-color: var(--color-border);">
+<div id="cookie-banner" role="alertdialog" aria-label="Cookie consent" class="hidden fixed bottom-0 left-0 right-0 z-[9999] p-3 border-t shadow-lg" style="background: var(--color-surface); border-color: var(--color-border);">
   <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 text-xs" style="color: var(--color-text-muted);">
     <p class="flex-1">
       {text.message}

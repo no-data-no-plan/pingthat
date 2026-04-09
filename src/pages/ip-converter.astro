@@ -3,33 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import IpConverter from "../components/IpConverter.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["ip-converter"].en;
 ---
 
 <Layout
-  title="IP Address Converter"
-  description="Convert IP addresses between decimal, binary, hexadecimal, octal, and integer formats. Free online IP converter."
+  title={p.title}
+  description={p.description}
   activeToolId="ip-converter"
 >
   <IpConverter client:load />
 
   <SeoContent
-    heading="About this tool"
-    text="Convert any IPv4 address between decimal dotted notation, binary, hexadecimal, integer, and octal formats. Auto-detects the input format and shows all conversions instantly. Also displays the IPv4-mapped IPv6 representation."
+    heading={p.seoHeading}
+    text={p.seoText}
     relatedToolIds={["subnet-calculator", "my-ip", "password-strength"]}
   />
 
   <SeoBlock
-    heading="IP address formats explained"
-    text="IPv4 addresses can be represented in multiple formats. Decimal dotted (192.168.1.1) is the most common. Binary shows the actual bits. Hexadecimal is used in some network configurations. Integer format is a single 32-bit number. Octal was historically used in some Unix systems."
-    features={[
-      "Auto-detect input format",
-      "Decimal dotted notation",
-      "Binary representation",
-      "Hexadecimal (dotted and flat)",
-      "32-bit integer format",
-      "Octal representation",
-      "IPv4-mapped IPv6 display",
-      "Copy individual values",
-    ]}
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
   />
 </Layout>

@@ -3,10 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import DnsLookup from "../components/DnsLookup.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["dns-lookup"].en;
 ---
 
-<Layout title="DNS Lookup Online Free" description="Query DNS records for any domain. A, AAAA, MX, CNAME, TXT, NS, SOA. Uses Cloudflare DNS. Free, instant." activeToolId="dns-lookup">
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="dns-lookup"
+>
   <DnsLookup client:only="svelte" />
-  <SeoContent heading="About this tool" text="Enter a domain to query DNS records using Cloudflare's DNS-over-HTTPS. See A, AAAA, MX, CNAME, TXT, NS, and SOA records with TTL values." relatedToolIds={["my-ip", "whois-lookup", "ssl-checker"]} />
-  <SeoBlock heading="How DNS lookup works" text="DNS translates domain names to IP addresses. This tool queries Cloudflare's public DNS resolver (1.1.1.1) via DNS-over-HTTPS for fast, private results." features={["A, AAAA, MX, CNAME, TXT, NS, SOA records", "TTL display", "Powered by Cloudflare DNS-over-HTTPS", "No server needed — queries from your browser"]} />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["my-ip", "whois-lookup", "ssl-checker"]}
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+  />
 </Layout>

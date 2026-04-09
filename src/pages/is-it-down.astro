@@ -3,10 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import IsItDown from "../components/IsItDown.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["is-it-down"].en;
 ---
 
-<Layout title="Is It Down? Website Down Checker" description="Check if a website is down for everyone or just you. Instant status check. Free." activeToolId="is-it-down">
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="is-it-down"
+>
   <IsItDown client:only="svelte" />
-  <SeoContent heading="About this tool" text="Enter a URL to check if a website is currently reachable. Get instant feedback on whether the site is up or down, with response time and status code." relatedToolIds={["is-it-up", "dns-lookup", "http-headers"]} />
-  <SeoBlock heading="How does this work?" text="We send a request to the website from our server and report whether it responds. If it responds with a status code below 500, it's considered up." features={["Instant up/down check", "Response time measurement", "HTTP status code display", "Works for any public URL"]} />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["is-it-up", "dns-lookup", "http-headers"]}
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+  />
 </Layout>

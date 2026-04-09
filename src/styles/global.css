@@ -18,8 +18,8 @@
 
   /* Text */
   --color-text: #e8e6e0;
-  --color-text-muted: #8b919a;
-  --color-text-dim: #555d6b;
+  --color-text-muted: #9ca3af;
+  --color-text-dim: #6b7280;
 
   /* Accent — emerald */
   --color-accent: #10b981;
@@ -142,11 +142,13 @@ body {
 
 /* ── Badges ── */
 .badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-size: 10px;
-  padding: 3px 8px;
+  padding: 5px 10px;
   border-radius: 5px;
   letter-spacing: 0.05em;
+  min-height: 28px;
 }
 
 .badge-green { background: var(--color-green-dim); color: var(--color-green); border: 1px solid rgba(62, 207, 142, 0.2); }
@@ -251,7 +253,7 @@ input[type="number"] { -moz-appearance: textfield; }
 .btn-primary {
   background: var(--color-accent);
   color: #0f172a;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
   font-size: 12px;
@@ -260,6 +262,7 @@ input[type="number"] { -moz-appearance: textfield; }
   transition: opacity 0.15s;
   cursor: pointer;
   border: none;
+  min-height: 44px;
 }
 
 .btn-primary:hover { opacity: 0.85; }
@@ -268,13 +271,14 @@ input[type="number"] { -moz-appearance: textfield; }
 .btn-secondary {
   background: var(--color-surface2);
   color: var(--color-text-muted);
-  padding: 8px 16px;
+  padding: 10px 16px;
   border-radius: 8px;
   font-size: 11px;
   letter-spacing: 0.05em;
   border: 1px solid var(--color-border);
   cursor: pointer;
   transition: color 0.15s, border-color 0.15s;
+  min-height: 36px;
 }
 
 .btn-secondary:hover { color: var(--color-text); border-color: var(--color-border2); }
@@ -291,7 +295,7 @@ input[type="number"] { -moz-appearance: textfield; }
 
 .tab {
   flex: 1;
-  padding: 7px 12px;
+  padding: 10px 12px;
   font-size: 11px;
   cursor: pointer;
   border: none;
@@ -300,6 +304,7 @@ input[type="number"] { -moz-appearance: textfield; }
   color: var(--color-text-muted);
   letter-spacing: 0.05em;
   transition: all 0.15s;
+  min-height: 40px;
 }
 
 .tab:hover { color: var(--color-text); }
