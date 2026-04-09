@@ -558,3 +558,54 @@ export const urlParserI18n = {
   es: { urlLabel: "URL", placeholder: "https://ejemplo.com/ruta?clave=valor#seccion", parsedUrl: "URL Analizada", queryParams: "Par\u00e1metros de Consulta", invalidUrl: "URL inv\u00e1lida. Introduce una URL completa que empiece con http:// o https://.", defaultPort: "(por defecto)", none: "(ninguno)", copy: "Copiar", sample: "Ejemplo", clear: "Limpiar" },
 } as const;
 export function getUrlParser(lang: Lang) { return urlParserI18n[lang]; }
+
+
+// ─── EmailAuth ─────────────────────────────────────────────────────────────
+
+export const emailAuthI18n = {
+  en: {
+    domainLabel: "Domain",
+    placeholder: "example.com",
+    check: "Check Email Auth",
+    checking: "Checking...",
+    results: "Email Authentication Results",
+    spfTitle: "SPF (Sender Policy Framework)",
+    dmarcTitle: "DMARC (Domain-based Message Authentication)",
+    dkimTitle: "DKIM (DomainKeys Identified Mail)",
+    recordFound: "Record found",
+    recordMissing: "No record found",
+    policy: "Policy",
+    selectors: "Selectors found",
+    assessPass: "Pass",
+    assessWarning: "Warning",
+    assessFail: "Fail",
+    tipSpf: "SPF specifies which mail servers are authorized to send email on behalf of your domain. Without it, anyone can forge emails from your domain.",
+    tipDmarc: "DMARC tells receiving servers what to do when SPF or DKIM checks fail. A policy of 'reject' or 'quarantine' provides strong protection against spoofing.",
+    tipDkim: "DKIM adds a cryptographic signature to outgoing emails, allowing receivers to verify the message was not altered in transit.",
+    checkFailed: "Email authentication check failed. Try again.",
+    invalidDomain: "Invalid domain format. Enter a domain like example.com.",
+  },
+  es: {
+    domainLabel: "Dominio",
+    placeholder: "ejemplo.com",
+    check: "Verificar Email Auth",
+    checking: "Verificando...",
+    results: "Resultados de Autenticacion de Email",
+    spfTitle: "SPF (Sender Policy Framework)",
+    dmarcTitle: "DMARC (Autenticacion de Mensajes Basada en Dominio)",
+    dkimTitle: "DKIM (DomainKeys Identified Mail)",
+    recordFound: "Registro encontrado",
+    recordMissing: "Sin registro encontrado",
+    policy: "Politica",
+    selectors: "Selectores encontrados",
+    assessPass: "Correcto",
+    assessWarning: "Advertencia",
+    assessFail: "Fallo",
+    tipSpf: "SPF especifica que servidores de correo estan autorizados a enviar email en nombre de tu dominio. Sin el, cualquiera puede falsificar emails desde tu dominio.",
+    tipDmarc: "DMARC indica a los servidores receptores que hacer cuando las verificaciones SPF o DKIM fallan. Una politica de 'reject' o 'quarantine' proporciona proteccion fuerte contra suplantacion.",
+    tipDkim: "DKIM agrega una firma criptografica a los emails salientes, permitiendo a los receptores verificar que el mensaje no fue alterado en transito.",
+    checkFailed: "La verificacion de autenticacion de email fallo. Intentalo de nuevo.",
+    invalidDomain: "Formato de dominio no valido. Introduce un dominio como ejemplo.com.",
+  },
+} as const;
+export function getEmailAuth(lang: Lang) { return emailAuthI18n[lang]; }

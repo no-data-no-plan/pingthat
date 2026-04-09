@@ -74,6 +74,15 @@ export interface RedirectCheckerResult {
   error?: string;
 }
 
+/** Returned by /api/email-auth */
+export interface EmailAuthResult {
+  domain: string;
+  spf: { found: boolean; record: string | null; assessment: "pass" | "warning" | "fail" };
+  dmarc: { found: boolean; record: string | null; policy: string | null; assessment: "pass" | "warning" | "fail" };
+  dkim: { found: boolean; selectors: Array<{ selector: string; record: string }>; assessment: "pass" | "warning" | "fail" };
+  error?: string;
+}
+
 /** Returned by /api/whois-lookup */
 export interface WhoisLookupResult {
   domain: string;

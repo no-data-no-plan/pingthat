@@ -45,6 +45,9 @@ export interface ApiErrors {
   responseTooLarge: string;
   invalidRdapResponse: string;
 
+  // email-auth
+  emailAuthFailed: string;
+
   // _shared fetchWithManualRedirects
   tooManyRedirects: string;
   invalidRedirectTarget: string;
@@ -73,6 +76,8 @@ const errors: Record<SupportedLang, ApiErrors> = {
 
     redirectCheckFailed: 'Redirect check failed',
     redirectToBlockedHost: 'Redirect to blocked host',
+
+    emailAuthFailed: 'Email authentication check failed',
 
     whoisLookupFailed: 'WHOIS lookup failed',
     domainNotFoundInRdap: 'Domain not found in RDAP',
@@ -105,6 +110,8 @@ const errors: Record<SupportedLang, ApiErrors> = {
 
     redirectCheckFailed: 'Comprobacion de redireccion fallida',
     redirectToBlockedHost: 'Redireccion a host bloqueado',
+
+    emailAuthFailed: 'La verificacion de autenticacion de email fallo',
 
     whoisLookupFailed: 'Consulta WHOIS fallida',
     domainNotFoundInRdap: 'Dominio no encontrado en RDAP',

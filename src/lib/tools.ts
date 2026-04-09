@@ -9,7 +9,7 @@ export interface Tool {
 }
 
 export const groups = [
-  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "is-it-down", "is-it-up"] },
+  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "is-it-down", "is-it-up"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
@@ -85,6 +85,15 @@ export const tools: Tool[] = [
     description: "Query DNS records for any domain \u2014 A, AAAA, MX, CNAME, TXT, NS, SOA",
     icon: "Dn",
     keywords: ["dns lookup", "dns checker", "dns query", "nslookup online"],
+    group: "Network",
+  },
+  {
+    id: "email-auth",
+    name: "Email Auth",
+    path: "/email-auth",
+    description: "Check SPF, DKIM, and DMARC records for any domain",
+    icon: "Em",
+    keywords: ["spf checker", "dkim checker", "dmarc checker", "email authentication", "spf record", "dkim record", "dmarc record", "email security"],
     group: "Network",
   },
   {

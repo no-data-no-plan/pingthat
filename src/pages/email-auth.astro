@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import EmailAuth from "../components/EmailAuth.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["email-auth"].en;
+---
+
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="email-auth"
+>
+  <EmailAuth client:only="svelte" />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["dns-lookup", "ssl-checker", "http-headers"]}
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+  />
+</Layout>
