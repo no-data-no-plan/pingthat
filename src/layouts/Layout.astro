@@ -78,10 +78,10 @@ const jsonLd = JSON.stringify(schemas);
   <link rel="canonical" href={canonicalUrl} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts (self-hosted) -->
+  <link rel="stylesheet" href="/fonts/fonts.css" />
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Open Graph -->
   <meta property="og:title" content={`${title} — PingThat`} />
@@ -144,6 +144,16 @@ const jsonLd = JSON.stringify(schemas);
       <!-- Content -->
       <main id="main-content" class="flex-1">
         <slot />
+        <!-- Ad banner -->
+        <div class="shrink-0 px-6 py-3 border-t border-[var(--color-border)]" style="min-height: 100px;">
+          <div class="mx-auto max-w-[728px]" style="min-height: 90px;">
+            <ins class="adsbygoogle"
+                 style="display:block; min-height: 90px;"
+                 data-ad-client="ca-pub-8761907366448308"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </div>
         <CrossLinks exclude="dev" lang={lang} />
       </main>
 
