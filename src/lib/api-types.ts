@@ -83,6 +83,20 @@ export interface EmailAuthResult {
   error?: string;
 }
 
+/** Single port scan entry returned within PortScanResult */
+export interface PortScanEntry {
+  port: number;
+  status: "open" | "closed" | "filtered";
+  service: string;
+}
+
+/** Returned by /api/port-scan */
+export interface PortScanResult {
+  host: string;
+  results: PortScanEntry[];
+  error?: string;
+}
+
 /** Returned by /api/whois-lookup */
 export interface WhoisLookupResult {
   domain: string;

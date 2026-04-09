@@ -48,6 +48,10 @@ export interface ApiErrors {
   // email-auth
   emailAuthFailed: string;
 
+  // port-scan
+  portScanFailed: string;
+  invalidPorts: string;
+
   // _shared fetchWithManualRedirects
   tooManyRedirects: string;
   invalidRedirectTarget: string;
@@ -78,6 +82,9 @@ const errors: Record<SupportedLang, ApiErrors> = {
     redirectToBlockedHost: 'Redirect to blocked host',
 
     emailAuthFailed: 'Email authentication check failed',
+
+    portScanFailed: 'Port scan failed',
+    invalidPorts: 'Invalid ports: provide 1-20 ports, each between 1 and 65535',
 
     whoisLookupFailed: 'WHOIS lookup failed',
     domainNotFoundInRdap: 'Domain not found in RDAP',
@@ -112,6 +119,9 @@ const errors: Record<SupportedLang, ApiErrors> = {
     redirectToBlockedHost: 'Redireccion a host bloqueado',
 
     emailAuthFailed: 'La verificacion de autenticacion de email fallo',
+
+    portScanFailed: 'El escaneo de puertos fallo',
+    invalidPorts: 'Puertos no validos: proporciona entre 1 y 20 puertos, cada uno entre 1 y 65535',
 
     whoisLookupFailed: 'Consulta WHOIS fallida',
     domainNotFoundInRdap: 'Dominio no encontrado en RDAP',

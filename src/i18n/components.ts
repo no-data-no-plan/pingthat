@@ -609,3 +609,48 @@ export const emailAuthI18n = {
   },
 } as const;
 export function getEmailAuth(lang: Lang) { return emailAuthI18n[lang]; }
+
+
+// ─── PortScan ───────────────────────────────────────────────────────────────
+
+export const portScanI18n = {
+  en: {
+    hostLabel: "Host",
+    placeholder: "example.com",
+    customPortsLabel: "Custom ports (optional)",
+    customPortsPlaceholder: "80, 443, 8080, 3000...",
+    customPortsHint: "Leave empty to scan 17 common ports. Max 20 ports, range 1-65535.",
+    scan: "Scan Ports",
+    scanning: "Scanning...",
+    results: "Port Scan Results",
+    statusOpen: "Open",
+    statusClosed: "Closed",
+    statusFiltered: "Filtered",
+    colPort: "Port",
+    colService: "Service",
+    colStatus: "Status",
+    scanFailed: "Port scan failed. Try again.",
+    invalidPorts: "Invalid ports. Enter comma-separated numbers between 1 and 65535 (max 20).",
+    disclaimer: "This tool checks HTTP/HTTPS connectivity to common ports from a Cloudflare Worker. It may not detect all open services -- only those that respond to HTTP requests. Filtered means the connection timed out (port may be blocked by a firewall).",
+  },
+  es: {
+    hostLabel: "Host",
+    placeholder: "ejemplo.com",
+    customPortsLabel: "Puertos personalizados (opcional)",
+    customPortsPlaceholder: "80, 443, 8080, 3000...",
+    customPortsHint: "Deja vacio para escanear 17 puertos comunes. Max 20 puertos, rango 1-65535.",
+    scan: "Escanear Puertos",
+    scanning: "Escaneando...",
+    results: "Resultados del Escaneo de Puertos",
+    statusOpen: "Abierto",
+    statusClosed: "Cerrado",
+    statusFiltered: "Filtrado",
+    colPort: "Puerto",
+    colService: "Servicio",
+    colStatus: "Estado",
+    scanFailed: "El escaneo de puertos fallo. Intentalo de nuevo.",
+    invalidPorts: "Puertos no validos. Introduce numeros separados por comas entre 1 y 65535 (max 20).",
+    disclaimer: "Esta herramienta verifica la conectividad HTTP/HTTPS a puertos comunes desde un Cloudflare Worker. Puede no detectar todos los servicios abiertos -- solo aquellos que responden a solicitudes HTTP. Filtrado significa que la conexion expiro (el puerto puede estar bloqueado por un firewall).",
+  },
+} as const;
+export function getPortScan(lang: Lang) { return portScanI18n[lang]; }

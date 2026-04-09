@@ -9,7 +9,7 @@ export interface Tool {
 }
 
 export const groups = [
-  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "is-it-down", "is-it-up"] },
+  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
@@ -94,6 +94,15 @@ export const tools: Tool[] = [
     description: "Check SPF, DKIM, and DMARC records for any domain",
     icon: "Em",
     keywords: ["spf checker", "dkim checker", "dmarc checker", "email authentication", "spf record", "dkim record", "dmarc record", "email security"],
+    group: "Network",
+  },
+  {
+    id: "port-scan",
+    name: "Port Scanner",
+    path: "/port-scan",
+    description: "Scan common ports on any host to check which services are reachable",
+    icon: "Ps",
+    keywords: ["port scanner", "port check", "open ports", "port scan online", "port checker"],
     group: "Network",
   },
   {
