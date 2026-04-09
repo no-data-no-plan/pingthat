@@ -1,0 +1,253 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is PingThat a good alternative to MXToolbox?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "PingThat is a strong alternative to MXToolbox for general network diagnostics like DNS lookups, SSL checks, WHOIS, and HTTP header inspection. It offers a cleaner interface, no registration, and no daily limits. However, MXToolbox is better suited for email-specific diagnostics (SPF, DKIM, DMARC, blacklist checks) and offers monitoring features that PingThat does not.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does MXToolbox offer that PingThat doesn't?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "MXToolbox offers 48+ tools with deep email diagnostics including MX record lookups, SPF/DKIM/DMARC validation, blacklist monitoring across 105+ lists, email header analysis, port scanning, ping/traceroute, domain health reports, and an API. MXToolbox also provides monitoring and alerting services (free tier: 1 domain, weekly checks).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Which free tool is best for DNS lookups?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Both PingThat and MXToolbox offer free DNS lookups. PingThat provides a faster, cleaner experience with no ads blocking results and no registration required. MXToolbox offers additional DNS-related tools like MX lookups and domain health reports. For a quick, distraction-free DNS query, PingThat is the better choice.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Does MXToolbox require registration?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "MXToolbox does not require registration for basic lookups. However, monitoring features, blacklist alerts, and advanced reports require a free account. Paid plans ($129-$399/month) unlock full monitoring, API access, and expanded blacklist checks. PingThat never requires registration for any feature.",
+      },
+    },
+  ],
+};
+
+const jsonLd = JSON.stringify(faqSchema);
+---
+
+<Layout
+  title="PingThat vs MXToolbox: Network Tools Compared (2026)"
+  description="Compare PingThat and MXToolbox for DNS, SSL, WHOIS, and network diagnostics. See which free tool fits your needs."
+  activeToolId="compare"
+  lang="en"
+>
+  <div class="max-w-4xl mx-auto px-6 py-8">
+    <!-- Page header -->
+    <div class="mb-8">
+      <div class="section-eyebrow">Comparison</div>
+      <h1 class="section-title">PingThat vs <em>MXToolbox</em></h1>
+      <div class="section-sub">An honest comparison of two free network tool suites</div>
+    </div>
+
+    <!-- Intro -->
+    <div class="card mb-8">
+      <div class="card-body space-y-3 text-sm" style="line-height: 1.7;">
+        <p style="color: var(--color-text-muted);">
+          <strong style="color: var(--color-text);">PingThat</strong> and <strong style="color: var(--color-text);">MXToolbox</strong> are both free online tool suites for network diagnostics, but they serve different audiences. PingThat focuses on a clean, developer-friendly experience with 16 tools that require no registration and have no usage limits. MXToolbox is an industry-standard platform with 48+ tools, deep email diagnostics, and paid monitoring tiers.
+        </p>
+        <p style="color: var(--color-text-muted);">
+          This page compares both tools honestly so you can decide which one fits your workflow.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature comparison table -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Feature Comparison</h2>
+      <div class="card overflow-x-auto">
+        <table class="w-full text-sm" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <th class="text-left px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">Feature</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-accent); font-weight: 600;">PingThat</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">MXToolbox</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["DNS Lookup", "Yes", "Yes"],
+              ["HTTP Headers", "Yes", "Yes"],
+              ["SSL Certificate Check", "Yes", "Yes"],
+              ["WHOIS Lookup", "Yes", "Yes"],
+              ["Subnet Calculator", "Yes", "Yes"],
+              ["Is It Up / Down", "Yes (2 tools)", "Monitoring only (paid)"],
+              ["JWT Decoder", "Yes", "No"],
+              ["Password Strength", "Yes", "Generator only"],
+              ["WebRTC Leak Test", "Yes", "No"],
+              ["Redirect Checker", "Yes", "No"],
+              ["URL Parser", "Yes", "No"],
+              ["Privacy Check", "Yes", "No"],
+              ["IP Converter", "Yes", "No"],
+              ["My IP Address", "Yes", "Yes"],
+              ["MX Record Lookup", "No", "Yes"],
+              ["SPF / DKIM / DMARC", "No", "Yes"],
+              ["Blacklist Check", "No", "Yes (105+ lists)"],
+              ["Email Header Analyzer", "No", "Yes"],
+              ["Port Scan", "No", "Yes"],
+              ["Ping / Traceroute", "No", "Yes"],
+              ["Monitoring & Alerts", "No", "Yes (free: 1 domain weekly)"],
+              ["API Access", "No", "Yes"],
+              ["Registration Required", "Never", "No for lookups, Yes for monitoring"],
+              ["Price", "Free", "Free lookups / $129\u2013399/mo"],
+              ["UI / UX", "Modern, clean", "Dated, cluttered"],
+              ["Languages", "EN + ES", "EN"],
+            ].map(([feature, pt, mx]) => (
+              <tr style="border-bottom: 1px solid var(--color-border);">
+                <td class="px-5 py-3 text-xs" style="color: var(--color-text);">{feature}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${pt.startsWith("Yes") ? "var(--color-green)" : pt === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{pt}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${mx.startsWith("Yes") ? "var(--color-green)" : mx === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{mx}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Privacy -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Privacy & Data Handling</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">No accounts, no tracking, no server-side logging. Client-side tools (JWT decoder, password checker, subnet calculator) never send data anywhere. Network tools use third-party APIs directly from the browser with no proxy.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">MXToolbox</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Free account required for monitoring and alerts. MXToolbox processes lookups server-side and may log query data. Paid plans store domain health history and alerts. Standard privacy policy applies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Pricing</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+            <span class="badge badge-green">Free</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">All 16 tools are completely free with no daily limits, no task caps, and no premium tier. No registration required for any feature.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">MXToolbox</span>
+            <span class="badge badge-amber">Freemium</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Free lookups with no registration. Free account adds 1 domain monitoring (weekly, 30 blacklists). Paid plans: <strong style="color: var(--color-text);">Delivery Center</strong> from $129/mo, <strong style="color: var(--color-text);">Full Suite</strong> up to $399/mo for 105+ blacklists, API, and advanced monitoring.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Who should use which -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Who Should Use Which?</h2>
+      <div class="card">
+        <div class="card-body space-y-4 text-sm" style="line-height: 1.7;">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-accent);">Choose PingThat if you need:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>Quick DNS, SSL, WHOIS, or HTTP header lookups with a clean interface</li>
+              <li>Developer tools like JWT decoding, URL parsing, or subnet calculation</li>
+              <li>Privacy-focused tools (WebRTC leak test, browser privacy check) with no tracking</li>
+              <li>A fast, distraction-free experience with no registration or paywalls</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">Choose MXToolbox if you need:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>Email deliverability diagnostics (SPF, DKIM, DMARC, BIMI, MTA-STS)</li>
+              <li>Blacklist monitoring across 105+ lists</li>
+              <li>Domain health reports with historical tracking</li>
+              <li>Monitoring and alerting for production domains</li>
+              <li>An API for automated network checks</li>
+              <li>Port scanning, ping, or traceroute</li>
+            </ul>
+          </div>
+          <p class="text-xs pt-2" style="color: var(--color-text-dim);">
+            Many developers and sysadmins use both tools: PingThat for everyday quick lookups and developer-specific tools, and MXToolbox for email infrastructure and monitoring.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Frequently Asked Questions</h2>
+      <div class="space-y-3">
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Is PingThat a good alternative to MXToolbox?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            PingThat is a strong alternative for general network diagnostics like DNS lookups, SSL checks, WHOIS, and HTTP header inspection. It offers a cleaner interface, no registration, and no daily limits. However, MXToolbox is better suited for email-specific diagnostics (SPF, DKIM, DMARC, blacklist checks) and offers monitoring features that PingThat does not.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">What does MXToolbox offer that PingThat doesn't?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            MXToolbox offers 48+ tools with deep email diagnostics including MX record lookups, SPF/DKIM/DMARC validation, blacklist monitoring across 105+ lists, email header analysis, port scanning, ping/traceroute, domain health reports, and an API. MXToolbox also provides monitoring and alerting services (free tier: 1 domain, weekly checks). It has been an industry standard since approximately 2004.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Which free tool is best for DNS lookups?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            Both PingThat and MXToolbox offer free DNS lookups. PingThat provides a faster, cleaner experience with no ads blocking results and no registration required. MXToolbox offers additional DNS-related tools like MX lookups and domain health reports. For a quick, distraction-free DNS query, PingThat is the better choice. For comprehensive email-related DNS analysis, MXToolbox has the edge.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Does MXToolbox require registration?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            MXToolbox does not require registration for basic lookups. However, monitoring features, blacklist alerts, and advanced reports require a free account. Paid plans ($129-$399/month) unlock full monitoring, API access, and expanded blacklist checks across 105+ lists. PingThat never requires registration for any feature.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQPage JSON-LD -->
+  <script type="application/ld+json" set:html={jsonLd} />
+</Layout>

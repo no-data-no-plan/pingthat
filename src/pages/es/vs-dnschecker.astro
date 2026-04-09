@@ -1,0 +1,251 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Es PingThat una buena alternativa a DNSChecker?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "PingThat es una buena alternativa a DNSChecker si necesitas un conjunto m\u00e1s amplio de herramientas de red y desarrollo m\u00e1s all\u00e1 de DNS. PingThat ofrece 16 herramientas incluyendo decodificaci\u00f3n JWT, test de fuga WebRTC, verificaci\u00f3n de fortaleza de contrase\u00f1as y c\u00e1lculo de subredes \u2014 ninguna de las cuales ofrece DNSChecker. Sin embargo, DNSChecker es mejor si necesitas espec\u00edficamente verificar la propagaci\u00f3n DNS desde m\u00e1s de 20 ubicaciones globales.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Qu\u00e9 ofrece DNSChecker que PingThat no tiene?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "DNSChecker ofrece verificaci\u00f3n de propagaci\u00f3n DNS desde m\u00e1s de 20 ubicaciones mundiales, permiti\u00e9ndote comprobar si los cambios DNS se han propagado globalmente. Tambi\u00e9n proporciona m\u00e1s tipos de registros DNS, herramientas espec\u00edficas de email como consultas MX y pruebas de entregabilidad, y una gama m\u00e1s amplia de utilidades IP. PingThat no ofrece verificaci\u00f3n de propagaci\u00f3n DNS multi-ubicaci\u00f3n.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Cu\u00e1l herramienta es mejor para consultas DNS?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Para consultas DNS est\u00e1ndar, ambas herramientas funcionan bien. DNSChecker destaca en propagaci\u00f3n DNS \u2014 verificar si tus cambios DNS han llegado a servidores de todo el mundo. PingThat ofrece una experiencia m\u00e1s limpia y sin anuncios para consultas DNS r\u00e1pidas. Si necesitas verificar propagaci\u00f3n global tras un cambio DNS, usa DNSChecker. Para consultas DNS diarias con una UI moderna, PingThat es m\u00e1s r\u00e1pido y limpio.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "DNSChecker es gratuito?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "S\u00ed, DNSChecker es gratuito. Sin embargo, el sitio tiene mucha publicidad con m\u00faltiples anuncios display e intersticiales que pueden hacer la experiencia m\u00e1s lenta. PingThat tambi\u00e9n es gratuito, sin anuncios, sin registro y sin l\u00edmites de uso en ninguna de sus 16 herramientas.",
+      },
+    },
+  ],
+};
+
+const jsonLd = JSON.stringify(faqSchema);
+---
+
+<Layout
+  title="PingThat vs DNSChecker: Herramientas de red comparadas (2026)"
+  description="Compara PingThat y DNSChecker para consultas DNS, WHOIS y diagn\u00f3sticos de red. Descubre cu\u00e1l se adapta mejor."
+  activeToolId="compare"
+  lang="es"
+>
+  <div class="max-w-4xl mx-auto px-6 py-8">
+    <!-- Page header -->
+    <div class="mb-8">
+      <div class="section-eyebrow">Comparativa</div>
+      <h1 class="section-title">PingThat vs <em>DNSChecker</em></h1>
+      <div class="section-sub">Una comparaci\u00f3n honesta de dos suites de herramientas de red gratuitas</div>
+    </div>
+
+    <!-- Intro -->
+    <div class="card mb-8">
+      <div class="card-body space-y-3 text-sm" style="line-height: 1.7;">
+        <p style="color: var(--color-text-muted);">
+          <strong style="color: var(--color-text);">PingThat</strong> y <strong style="color: var(--color-text);">DNSChecker</strong> son dos suites de herramientas online gratuitas, pero se enfocan en fortalezas diferentes. PingThat ofrece 16 herramientas orientadas a desarrolladores con una interfaz limpia, sin anuncios y sin registro. DNSChecker se especializa en verificaci\u00f3n de propagaci\u00f3n DNS desde m\u00e1s de 20 ubicaciones globales, junto con consultas DNS, WHOIS, herramientas IP y utilidades de email.
+        </p>
+        <p style="color: var(--color-text-muted);">
+          Esta p\u00e1gina compara ambas herramientas de forma honesta para que puedas decidir cu\u00e1l se adapta mejor a tu flujo de trabajo.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature comparison table -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Comparaci\u00f3n de funcionalidades</h2>
+      <div class="card overflow-x-auto">
+        <table class="w-full text-sm" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <th class="text-left px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">Funcionalidad</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-accent); font-weight: 600;">PingThat</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">DNSChecker</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["Consulta DNS", "S\u00ed", "S\u00ed"],
+              ["Propagaci\u00f3n DNS (multi-ubicaci\u00f3n)", "No", "S\u00ed (20+ ubicaciones)"],
+              ["Cabeceras HTTP", "S\u00ed", "No"],
+              ["Verificaci\u00f3n SSL", "S\u00ed", "S\u00ed"],
+              ["WHOIS", "S\u00ed", "S\u00ed"],
+              ["Calculadora de subredes", "S\u00ed", "No"],
+              ["Est\u00e1 ca\u00edda / activa", "S\u00ed (2 herramientas)", "No"],
+              ["Decodificador JWT", "S\u00ed", "No"],
+              ["Fortaleza de contrase\u00f1a", "S\u00ed", "No"],
+              ["Test de fuga WebRTC", "S\u00ed", "No"],
+              ["Verificador de redirecciones", "S\u00ed", "No"],
+              ["Analizador de URL", "S\u00ed", "No"],
+              ["Test de privacidad", "S\u00ed", "No"],
+              ["Conversor de IP", "S\u00ed", "No"],
+              ["Mi direcci\u00f3n IP", "S\u00ed", "S\u00ed"],
+              ["Consulta MX", "No", "S\u00ed"],
+              ["Entregabilidad de email", "No", "S\u00ed"],
+              ["DNS inverso", "No", "S\u00ed"],
+              ["Ubicaci\u00f3n IP", "No", "S\u00ed"],
+              ["Ping / Traceroute", "No", "S\u00ed"],
+              ["Registro requerido", "Nunca", "Nunca"],
+              ["Precio", "Gratis", "Gratis (con publicidad)"],
+              ["Anuncios", "Ninguno", "Muchos (display + intersticiales)"],
+              ["UI / UX", "Moderna, limpia", "Funcional, con mucha publicidad"],
+              ["Idiomas", "EN + ES", "EN"],
+            ].map(([feature, pt, dc]) => (
+              <tr style="border-bottom: 1px solid var(--color-border);">
+                <td class="px-5 py-3 text-xs" style="color: var(--color-text);">{feature}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${pt.startsWith("S\u00ed") ? "var(--color-green)" : pt === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{pt}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${dc.startsWith("S\u00ed") ? "var(--color-green)" : dc === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{dc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Privacy -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Privacidad y manejo de datos</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Sin cuentas, sin rastreo, sin registros en servidor. Las herramientas del lado del cliente (decodificador JWT, verificador de contrase\u00f1as, calculadora de subredes) nunca env\u00edan datos a ning\u00fan sitio. Las herramientas de red usan APIs de terceros directamente desde el navegador sin proxy.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">DNSChecker</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">No requiere registro. Sin embargo, DNSChecker usa publicidad intensiva (Google AdSense, anuncios display, intersticiales) que involucra rastreadores de terceros. Las consultas DNS se procesan en el servidor. Se aplica su pol\u00edtica de privacidad est\u00e1ndar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Precios</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+            <span class="badge badge-green">Gratis</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Las 16 herramientas son completamente gratuitas sin l\u00edmites diarios, sin topes de tareas y sin tier premium. No se requiere registro para ninguna funci\u00f3n. Sin anuncios.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">DNSChecker</span>
+            <span class="badge badge-green">Gratis</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Todas las herramientas son gratuitas sin registro. El sitio se monetiza mediante publicidad display, que puede ser intrusiva. No ofrece planes de pago ni tiers premium.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Who should use which -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Para qui\u00e9n es cada herramienta?</h2>
+      <div class="card">
+        <div class="card-body space-y-4 text-sm" style="line-height: 1.7;">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-accent);">Elige PingThat si necesitas:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>Una experiencia limpia y sin anuncios para consultas DNS, SSL, WHOIS o cabeceras HTTP</li>
+              <li>Herramientas de desarrollo como decodificaci\u00f3n JWT, an\u00e1lisis de URL o c\u00e1lculo de subredes</li>
+              <li>Herramientas de privacidad (test de fuga WebRTC, test de privacidad del navegador) sin rastreo</li>
+              <li>Un kit de herramientas m\u00e1s amplio que DNS \u2014 16 herramientas de red, seguridad y desarrollo</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">Elige DNSChecker si necesitas:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>Verificaci\u00f3n de propagaci\u00f3n DNS desde m\u00e1s de 20 ubicaciones mundiales</li>
+              <li>Comprobar que los cambios DNS han llegado a servidores de nombres globales</li>
+              <li>Herramientas espec\u00edficas de email como consultas MX y pruebas de entregabilidad</li>
+              <li>DNS inverso y geolocalizaci\u00f3n IP</li>
+              <li>Una gama m\u00e1s amplia de tipos de registros DNS</li>
+            </ul>
+          </div>
+          <p class="text-xs pt-2" style="color: var(--color-text-dim);">
+            Muchos desarrolladores usan ambas: DNSChecker tras hacer cambios DNS para verificar la propagaci\u00f3n global, y PingThat para consultas r\u00e1pidas del d\u00eda a d\u00eda y herramientas espec\u00edficas como decodificaci\u00f3n JWT y c\u00e1lculo de subredes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Preguntas frecuentes</h2>
+      <div class="space-y-3">
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Es PingThat una buena alternativa a DNSChecker?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            PingThat es una buena alternativa si necesitas un conjunto m\u00e1s amplio de herramientas de red y desarrollo m\u00e1s all\u00e1 de DNS. Ofrece 16 herramientas incluyendo decodificaci\u00f3n JWT, test de fuga WebRTC, verificaci\u00f3n de fortaleza de contrase\u00f1as y c\u00e1lculo de subredes. Sin embargo, DNSChecker es mejor si necesitas verificar la propagaci\u00f3n DNS desde m\u00e1s de 20 ubicaciones globales.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Qu\u00e9 ofrece DNSChecker que PingThat no tiene?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            DNSChecker ofrece verificaci\u00f3n de propagaci\u00f3n DNS desde m\u00e1s de 20 ubicaciones mundiales, permiti\u00e9ndote comprobar si los cambios DNS se han propagado globalmente. Tambi\u00e9n proporciona m\u00e1s tipos de registros DNS, herramientas de email como consultas MX y pruebas de entregabilidad, y utilidades IP adicionales como DNS inverso y geolocalizaci\u00f3n.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Cu\u00e1l herramienta es mejor para consultas DNS?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            Para consultas DNS est\u00e1ndar, ambas funcionan bien. DNSChecker destaca en propagaci\u00f3n DNS \u2014 verificar si tus cambios han llegado a servidores de todo el mundo. PingThat ofrece una experiencia m\u00e1s limpia y sin anuncios para consultas r\u00e1pidas. Si necesitas verificar propagaci\u00f3n global tras un cambio DNS, usa DNSChecker. Para consultas DNS diarias con una UI moderna, PingThat es m\u00e1s r\u00e1pido y limpio.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">DNSChecker es gratuito?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            S\u00ed, DNSChecker es gratuito. Sin embargo, el sitio tiene mucha publicidad con m\u00faltiples anuncios display e intersticiales que pueden hacer la experiencia m\u00e1s lenta. PingThat tambi\u00e9n es gratuito, sin anuncios, sin registro y sin l\u00edmites de uso en ninguna de sus 16 herramientas.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQPage JSON-LD -->
+  <script type="application/ld+json" set:html={jsonLd} />
+</Layout>

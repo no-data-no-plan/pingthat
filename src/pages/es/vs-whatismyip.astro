@@ -1,0 +1,252 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Es PingThat una buena alternativa a WhatIsMyIP?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "PingThat es una buena alternativa a WhatIsMyIP si necesitas m\u00e1s que solo herramientas de IP. PingThat ofrece 16 herramientas incluyendo DNS, SSL, WHOIS, decodificaci\u00f3n JWT, c\u00e1lculo de subredes y test de fuga WebRTC junto con su funci\u00f3n Mi IP. Sin embargo, WhatIsMyIP es mejor si necesitas espec\u00edficamente test de velocidad, detecci\u00f3n de VPN/proxy o datos detallados de geolocalizaci\u00f3n IP.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Qu\u00e9 ofrece WhatIsMyIP que PingThat no tiene?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "WhatIsMyIP ofrece test de velocidad de internet, detecci\u00f3n de VPN y proxy, geolocalizaci\u00f3n IP detallada con informaci\u00f3n del ISP, test de fuga DNS, verificaci\u00f3n de puertos y herramientas de email. Se enfoca espec\u00edficamente en informaci\u00f3n de direcci\u00f3n IP y diagn\u00f3sticos de conexi\u00f3n a internet. PingThat no ofrece test de velocidad, detecci\u00f3n de VPN ni detecci\u00f3n de proxy.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Cu\u00e1l herramienta es mejor para verificar mi direcci\u00f3n IP?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Para simplemente verificar tu direcci\u00f3n IP, ambas herramientas funcionan bien. WhatIsMyIP proporciona m\u00e1s detalle espec\u00edfico de IP incluyendo ISP, geolocalizaci\u00f3n y tipo de conexi\u00f3n. PingThat muestra tu IP y tambi\u00e9n ofrece un test de fuga WebRTC para comprobar si tu IP real se filtra a trav\u00e9s del navegador. Si solo necesitas tu IP, cualquiera sirve. Si necesitas detalles IP m\u00e1s otras herramientas de red, PingThat ofrece m\u00e1s amplitud.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "WhatIsMyIP tiene anuncios?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "S\u00ed, WhatIsMyIP tiene mucha publicidad con m\u00faltiples anuncios display en cada p\u00e1gina. Los anuncios pueden ralentizar la experiencia y dificultar encontrar resultados. PingThat no tiene anuncios, no requiere registro y no rastrea \u2014 las 16 herramientas son completamente gratuitas y limpias.",
+      },
+    },
+  ],
+};
+
+const jsonLd = JSON.stringify(faqSchema);
+---
+
+<Layout
+  title="PingThat vs WhatIsMyIP: Herramientas de red comparadas (2026)"
+  description="Compara PingThat y WhatIsMyIP para consulta de IP, DNS, SSL y diagn\u00f3sticos de red. Descubre cu\u00e1l se adapta mejor."
+  activeToolId="compare"
+  lang="es"
+>
+  <div class="max-w-4xl mx-auto px-6 py-8">
+    <!-- Page header -->
+    <div class="mb-8">
+      <div class="section-eyebrow">Comparativa</div>
+      <h1 class="section-title">PingThat vs <em>WhatIsMyIP</em></h1>
+      <div class="section-sub">Una comparaci\u00f3n honesta de dos suites de herramientas de red gratuitas</div>
+    </div>
+
+    <!-- Intro -->
+    <div class="card mb-8">
+      <div class="card-body space-y-3 text-sm" style="line-height: 1.7;">
+        <p style="color: var(--color-text-muted);">
+          <strong style="color: var(--color-text);">PingThat</strong> y <strong style="color: var(--color-text);">WhatIsMyIP</strong> permiten verificar tu direcci\u00f3n IP y diagnosticar problemas de red, pero se enfocan en \u00e1reas diferentes. PingThat es una suite de 16 herramientas para desarrolladores que cubre DNS, SSL, WHOIS, decodificaci\u00f3n JWT, test de fuga WebRTC y m\u00e1s. WhatIsMyIP se especializa en informaci\u00f3n de direcci\u00f3n IP, test de velocidad, detecci\u00f3n de VPN/proxy y test de fuga DNS.
+        </p>
+        <p style="color: var(--color-text-muted);">
+          Esta p\u00e1gina compara ambas herramientas de forma honesta para que puedas decidir cu\u00e1l se adapta mejor a tu flujo de trabajo.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature comparison table -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Comparaci\u00f3n de funcionalidades</h2>
+      <div class="card overflow-x-auto">
+        <table class="w-full text-sm" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <th class="text-left px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">Funcionalidad</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-accent); font-weight: 600;">PingThat</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">WhatIsMyIP</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["Mi direcci\u00f3n IP", "S\u00ed", "S\u00ed"],
+              ["Test de fuga WebRTC", "S\u00ed", "No"],
+              ["Consulta DNS", "S\u00ed", "S\u00ed (b\u00e1sica)"],
+              ["Cabeceras HTTP", "S\u00ed", "No"],
+              ["Verificaci\u00f3n SSL", "S\u00ed", "No"],
+              ["WHOIS", "S\u00ed", "S\u00ed"],
+              ["Calculadora de subredes", "S\u00ed", "No"],
+              ["Est\u00e1 ca\u00edda / activa", "S\u00ed (2 herramientas)", "No"],
+              ["Decodificador JWT", "S\u00ed", "No"],
+              ["Fortaleza de contrase\u00f1a", "S\u00ed", "S\u00ed (generador)"],
+              ["Verificador de redirecciones", "S\u00ed", "No"],
+              ["Analizador de URL", "S\u00ed", "No"],
+              ["Test de privacidad", "S\u00ed", "No"],
+              ["Conversor de IP", "S\u00ed", "No"],
+              ["Test de velocidad", "No", "S\u00ed"],
+              ["Detecci\u00f3n de VPN", "No", "S\u00ed"],
+              ["Detecci\u00f3n de proxy", "No", "S\u00ed"],
+              ["Test de fuga DNS", "No", "S\u00ed"],
+              ["Verificaci\u00f3n de puertos", "No", "S\u00ed"],
+              ["Geolocalizaci\u00f3n IP (detallada)", "No", "S\u00ed (ISP, ciudad, pa\u00eds)"],
+              ["Herramientas de email", "No", "S\u00ed"],
+              ["Registro requerido", "Nunca", "Nunca"],
+              ["Precio", "Gratis", "Gratis (con publicidad)"],
+              ["Anuncios", "Ninguno", "Muchos (anuncios display)"],
+              ["UI / UX", "Moderna, limpia", "Anticuada, con mucha publicidad"],
+              ["Idiomas", "EN + ES", "EN"],
+            ].map(([feature, pt, wm]) => (
+              <tr style="border-bottom: 1px solid var(--color-border);">
+                <td class="px-5 py-3 text-xs" style="color: var(--color-text);">{feature}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${pt.startsWith("S\u00ed") ? "var(--color-green)" : pt === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{pt}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${wm.startsWith("S\u00ed") ? "var(--color-green)" : wm === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{wm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Privacy -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Privacidad y manejo de datos</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Sin cuentas, sin rastreo, sin registros en servidor. Las herramientas del lado del cliente (decodificador JWT, verificador de contrase\u00f1as, calculadora de subredes) nunca env\u00edan datos a ning\u00fan sitio. Las herramientas de red usan APIs de terceros directamente desde el navegador sin proxy.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">WhatIsMyIP</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">No requiere registro. Sin embargo, WhatIsMyIP usa publicidad intensiva que involucra m\u00faltiples rastreadores y cookies de terceros. Las consultas IP se procesan en el servidor. El sitio recopila datos est\u00e1ndar de anal\u00edtica web. Se aplica su pol\u00edtica de privacidad est\u00e1ndar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Precios</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+            <span class="badge badge-green">Gratis</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Las 16 herramientas son completamente gratuitas sin l\u00edmites diarios, sin topes de tareas y sin tier premium. No se requiere registro para ninguna funci\u00f3n. Sin anuncios.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">WhatIsMyIP</span>
+            <span class="badge badge-green">Gratis</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">Todas las herramientas son gratuitas sin registro. El sitio se monetiza mediante publicidad display intensiva. No ofrece planes de pago ni tiers premium.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Who should use which -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Para qui\u00e9n es cada herramienta?</h2>
+      <div class="card">
+        <div class="card-body space-y-4 text-sm" style="line-height: 1.7;">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-accent);">Elige PingThat si necesitas:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>Una forma limpia y sin anuncios de verificar tu IP junto con otros diagn\u00f3sticos</li>
+              <li>Test de fuga WebRTC para verificar que tu VPN o proxy no filtra tu IP real</li>
+              <li>Herramientas de desarrollo como decodificaci\u00f3n JWT, verificaci\u00f3n SSL, c\u00e1lculo de subredes y an\u00e1lisis de URL</li>
+              <li>DNS, WHOIS, cabeceras HTTP y verificaci\u00f3n de redirecciones en un solo kit</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">Elige WhatIsMyIP si necesitas:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>Test de velocidad de internet (descarga/subida/ping)</li>
+              <li>Detecci\u00f3n de VPN y proxy para verificar que tu conexi\u00f3n est\u00e1 protegida</li>
+              <li>Geolocalizaci\u00f3n IP detallada con informaci\u00f3n de ISP, ciudad y tipo de conexi\u00f3n</li>
+              <li>Test de fuga DNS</li>
+              <li>Verificaci\u00f3n de puertos para comprobar si puertos espec\u00edficos est\u00e1n abiertos</li>
+            </ul>
+          </div>
+          <p class="text-xs pt-2" style="color: var(--color-text-dim);">
+            Muchos usuarios usan ambas: WhatIsMyIP para verificaciones r\u00e1pidas de IP y tests de velocidad, y PingThat para diagn\u00f3sticos orientados a desarrollo como verificaci\u00f3n SSL, decodificaci\u00f3n JWT y an\u00e1lisis de red sin anuncios.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Preguntas frecuentes</h2>
+      <div class="space-y-3">
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Es PingThat una buena alternativa a WhatIsMyIP?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            PingThat es una buena alternativa si necesitas m\u00e1s que herramientas de IP. Ofrece 16 herramientas incluyendo DNS, SSL, WHOIS, decodificaci\u00f3n JWT, c\u00e1lculo de subredes y test de fuga WebRTC. Sin embargo, WhatIsMyIP es mejor si necesitas espec\u00edficamente test de velocidad, detecci\u00f3n de VPN/proxy o datos detallados de geolocalizaci\u00f3n IP.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Qu\u00e9 ofrece WhatIsMyIP que PingThat no tiene?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            WhatIsMyIP ofrece test de velocidad de internet, detecci\u00f3n de VPN y proxy, geolocalizaci\u00f3n IP detallada con informaci\u00f3n del ISP, test de fuga DNS, verificaci\u00f3n de puertos y herramientas de email. Se enfoca en informaci\u00f3n de direcci\u00f3n IP y diagn\u00f3sticos de conexi\u00f3n. PingThat no ofrece test de velocidad, detecci\u00f3n de VPN ni detecci\u00f3n de proxy.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Cu\u00e1l herramienta es mejor para verificar mi direcci\u00f3n IP?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            Para simplemente verificar tu IP, ambas funcionan bien. WhatIsMyIP proporciona m\u00e1s detalle espec\u00edfico incluyendo ISP, geolocalizaci\u00f3n y tipo de conexi\u00f3n. PingThat muestra tu IP y ofrece un test de fuga WebRTC para comprobar si tu IP real se filtra. Si solo necesitas tu IP, cualquiera sirve. Si necesitas detalles IP m\u00e1s otras herramientas de red, PingThat ofrece m\u00e1s amplitud.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">WhatIsMyIP tiene anuncios?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            S\u00ed, WhatIsMyIP tiene mucha publicidad con m\u00faltiples anuncios display en cada p\u00e1gina. Los anuncios pueden ralentizar la experiencia y dificultar encontrar resultados. PingThat no tiene anuncios, no requiere registro y no rastrea \u2014 las 16 herramientas son completamente gratuitas y limpias.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQPage JSON-LD -->
+  <script type="application/ld+json" set:html={jsonLd} />
+</Layout>

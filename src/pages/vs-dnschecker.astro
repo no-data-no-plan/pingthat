@@ -1,0 +1,251 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is PingThat a good alternative to DNSChecker?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "PingThat is a good alternative to DNSChecker if you need a broader set of network and developer tools beyond DNS. PingThat offers 16 tools including JWT decoding, WebRTC leak testing, password strength checking, and subnet calculation — none of which DNSChecker provides. However, DNSChecker is the better choice if you specifically need DNS propagation checks from 20+ global locations.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does DNSChecker offer that PingThat doesn't?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "DNSChecker offers DNS propagation checking from 20+ worldwide locations, letting you verify if DNS changes have propagated globally. It also provides more DNS record types, email-specific tools like MX lookup and email deliverability testing, and a broader range of IP-related utilities. PingThat does not offer multi-location DNS propagation checks.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Which tool is better for DNS lookups?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "For standard DNS lookups, both tools work well. DNSChecker excels at DNS propagation — checking if your DNS changes have reached servers worldwide. PingThat provides a cleaner, ad-free experience for quick single-server DNS queries. If you need to verify global propagation after a DNS change, use DNSChecker. For everyday DNS lookups with a modern UI, PingThat is faster and cleaner.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is DNSChecker free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, DNSChecker is free to use. However, the site is heavily ad-supported with multiple display and interstitial ads that can make the experience slower. PingThat is also free with no ads, no registration, and no usage limits on any of its 16 tools.",
+      },
+    },
+  ],
+};
+
+const jsonLd = JSON.stringify(faqSchema);
+---
+
+<Layout
+  title="PingThat vs DNSChecker: Network Tools Compared (2026)"
+  description="Compare PingThat and DNSChecker for DNS lookups, WHOIS, and network diagnostics. See which free tool fits your needs."
+  activeToolId="compare"
+  lang="en"
+>
+  <div class="max-w-4xl mx-auto px-6 py-8">
+    <!-- Page header -->
+    <div class="mb-8">
+      <div class="section-eyebrow">Comparison</div>
+      <h1 class="section-title">PingThat vs <em>DNSChecker</em></h1>
+      <div class="section-sub">An honest comparison of two free network tool suites</div>
+    </div>
+
+    <!-- Intro -->
+    <div class="card mb-8">
+      <div class="card-body space-y-3 text-sm" style="line-height: 1.7;">
+        <p style="color: var(--color-text-muted);">
+          <strong style="color: var(--color-text);">PingThat</strong> and <strong style="color: var(--color-text);">DNSChecker</strong> are both free online tool suites, but they focus on different strengths. PingThat provides 16 developer-friendly tools with a clean interface, no ads, and no registration. DNSChecker specializes in DNS propagation checking from 20+ global locations, alongside DNS lookups, WHOIS, IP tools, and email utilities.
+        </p>
+        <p style="color: var(--color-text-muted);">
+          This page compares both tools honestly so you can decide which one fits your workflow.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature comparison table -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Feature Comparison</h2>
+      <div class="card overflow-x-auto">
+        <table class="w-full text-sm" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <th class="text-left px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">Feature</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-accent); font-weight: 600;">PingThat</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">DNSChecker</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["DNS Lookup", "Yes", "Yes"],
+              ["DNS Propagation (multi-location)", "No", "Yes (20+ locations)"],
+              ["HTTP Headers", "Yes", "No"],
+              ["SSL Certificate Check", "Yes", "Yes"],
+              ["WHOIS Lookup", "Yes", "Yes"],
+              ["Subnet Calculator", "Yes", "No"],
+              ["Is It Up / Down", "Yes (2 tools)", "No"],
+              ["JWT Decoder", "Yes", "No"],
+              ["Password Strength", "Yes", "No"],
+              ["WebRTC Leak Test", "Yes", "No"],
+              ["Redirect Checker", "Yes", "No"],
+              ["URL Parser", "Yes", "No"],
+              ["Privacy Check", "Yes", "No"],
+              ["IP Converter", "Yes", "No"],
+              ["My IP Address", "Yes", "Yes"],
+              ["MX Lookup", "No", "Yes"],
+              ["Email Deliverability", "No", "Yes"],
+              ["Reverse DNS", "No", "Yes"],
+              ["IP Location", "No", "Yes"],
+              ["Ping / Traceroute", "No", "Yes"],
+              ["Registration Required", "Never", "Never"],
+              ["Price", "Free", "Free (ad-supported)"],
+              ["Ads", "None", "Heavy (display + interstitial)"],
+              ["UI / UX", "Modern, clean", "Functional, ad-heavy"],
+              ["Languages", "EN + ES", "EN"],
+            ].map(([feature, pt, dc]) => (
+              <tr style="border-bottom: 1px solid var(--color-border);">
+                <td class="px-5 py-3 text-xs" style="color: var(--color-text);">{feature}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${pt.startsWith("Yes") ? "var(--color-green)" : pt === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{pt}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${dc.startsWith("Yes") ? "var(--color-green)" : dc === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{dc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Privacy -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Privacy & Data Handling</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">No accounts, no tracking, no server-side logging. Client-side tools (JWT decoder, password checker, subnet calculator) never send data anywhere. Network tools use third-party APIs directly from the browser with no proxy.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">DNSChecker</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">No registration required. However, DNSChecker uses heavy advertising (Google AdSense, display ads, interstitial ads) which involves third-party trackers. DNS queries are processed server-side. Standard privacy policy applies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Pricing</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+            <span class="badge badge-green">Free</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">All 16 tools are completely free with no daily limits, no task caps, and no premium tier. No registration required for any feature. No ads.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">DNSChecker</span>
+            <span class="badge badge-green">Free</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">All tools are free with no registration. The site is monetized through display advertising, which can be intrusive. No paid plans or premium tiers are offered.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Who should use which -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Who Should Use Which?</h2>
+      <div class="card">
+        <div class="card-body space-y-4 text-sm" style="line-height: 1.7;">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-accent);">Choose PingThat if you need:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>A clean, ad-free experience for DNS, SSL, WHOIS, or HTTP header lookups</li>
+              <li>Developer tools like JWT decoding, URL parsing, or subnet calculation</li>
+              <li>Privacy-focused tools (WebRTC leak test, browser privacy check) with no tracking</li>
+              <li>A broader toolkit beyond DNS — 16 tools covering network, security, and development</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">Choose DNSChecker if you need:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>DNS propagation checking from 20+ worldwide locations</li>
+              <li>Verification that DNS changes have reached global nameservers</li>
+              <li>Email-specific tools like MX lookups and deliverability testing</li>
+              <li>Reverse DNS lookups and IP geolocation</li>
+              <li>A wider range of DNS record type queries</li>
+            </ul>
+          </div>
+          <p class="text-xs pt-2" style="color: var(--color-text-dim);">
+            Many developers use both: DNSChecker after making DNS changes to verify global propagation, and PingThat for everyday quick lookups and developer-specific tools like JWT decoding and subnet calculation.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Frequently Asked Questions</h2>
+      <div class="space-y-3">
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Is PingThat a good alternative to DNSChecker?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            PingThat is a good alternative if you need a broader set of network and developer tools beyond DNS. It offers 16 tools including JWT decoding, WebRTC leak testing, password strength checking, and subnet calculation — none of which DNSChecker provides. However, DNSChecker is the better choice if you specifically need DNS propagation checks from 20+ global locations.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">What does DNSChecker offer that PingThat doesn't?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            DNSChecker offers DNS propagation checking from 20+ worldwide locations, letting you verify if DNS changes have propagated globally. It also provides more DNS record types, email-specific tools like MX lookup and email deliverability testing, and a broader range of IP-related utilities. PingThat does not offer multi-location DNS propagation checks.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Which tool is better for DNS lookups?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            For standard DNS lookups, both tools work well. DNSChecker excels at DNS propagation — checking if your DNS changes have reached servers worldwide. PingThat provides a cleaner, ad-free experience for quick single-server DNS queries. If you need to verify global propagation after a DNS change, use DNSChecker. For everyday DNS lookups with a modern UI, PingThat is faster and cleaner.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Is DNSChecker free?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            Yes, DNSChecker is free to use. However, the site is heavily ad-supported with multiple display and interstitial ads that can make the experience slower. PingThat is also free with no ads, no registration, and no usage limits on any of its 16 tools.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQPage JSON-LD -->
+  <script type="application/ld+json" set:html={jsonLd} />
+</Layout>

@@ -1,0 +1,249 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is PingThat a good alternative to SecurityHeaders.com?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "PingThat is a good complement to SecurityHeaders.com rather than a direct replacement. PingThat offers HTTP header inspection as one of 16 tools, alongside DNS, SSL, WHOIS, JWT decoding, and more. SecurityHeaders.com provides deeper header-specific analysis with an A-F grading system and actionable recommendations. For a quick header check alongside other diagnostics, use PingThat. For a thorough security header audit, SecurityHeaders.com is the specialist.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does SecurityHeaders.com offer that PingThat doesn't?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "SecurityHeaders.com offers a dedicated A-F grading system for security headers, detailed analysis of CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy. It provides specific recommendations for missing or misconfigured headers and is widely recognized as an industry standard for header audits. PingThat shows header values but does not grade or provide remediation guidance.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Which tool is better for checking HTTP security headers?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "SecurityHeaders.com is better for dedicated security header auditing — it grades your site A through F and tells you exactly what to fix. PingThat's HTTP Headers tool shows all response headers (not just security ones) and is useful for quick checks alongside other diagnostics. If you need a pass/fail audit to share with a team or client, use SecurityHeaders.com. For everyday header inspection as part of broader debugging, PingThat is more convenient.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is SecurityHeaders.com free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, SecurityHeaders.com is free for individual header scans. It has a clean, minimal interface with no registration required. The site is maintained by Scott Helme, a well-known security researcher. PingThat is also free, offering 16 tools with no registration, no limits, and no ads.",
+      },
+    },
+  ],
+};
+
+const jsonLd = JSON.stringify(faqSchema);
+---
+
+<Layout
+  title="PingThat vs SecurityHeaders: Header Analysis Compared (2026)"
+  description="Compare PingThat and SecurityHeaders.com for HTTP security header analysis. See which free tool fits your needs."
+  activeToolId="compare"
+  lang="en"
+>
+  <div class="max-w-4xl mx-auto px-6 py-8">
+    <!-- Page header -->
+    <div class="mb-8">
+      <div class="section-eyebrow">Comparison</div>
+      <h1 class="section-title">PingThat vs <em>SecurityHeaders</em></h1>
+      <div class="section-sub">An honest comparison of a multi-tool suite and a specialist header scanner</div>
+    </div>
+
+    <!-- Intro -->
+    <div class="card mb-8">
+      <div class="card-body space-y-3 text-sm" style="line-height: 1.7;">
+        <p style="color: var(--color-text-muted);">
+          <strong style="color: var(--color-text);">PingThat</strong> and <strong style="color: var(--color-text);">SecurityHeaders.com</strong> both let you inspect HTTP headers, but they serve different purposes. PingThat is a 16-tool network and developer suite that includes header inspection alongside DNS, SSL, WHOIS, JWT decoding, and more. SecurityHeaders.com is a single-purpose tool by security researcher Scott Helme that grades your site's security headers A through F and provides specific fix recommendations.
+        </p>
+        <p style="color: var(--color-text-muted);">
+          This page compares both tools honestly so you can decide which one fits your workflow.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature comparison table -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Feature Comparison</h2>
+      <div class="card overflow-x-auto">
+        <table class="w-full text-sm" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <th class="text-left px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">Feature</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-accent); font-weight: 600;">PingThat</th>
+              <th class="text-center px-5 py-3 text-xs uppercase tracking-wider" style="color: var(--color-text-muted); font-weight: 600;">SecurityHeaders</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["HTTP Headers Inspection", "Yes", "Yes"],
+              ["Security Header Grading (A-F)", "No", "Yes"],
+              ["CSP Analysis", "No (shows raw value)", "Yes (detailed breakdown)"],
+              ["HSTS Check", "No (shows raw value)", "Yes (with recommendations)"],
+              ["Fix Recommendations", "No", "Yes"],
+              ["DNS Lookup", "Yes", "No"],
+              ["SSL Certificate Check", "Yes", "No"],
+              ["WHOIS Lookup", "Yes", "No"],
+              ["Subnet Calculator", "Yes", "No"],
+              ["Is It Up / Down", "Yes (2 tools)", "No"],
+              ["JWT Decoder", "Yes", "No"],
+              ["Password Strength", "Yes", "No"],
+              ["WebRTC Leak Test", "Yes", "No"],
+              ["Redirect Checker", "Yes", "No"],
+              ["URL Parser", "Yes", "No"],
+              ["Privacy Check", "Yes", "No"],
+              ["IP Converter", "Yes", "No"],
+              ["My IP Address", "Yes", "No"],
+              ["Total Tools", "16", "1"],
+              ["Registration Required", "Never", "Never"],
+              ["Price", "Free", "Free"],
+              ["Ads", "None", "None"],
+              ["UI / UX", "Modern, clean", "Clean, minimal"],
+              ["Languages", "EN + ES", "EN"],
+            ].map(([feature, pt, sh]) => (
+              <tr style="border-bottom: 1px solid var(--color-border);">
+                <td class="px-5 py-3 text-xs" style="color: var(--color-text);">{feature}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${pt.startsWith("Yes") ? "var(--color-green)" : pt === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{pt}</td>
+                <td class="px-5 py-3 text-xs text-center" style={`color: ${sh.startsWith("Yes") ? "var(--color-green)" : sh === "No" ? "var(--color-text-dim)" : "var(--color-text-muted)"};`}>{sh}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Privacy -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Privacy & Data Handling</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">No accounts, no tracking, no server-side logging. Client-side tools (JWT decoder, password checker, subnet calculator) never send data anywhere. Network tools use third-party APIs directly from the browser with no proxy.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">SecurityHeaders</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">No registration required. Scans are processed server-side. SecurityHeaders.com is maintained by Scott Helme, a respected security researcher. Recent scan results may be cached. The site has a clean interface with no intrusive advertising.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Pricing</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--color-accent);">PingThat</span>
+            <span class="badge badge-green">Free</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">All 16 tools are completely free with no daily limits, no task caps, and no premium tier. No registration required for any feature.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">SecurityHeaders</span>
+            <span class="badge badge-green">Free</span>
+          </div>
+          <div class="card-body text-xs space-y-2" style="line-height: 1.6;">
+            <p style="color: var(--color-text-muted);">The header scanning tool is completely free with no registration. No paid plans. Scott Helme also offers <strong style="color: var(--color-text);">Report URI</strong>, a separate paid service for CSP and security reporting, but SecurityHeaders.com itself is free.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Who should use which -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Who Should Use Which?</h2>
+      <div class="card">
+        <div class="card-body space-y-4 text-sm" style="line-height: 1.7;">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-accent);">Choose PingThat if you need:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>A quick view of all HTTP response headers (not just security headers)</li>
+              <li>Header inspection alongside DNS, SSL, WHOIS, and other diagnostics in one place</li>
+              <li>Developer tools like JWT decoding, URL parsing, or subnet calculation</li>
+              <li>Privacy-focused tools (WebRTC leak test, browser privacy check) with no tracking</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">Choose SecurityHeaders if you need:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs" style="color: var(--color-text-muted);">
+              <li>An A-F grade for your site's security headers to share with teams or clients</li>
+              <li>Detailed analysis of CSP, HSTS, X-Frame-Options, Permissions-Policy, and more</li>
+              <li>Specific recommendations for missing or misconfigured security headers</li>
+              <li>An industry-standard security header audit</li>
+            </ul>
+          </div>
+          <p class="text-xs pt-2" style="color: var(--color-text-dim);">
+            Many developers use both: SecurityHeaders.com for dedicated security audits and grading, and PingThat for everyday header inspection alongside other network diagnostics.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mb-8">
+      <h2 class="text-base font-semibold mb-4" style="color: var(--color-text);">Frequently Asked Questions</h2>
+      <div class="space-y-3">
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Is PingThat a good alternative to SecurityHeaders.com?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            PingThat is a good complement rather than a direct replacement. PingThat offers HTTP header inspection as one of 16 tools, alongside DNS, SSL, WHOIS, JWT decoding, and more. SecurityHeaders.com provides deeper header-specific analysis with an A-F grading system and actionable recommendations. For a quick header check alongside other diagnostics, use PingThat. For a thorough security header audit, SecurityHeaders.com is the specialist.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">What does SecurityHeaders.com offer that PingThat doesn't?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            SecurityHeaders.com offers a dedicated A-F grading system, detailed analysis of CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy. It provides specific recommendations for missing or misconfigured headers and is widely recognized as an industry standard for header audits. PingThat shows header values but does not grade or provide remediation guidance.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Which tool is better for checking HTTP security headers?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            SecurityHeaders.com is better for dedicated security header auditing — it grades your site A through F and tells you exactly what to fix. PingThat's HTTP Headers tool shows all response headers (not just security ones) and is useful for quick checks alongside other diagnostics. If you need a pass/fail audit to share with a team or client, use SecurityHeaders.com. For everyday header inspection as part of broader debugging, PingThat is more convenient.
+          </div>
+        </details>
+
+        <details class="card group">
+          <summary class="card-header cursor-pointer list-none" style="user-select: none;">
+            <span class="text-xs font-medium" style="color: var(--color-text);">Is SecurityHeaders.com free?</span>
+            <svg class="w-4 h-4 transition-transform group-open:rotate-180" style="color: var(--color-text-dim); flex-shrink: 0;" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="card-body text-xs" style="color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border);">
+            Yes, SecurityHeaders.com is free for individual header scans with no registration required. The site is maintained by Scott Helme, a well-known security researcher. PingThat is also free, offering 16 tools with no registration, no limits, and no ads.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQPage JSON-LD -->
+  <script type="application/ld+json" set:html={jsonLd} />
+</Layout>
