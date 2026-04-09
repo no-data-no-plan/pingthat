@@ -343,4 +343,94 @@
     <priority>0.3</priority>
     <lastmod>2026-04-06</lastmod>
   </url>
+
+  <url>
+    <loc>https://pingthat.dev/vs-mxtoolbox/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-mxtoolbox/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-mxtoolbox/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-mxtoolbox/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/vs-dnschecker/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-dnschecker/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-dnschecker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-dnschecker/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/vs-securityheaders/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-securityheaders/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-securityheaders/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-securityheaders/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/vs-hackertarget/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-hackertarget/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-hackertarget/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-hackertarget/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/vs-whatismyip/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-whatismyip/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-whatismyip/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-whatismyip/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/vs-mxtoolbox/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-mxtoolbox/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-mxtoolbox/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-mxtoolbox/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/vs-dnschecker/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-dnschecker/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-dnschecker/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-dnschecker/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/vs-securityheaders/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-securityheaders/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-securityheaders/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-securityheaders/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/vs-hackertarget/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-hackertarget/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-hackertarget/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-hackertarget/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/vs-whatismyip/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-whatismyip/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-whatismyip/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-whatismyip/" />
+    <priority>0.6</priority>
+    <lastmod>2026-04-09</lastmod>
+  </url>
 </urlset>
