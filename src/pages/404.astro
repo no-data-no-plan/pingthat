@@ -22,9 +22,10 @@ const popular = popularIds.map(id => tools.find(t => t.id === id)).filter(Boolea
   <meta name="robots" content="noindex" />
   <title>Page Not Found — PingThat</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts (self-hosted) -->
+  <link rel="stylesheet" href="/fonts/fonts.css" />
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <style>
     html[lang="es"] [data-lang="en"] { display: none !important; }
     html:not([lang="es"]) [data-lang="es"] { display: none !important; }

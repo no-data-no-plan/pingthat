@@ -59,8 +59,8 @@
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
   <div class="card">
     <div class="card-body space-y-3">
-      <label style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
-      <input type="text" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
+      <label for="whois-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
+      <input id="whois-domain" type="text" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
       <button class="btn-primary" onclick={lookup} disabled={loading || !domain.trim()}>{loading ? t.looking : t.lookup}</button>
     </div>
   </div>

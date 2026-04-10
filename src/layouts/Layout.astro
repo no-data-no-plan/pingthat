@@ -124,22 +124,27 @@ const jsonLd = JSON.stringify(schemas);
     <!-- Main content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Header -->
-      <header class="sticky top-0 z-30 flex items-center justify-between px-6 py-3 border-b border-[var(--color-border)]" style="background: var(--color-bg);">
-        <div class="flex items-center gap-3">
-          <button id="menu-toggle" class="lg:hidden p-2 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <header class="sticky top-0 z-30 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 border-b border-[var(--color-border)]" style="background: var(--color-bg);">
+        <div class="flex items-center gap-2 min-w-0 flex-1">
+          <button id="menu-toggle" class="lg:hidden p-2 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] shrink-0" aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'}>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
-          <div>
-            <h1 class="text-sm font-medium text-[var(--color-text)]">{title}</h1>
-          </div>
+          <h1 class="text-sm font-medium text-[var(--color-text)] truncate">{title}</h1>
         </div>
-        <div class="flex items-center gap-3" style="min-height: 28px;">
-          <a href={lang === "en" ? esUrl : enUrl} class="hidden sm:inline text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors" style="text-decoration: none; font-weight: 500;">
+        <div class="flex items-center gap-2 shrink-0" style="min-height: 28px;">
+          <a href={lang === "en" ? esUrl : enUrl} class="inline-flex items-center text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors" style="text-decoration: none; font-weight: 500;" aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a inglés"}>
             {lang === "en" ? "ES" : "EN"}
           </a>
-          <span class="hidden sm:inline badge badge-accent" style="min-width: 180px; text-align: center;">{c.noDataCollectedPrivate}</span>
+          <span class="header-badge badge badge-accent" style="min-width: 180px; text-align: center;">{c.noDataCollectedPrivate}</span>
         </div>
       </header>
+      <style is:global>
+        /* .badge sets display: inline-flex in global.css, which wins over
+           Tailwind's .hidden. Force-hide the header badge below sm. */
+        @media (max-width: 639px) {
+          .header-badge { display: none !important; }
+        }
+      </style>
 
       <!-- Content -->
       <main id="main-content" class="flex-1">
@@ -180,10 +185,13 @@ const jsonLd = JSON.stringify(schemas);
             <span>{c.private100}</span>
           </span>
         </div>
-        <form action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
+        <form id="feedback-form" action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
           <input type="hidden" name="app" value="PingThat" />
+          <input type="hidden" name="page" value="" />
+          <input type="hidden" name="_subject" value="" />
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
           <input type="text" name="message" placeholder={c.feedbackPlaceholder} required
+            aria-label={c.feedbackPlaceholder}
             class="flex-1 px-3 py-1.5 rounded text-[11px]"
             style="background: var(--color-surface2); border: 1px solid var(--color-border); color: var(--color-text); font-family: 'Inter', sans-serif;"
           />
@@ -229,6 +237,89 @@ const jsonLd = JSON.stringify(schemas);
         if (v < -NUMBER_MAX) el.value = String(-NUMBER_MAX);
       }
     });
+  </script>
+
+  <!-- Feedback form: AJAX submit + toast (no page reload) -->
+  <script>
+    (function () {
+      const form = document.getElementById('feedback-form');
+      if (!(form instanceof HTMLFormElement)) return;
+
+      const isEs = document.documentElement.lang === 'es';
+      const MSG = {
+        success: isEs ? '¡Gracias por tu feedback!' : 'Thanks for your feedback!',
+        error: isEs ? 'Error al enviar. Inténtalo más tarde.' : 'Error sending. Please try again later.',
+      };
+
+      function showToast(text, isError) {
+        const toast = document.createElement('div');
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        toast.textContent = text;
+        Object.assign(toast.style, {
+          position: 'fixed',
+          bottom: '24px',
+          left: '50%',
+          transform: 'translate(-50%, 20px)',
+          padding: '12px 20px',
+          borderRadius: '8px',
+          background: isError ? '#dc2626' : '#059669',
+          color: '#fff',
+          fontSize: '13px',
+          fontWeight: '500',
+          fontFamily: 'Inter, sans-serif',
+          zIndex: '9999',
+          boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
+          opacity: '0',
+          transition: 'opacity .25s ease, transform .25s ease',
+          cursor: 'pointer',
+          maxWidth: '90vw',
+        });
+        toast.title = isEs ? 'Clic para cerrar' : 'Click to dismiss';
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translate(-50%, 0)';
+        });
+        let dismissed = false;
+        const dismiss = () => {
+          if (dismissed) return;
+          dismissed = true;
+          toast.style.opacity = '0';
+          toast.style.transform = 'translate(-50%, 20px)';
+          setTimeout(() => toast.remove(), 300);
+        };
+        toast.addEventListener('click', dismiss);
+        setTimeout(dismiss, 5000);
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const data = new FormData(form);
+        data.set('page', location.href);
+        const appName = String(data.get('app') || 'PingThat');
+        data.set('_subject', `[${appName}] ${location.pathname}`);
+        if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = true;
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { Accept: 'application/json' },
+          });
+          if (res.ok) {
+            showToast(MSG.success, false);
+            form.reset();
+          } else {
+            showToast(MSG.error, true);
+          }
+        } catch {
+          showToast(MSG.error, true);
+        } finally {
+          if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;
+        }
+      });
+    })();
   </script>
 </body>
 </html>

@@ -93,6 +93,34 @@ describe('isBlockedHost', () => {
     expect(isBlockedHost('169.254.1.1')).toBe(true);
   });
 
+  it('blocks RFC 6598 CGNAT 100.64.0.0/10', () => {
+    expect(isBlockedHost('100.64.0.1')).toBe(true);
+    expect(isBlockedHost('100.100.100.100')).toBe(true);
+    expect(isBlockedHost('100.127.255.255')).toBe(true);
+  });
+
+  it('allows IPs outside RFC 6598 CGNAT /10', () => {
+    expect(isBlockedHost('100.128.0.0')).toBe(false);
+    expect(isBlockedHost('100.0.0.0')).toBe(false);
+    expect(isBlockedHost('100.63.255.255')).toBe(false);
+  });
+
+  it('blocks RFC 2544 benchmarking 198.18.0.0/15', () => {
+    expect(isBlockedHost('198.18.0.1')).toBe(true);
+    expect(isBlockedHost('198.19.255.255')).toBe(true);
+  });
+
+  it('allows IPs outside 198.18.0.0/15', () => {
+    expect(isBlockedHost('198.20.0.0')).toBe(false);
+    expect(isBlockedHost('198.17.255.255')).toBe(false);
+  });
+
+  it('blocks RFC 5737 TEST-NET documentation ranges', () => {
+    expect(isBlockedHost('192.0.2.1')).toBe(true);
+    expect(isBlockedHost('198.51.100.1')).toBe(true);
+    expect(isBlockedHost('203.0.113.1')).toBe(true);
+  });
+
   it('blocks IPv6 loopback ::1', () => {
     expect(isBlockedHost('::1')).toBe(true);
     expect(isBlockedHost('[::1]')).toBe(true);

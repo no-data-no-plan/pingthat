@@ -24,6 +24,15 @@ export function isBlockedHost(hostname: string): boolean {
     h.startsWith("0.") ||
     h === "0.0.0.0" ||
     h.startsWith("169.254.") ||
+    // RFC 6598 Carrier-Grade NAT (Shared Address Space): 100.64.0.0/10
+    // Matches 100.64.x.x through 100.127.x.x
+    /^100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\./.test(h) ||
+    // RFC 2544 / RFC 5737 benchmarking: 198.18.0.0/15 (198.18.x.x - 198.19.x.x)
+    /^198\.(18|19)\./.test(h) ||
+    // RFC 5737 documentation ranges (TEST-NET-1, TEST-NET-2, TEST-NET-3)
+    h.startsWith("192.0.2.") ||
+    h.startsWith("198.51.100.") ||
+    h.startsWith("203.0.113.") ||
     h === "::1" ||
     h === "::ffff:127.0.0.1" ||
     /^::ffff:(127\.|10\.|192\.168\.|0\.)/.test(h) ||
@@ -34,8 +43,7 @@ export function isBlockedHost(hostname: string): boolean {
   );
 }
 
-// TODO: Configure Cloudflare WAF rate limiting rule for /api/* endpoints
-// (e.g. 10 req/10s per IP, matching the CompoundVision setup)
+// Rate limiting: configured at Cloudflare edge level (10 req/10s per IP on /api/*)
 
 const CORS_HEADERS: Record<string, string> = {
   "Content-Type": "application/json",

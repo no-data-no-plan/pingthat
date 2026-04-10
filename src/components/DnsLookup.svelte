@@ -65,10 +65,10 @@
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
   <div class="card">
     <div class="card-body space-y-3">
-      <label style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
-      <input type="text" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
-      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-        <label style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.recordType}</label>
+      <label for="dns-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
+      <input id="dns-domain" type="text" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;" role="group" aria-label={t.recordType}>
+        <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.recordType}</span>
         {#each types as rt}
           <button class={recordType === rt ? "btn-primary" : "btn-secondary"} style="padding: 4px 10px; font-size: 12px;" onclick={() => { recordType = rt; if (domain.trim()) lookup(); }}>{rt}</button>
         {/each}
@@ -79,6 +79,7 @@
     </div>
   </div>
 
+  <div aria-live="polite" aria-atomic="true">
   {#if error}
     <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
   {/if}
@@ -108,4 +109,5 @@
       </div>
     </div>
   {/if}
+  </div>
 </div>

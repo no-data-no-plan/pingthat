@@ -52,8 +52,8 @@
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
   <div class="card">
     <div class="card-body space-y-3">
-      <label style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.urlLabel}</label>
-      <input type="text" bind:value={input} placeholder={t.placeholder} oninput={handleInput} onkeypress={(e) => e.key === 'Enter' && parse()} style="width: 100%;" />
+      <label for="urlparser-url" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.urlLabel}</label>
+      <input id="urlparser-url" type="text" bind:value={input} placeholder={t.placeholder} oninput={handleInput} onkeypress={(e) => e.key === 'Enter' && parse()} style="width: 100%;" />
       <div style="display: flex; gap: 8px;">
         <button class="btn-secondary" onclick={copySample} style="font-size: 12px;">{t.sample}</button>
         <button class="btn-secondary" onclick={() => { input = ""; parsed = null; error = ""; }} style="font-size: 12px;">{t.clear}</button>

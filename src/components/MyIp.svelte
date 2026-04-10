@@ -104,6 +104,7 @@
     </div>
   </div>
 
+  <div aria-live="polite" aria-atomic="true">
   {#if loading}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
@@ -196,4 +197,5 @@
       </div>
     </div>
   {/if}
+  </div>
 </div>

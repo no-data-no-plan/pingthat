@@ -12,7 +12,7 @@ const jsonLd = JSON.stringify([
     "@type": "WebApplication",
     name: "PingThat",
     url: "https://pingthat.dev",
-    description: "PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking.",
+    description: "PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking.",
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -26,7 +26,7 @@ const jsonLd = JSON.stringify([
         name: "What is the best free online DNS lookup tool?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "PingThat offers a free DNS lookup tool as part of its collection of 15 network and security tools. It returns A, AAAA, MX, NS, TXT, and CNAME records instantly. All lookups run in the browser with no tracking or data collection.",
+          text: "PingThat offers a free DNS lookup tool as part of its collection of 17 network and security tools. It returns A, AAAA, MX, NS, TXT, and CNAME records instantly. All lookups run in the browser with no tracking or data collection.",
         },
       },
       {
@@ -71,7 +71,7 @@ const jsonLd = JSON.stringify([
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
+  <meta name="description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
   <meta name="keywords" content="network tools, what is my ip, privacy check, webrtc leak test, subnet calculator, ip converter, password strength, jwt decoder, developer tools" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
@@ -83,19 +83,20 @@ const jsonLd = JSON.stringify([
   <link rel="alternate" hreflang="x-default" href="https://pingthat.dev/" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts (self-hosted) -->
+  <link rel="stylesheet" href="/fonts/fonts.css" />
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
 
   <meta property="og:title" content="PingThat — Network Tools for Developers" />
-  <meta property="og:description" content="PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
+  <meta property="og:description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
   <meta property="og:url" content="https://pingthat.dev/" />
   <meta property="og:site_name" content="PingThat" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://pingthat.dev/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PingThat — Network Tools for Developers" />
-  <meta name="twitter:description" content="PingThat is a free collection of 15 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
+  <meta name="twitter:description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
   <meta name="twitter:image" content="https://pingthat.dev/og-image.png" />
 
   <script type="application/ld+json" set:html={jsonLd} />

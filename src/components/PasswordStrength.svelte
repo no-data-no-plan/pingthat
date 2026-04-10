@@ -217,6 +217,7 @@
         <button
           style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 11px; color: var(--color-text-muted);"
           onclick={() => (showPassword = !showPassword)}
+          aria-label={showPassword ? t.hide : t.show}
         >
           {showPassword ? t.hide : t.show}
         </button>
@@ -224,6 +225,7 @@
     </div>
   </div>
 
+  <div aria-live="polite" aria-atomic="true">
   {#if analysis}
     <!-- Strength meter -->
     <div class="card">
@@ -335,4 +337,5 @@
       </div>
     {/if}
   {/if}
+  </div>
 </div>

@@ -120,20 +120,21 @@
     <div class="card-body">
       <div style="display: flex; gap: 12px; align-items: end; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 160px;">
-          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">{t.ipAddress}</label>
-          <input type="text" bind:value={ipInput} placeholder="192.168.1.0" style="width: 100%;" />
+          <label for="subnet-ip" style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">{t.ipAddress}</label>
+          <input id="subnet-ip" type="text" bind:value={ipInput} placeholder="192.168.1.0" style="width: 100%;" />
         </div>
         <div style="width: 100px;">
-          <label style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">CIDR (/{cidr}) <InfoTip text={t.cidrTip} /></label>
-          <input type="range" min="0" max="32" bind:value={cidr} style="width: 100%; accent-color: var(--color-accent);" />
+          <label for="subnet-cidr-range" style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">CIDR (/{cidr}) <InfoTip text={t.cidrTip} /></label>
+          <input id="subnet-cidr-range" type="range" min="0" max="32" bind:value={cidr} style="width: 100%; accent-color: var(--color-accent);" />
         </div>
         <div style="width: 60px;">
-          <input type="number" min="0" max="32" bind:value={cidr} style="width: 100%; text-align: center;" />
+          <input id="subnet-cidr-number" type="number" min="0" max="32" bind:value={cidr} style="width: 100%; text-align: center;" aria-label="CIDR value" />
         </div>
       </div>
     </div>
   </div>
 
+  <div aria-live="polite" aria-atomic="true">
   {#if result}
     <!-- Results -->
     <div class="metrics-grid cols-2">
@@ -208,6 +209,7 @@
       </div>
     </div>
   {/if}
+  </div>
 
   <!-- Cheatsheet -->
   <div class="card">

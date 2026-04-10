@@ -28,8 +28,8 @@ function buildCSP(nonce) {
 const CSP_STATIC = [
   "default-src 'self'",
   `script-src 'self' ${SCRIPT_ALLOW}`,
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self'",
   `img-src 'self' data: blob: ${AD_IMG}`,
   "connect-src 'self' https://pagead2.googlesyndication.com https://formspree.io https://ipapi.co https://api.ipify.org https://cloudflare-dns.com https://*.google.com https://*.adtrafficquality.google https://*.cloudflareinsights.com",
   "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://*.adtrafficquality.google",
