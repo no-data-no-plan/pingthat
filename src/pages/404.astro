@@ -1,4 +1,5 @@
 ---
+import LangToggle from "../components/LangToggle.astro";
 import "../styles/global.css";
 import { tools } from "../lib/tools";
 
@@ -44,6 +45,10 @@ const popular = popularIds.map(id => tools.find(t => t.id === id)).filter(Boolea
   </script>
 </head>
 <body style="background: var(--color-bg); color: var(--color-text);">
+  <div class="absolute top-4 right-4 z-30">
+    <span data-lang="en"><LangToggle lang="en" enPath="/" esPath="/es/" /></span>
+    <span data-lang="es"><LangToggle lang="es" enPath="/" esPath="/es/" /></span>
+  </div>
   <div class="min-h-screen flex flex-col items-center justify-center px-6 py-12">
     <div class="text-center max-w-2xl">
       <p class="text-6xl font-bold mb-4" style="color: var(--color-accent-fg);">404</p>
