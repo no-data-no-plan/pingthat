@@ -1,0 +1,4 @@
+#!/bin/bash
+# Pre-commit hook wrapper — delegates to scripts/check-a11y.sh in the repo root.
+# Installed by running: git config core.hooksPath .githooks
+exec bash scripts/check-a11y.sh
