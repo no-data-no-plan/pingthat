@@ -4,6 +4,7 @@ import { tools, groups } from "../lib/tools";
 import { getCommon } from "../i18n/common";
 import CookieConsent from "../components/CookieConsent.astro";
 import CompareLinks from "../components/CompareLinks.astro";
+import LangToggle from "../components/LangToggle.astro";
 
 const c = getCommon("en");
 
@@ -127,7 +128,7 @@ const jsonLd = JSON.stringify([
     <!-- Hero -->
     <header class="px-6 py-16 sm:py-24 text-center max-w-3xl mx-auto">
       <div class="flex justify-end mb-4">
-        <a href="/es" class="text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors" style="text-decoration: none; font-weight: 500;">ES</a>
+        <LangToggle lang="en" enPath="/" esPath="/es/" />
       </div>
       <p class="text-[10px] uppercase tracking-[0.2em] mb-4 font-semibold" style="color: var(--color-accent-fg);">{c.heroEyebrow}</p>
       <h1 class="text-4xl sm:text-5xl font-bold mb-4" style="color: var(--color-text);">

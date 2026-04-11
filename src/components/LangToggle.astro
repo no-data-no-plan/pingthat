@@ -1,0 +1,58 @@
+---
+// Unified EN|ES language toggle. Both labels always visible, the
+// active one highlighted, the inactive one is a link to the alternate.
+// Top-right placement across all 6 portfolio apps for consistency.
+//
+// Props:
+//   lang     — current language ("en" | "es")
+//   enPath   — full path to the English version of the current page
+//   esPath   — full path to the Spanish version of the current page
+//
+// A11y:
+//   - wrapped in <nav aria-label="Language"> for landmark
+//   - active rendered as <span aria-current="page"> (not clickable)
+//   - inactive rendered as <a> with descriptive aria-label
+//   - minimum 40×40 px tap target (≥ WCAG 2.5.8 AA 24×24)
+
+import type { Lang } from "../i18n/index";
+
+interface Props {
+  lang: Lang;
+  enPath: string;
+  esPath: string;
+}
+
+const { lang, enPath, esPath } = Astro.props;
+
+const navLabel = lang === "es" ? "Idioma" : "Language";
+const switchToEn = "Switch to English";
+const switchToEs = "Cambiar a español";
+
+const baseBtn =
+  "px-2 min-w-[28px] h-[36px] inline-flex items-center justify-center rounded text-[11px] font-medium transition-colors no-underline";
+const activeBtn =
+  baseBtn +
+  " text-[var(--color-accent-fg)] font-semibold cursor-default";
+const inactiveBtn =
+  baseBtn +
+  " text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-tertiary)]";
+---
+
+<nav
+  class="inline-flex items-center"
+  aria-label={navLabel}
+>
+  {lang === "en" ? (
+    <>
+      <span class={activeBtn} aria-current="page">EN</span>
+      <span class="w-px h-4 bg-[var(--color-border)]" aria-hidden="true"></span>
+      <a href={esPath} class={inactiveBtn} aria-label={switchToEs}>ES</a>
+    </>
+  ) : (
+    <>
+      <a href={enPath} class={inactiveBtn} aria-label={switchToEn}>EN</a>
+      <span class="w-px h-4 bg-[var(--color-border)]" aria-hidden="true"></span>
+      <span class={activeBtn} aria-current="page">ES</span>
+    </>
+  )}
+</nav>

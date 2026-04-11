@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
+import LangToggle from "../components/LangToggle.astro";
 import CrossLinks from "../components/CrossLinks.astro";
 import CompareLinks from "../components/CompareLinks.astro";
 import CookieConsent from "../components/CookieConsent.astro";
@@ -194,9 +195,11 @@ const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
           )}
         </div>
         <div class="flex items-center gap-2 shrink-0" style="min-height: 28px;">
-          <a href={lang === "en" ? esUrl : enUrl} class="inline-flex items-center text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors" style="text-decoration: none; font-weight: 500;" aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a inglés"}>
-            {lang === "en" ? "ES" : "EN"}
-          </a>
+          <LangToggle
+            lang={lang}
+            enPath={withSlash(toolPath)}
+            esPath={withSlash('/es' + toolPath)}
+          />
           <span class="header-badge badge badge-accent" style="min-width: 180px; text-align: center;">{c.noDataCollectedPrivate}</span>
         </div>
       </header>
