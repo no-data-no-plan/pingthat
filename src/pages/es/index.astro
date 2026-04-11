@@ -124,13 +124,15 @@ const jsonLd = JSON.stringify([
   <script type="application/ld+json" set:html={jsonLd} />
 </head>
 <body>
-  <div class="min-h-screen" style="background: var(--color-bg); color: var(--color-text);">
+  <div class="min-h-screen relative" style="background: var(--color-bg); color: var(--color-text);">
+
+    <!-- Top-right language toggle -->
+    <div class="absolute top-4 right-4 z-30">
+      <LangToggle lang="es" enPath="/" esPath="/es/" />
+    </div>
 
     <!-- Hero -->
     <header class="px-6 py-16 sm:py-24 text-center max-w-3xl mx-auto">
-      <div class="flex justify-end mb-4">
-        <LangToggle lang="es" enPath="/" esPath="/es/" />
-      </div>
       <p class="text-[10px] uppercase tracking-[0.2em] mb-4 font-semibold" style="color: var(--color-accent-fg);">{c.heroEyebrow}</p>
       <h1 class="text-4xl sm:text-5xl font-bold mb-4" style="color: var(--color-text);">
         {c.heroHeadingPrefix}<em class="italic" style="color: var(--color-accent-fg);">{c.heroHeadingEm}</em>
