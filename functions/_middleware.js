@@ -64,7 +64,6 @@ const PERMISSIONS_POLICY = [
   'publickey-credentials-get=()',
   'screen-wake-lock=()',
   'serial=()',
-  'sync-xhr=(self)',
   'usb=()',
   'web-share=()',
   'xr-spatial-tracking=()',

@@ -41,6 +41,26 @@ const faqSchema = {
 };
 
 const jsonLd = JSON.stringify(faqSchema);
+
+const articleJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: `PingThat vs SecurityHeaders: Header Analysis Compared (2026)`,
+  description: `Compare PingThat and SecurityHeaders.com for HTTP security header analysis. See which free tool fits your needs.`,
+  author: { "@type": "Organization", name: "PingThat", url: "https://pingthat.dev" },
+  publisher: {
+    "@type": "Organization",
+    name: "PingThat",
+    url: "https://pingthat.dev",
+    logo: { "@type": "ImageObject", url: "https://pingthat.dev/og-image.png" },
+  },
+  datePublished: "2026-04-01",
+  dateModified: "2026-04-11",
+  mainEntityOfPage: { "@type": "WebPage", "@id": "https://pingthat.dev/vs-securityheaders/" },
+  inLanguage: "en-US",
+  isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
+});
+
 ---
 
 <Layout
@@ -49,6 +69,7 @@ const jsonLd = JSON.stringify(faqSchema);
   activeToolId="compare"
   lang="en"
 >
+  <script type="application/ld+json" set:html={articleJsonLd} />
   <div class="max-w-4xl mx-auto px-6 py-8">
     <!-- Page header -->
     <div class="mb-8">

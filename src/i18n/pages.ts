@@ -17,7 +17,7 @@ export const pageI18n: Record<
   "my-ip": {
     en: {
       title: "What Is My IP",
-      description: "See your public IP address, location, ISP, and network details. Free, instant, no tracking.",
+      description: "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup with no tracking or signup.",
       seoHeading: "About this tool",
       seoText: "Instantly see your public IP address along with your approximate location, ISP, timezone, and connection details. We fetch your IP from public APIs and display it locally \u2014 no data is stored or logged.",
       seoBlockHeading: "How does IP detection work?",
@@ -32,7 +32,7 @@ export const pageI18n: Record<
     },
     es: {
       title: "Cu\u00e1l Es Mi IP",
-      description: "Consulta tu direcci\u00f3n IP p\u00fablica, ubicaci\u00f3n, ISP y detalles de red. Gratis, instant\u00e1neo, sin rastreo.",
+      description: "Consulta tu direcci\u00f3n IPv4 e IPv6 p\u00fablica, geolocalizaci\u00f3n, ISP y ASN en tiempo real. Gratis, instant\u00e1neo, sin rastreo ni registro.",
       seoHeading: "Sobre esta herramienta",
       seoText: "Consulta instant\u00e1neamente tu direcci\u00f3n IP p\u00fablica junto con tu ubicaci\u00f3n aproximada, ISP, zona horaria y detalles de conexi\u00f3n. Obtenemos tu IP de APIs p\u00fablicas y la mostramos localmente \u2014 no se almacena ni registra ning\u00fan dato.",
       seoBlockHeading: "\u00bfC\u00f3mo funciona la detecci\u00f3n de IP?",
@@ -50,7 +50,7 @@ export const pageI18n: Record<
   "privacy-check": {
     en: {
       title: "Browser Privacy Check",
-      description: "Check your browser's privacy settings, tracking protection, and fingerprint exposure. Free, instant, 100% client-side.",
+      description: "Check your browser's privacy settings, tracking protection, cookies, and fingerprint exposure. Free, instant, runs 100% client-side.",
       seoHeading: "About this tool",
       seoText: "This tool checks what information your browser exposes to websites. It tests Do Not Track, cookies, WebRTC leaks, canvas and audio fingerprinting, WebGL vendor, and hardware details. Everything runs locally in your browser.",
       seoBlockHeading: "Understanding browser fingerprinting",
@@ -66,7 +66,7 @@ export const pageI18n: Record<
     },
     es: {
       title: "Comprobaci\u00f3n de Privacidad del Navegador",
-      description: "Comprueba la configuraci\u00f3n de privacidad de tu navegador, protecci\u00f3n contra rastreo y exposici\u00f3n de huella digital. Gratis, instant\u00e1neo, 100% en el cliente.",
+      description: "Comprueba la privacidad del navegador: protecci\u00f3n contra rastreo, cookies y huella digital. Gratis, instant\u00e1neo y 100% en el cliente.",
       seoHeading: "Sobre esta herramienta",
       seoText: "Esta herramienta comprueba qu\u00e9 informaci\u00f3n expone tu navegador a los sitios web. Analiza Do Not Track, cookies, fugas WebRTC, huella de canvas y audio, fabricante WebGL y detalles de hardware. Todo se ejecuta localmente en tu navegador.",
       seoBlockHeading: "Entendiendo la huella digital del navegador",
@@ -85,7 +85,7 @@ export const pageI18n: Record<
   "webrtc-leak-test": {
     en: {
       title: "WebRTC Leak Test",
-      description: "Check if WebRTC is leaking your real IP address. Detect local and public IPs exposed through ICE candidates.",
+      description: "Check if WebRTC is leaking your real IP behind a VPN. Detects local and public IPs exposed through ICE candidates. Free, runs in your browser.",
       seoHeading: "About this tool",
       seoText: "This tool creates a WebRTC peer connection and inspects ICE candidates to determine if your local (private) IP addresses are being leaked. Particularly important for VPN users who want to ensure their real IP is hidden.",
       seoBlockHeading: "Why WebRTC leaks matter",
@@ -118,7 +118,7 @@ export const pageI18n: Record<
   "subnet-calculator": {
     en: {
       title: "Subnet Calculator",
-      description: "Calculate network address, broadcast address, host range, and more from CIDR notation. Free online subnet calculator.",
+      description: "Calculate network address, broadcast address, host range, subnet mask, and wildcard from any CIDR block. Free IPv4 subnet planner in browser.",
       seoHeading: "About this tool",
       seoText: "Enter an IP address and CIDR prefix length to instantly calculate network details including network address, broadcast address, host range, subnet mask, wildcard mask, and IP class. Includes a common subnet cheatsheet.",
       seoBlockHeading: "Understanding CIDR notation",
@@ -136,7 +136,7 @@ export const pageI18n: Record<
     },
     es: {
       title: "Calculadora de Subredes",
-      description: "Calcula la direcci\u00f3n de red, direcci\u00f3n de broadcast, rango de hosts y m\u00e1s a partir de la notaci\u00f3n CIDR. Calculadora de subredes online gratuita.",
+      description: "Calcula direcci\u00f3n de red, broadcast, rango de hosts, m\u00e1scara y wildcard desde cualquier CIDR. Planificador IPv4 gratuito en tu navegador.",
       seoHeading: "Sobre esta herramienta",
       seoText: "Introduce una direcci\u00f3n IP y la longitud del prefijo CIDR para calcular instant\u00e1neamente los detalles de red, incluyendo direcci\u00f3n de red, direcci\u00f3n de broadcast, rango de hosts, m\u00e1scara de subred, m\u00e1scara wildcard y clase IP. Incluye una tabla de referencia de subredes comunes.",
       seoBlockHeading: "Entendiendo la notaci\u00f3n CIDR",
@@ -157,7 +157,7 @@ export const pageI18n: Record<
   "ip-converter": {
     en: {
       title: "IP Address Converter",
-      description: "Convert IP addresses between decimal, binary, hexadecimal, octal, and integer formats. Free online IP converter.",
+      description: "Convert IPv4 addresses between decimal, binary, hexadecimal, octal, and integer formats. Free and instant — runs 100% in your browser.",
       seoHeading: "About this tool",
       seoText: "Convert any IPv4 address between decimal dotted notation, binary, hexadecimal, integer, and octal formats. Auto-detects the input format and shows all conversions instantly. Also displays the IPv4-mapped IPv6 representation.",
       seoBlockHeading: "IP address formats explained",
@@ -175,7 +175,7 @@ export const pageI18n: Record<
     },
     es: {
       title: "Conversor de Direcciones IP",
-      description: "Convierte direcciones IP entre formatos decimal, binario, hexadecimal, octal y entero. Conversor de IP online gratuito.",
+      description: "Convierte direcciones IPv4 entre formatos decimal, binario, hexadecimal, octal y entero. Conversor gratuito — 100% en tu navegador.",
       seoHeading: "Sobre esta herramienta",
       seoText: "Convierte cualquier direcci\u00f3n IPv4 entre notaci\u00f3n decimal con puntos, binario, hexadecimal, entero y octal. Detecta autom\u00e1ticamente el formato de entrada y muestra todas las conversiones instant\u00e1neamente. Tambi\u00e9n muestra la representaci\u00f3n IPv4-mapped IPv6.",
       seoBlockHeading: "Formatos de direcci\u00f3n IP explicados",
@@ -213,7 +213,7 @@ export const pageI18n: Record<
     },
     es: {
       title: "Comprobador de Fortaleza de Contrase\u00f1as",
-      description: "Analiza la entrop\u00eda de contrase\u00f1as, estimaci\u00f3n de tiempo de descifrado y clasificaci\u00f3n de fortaleza. 100% en el cliente, tu contrase\u00f1a nunca sale de tu navegador.",
+      description: "Analiza entrop\u00eda de contrase\u00f1as, tiempo de descifrado y fortaleza. 100% en el cliente — tu contrase\u00f1a nunca sale de tu navegador.",
       seoHeading: "Sobre esta herramienta",
       seoText: "Comprueba la fortaleza de tu contrase\u00f1a con an\u00e1lisis de entrop\u00eda, estimaci\u00f3n de tiempo de descifrado a diferentes velocidades de ataque, desglose de composici\u00f3n y detecci\u00f3n de contrase\u00f1as comunes. Tu contrase\u00f1a nunca se env\u00eda a ning\u00fan sitio \u2014 todo el an\u00e1lisis ocurre en tu navegador.",
       seoBlockHeading: "C\u00f3mo se mide la fortaleza de una contrase\u00f1a",
@@ -271,7 +271,7 @@ export const pageI18n: Record<
   "email-auth": {
     en: {
       title: "Email Auth Checker - SPF, DKIM & DMARC",
-      description: "Check SPF, DKIM, and DMARC records for any domain. Verify email authentication configuration. Free, instant.",
+      description: "Check SPF, DKIM, and DMARC records for any domain. Verify email authentication, troubleshoot deliverability, and audit your domain's email security.",
       seoHeading: "About this tool",
       seoText: "Enter a domain to check its email authentication records. SPF, DKIM, and DMARC work together to prevent email spoofing and phishing. This tool queries DNS to verify all three are properly configured.",
       seoBlockHeading: "Why email authentication matters",
@@ -305,7 +305,7 @@ export const pageI18n: Record<
   "port-scan": {
     en: {
       title: "Port Scanner Online Free",
-      description: "Scan common ports on any host. Check which services are reachable -- HTTP, HTTPS, SSH, FTP, and more. Free, instant.",
+      description: "Scan common ports on any host: HTTP, HTTPS, SSH, FTP, SMTP, databases and more. Check which services are reachable from the public internet.",
       seoHeading: "About this tool",
       seoText: "Enter a domain or hostname to scan common service ports. The tool attempts HTTP/HTTPS connections to each port and reports whether it is open, closed, or filtered. You can also specify custom ports.",
       seoBlockHeading: "How port scanning works",

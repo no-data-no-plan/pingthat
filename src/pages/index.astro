@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { tools, groups } from "../lib/tools";
 import { getCommon } from "../i18n/common";
 import CookieConsent from "../components/CookieConsent.astro";
+import CompareLinks from "../components/CompareLinks.astro";
 
 const c = getCommon("en");
 
@@ -16,6 +17,26 @@ const jsonLd = JSON.stringify([
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    inLanguage: ["en", "es"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "PingThat",
+    url: "https://pingthat.dev",
+    description: "Free network tools: IP lookup, privacy check, WebRTC leak test, subnet calculator, JWT decoder and more.",
+    inLanguage: ["en", "es"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PingThat",
+    url: "https://pingthat.dev",
+    logo: "https://pingthat.dev/og-image.png",
+    description: "Free, privacy-first suite of 17 network and developer tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder, subnet calculator and more. 100% client-side.",
+    sameAs: [
+      "https://buymeacoffee.com/allopen",
+    ],
   },
   {
     "@context": "https://schema.org",
@@ -72,7 +93,6 @@ const jsonLd = JSON.stringify([
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
-  <meta name="keywords" content="network tools, what is my ip, privacy check, webrtc leak test, subnet calculator, ip converter, password strength, jwt decoder, developer tools" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
 
@@ -174,6 +194,8 @@ const jsonLd = JSON.stringify([
         </p>
       </section>
     </main>
+
+    <CompareLinks lang="en" competitors={["mxtoolbox", "dnschecker", "hackertarget", "securityheaders", "whatismyip"]} />
 
     <!-- Footer -->
     <footer class="px-6 py-4 flex justify-between text-[11px]" style="color: var(--color-text-dim); border-top: 1px solid var(--color-border);">

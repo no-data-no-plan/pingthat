@@ -2,10 +2,12 @@
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
 import CrossLinks from "../components/CrossLinks.astro";
+import CompareLinks from "../components/CompareLinks.astro";
 import CookieConsent from "../components/CookieConsent.astro";
 import { tools } from "../lib/tools";
 import type { Lang } from "../i18n/index";
 import { getCommon } from "../i18n/common";
+import { getHowTo } from "../i18n/howto";
 
 interface Props {
   title: string;
@@ -18,7 +20,6 @@ const { title, description, activeToolId, lang = "en" } = Astro.props;
 const c = getCommon(lang);
 
 const activeTool = tools.find(t => t.id === activeToolId);
-const keywords = activeTool?.keywords.join(", ") ?? "";
 const toolPath = activeTool?.path ?? Astro.url.pathname;
 const canonicalPath = lang === "es" ? `/es${toolPath}` : toolPath;
 const withSlash = (p: string) => p.endsWith('/') ? p : p + '/';
@@ -27,28 +28,66 @@ const enUrl = `https://pingthat.dev${withSlash(toolPath)}`;
 const esUrl = `https://pingthat.dev${withSlash('/es' + toolPath)}`;
 
 const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/es" || Astro.url.pathname === "/es/";
+// Page-type detection for schema-appropriate markup.
+const normalizedPath = Astro.url.pathname.replace(/^\/es\//, '/').replace(/\/$/, '');
+const isLegalPage = normalizedPath === "/privacy-policy";
+const isComparePage = normalizedPath.startsWith("/vs-");
 
-const schemas: object[] = [
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: title,
-    url: canonicalUrl,
-    description,
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "Any",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    isPartOf: { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
-  },
+type SchemaObject = Record<string, unknown>;
+const primarySchema: SchemaObject = (isLegalPage || isComparePage)
+  ? {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: title,
+      url: canonicalUrl,
+      description,
+      inLanguage: lang,
+      isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
+    }
+  : {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: title,
+      url: canonicalUrl,
+      description,
+      applicationCategory: "DeveloperApplication",
+      operatingSystem: "Any",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      isPartOf: { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
+    };
+
+const schemas: SchemaObject[] = [
+  primarySchema,
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "PingThat", item: `https://pingthat.dev${lang === "es" ? "/es" : ""}` },
+      { "@type": "ListItem", position: 1, name: "PingThat", item: `https://pingthat.dev${lang === "es" ? "/es/" : "/"}` },
       ...(!isHome ? [{ "@type": "ListItem", position: 2, name: title, item: canonicalUrl }] : []),
     ],
   },
 ];
+
+// HowTo schema for tool pages only. Skipped for legal + compare.
+if (!isLegalPage && !isComparePage && !isHome) {
+  const howto = getHowTo(activeToolId, lang);
+  if (howto) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: howto.name,
+      description,
+      inLanguage: lang,
+      tool: [{ "@type": "HowToTool", name: `PingThat ${title}` }],
+      step: howto.steps.map((s, i) => ({
+        "@type": "HowToStep",
+        position: i + 1,
+        name: s.name,
+        text: s.text,
+      })),
+    });
+  }
+}
 
 if (isHome) {
   schemas.push({
@@ -59,9 +98,24 @@ if (isHome) {
     description: "Free network tools: IP lookup, privacy check, WebRTC leak test, subnet calculator, JWT decoder and more.",
     inLanguage: ["en", "es"],
   });
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PingThat",
+    url: "https://pingthat.dev",
+    logo: "https://pingthat.dev/og-image.png",
+    description: "Free, privacy-first suite of 17 network and developer tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder, subnet calculator and more. 100% client-side.",
+    sameAs: [
+      "https://buymeacoffee.com/allopen",
+    ],
+  });
 }
 
 const jsonLd = JSON.stringify(schemas);
+
+const ogType = isLegalPage ? "website" : "article";
+const ogLocale = lang === "es" ? "es_ES" : "en_US";
+const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
 ---
 
 <!doctype html>
@@ -70,7 +124,6 @@ const jsonLd = JSON.stringify(schemas);
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
-  {keywords && <meta name="keywords" content={keywords} />}
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
 
@@ -88,8 +141,13 @@ const jsonLd = JSON.stringify(schemas);
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content="PingThat" />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:locale" content={ogLocale} />
+  <meta property="og:locale:alternate" content={ogLocaleAlternate} />
   <meta property="og:image" content="https://pingthat.dev/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="PingThat — Free network tools for developers" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -129,7 +187,11 @@ const jsonLd = JSON.stringify(schemas);
           <button id="menu-toggle" class="lg:hidden p-2 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] shrink-0" aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
-          <h1 class="text-sm font-medium text-[var(--color-text)] truncate">{title}</h1>
+          {isComparePage || isLegalPage ? (
+            <span class="text-sm font-medium text-[var(--color-text)] truncate">{title}</span>
+          ) : (
+            <h1 class="text-sm font-medium text-[var(--color-text)] truncate">{title}</h1>
+          )}
         </div>
         <div class="flex items-center gap-2 shrink-0" style="min-height: 28px;">
           <a href={lang === "en" ? esUrl : enUrl} class="inline-flex items-center text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors" style="text-decoration: none; font-weight: 500;" aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a inglés"}>
@@ -160,6 +222,9 @@ const jsonLd = JSON.stringify(schemas);
                  data-full-width-responsive="true"></ins>
           </div>
         </div>
+        {!isComparePage && (
+          <CompareLinks lang={lang} competitors={["mxtoolbox", "dnschecker", "hackertarget", "securityheaders", "whatismyip"]} />
+        )}
         <CrossLinks exclude="dev" lang={lang} />
       </main>
 

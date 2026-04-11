@@ -2,6 +2,7 @@
 import "../../styles/global.css";
 import { tools, groups } from "../../lib/tools";
 import CookieConsent from "../../components/CookieConsent.astro";
+import CompareLinks from "../../components/CompareLinks.astro";
 import { getCommon } from "../../i18n/common";
 import { toolNamesI18n, toolDescriptionsI18n, groupLabelsI18n } from "../../i18n/pages";
 
@@ -17,6 +18,26 @@ const jsonLd = JSON.stringify([
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    inLanguage: ["en", "es"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "PingThat",
+    url: "https://pingthat.dev",
+    description: "Herramientas de red gratuitas: consulta de IP, privacidad, fugas WebRTC, calculadora de subredes, decodificador JWT y más.",
+    inLanguage: ["en", "es"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PingThat",
+    url: "https://pingthat.dev",
+    logo: "https://pingthat.dev/og-image.png",
+    description: "Suite gratuita y privacy-first de 17 herramientas de red y desarrollo — consulta DNS, verificador SSL, WHOIS, cabeceras HTTP, decodificador JWT, calculadora de subredes y más. 100% cliente.",
+    sameAs: [
+      "https://buymeacoffee.com/allopen",
+    ],
   },
   {
     "@context": "https://schema.org",
@@ -73,7 +94,6 @@ const jsonLd = JSON.stringify([
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="PingThat es una coleccion gratuita de 17 herramientas de red y seguridad — consulta DNS, verificador SSL, WHOIS, cabeceras HTTP, decodificador JWT — que se ejecutan en tu navegador sin rastreo." />
-  <meta name="keywords" content="herramientas de red, cual es mi ip, comprobaci\u00f3n de privacidad, test fugas webrtc, calculadora de subredes, conversor de ip, fortaleza de contrase\u00f1as, decodificador jwt, herramientas para desarrolladores" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
 
@@ -175,6 +195,8 @@ const jsonLd = JSON.stringify([
         </p>
       </section>
     </main>
+
+    <CompareLinks lang="es" competitors={["mxtoolbox", "dnschecker", "hackertarget", "securityheaders", "whatismyip"]} />
 
     <!-- Footer -->
     <footer class="px-6 py-4 flex justify-between text-[11px]" style="color: var(--color-text-dim); border-top: 1px solid var(--color-border);">
