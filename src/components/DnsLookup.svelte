@@ -66,11 +66,11 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="dns-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
-      <input id="dns-domain" type="text" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
+      <input id="dns-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;" role="group" aria-label={t.recordType}>
         <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.recordType}</span>
         {#each types as rt}
-          <button class={recordType === rt ? "btn-primary" : "btn-secondary"} style="padding: 4px 10px; font-size: 12px;" onclick={() => { recordType = rt; if (domain.trim()) lookup(); }}>{rt}</button>
+          <button class={recordType === rt ? "btn-primary" : "btn-secondary"} style="padding: 10px 14px; font-size: 12px; min-height: 44px; min-width: 44px;" onclick={() => { recordType = rt; if (domain.trim()) lookup(); }}>{rt}</button>
         {/each}
       </div>
       <button class="btn-primary" onclick={lookup} disabled={loading || !domain.trim()}>
@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <div aria-live="polite" aria-atomic="true">
+  <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}
     <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
   {/if}

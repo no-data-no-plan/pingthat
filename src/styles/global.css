@@ -278,14 +278,15 @@ input[type="number"] { -moz-appearance: textfield; }
 .btn-secondary {
   background: var(--color-surface2);
   color: var(--color-text-muted);
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-radius: 8px;
   font-size: 11px;
   letter-spacing: 0.05em;
   border: 1px solid var(--color-border);
   cursor: pointer;
   transition: color 0.15s, border-color 0.15s;
-  min-height: 36px;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .btn-secondary:hover { color: var(--color-text); border-color: var(--color-border2); }

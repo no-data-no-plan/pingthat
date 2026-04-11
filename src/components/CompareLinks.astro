@@ -25,7 +25,7 @@ const label = lang === "es" ? "Compara con" : "Compare with";
 ---
 
 {items.length > 0 && (
-  <section class="px-6 py-4 border-t border-[var(--color-border)]">
+  <nav class="px-6 py-4 border-t border-[var(--color-border)]" aria-label={label}>
     <div class="flex flex-wrap items-center gap-2">
       <span class="text-[10px] font-mono uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
         {label}
@@ -39,5 +39,5 @@ const label = lang === "es" ? "Compara con" : "Compare with";
         </a>
       ))}
     </div>
-  </section>
+  </nav>
 )}

@@ -184,7 +184,7 @@ const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
       <!-- Header -->
       <header class="sticky top-0 z-30 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 border-b border-[var(--color-border)]" style="background: var(--color-bg);">
         <div class="flex items-center gap-2 min-w-0 flex-1">
-          <button id="menu-toggle" class="lg:hidden p-2 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] shrink-0" aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'}>
+          <button id="menu-toggle" class="lg:hidden p-2 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] shrink-0" aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'} aria-expanded="false" aria-controls="sidebar">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
           {isComparePage || isLegalPage ? (
@@ -280,10 +280,12 @@ const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
     function openSidebar() {
       sidebar?.classList.remove('-translate-x-full');
       overlay?.classList.remove('hidden');
+      toggle?.setAttribute('aria-expanded', 'true');
     }
     function closeSidebar() {
       sidebar?.classList.add('-translate-x-full');
       overlay?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
     }
 
     toggle?.addEventListener('click', openSidebar);

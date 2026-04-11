@@ -109,7 +109,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="port-host" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.hostLabel}</label>
-      <input id="port-host" type="text" bind:value={host} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && scan()} style="width: 100%;" />
+      <input id="port-host" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={host} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && scan()} style="width: 100%;" />
 
       <label for="port-custom" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.customPortsLabel}</label>
       <input id="port-custom" type="text" bind:value={customPorts} placeholder={t.customPortsPlaceholder} onkeypress={(e) => e.key === 'Enter' && scan()} style="width: 100%;" />
@@ -121,7 +121,7 @@
     </div>
   </div>
 
-  <div aria-live="polite" aria-atomic="true">
+  <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
 
   {#if result}

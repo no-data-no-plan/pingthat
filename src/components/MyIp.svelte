@@ -104,7 +104,7 @@
     </div>
   </div>
 
-  <div aria-live="polite" aria-atomic="true">
+  <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if loading}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">

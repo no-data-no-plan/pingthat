@@ -128,7 +128,7 @@
       {/if}
     </div>
     <div class="card-body">
-      <input type="text" bind:value={input} placeholder={t.placeholder} style="width: 100%; font-family: monospace;" />
+      <input type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={input} placeholder={t.placeholder} style="width: 100%; font-family: monospace;" />
       <p style="font-size: 11px; color: var(--color-text-dim); margin-top: 8px;">
         {t.inputHint}
       </p>
