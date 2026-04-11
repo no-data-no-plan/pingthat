@@ -84,6 +84,13 @@ export async function onRequest(context) {
     });
   }
 
+  if (url.pathname === '/privacy/' || url.pathname === '/privacy') {
+    return Response.redirect('https://pingthat.dev/privacy-policy/' + url.search, 301);
+  }
+  if (url.pathname === '/es/privacy/' || url.pathname === '/es/privacy') {
+    return Response.redirect('https://pingthat.dev/es/privacy-policy/' + url.search, 301);
+  }
+
   let response = await context.next();
 
   const contentType = response.headers.get('content-type') || '';
