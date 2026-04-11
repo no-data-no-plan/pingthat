@@ -209,7 +209,7 @@
             {t.explanation2Prefix}<strong style="color: var(--color-text);">{t.explanation2Bold}</strong>{t.explanation2Suffix}
           </p>
           <p>
-            <strong style="color: var(--color-text);">{t.preventPrefix}</strong>{t.preventText}<code style="color: var(--color-accent);">{t.preventCode}</code>{t.preventEnd}
+            <strong style="color: var(--color-text);">{t.preventPrefix}</strong>{t.preventText}<code style="color: var(--color-accent-fg);">{t.preventCode}</code>{t.preventEnd}
           </p>
         </div>
       </div>

@@ -20,13 +20,13 @@ const relatedTools = relatedToolIds
 ---
 
 <section class="px-8 py-5 border-t border-[var(--color-border)]" style="background: var(--color-surface);">
-  <h2 class="text-[10px] uppercase tracking-[0.12em] mb-2" style="color: var(--color-accent);">{heading}</h2>
+  <h2 class="text-[10px] uppercase tracking-[0.12em] mb-2" style="color: var(--color-accent-fg);">{heading}</h2>
   <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{text}</p>
   {relatedTools.length > 0 && (
     <div class="flex flex-wrap gap-2 mt-3">
       <span class="text-[10px]" style="color: var(--color-text-dim);">{c.related}</span>
       {relatedTools.map((tool) => (
-        <a href={`${prefix}${tool.path}`} class="text-[10px] hover:underline" style="color: var(--color-accent);">
+        <a href={`${prefix}${tool.path}`} class="text-[10px] underline" style="color: var(--color-accent-fg);">
           {toolNamesI18n[tool.id]?.[lang] ?? tool.name}
         </a>
       ))}

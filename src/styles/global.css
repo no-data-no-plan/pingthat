@@ -18,11 +18,18 @@
 
   /* Text */
   --color-text: #e8e6e0;
-  --color-text-muted: #9ca3af;
-  --color-text-dim: #6b7280;
+  /* muted + dim unified to #b6c0cf for WCAG 4.5:1 on dark surfaces.
+     Old #9ca3af failed on surface3 (2.98), old #6b7280 failed all. */
+  --color-text-muted: #b6c0cf;
+  --color-text-dim: #b6c0cf;
 
   /* Accent — emerald */
-  --color-accent: #10b981;
+  /* Accent split: --color-accent for bg (white text needs ≥4.5 — old
+     #10b981 was 2.54, #047857 passes at 5.48). --color-accent-fg for
+     text on dark backgrounds (bright green passes 11.71/9.60/6.79/4.97
+     on the 4 dark surfaces). */
+  --color-accent: #047857;
+  --color-accent-fg: #6ee7b7;
   --color-accent-dim: rgba(16, 185, 129, 0.10);
 
   /* Semantic colors */
@@ -155,14 +162,14 @@ body {
 .badge-red { background: var(--color-red-dim); color: var(--color-red); border: 1px solid rgba(255, 107, 107, 0.2); }
 .badge-amber { background: var(--color-amber-dim); color: var(--color-amber); border: 1px solid rgba(245, 166, 35, 0.2); }
 .badge-blue { background: var(--color-blue-dim); color: var(--color-blue); border: 1px solid rgba(74, 143, 255, 0.2); }
-.badge-accent { background: var(--color-accent-dim); color: var(--color-accent); border: 1px solid rgba(16, 185, 129, 0.2); }
+.badge-accent { background: var(--color-accent-dim); color: var(--color-accent-fg); border: 1px solid rgba(16, 185, 129, 0.2); }
 .badge-purple { background: var(--color-purple-dim); color: var(--color-purple); border: 1px solid rgba(167, 139, 250, 0.2); }
 
 /* ── Section headings ── */
 .section-eyebrow {
   font-size: 10px;
   letter-spacing: 0.15em;
-  color: var(--color-accent);
+  color: var(--color-accent-fg);
   text-transform: uppercase;
   margin-bottom: 6px;
 }
@@ -176,7 +183,7 @@ body {
 
 .section-title em {
   font-style: italic;
-  color: var(--color-accent);
+  color: var(--color-accent-fg);
 }
 
 .section-sub {
@@ -308,7 +315,7 @@ input[type="number"] { -moz-appearance: textfield; }
 }
 
 .tab:hover { color: var(--color-text); }
-.tab.active { background: var(--color-surface); color: var(--color-accent); border: 1px solid var(--color-border2); }
+.tab.active { background: var(--color-surface); color: var(--color-accent-fg); border: 1px solid var(--color-border2); }
 
 /* ── Progress bar ── */
 .progress-bar {
@@ -328,7 +335,7 @@ input[type="number"] { -moz-appearance: textfield; }
 /* ── Utility classes ── */
 .text-green { color: var(--color-green); }
 .text-red { color: var(--color-red); }
-.text-accent { color: var(--color-accent); }
+.text-accent { color: var(--color-accent-fg); }
 .text-amber { color: var(--color-amber); }
 .text-blue { color: var(--color-blue); }
 .text-muted { color: var(--color-text-muted); }

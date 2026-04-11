@@ -129,7 +129,7 @@
           <div style="font-size: 13px; font-weight: 600; color: var(--color-green, #22c55e);">{t.selectors}: {result.dkim.selectors.length}</div>
           {#each result.dkim.selectors as sel}
             <div style="padding: 8px; background: var(--color-bg-secondary, #f9fafb); border-radius: 6px; margin-bottom: 6px;">
-              <div style="font-size: 12px; font-weight: 600; color: var(--color-accent);">{sel.selector}._domainkey</div>
+              <div style="font-size: 12px; font-weight: 600; color: var(--color-accent-fg);">{sel.selector}._domainkey</div>
               <div style="font-family: monospace; font-size: 11px; word-break: break-all; margin-top: 4px;">{sel.record}</div>
             </div>
           {/each}

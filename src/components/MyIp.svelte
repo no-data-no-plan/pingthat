@@ -127,7 +127,7 @@
         </button>
       </div>
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
-        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent); letter-spacing: -0.02em; font-family: 'Inter', monospace;">
+        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent-fg); letter-spacing: -0.02em; font-family: 'Inter', monospace;">
           {ip}
         </p>
       </div>

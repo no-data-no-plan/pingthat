@@ -104,7 +104,7 @@
 
   .info-tip:hover .info-tip-icon,
   .info-tip:focus-visible .info-tip-icon {
-    color: var(--color-accent);
+    color: var(--color-accent-fg);
     border-color: var(--color-accent);
   }
 </style>

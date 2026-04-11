@@ -130,9 +130,9 @@ const jsonLd = JSON.stringify([
       <div class="flex justify-end mb-4">
         <a href="/" class="text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors" style="text-decoration: none; font-weight: 500;">EN</a>
       </div>
-      <p class="text-[10px] uppercase tracking-[0.2em] mb-4 font-semibold" style="color: var(--color-accent);">{c.heroEyebrow}</p>
+      <p class="text-[10px] uppercase tracking-[0.2em] mb-4 font-semibold" style="color: var(--color-accent-fg);">{c.heroEyebrow}</p>
       <h1 class="text-4xl sm:text-5xl font-bold mb-4" style="color: var(--color-text);">
-        {c.heroHeadingPrefix}<em class="italic" style="color: var(--color-accent);">{c.heroHeadingEm}</em>
+        {c.heroHeadingPrefix}<em class="italic" style="color: var(--color-accent-fg);">{c.heroHeadingEm}</em>
       </h1>
       <p class="text-sm sm:text-base leading-relaxed" style="color: var(--color-text-muted);">
         {c.heroText}
@@ -144,7 +144,7 @@ const jsonLd = JSON.stringify([
       {groups.map((group) => (
         <section class="mb-12">
           <div class="flex items-center gap-3 mb-5">
-            <h2 class="text-[10px] uppercase tracking-[0.15em] font-semibold" style="color: var(--color-accent);">
+            <h2 class="text-[10px] uppercase tracking-[0.15em] font-semibold" style="color: var(--color-accent-fg);">
               {groupLabelsI18n[group.label]?.es ?? group.label}
             </h2>
             <div class="flex-1 h-px" style="background: var(--color-border);"></div>
@@ -164,7 +164,7 @@ const jsonLd = JSON.stringify([
                     <div class="flex items-start gap-3">
                       <span
                         class="text-xs flex items-center justify-center w-9 h-9 rounded-lg shrink-0 font-semibold font-mono"
-                        style="background: var(--color-accent-dim); color: var(--color-accent); border: 1px solid rgba(16,185,129,0.15);"
+                        style="background: var(--color-accent-dim); color: var(--color-accent-fg); border: 1px solid rgba(16,185,129,0.15);"
                       >
                         {tool.icon}
                       </span>

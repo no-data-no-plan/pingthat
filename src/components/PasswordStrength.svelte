@@ -193,7 +193,7 @@
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
   <!-- Privacy notice -->
   <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--color-accent-dim); border: 1px solid rgba(16, 185, 129, 0.2);">
-    <span style="font-size: 12px; color: var(--color-accent);">{t.privacyNotice}</span>
+    <span style="font-size: 12px; color: var(--color-accent-fg);">{t.privacyNotice}</span>
   </div>
 
   <!-- Input -->

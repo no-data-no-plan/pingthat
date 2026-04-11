@@ -99,7 +99,7 @@
           <tbody>
             {#each results as record}
               <tr style="border-bottom: 1px solid var(--color-border);">
-                <td style="padding: 6px; font-weight: 600; color: var(--color-accent);">{typeLabel(record.type)}</td>
+                <td style="padding: 6px; font-weight: 600; color: var(--color-accent-fg);">{typeLabel(record.type)}</td>
                 <td style="padding: 6px; font-family: monospace; word-break: break-all;">{record.data}</td>
                 <td style="padding: 6px; color: var(--color-text-muted);">{record.TTL}s</td>
               </tr>

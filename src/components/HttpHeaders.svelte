@@ -95,7 +95,7 @@
       <div class="card-body">
         {#each Object.entries(result.headers) as [key, value]}
           <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid var(--color-border); gap: 8px;">
-            <span style="font-size: 12px; font-weight: 600; color: var(--color-accent); font-family: monospace; min-width: 120px;">{key}</span>
+            <span style="font-size: 12px; font-weight: 600; color: var(--color-accent-fg); font-family: monospace; min-width: 120px;">{key}</span>
             <span style="font-size: 12px; font-family: monospace; word-break: break-all; flex: 1;">{value}</span>
             <button class="btn-secondary" style="font-size: 10px; padding: 2px 6px; white-space: nowrap;" onclick={() => copy(String(value))}>{t.copy}</button>
           </div>

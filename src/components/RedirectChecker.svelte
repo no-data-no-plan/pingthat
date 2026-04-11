@@ -85,7 +85,7 @@
             </div>
             <div style="font-family: monospace; font-size: 12px; word-break: break-all; color: var(--color-text-muted);">{step.url}</div>
             {#if step.location}
-              <div style="font-size: 11px; color: var(--color-accent); margin-top: 4px;">\u2192 {step.location}</div>
+              <div style="font-size: 11px; color: var(--color-accent-fg); margin-top: 4px;">\u2192 {step.location}</div>
             {/if}
           </div>
         {/each}

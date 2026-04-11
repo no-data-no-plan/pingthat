@@ -194,7 +194,7 @@
       <div class="card-body" style="font-family: monospace; font-size: 13px; line-height: 2;">
         <div style="display: flex; gap: 12px;">
           <span style="color: var(--color-text-muted); width: 80px; flex-shrink: 0;">{t.ip}:</span>
-          <span style="color: var(--color-accent); word-break: break-all;">{result.binaryIp}</span>
+          <span style="color: var(--color-accent-fg); word-break: break-all;">{result.binaryIp}</span>
         </div>
         <div style="display: flex; gap: 12px;">
           <span style="color: var(--color-text-muted); width: 80px; flex-shrink: 0;">{t.mask}:</span>
@@ -228,7 +228,7 @@
         <tbody>
           {#each cheatsheet as row}
             <tr style="border-bottom: 1px solid var(--color-border);">
-              <td style="padding: 8px 16px; color: var(--color-accent); font-family: monospace;">{row.cidr}</td>
+              <td style="padding: 8px 16px; color: var(--color-accent-fg); font-family: monospace;">{row.cidr}</td>
               <td style="padding: 8px 16px; color: var(--color-text); font-family: monospace;">{row.mask}</td>
               <td style="padding: 8px 16px; text-align: right; color: var(--color-text);">{row.hosts.toLocaleString()}</td>
             </tr>

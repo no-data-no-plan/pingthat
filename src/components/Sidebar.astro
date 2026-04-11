@@ -26,7 +26,7 @@ const langPrefix = lang === "es" ? "/es" : "";
   <!-- Brand -->
   <div class="px-5 py-4 border-b border-[var(--color-border)]">
     <a href={`${langPrefix}/`} class="flex items-center gap-2">
-      <span class="text-lg font-bold" style="color: var(--color-accent);">PingThat</span>
+      <span class="text-lg font-bold" style="color: var(--color-accent-fg);">PingThat</span>
     </a>
     <p class="text-[10px] mt-1" style="color: var(--color-text-dim); letter-spacing: 0.1em;">{c.networkToolsUppercase}</p>
   </div>
@@ -70,7 +70,7 @@ const langPrefix = lang === "es" ? "/es" : "";
                 class:list={[
                   "sidebar-link flex items-center gap-3 px-5 py-2 text-xs transition-colors",
                   isActive
-                    ? "text-[var(--color-accent)] bg-[var(--color-accent-dim)]"
+                    ? "text-[var(--color-accent-fg)] bg-[var(--color-accent-dim)]"
                     : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[rgba(255,255,255,0.03)]",
                 ]}
                 data-tool-name={(toolNamesI18n[tool.id]?.[lang] ?? tool.name).toLowerCase()}

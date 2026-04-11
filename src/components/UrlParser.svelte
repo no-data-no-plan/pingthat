@@ -71,7 +71,7 @@
       <div class="card-body">
         {#each fields as field}
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--color-border);">
-            <span style="font-size: 11px; font-weight: 600; color: var(--color-accent); text-transform: uppercase; min-width: 80px;">{field.label}</span>
+            <span style="font-size: 11px; font-weight: 600; color: var(--color-accent-fg); text-transform: uppercase; min-width: 80px;">{field.label}</span>
             <span style="font-family: monospace; font-size: 13px; word-break: break-all; flex: 1; margin: 0 12px;">{field.value}</span>
             <button class="btn-secondary" style="font-size: 11px; padding: 2px 8px;" onclick={() => copy(field.value)}>{t.copy}</button>
           </div>
@@ -85,7 +85,7 @@
         <div class="card-body">
           {#each parsed.params as [key, value]}
             <div style="display: flex; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--color-border); font-size: 13px;">
-              <span style="font-weight: 600; color: var(--color-accent); font-family: monospace;">{key}</span>
+              <span style="font-weight: 600; color: var(--color-accent-fg); font-family: monospace;">{key}</span>
               <span style="color: var(--color-text-muted);">=</span>
               <span style="font-family: monospace; word-break: break-all;">{value}</span>
             </div>
