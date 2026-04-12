@@ -2,7 +2,7 @@
 const AD_IMG = "https://*.googlesyndication.com https://*.doubleclick.net https://*.googleusercontent.com https://*.gstatic.com https://*.google.com https://*.ggpht.com https://*.adtrafficquality.google";
 
 // Shared script allowlist
-const SCRIPT_ALLOW = "https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://adservice.google.es https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://static.cloudflareinsights.com";
+const SCRIPT_ALLOW = "https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://adservice.google.es https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://static.cloudflareinsights.com https://www.googletagmanager.com";
 
 // Enforcing CSP (strict) for HTML — no 'unsafe-inline'. Requires per-request nonce on
 // every <script> tag, which HTMLRewriter stamps below.
@@ -12,8 +12,8 @@ function buildCSP(nonce) {
     `script-src 'self' 'nonce-${nonce}' ${SCRIPT_ALLOW}`,
     "style-src 'self' 'unsafe-inline'",
     "font-src 'self'",
-    `img-src 'self' data: blob: ${AD_IMG}`,
-    "connect-src 'self' https://pagead2.googlesyndication.com https://formspree.io https://ipapi.co https://api.ipify.org https://cloudflare-dns.com https://*.google.com https://*.adtrafficquality.google https://*.cloudflareinsights.com",
+    `img-src 'self' data: blob: ${AD_IMG} https://*.google-analytics.com https://*.analytics.google.com`,
+    "connect-src 'self' https://pagead2.googlesyndication.com https://formspree.io https://ipapi.co https://api.ipify.org https://cloudflare-dns.com https://*.google.com https://*.adtrafficquality.google https://*.cloudflareinsights.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
     "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://*.adtrafficquality.google",
     "worker-src 'self' blob:",
     "object-src 'none'",
@@ -30,8 +30,8 @@ const CSP_STATIC = [
   `script-src 'self' ${SCRIPT_ALLOW}`,
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self'",
-  `img-src 'self' data: blob: ${AD_IMG}`,
-  "connect-src 'self' https://pagead2.googlesyndication.com https://formspree.io https://ipapi.co https://api.ipify.org https://cloudflare-dns.com https://*.google.com https://*.adtrafficquality.google https://*.cloudflareinsights.com",
+  `img-src 'self' data: blob: ${AD_IMG} https://*.google-analytics.com https://*.analytics.google.com`,
+  "connect-src 'self' https://pagead2.googlesyndication.com https://formspree.io https://ipapi.co https://api.ipify.org https://cloudflare-dns.com https://*.google.com https://*.adtrafficquality.google https://*.cloudflareinsights.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://*.adtrafficquality.google",
   "worker-src 'self' blob:",
   "object-src 'none'",
