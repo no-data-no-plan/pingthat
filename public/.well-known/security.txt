@@ -1,0 +1,4 @@
+Contact: mailto:security@pingthat.dev
+Expires: 2027-04-12T00:00:00.000Z
+Preferred-Languages: en, es
+Canonical: https://pingthat.dev/.well-known/security.txt
