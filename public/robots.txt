@@ -47,3 +47,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://pingthat.dev/sitemap.xml
+
+# Machine-readable tool index: /tools.json
