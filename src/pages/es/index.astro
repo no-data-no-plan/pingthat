@@ -98,6 +98,23 @@ const jsonLd = JSON.stringify([
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
 
+  <!-- Google Analytics 4 — Consent Mode v2. Default deny; CMP updates consent. -->
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500,
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-MRBSLR79JG', { anonymize_ip: true });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRBSLR79JG"></script>
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+
   <title>PingThat — Herramientas de Red para Desarrolladores</title>
   <link rel="canonical" href="https://pingthat.dev/es/" />
   <link rel="alternate" hreflang="en" href="https://pingthat.dev/" />
