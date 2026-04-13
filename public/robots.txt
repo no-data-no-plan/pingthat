@@ -17,6 +17,25 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
+# Independent / privacy-first search engines
+User-agent: Bravebot
+Allow: /
+
+User-agent: MojeekBot
+Allow: /
+
+User-agent: MarginaliaBot
+Allow: /
+
+User-agent: Kagibot
+Allow: /
+
+User-agent: Qwantify
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
 # AI training bots — blocked (training only, no user-facing citation)
 User-agent: GPTBot
 Disallow: /
