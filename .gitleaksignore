@@ -1,0 +1,6 @@
+# False positives ignored for security scanning.
+# Format: <commit>:<file>:<ruleID>:<line>
+
+# sampleJwt in the JWT Decoder tool — it is a demo token shown to the user
+# to illustrate the decoder, not a real secret.
+942fcd441867b1de41e0849682d94a75681fabc7:src/components/JwtDecoder.svelte:jwt:89
