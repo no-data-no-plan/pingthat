@@ -481,4 +481,105 @@
     <changefreq>monthly</changefreq>
     <lastmod>2026-04-11</lastmod>
   </url>
+
+  <!-- Docs hub -->
+  <url>
+    <loc>https://pingthat.dev/docs/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/" />
+    <priority>0.8</priority><changefreq>weekly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/es/docs/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/" />
+    <priority>0.8</priority><changefreq>weekly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <!-- Docs articles (6 × EN + ES) -->
+  <url>
+    <loc>https://pingthat.dev/docs/ssl-certificate-monitoring-basics/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/ssl-certificate-monitoring-basics/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/es/docs/ssl-certificate-monitoring-basics/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/ssl-certificate-monitoring-basics/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/docs/dns-propagation-explained/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/dns-propagation-explained/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/dns-propagation-explained/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/dns-propagation-explained/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/es/docs/dns-propagation-explained/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/dns-propagation-explained/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/dns-propagation-explained/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/dns-propagation-explained/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/docs/http-status-codes-in-monitoring/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/http-status-codes-in-monitoring/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/es/docs/http-status-codes-in-monitoring/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/http-status-codes-in-monitoring/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/docs/uptime-sla-math/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/uptime-sla-math/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/uptime-sla-math/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/uptime-sla-math/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/es/docs/uptime-sla-math/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/uptime-sla-math/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/uptime-sla-math/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/uptime-sla-math/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/email-auth-spf-dkim-dmarc/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/es/docs/email-auth-spf-dkim-dmarc/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/email-auth-spf-dkim-dmarc/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/docs/port-scanning-legality-and-ethics/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/port-scanning-legality-and-ethics/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
+  <url>
+    <loc>https://pingthat.dev/es/docs/port-scanning-legality-and-ethics/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/port-scanning-legality-and-ethics/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
+    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-17</lastmod>
+  </url>
 </urlset>

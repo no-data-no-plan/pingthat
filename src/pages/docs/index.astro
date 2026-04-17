@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getAllDocs, docPath, formatDate, CATEGORY_ORDER, CATEGORY_LABELS } from "../../lib/docs";
+
+const lang = "en" as const;
+const docs = await getAllDocs(lang);
+const groupedCategories = CATEGORY_ORDER
+  .map((cat) => ({ cat, docs: docs.filter((d) => d.data.category === cat) }))
+  .filter((g) => g.docs.length > 0);
+
+const description = "Practical guides for developers on uptime monitoring, DNS, SSL, HTTP, and email authentication. Every guide links to the PingThat tool that applies it.";
+---
+
+<Layout title="Guides" description={description} activeToolId="docs" lang={lang} schemaType="CollectionPage">
+  <section class="px-4 sm:px-8 py-8 max-w-[56rem] mx-auto">
+    <header class="mb-8">
+      <p class="text-xs uppercase tracking-wider text-[var(--color-accent-fg)] mb-2">Guides</p>
+      <h1 class="text-3xl font-bold text-[var(--color-text)] leading-tight mb-3">Monitoring, DNS, SSL & HTTP guides</h1>
+      <p class="text-base text-[var(--color-text-muted)] leading-relaxed max-w-2xl">
+        Honest, practical guides covering uptime SLA math, DNS propagation, SSL certificate monitoring, HTTP redirects, and email authentication (SPF/DKIM/DMARC).
+        Each guide is paired with the PingThat tool that applies it live.
+      </p>
+    </header>
+
+    {docs.length === 0 && (
+      <div class="p-4 rounded border border-[var(--color-border)] text-sm text-[var(--color-text-muted)]" style="background: var(--color-surface);">
+        No guides published yet. Check back soon.
+      </div>
+    )}
+
+    {groupedCategories.map(({ cat, docs: catDocs }) => (
+      <div class="mb-8">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text)] mb-3 pb-1 border-b border-[var(--color-border)]">
+          {CATEGORY_LABELS[lang][cat]}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {catDocs.map((doc) => (
+            <a
+              href={docPath(doc)}
+              class="block p-4 rounded border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors"
+              style="background: var(--color-surface);"
+            >
+              <div class="text-sm font-semibold text-[var(--color-text)] mb-1 leading-snug">{doc.data.title}</div>
+              <div class="text-xs text-[var(--color-text-muted)] line-clamp-3 mb-2">{doc.data.description}</div>
+              <div class="text-[10px] text-[var(--color-text-dim)]">{formatDate(doc.data.publishedAt, lang)}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</Layout>

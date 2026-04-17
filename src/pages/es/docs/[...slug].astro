@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import RelatedTools from "../../../components/RelatedTools.astro";
+import { CATEGORY_LABELS, docSlug, formatDate } from "../../../lib/docs";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs", (d) => d.data.lang === "es");
+  return docs.map((doc) => ({
+    params: { slug: docSlug(doc) },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+const categoryLabel = CATEGORY_LABELS.es[doc.data.category];
+const lang = "es" as const;
+---
+
+<Layout
+  title={doc.data.title}
+  description={doc.data.description}
+  activeToolId="docs"
+  lang={lang}
+  schemaType="Article"
+  docsPublishedAt={doc.data.publishedAt}
+  docsUpdatedAt={doc.data.updatedAt}
+  docsCategory={categoryLabel}
+  docsTags={doc.data.tags}
+>
+  <article class="px-4 sm:px-8 py-6 max-w-[48rem] mx-auto">
+    <header class="mb-6">
+      <p class="text-xs uppercase tracking-wider text-[var(--color-accent-fg)] mb-2">{categoryLabel}</p>
+      <h1 class="text-2xl sm:text-3xl font-bold text-[var(--color-text)] leading-tight mb-3">{doc.data.title}</h1>
+      <p class="text-base text-[var(--color-text-muted)] leading-relaxed mb-3">{doc.data.description}</p>
+      <div class="flex items-center gap-2 text-xs text-[var(--color-text-dim)]">
+        <time datetime={doc.data.publishedAt.toISOString()}>Publicado: {formatDate(doc.data.publishedAt, lang)}</time>
+        {doc.data.updatedAt && (
+          <>
+            <span aria-hidden="true">·</span>
+            <time datetime={doc.data.updatedAt.toISOString()}>Actualizado: {formatDate(doc.data.updatedAt, lang)}</time>
+          </>
+        )}
+      </div>
+    </header>
+    <div class="docs-prose">
+      <Content />
+    </div>
+    {doc.data.relatedToolIds.length > 0 && (
+      <RelatedTools toolIds={doc.data.relatedToolIds} lang={lang} />
+    )}
+  </article>
+</Layout>

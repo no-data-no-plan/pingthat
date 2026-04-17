@@ -16,13 +16,22 @@ interface Props {
   description: string;
   activeToolId: string;
   lang?: Lang;
+  schemaType?: "SoftwareApplication" | "Article" | "CollectionPage";
+  docsPublishedAt?: Date;
+  docsUpdatedAt?: Date;
+  docsCategory?: string;
+  docsTags?: string[];
 }
 
-const { title, description, activeToolId, lang = "en" } = Astro.props;
+const { title, description, activeToolId, lang = "en", schemaType = "SoftwareApplication", docsPublishedAt, docsUpdatedAt, docsCategory, docsTags } = Astro.props;
 const c = getCommon(lang);
 
 const activeTool = tools.find(t => t.id === activeToolId);
-const toolPath = activeTool?.path ?? Astro.url.pathname;
+// For resolved tools, tool.path is the EN canonical path. For unresolved
+// (compare pages, docs), Astro.url.pathname is the full request path already
+// including /es/ when present. Strip that prefix to get the "bare" EN path.
+const pathnameBare = Astro.url.pathname.replace(/^\/es\//, '/').replace(/^\/es$/, '/');
+const toolPath = activeTool?.path ?? pathnameBare;
 const canonicalPath = lang === "es" ? `/es${toolPath}` : toolPath;
 const withSlash = (p: string) => p.endsWith('/') ? p : p + '/';
 const canonicalUrl = `https://pingthat.dev${withSlash(canonicalPath)}`;
@@ -34,44 +43,90 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/es" || Ast
 const normalizedPath = Astro.url.pathname.replace(/^\/es\//, '/').replace(/\/$/, '');
 const isLegalPage = normalizedPath === "/privacy-policy";
 const isComparePage = normalizedPath.startsWith("/vs-");
+const isDocsArticle = schemaType === "Article" && !!docsPublishedAt;
+const isDocsHub = activeToolId === "docs" && !isDocsArticle;
 
 type SchemaObject = Record<string, unknown>;
-const primarySchema: SchemaObject = (isLegalPage || isComparePage)
-  ? {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      name: title,
-      url: canonicalUrl,
-      description,
-      inLanguage: lang,
-      isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
-    }
-  : {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      name: title,
-      url: canonicalUrl,
-      description,
-      applicationCategory: "DeveloperApplication",
-      operatingSystem: "Any",
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      isPartOf: { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
-    };
+let primarySchema: SchemaObject;
+if (isLegalPage || isComparePage) {
+  primarySchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    url: canonicalUrl,
+    description,
+    inLanguage: lang,
+    isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
+  };
+} else if (isDocsArticle) {
+  primarySchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    url: canonicalUrl,
+    description,
+    inLanguage: lang,
+    datePublished: docsPublishedAt!.toISOString(),
+    dateModified: (docsUpdatedAt ?? docsPublishedAt!).toISOString(),
+    author: { "@type": "Organization", name: "PingThat", url: "https://pingthat.dev" },
+    publisher: {
+      "@type": "Organization",
+      name: "PingThat",
+      logo: { "@type": "ImageObject", url: "https://pingthat.dev/og-image.png" },
+    },
+    mainEntityOfPage: canonicalUrl,
+    articleSection: docsCategory,
+    keywords: docsTags?.join(", "),
+    image: "https://pingthat.dev/og-image.png",
+    isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
+  };
+} else if (isDocsHub) {
+  primarySchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: title,
+    url: canonicalUrl,
+    description,
+    inLanguage: lang,
+    isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
+  };
+} else {
+  primarySchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: title,
+    url: canonicalUrl,
+    description,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Any",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    isPartOf: { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
+  };
+}
 
+const docsHubPath = lang === "es" ? "/es/docs/" : "/docs/";
+const docsHubLabel = lang === "es" ? "Gu\u00edas" : "Guides";
+const breadcrumbItems = isDocsArticle
+  ? [
+      { "@type": "ListItem", position: 1, name: "PingThat", item: `https://pingthat.dev${lang === "es" ? "/es/" : "/"}` },
+      { "@type": "ListItem", position: 2, name: docsHubLabel, item: `https://pingthat.dev${docsHubPath}` },
+      { "@type": "ListItem", position: 3, name: title, item: canonicalUrl },
+    ]
+  : [
+      { "@type": "ListItem", position: 1, name: "PingThat", item: `https://pingthat.dev${lang === "es" ? "/es/" : "/"}` },
+      ...(!isHome ? [{ "@type": "ListItem", position: 2, name: title, item: canonicalUrl }] : []),
+    ];
 const schemas: SchemaObject[] = [
   primarySchema,
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "PingThat", item: `https://pingthat.dev${lang === "es" ? "/es/" : "/"}` },
-      ...(!isHome ? [{ "@type": "ListItem", position: 2, name: title, item: canonicalUrl }] : []),
-    ],
+    itemListElement: breadcrumbItems,
   },
 ];
 
-// HowTo schema for tool pages only. Skipped for legal + compare.
-if (!isLegalPage && !isComparePage && !isHome) {
+// HowTo schema for tool pages only. Skipped for legal + compare + docs.
+if (!isLegalPage && !isComparePage && !isHome && !isDocsArticle && !isDocsHub) {
   const howto = getHowTo(activeToolId, lang);
   if (howto) {
     schemas.push({
