@@ -69,7 +69,7 @@ Un buen monitor parsea la cadena completa y verifica que cada eslabón llega a u
 
 Los registros CAA (Certificate Authority Authorization) en DNS dicen a las CAs públicas cuáles pueden emitir certificados para tu dominio. Son excelentes para seguridad, y rompen renovaciones silenciosamente si los añades incorrectamente.
 
-```
+```dns
 example.com.  300  IN  CAA  0 issue "letsencrypt.org"
 example.com.  300  IN  CAA  0 issue "pki.goog"
 example.com.  300  IN  CAA  0 iodef "mailto:security@example.com"

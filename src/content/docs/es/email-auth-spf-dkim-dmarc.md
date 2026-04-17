@@ -36,7 +36,7 @@ Cada uno responde a una pregunta distinta. SPF pregunta "¿está el servidor de 
 
 SPF (Sender Policy Framework) es un registro TXT listando las IPs y dominios autorizados a enviar email en tu nombre. Un registro típico:
 
-```
+```dns
 example.com.  3600  IN  TXT  "v=spf1 mx a:mail.example.com include:_spf.google.com include:mailgun.org ip4:203.0.113.5 -all"
 ```
 
@@ -55,7 +55,7 @@ Los mecanismos:
 
 La trampa: **SPF está limitado a 10 lookups DNS**. Cada `include:`, `a`, `mx` o `redirect=` cuenta. Si tu SPF excede 10 lookups, los receptores tratan el registro como `permerror`, que la mayoría de motores de scoring tratan igual que no tener SPF. Un registro que se ve así ya está roto:
 
-```
+```txt
 "v=spf1 include:_spf.google.com include:mailgun.org include:sendgrid.net include:_spf.salesforce.com include:mktomail.com -all"
 ```
 
@@ -65,7 +65,7 @@ Cada uno de esos includes anidados tiene sus propios lookups. `_spf.google.com` 
 
 DKIM (DomainKeys Identified Mail) firma cada mensaje saliente con una clave privada. La clave pública vive en DNS en un selector, así los receptores pueden verificar la firma:
 
-```
+```dns
 mail2026._domainkey.example.com.  3600  IN  TXT  "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC..."
 ```
 
@@ -83,7 +83,7 @@ El alignment DKIM es lo que le importa a DMARC: el dominio `d=` en la firma DKIM
 
 DMARC (Domain-based Message Authentication, Reporting and Conformance) se sienta encima de SPF y DKIM, diciendo a los receptores qué hacer cuando falla el alignment y dónde enviar reportes:
 
-```
+```dns
 _dmarc.example.com.  3600  IN  TXT  "v=DMARC1; p=reject; rua=mailto:dmarc-reports@example.com; pct=100; sp=reject; adkim=s; aspf=s"
 ```
 

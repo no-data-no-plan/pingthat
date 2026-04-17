@@ -54,7 +54,7 @@ El salto de 99.9% a 99.99% es donde la mayoría de organizaciones fallan en entr
 
 Multiplicadores aproximados de coste de entrega (tiempo de ingeniería e infraestructura combinados):
 
-```
+```txt
 99%     baseline (llámalo 1x)
 99.5%   ~1.5x
 99.9%   ~3x
@@ -85,7 +85,7 @@ Para un objetivo de 99.99% (presupuesto 4 min/mes), hacer probe cada 60 segundos
 
 Si tu servicio depende de tres vendors, cada uno con SLA 99.9%, tu techo teórico es:
 
-```
+```txt
 0.999 × 0.999 × 0.999 = 0.997 ≈ 99.7%
 ```
 

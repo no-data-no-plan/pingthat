@@ -56,3 +56,29 @@ const lang = "es" as const;
     )}
   </article>
 </Layout>
+
+<style is:global>
+  .docs-prose { color: var(--color-text-primary, var(--color-text)); font-size: 0.95rem; line-height: 1.75; }
+  .docs-prose h2 { font-size: 1.4rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--color-text-primary, var(--color-text)); border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; }
+  .docs-prose h3 { font-size: 1.15rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.6rem; color: var(--color-text-primary, var(--color-text)); }
+  .docs-prose p { margin-bottom: 1.1rem; color: var(--color-text-secondary, var(--color-text-muted)); text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+  .docs-prose ul, .docs-prose ol { margin: 0.75rem 0 1.25rem 1.5rem; color: var(--color-text-secondary, var(--color-text-muted)); }
+  .docs-prose ul { list-style: disc; }
+  .docs-prose ol { list-style: decimal; }
+  .docs-prose li { margin-bottom: 0.5rem; line-height: 1.7; }
+  .docs-prose li > p { margin-bottom: 0.5rem; text-align: left; }
+  .docs-prose a { color: var(--color-accent-fg); text-decoration: underline; text-underline-offset: 2px; }
+  .docs-prose a:hover { text-decoration: none; }
+  .docs-prose code { background: var(--color-bg-tertiary, var(--color-surface2)); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.88em; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .docs-prose pre { background: var(--color-bg-tertiary, var(--color-surface2)); padding: 1rem 1.15rem; border-radius: 6px; overflow-x: auto; margin: 1.25rem 0; border: 1px solid var(--color-border); }
+  .docs-prose pre code { background: transparent; padding: 0; font-size: 0.85rem; }
+  .docs-prose blockquote { border-left: 3px solid var(--color-accent); padding: 0.4rem 0 0.4rem 1rem; margin: 1.25rem 0; color: var(--color-text-secondary, var(--color-text-muted)); font-style: italic; }
+  .docs-prose table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.9rem; }
+  .docs-prose th, .docs-prose td { border: 1px solid var(--color-border); padding: 0.55rem 0.8rem; text-align: left; vertical-align: top; }
+  .docs-prose th { background: var(--color-bg-tertiary, var(--color-surface2)); font-weight: 600; color: var(--color-text-primary, var(--color-text)); }
+  .docs-prose strong { color: var(--color-text-primary, var(--color-text)); font-weight: 600; }
+  .docs-prose > * + * { margin-top: 0; }
+  @media (max-width: 640px) {
+    .docs-prose p { text-align: left; }
+  }
+</style>

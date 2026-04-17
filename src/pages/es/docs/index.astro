@@ -8,23 +8,23 @@ const groupedCategories = CATEGORY_ORDER
   .map((cat) => ({ cat, docs: docs.filter((d) => d.data.category === cat) }))
   .filter((g) => g.docs.length > 0);
 
-const description = "Gu\u00edas pr\u00e1cticas para desarrolladores sobre monitoreo de uptime, DNS, SSL, HTTP y autenticaci\u00f3n de email. Cada gu\u00eda enlaza a la herramienta de PingThat que la aplica en vivo.";
+const description = "Guías prácticas para desarrolladores sobre monitoreo de uptime, DNS, SSL, HTTP y autenticación de email. Cada guía enlaza a la herramienta de PingThat que la aplica en vivo.";
 ---
 
-<Layout title="Gu\u00edas" description={description} activeToolId="docs" lang={lang} schemaType="CollectionPage">
+<Layout title="Guías" description={description} activeToolId="docs" lang={lang} schemaType="CollectionPage">
   <section class="px-4 sm:px-8 py-8 max-w-[56rem] mx-auto">
     <header class="mb-8">
-      <p class="text-xs uppercase tracking-wider text-[var(--color-accent-fg)] mb-2">Gu\u00edas</p>
-      <h1 class="text-3xl font-bold text-[var(--color-text)] leading-tight mb-3">Gu\u00edas de monitoreo, DNS, SSL y HTTP</h1>
+      <p class="text-xs uppercase tracking-wider text-[var(--color-accent-fg)] mb-2">Guías</p>
+      <h1 class="text-3xl font-bold text-[var(--color-text)] leading-tight mb-3">Guías de monitoreo, DNS, SSL y HTTP</h1>
       <p class="text-base text-[var(--color-text-muted)] leading-relaxed max-w-2xl">
-        Gu\u00edas pr\u00e1cticas y honestas sobre c\u00e1lculos de SLA uptime, propagaci\u00f3n DNS, monitoreo de certificados SSL, redirects HTTP y autenticaci\u00f3n de email (SPF/DKIM/DMARC).
-        Cada gu\u00eda va con la herramienta de PingThat que la aplica en vivo.
+        Guías prácticas y honestas sobre cálculos de SLA uptime, propagación DNS, monitoreo de certificados SSL, redirects HTTP y autenticación de email (SPF/DKIM/DMARC).
+        Cada guía va con la herramienta de PingThat que la aplica en vivo.
       </p>
     </header>
 
     {docs.length === 0 && (
       <div class="p-4 rounded border border-[var(--color-border)] text-sm text-[var(--color-text-muted)]" style="background: var(--color-surface);">
-        Sin gu\u00edas publicadas todav\u00eda. Vuelve pronto.
+        Sin guías publicadas todavía. Vuelve pronto.
       </div>
     )}
 

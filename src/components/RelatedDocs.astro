@@ -9,7 +9,7 @@ interface Props {
 
 const { toolId, lang = "en" } = Astro.props;
 const docs = await getDocsReferencingTool(toolId, lang, 4);
-const heading = lang === "es" ? "Gu\u00edas relacionadas" : "Related guides";
+const heading = lang === "es" ? "Guías relacionadas" : "Related guides";
 ---
 
 {docs.length > 0 && (

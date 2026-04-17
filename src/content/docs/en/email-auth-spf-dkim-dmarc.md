@@ -36,7 +36,7 @@ Each answers a different question. SPF asks "is the sending server allowed?", DK
 
 SPF (Sender Policy Framework) is a TXT record listing the IPs and domains authorized to send email on your behalf. A typical record:
 
-```
+```dns
 example.com.  3600  IN  TXT  "v=spf1 mx a:mail.example.com include:_spf.google.com include:mailgun.org ip4:203.0.113.5 -all"
 ```
 
@@ -55,7 +55,7 @@ The mechanisms:
 
 The trap: **SPF is limited to 10 DNS lookups**. Each `include:`, `a`, `mx`, or `redirect=` counts. If your SPF exceeds 10 lookups, receivers treat the record as a `permerror`, which most scoring engines treat the same as no SPF at all. A record that looks like this is already broken:
 
-```
+```txt
 "v=spf1 include:_spf.google.com include:mailgun.org include:sendgrid.net include:_spf.salesforce.com include:mktomail.com -all"
 ```
 
@@ -65,7 +65,7 @@ Each of those nested includes has its own lookups. `_spf.google.com` alone pulls
 
 DKIM (DomainKeys Identified Mail) signs each outgoing message with a private key. The public key lives in DNS at a selector, so receivers can verify the signature:
 
-```
+```dns
 mail2026._domainkey.example.com.  3600  IN  TXT  "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC..."
 ```
 
@@ -83,7 +83,7 @@ DKIM alignment is what DMARC cares about: the `d=` domain in the DKIM signature 
 
 DMARC (Domain-based Message Authentication, Reporting and Conformance) sits on top of SPF and DKIM, telling receivers what to do when alignment fails and where to send reports:
 
-```
+```dns
 _dmarc.example.com.  3600  IN  TXT  "v=DMARC1; p=reject; rua=mailto:dmarc-reports@example.com; pct=100; sp=reject; adkim=s; aspf=s"
 ```
 

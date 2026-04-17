@@ -48,7 +48,7 @@ The practical upshot: if you set a TTL of 300 seconds (5 minutes), 80% of your u
 
 If you know you are going to change a record (IP migration, CDN swap, MX change), lower the TTL 24-48 hours ahead of the change:
 
-```
+```dns
 # Before migration, set TTL low
 example.com.  300  IN  A  192.0.2.10
 
@@ -65,7 +65,7 @@ A lower TTL means more queries to your authoritative server, but for 48 hours ar
 
 When a resolver queries for a name that does not exist (NXDOMAIN) or a record type that does not exist (e.g. there is no AAAA), it caches the negative response. The TTL for negative caching comes from the SOA record, specifically the minimum field:
 
-```
+```dns
 example.com.  IN  SOA  ns1.example.com. admin.example.com. (
                   2026041700  ; serial
                   3600        ; refresh

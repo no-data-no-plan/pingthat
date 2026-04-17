@@ -69,7 +69,7 @@ A good monitor parses the full chain and verifies each link reaches a trusted ro
 
 CAA (Certificate Authority Authorization) records in DNS tell public CAs which of them are allowed to issue certs for your domain. They are great for security, and they silently break renewals when you add them incorrectly.
 
-```
+```dns
 example.com.  300  IN  CAA  0 issue "letsencrypt.org"
 example.com.  300  IN  CAA  0 issue "pki.goog"
 example.com.  300  IN  CAA  0 iodef "mailto:security@example.com"

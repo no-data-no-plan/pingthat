@@ -54,7 +54,7 @@ The jump from 99.9% to 99.99% is where most organisations fail to deliver what t
 
 Rough cost-to-deliver multipliers (engineering time and infrastructure combined):
 
-```
+```txt
 99%     baseline (call it 1x)
 99.5%   ~1.5x
 99.9%   ~3x
@@ -85,7 +85,7 @@ For a 99.99% target (4 min/month budget), probing every 60 seconds is too coarse
 
 If your service depends on three vendors, each with 99.9% SLA, your theoretical ceiling is:
 
-```
+```txt
 0.999 × 0.999 × 0.999 = 0.997 ≈ 99.7%
 ```
 

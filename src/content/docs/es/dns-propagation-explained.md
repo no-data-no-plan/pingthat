@@ -48,7 +48,7 @@ La consecuencia práctica: si fijas un TTL de 300 segundos (5 minutos), el 80% d
 
 Si sabes que vas a cambiar un registro (migración de IP, cambio de CDN, cambio de MX), baja el TTL 24-48 horas antes del cambio:
 
-```
+```dns
 # Antes de migrar, fijar TTL bajo
 example.com.  300  IN  A  192.0.2.10
 
@@ -65,7 +65,7 @@ Un TTL más bajo significa más queries a tu servidor autoritativo, pero durante
 
 Cuando un resolver pregunta por un nombre que no existe (NXDOMAIN) o un tipo de registro que no existe (por ejemplo, no hay AAAA), cachea la respuesta negativa. El TTL del negative caching viene del registro SOA, específicamente el campo mínimo:
 
-```
+```dns
 example.com.  IN  SOA  ns1.example.com. admin.example.com. (
                   2026041700  ; serial
                   3600        ; refresh
