@@ -1,0 +1,50 @@
+---
+import type { Lang } from "../i18n/index";
+
+interface FaqItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: FaqItem[];
+  lang?: Lang;
+}
+
+const { items, lang = "en" } = Astro.props;
+const heading = lang === "es" ? "Preguntas frecuentes" : "Frequently asked questions";
+
+const faqSchema = items.length > 0
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "inLanguage": lang,
+      "mainEntity": items.map((f) => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a },
+      })),
+    }
+  : null;
+---
+
+{items.length > 0 && (
+  <section class="mt-8 pt-6 border-t border-[var(--color-border)]">
+    <h2 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary, var(--color-text));">{heading}</h2>
+    <div class="space-y-2">
+      {items.map((f) => (
+        <details class="border-b border-[var(--color-border)] last:border-b-0 pb-2">
+          <summary class="cursor-pointer py-2 text-sm font-medium list-none flex items-start gap-2" style="color: var(--color-text-primary, var(--color-text));">
+            <span aria-hidden="true" class="shrink-0 text-xs mt-0.5" style="color: var(--color-text-muted);">▸</span>
+            <span>{f.q}</span>
+          </summary>
+          <p class="ml-5 mt-1 mb-2 text-sm leading-relaxed" style="color: var(--color-text-muted);">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+)}
+
+{faqSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+)}

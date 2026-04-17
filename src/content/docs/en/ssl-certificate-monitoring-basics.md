@@ -7,6 +7,17 @@ publishedAt: 2026-04-17
 lang: en
 tags: ["ssl", "tls", "certificates", "monitoring"]
 excerpt: "An expired cert takes a site down hard. Here's what to monitor, what thresholds to set, and the subtle issues most checkers miss."
+faq:
+  - q: "How many days before expiry should I alert on TLS certificates?"
+    a: "For Let's Encrypt or any 90-day cert with automated renewal, alert at 30 days (info), 14 days (warning), 7 days (critical), 3 days (page), and 1 day (page plus public comms). For manually renewed year-long certs, shift the window to 60/30/14/7. The point is that your alert window should cover at least two full renewal cycles — silent renewal failures can run for weeks before actually expiring, so a narrow window means you find out too late to react safely."
+  - q: "Does Let's Encrypt auto-renewal always work?"
+    a: "No. Common silent failures include HTTP-01 challenges blocked by CDN rules or Basic auth on /.well-known/acme-challenge/, expired DNS-01 API tokens, rate limits hit during incidents, and certbot running successfully but the post-hook that reloads nginx never firing. Add an external integration test that curls your site once a day and checks the leaf cert's Not After date stays beyond 60 days. If it drifts below 60, the renewal chain is broken and you have about 30 days to fix it before alerts fire."
+  - q: "What is OCSP stapling and why should I monitor it?"
+    a: "OCSP stapling is when your server fetches the certificate revocation status from the CA periodically and attaches it to the TLS handshake, making revocation checks fast and private. The failure mode is a misconfigured nginx or Apache serving a stale stapled response, which clients reject. If you use OCSP Must-Staple, a stapling bug takes the whole site down. Monitor the stapled response age — most server configs refresh hourly, so anything older than 24 hours means the OCSP fetcher is broken."
+  - q: "Why do CAA records silently break TLS renewals?"
+    a: "CAA (Certificate Authority Authorization) records tell public CAs which of them are allowed to issue certs for your domain. If you change CA — say Let's Encrypt to ZeroSSL — and forget to update the CAA record, the next renewal fails with a message most people ignore. A CAA record that lists a CA you no longer use is a slow-motion outage waiting for the current cert's 90-day window to close. Monitor your CAA records alongside the cert itself."
+  - q: "What should I page on versus warn on for cert alerts?"
+    a: "Page on: expiry less than 3 days, hostname mismatch with the Subject Alternative Name list, broken chain that does not verify against Mozilla's root store, or cert revoked. Warn on: expiry 3-14 days, OCSP stapling stale more than 24 hours, chain includes deprecated algorithms (SHA-1, RSA under 2048, or from 2026 onward RSA under 3072). Info on: expiry 14-30 days, new issuer detected. Everything else is noise — avoid alerting on TLS 1.0 support or similar policy items unless it is a tracked project."
 ---
 
 Every sysadmin has the same story: a production cert expired on a Sunday morning, and Monday was spent explaining why the checkout page was broken. Certificate monitoring is not glamorous, but it is one of the highest-ROI checks you can automate. This guide covers what to monitor beyond the expiry date, because "days until expiry" alone misses half the real failure modes.

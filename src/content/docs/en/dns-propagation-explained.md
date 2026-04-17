@@ -7,6 +7,17 @@ publishedAt: 2026-04-17
 lang: en
 tags: ["dns", "ttl", "propagation", "resolvers"]
 excerpt: "Nobody is \"propagating\" anything. DNS is a cache-expiry problem, and you can largely control it. Here is what actually happens."
+faq:
+  - q: "Why does dig show different results from different resolvers?"
+    a: "Because DNS is a cache-expiry problem, not a propagation one. When you change a record, your authoritative server serves the new value immediately, but resolvers worldwide still hold the old value in cache until their individual TTL expires. A resolver that fetched your record 300 seconds ago with a TTL of 3600 will keep serving stale data for another 3300 seconds regardless of what you change upstream. Running dig against 1.1.1.1, 8.8.8.8, and 9.9.9.9 often shows different answers because each resolver's cache expired at a different moment."
+  - q: "How low can I safely set a DNS TTL?"
+    a: "Most public resolvers respect TTLs down to about 30 seconds (Cloudflare 1.1.1.1 enforces a ~30s minimum), and anything 60-300 seconds is safe in practice. Some ISP resolvers and corporate caches enforce minimums around 300 seconds, so values below that get silently rounded up. For a migration, lower the TTL to 300 about 24-48 hours ahead of the change, then raise it back to 3600 or 86400 once stable — constant DNS lookups for unchanged records waste resources and give you no benefit."
+  - q: "Is DNSSEC required to monitor DNS properly?"
+    a: "No, but if your zone is signed, monitoring gets more complex. Stale caches are worse with DNSSEC because validating resolvers also cache RRSIG records with their own TTLs. A record change means the old signature becomes stale too, and some validating resolvers reject until both expire. If you use DNSSEC, lower TTLs 72 hours ahead of changes, never rotate DNSSEC keys during a migration, and use WHOIS to confirm your registrar has the correct DS record — a mismatched DS is the most common cause of validation failures."
+  - q: "What is negative caching and how does it break new DNS records?"
+    a: "When a resolver queries a name that does not exist (NXDOMAIN) or a missing record type (like an absent AAAA), it caches the negative answer. The cache duration comes from the SOA record's minimum field. If you ask for mail.example.com, it does not exist, and your resolver caches NXDOMAIN for 3600 seconds. You then create the record — users still get NXDOMAIN for the next hour. To avoid this, lower the SOA minimum to 300 before creating new names."
+  - q: "How long do NS record changes actually take?"
+    a: "NS changes at your registrar are the one case where 48 hours is a reasonable estimate. TLD nameservers themselves cache delegation records, and their TTLs are typically 1-2 days. Unlike normal A or CNAME changes, you cannot just lower the TTL ahead of time because the TLD controls those caches. Plan NS migrations with extra lead time: lower sub-record TTLs in advance, keep the old nameservers serving correct data for at least 48 hours after the change, and verify with dig +trace."
 ---
 
 Every DNS tutorial tells you to "wait 48 hours for propagation" after a change. That advice is a relic from when domain registrars pushed zone files to root servers on a schedule. Modern DNS is a distributed caching system — nothing propagates, caches expire. Understanding the difference saves you hours of staring at `dig` output wondering why one resolver updated and another did not.

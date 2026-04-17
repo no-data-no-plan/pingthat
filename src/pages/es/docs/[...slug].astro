@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from "../../../components/RelatedTools.astro";
+import FaqBlock from "../../../components/FaqBlock.astro";
 import { CATEGORY_LABELS, docSlug, formatDate } from "../../../lib/docs";
 
 export async function getStaticPaths() {
@@ -49,6 +50,9 @@ const lang = "es" as const;
     </div>
     {doc.data.relatedToolIds.length > 0 && (
       <RelatedTools toolIds={doc.data.relatedToolIds} lang={lang} />
+    )}
+    {doc.data.faq && doc.data.faq.length > 0 && (
+      <FaqBlock items={doc.data.faq} lang={lang} />
     )}
   </article>
 </Layout>

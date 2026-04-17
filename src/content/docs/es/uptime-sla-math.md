@@ -7,6 +7,17 @@ publishedAt: 2026-04-17
 lang: es
 tags: ["sla", "uptime", "monitoring", "availability"]
 excerpt: "Cada nueve cuesta unas 10 veces más que el anterior. Aquí va la matemática honesta y lo que hace falta para entregar cada nivel de verdad."
+faq:
+  - q: "¿Qué permite realmente un 99.9% de uptime al mes?"
+    a: "99.9% (tres nueves) te da 43.8 minutos de caída al mes, 8.76 horas al año, o 10.1 minutos por semana. Eso es suficiente para absorber un mal deploy con un rollback de 5 minutos, o un incidente con 30-40 minutos de MTTR. Más allá y quemas el presupuesto. 99.95% aprieta a 21.9 minutos al mes, y 99.99% baja a 4.38 minutos — apenas lo justo para notar un incidente, menos aún para responder manualmente. Tu objetivo de MTTR debe caber cómodamente dentro del presupuesto mensual."
+  - q: "¿Puede un CDN llevarme de 99.9% a 99.99%?"
+    a: "Solo para contenido estático, y solo si el CDN mismo mantiene 99.99%. Para peticiones dinámicas que tocan tu origen, el uptime del CDN se multiplica con el del origen — la disponibilidad compuesta es peor que cualquiera de los componentes aislado. Si tu origen es 99.9% y el CDN es 99.99%, el compuesto es 0.999 × 0.9999 ≈ 99.89%. Ir de 99.9% a 99.99% end-to-end requiere arreglar el origen: multi-AZ, failover automático, deploys sin downtime y remediación que supere el MTTR humano de 10-30 minutos."
+  - q: "¿Los créditos SLA valen algo en la práctica?"
+    a: "Casi nunca, en términos financieros. Un SLA 99.9% con 10% de crédito sobre una factura mensual de $500 significa $50 de vuelta si el vendor estuvo caído 43 minutos. Si tu negocio perdió $500 por minuto durante esos 43 minutos, el crédito cubre 6 segundos de ingresos reales perdidos. Los créditos SLA son palanca reputacional, no compensación. Si la disponibilidad realmente importa a tu negocio, lo único que importa es si el vendor entrega — un reembolso es irrelevante comparado con el impacto en cadena sobre tu propio SLA."
+  - q: "¿La frecuencia y ubicación de los probes afectan el uptime medido?"
+    a: "Totalmente. Un probe de 60 segundos desde una ubicación tiene resolución de ~1 minuto, así que una caída de 40 segundos puede no registrarse. Para un objetivo de 99.99% (presupuesto 4 min/mes) haz probe cada 10-30 segundos desde varias regiones, si no N=3 fallos consecutivos a 60s significan un suelo de 3 minutos antes incluso de alertar. Probes desde 3+ regiones también filtran clima de red de una región que si no causaría falsos positivos en tu dashboard de SLA."
+  - q: "¿Qué es el problema de SLA compuesto con múltiples vendors?"
+    a: "Si tu servicio depende de tres vendors cada uno a 99.9%, tu techo teórico es 0.999 × 0.999 × 0.999 = 99.7%, unas 26 horas de caída al año en lugar de 9. Y eso asumiendo que las caídas de los tres vendors son independientes, lo que normalmente no es verdad si comparten el mismo DNS, IAM o red del mismo proveedor cloud. La regla práctica: tu techo SLA siempre es más bajo que tu vendor más débil, y las dependencias compartidas lo empeoran más allá de lo que sugiere la matemática."
 ---
 
 Todos los slide decks de vendor prometen "cinco nueves" de uptime. La mayoría no los entrega, y la mayoría de clientes no los necesita. Entender la matemática de los niveles de disponibilidad, y lo que cada nivel cuesta en arquitectura y procesos, es cómo evitas sobre-ingenierizar (o peor, infra-ingenierizar) tus propios sistemas.

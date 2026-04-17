@@ -7,6 +7,17 @@ publishedAt: 2026-04-17
 lang: es
 tags: ["http", "monitoring", "status-codes", "alerts"]
 excerpt: "Alertar por cualquier no-2xx es cómo entrenas a tu equipo a ignorar alertas. Aquí va un mapeo más sensato de códigos a severidad."
+faq:
+  - q: "¿Debería alertar por respuestas HTTP 429?"
+    a: "Normalmente no. Un 429 Too Many Requests casi siempre significa que tu propio monitor está pegando en un rate limit, no que los usuarios vean caídas. El arreglo es bajar la frecuencia del probe o añadir el monitor a un allowlist, no despertar a alguien. La excepción es cuando los 429 aparecen en tráfico real de usuarios en logs de tu aplicación — eso indica que necesitas más capacidad o un mejor tier de rate-limit. Para el monitor mismo, suprime alertas 429 y baja la tasa del probe."
+  - q: "¿Un 503 Service Unavailable siempre es caída?"
+    a: "No siempre. Una aplicación bien diseñada sirve 503 con cabecera Retry-After durante deploys planificados o mantenimiento, y eso es comportamiento esperado. La regla: 503 con Retry-After o durante una ventana de mantenimiento conocida es warning, 503 sin ninguna de las dos es critical. Configura tu monitor para leer un flag de mantenimiento o parsear la cabecera Retry-After, y suprime alertas cuando indiquen caída planificada. 503 recurrentes en horas normales significan que tu app está sin capacidad y deberías hacer page."
+  - q: "¿Las respuestas 3xx cuentan como downtime?"
+    a: "No, siempre que la cadena de redirección termine en un 2xx válido. Configura tu monitor para seguir redirects hasta 5 saltos y evaluar el estado final. Un 301 a un destino funcional no es caída — un 301 a un destino roto sí. Bucles de redirección y cadenas de más de 3 saltos suelen indicar mala configuración. Usa un redirect checker periódicamente para auditar tus redirects en busca de bucles accidentales, cambios de método (POST a GET), o cadenas que pierden parámetros de query."
+  - q: "¿Cuándo debería un 404 disparar una alerta?"
+    a: "Alerta cuando un 404 aparece en una URL que monitorizas explícitamente — algo que debería existir y solía devolver 2xx. No alertes por 404s de paths aleatorios crawleados, probes de scanners, o URLs que nunca anunciaste. La señal de severidad es un 404 súbito en un endpoint estable monitorizado, que casi siempre significa que un deploy removió o movió el recurso. Para analítica, rastrea tasas agregadas de 404 por separado, pero haz page solo en fallos de URL monitorizada."
+  - q: "¿Debería hacer page por una sola respuesta 5xx?"
+    a: "No. Un 500 único es ruido estadístico en la mayoría de setups — clima de red, una tormenta de reintentos, o un crash puntual. Haz page en N fallos consecutivos (típicamente 2 o 3) desde múltiples probes geográficos, y solo cuando una mayoría de probes coincida en el fallo. Esto suaviza blips transitorios sin perder señal en caídas reales. Para SLAs más estrictos (99.99% y arriba) haz probe cada 10-30 segundos desde 3+ regiones para que N=2 siga disparando dentro de tu presupuesto de downtime."
 ---
 
 Un monitor ingenuo de uptime trata cualquier cosa fuera del rango 200-299 como fallo. Por eso tantos equipos sufren fatiga de alertas — les despiertan por redirects 301, prompts de auth 401 y blips de rate-limit 429 que no son caídas reales. Mapear códigos HTTP a severidad de alerta correctamente es una de las formas más baratas de cortar ruido sin perder señal real.

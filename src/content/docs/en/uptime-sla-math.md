@@ -7,6 +7,17 @@ publishedAt: 2026-04-17
 lang: en
 tags: ["sla", "uptime", "monitoring", "availability"]
 excerpt: "Each nine gets about 10x more expensive than the last. Here is the honest math and what it takes to actually deliver each tier."
+faq:
+  - q: "What does 99.9% uptime actually allow per month?"
+    a: "99.9% (three nines) gives you 43.8 minutes of downtime per month, 8.76 hours per year, or 10.1 minutes per week. That is enough to absorb a bad deploy with a 5-minute rollback, or one incident with 30-40 minutes of MTTR. Anything longer and you blow the budget. 99.95% tightens that to 21.9 minutes per month, and 99.99% drops it to 4.38 minutes — barely enough to notice an incident, let alone respond manually. Your MTTR target should comfortably fit inside the monthly budget."
+  - q: "Can adding a CDN take me from 99.9% to 99.99%?"
+    a: "Only for static content, and only if the CDN itself holds 99.99%. For dynamic requests that hit your origin, CDN uptime multiplies with origin uptime — composite availability is worse than either component alone. If your origin is 99.9% and the CDN is 99.99%, the composite is 0.999 × 0.9999 ≈ 99.89%. Going from 99.9% to 99.99% end-to-end requires fixing the origin itself: multi-AZ, automated failover, zero-downtime deploys, and remediation that beats a human's 10-30 minute MTTR."
+  - q: "Are SLA credits actually worth anything?"
+    a: "Almost never, in financial terms. A 99.9% SLA with a 10% credit on a $500 monthly bill means $50 back if the vendor was down 43 minutes. If your business lost $500 per minute during those 43 minutes, the credit covers 6 seconds of real revenue loss. SLA credits are a reputational lever, not compensation. If availability actually matters to your business, the only thing that matters is whether the vendor delivers — a refund is irrelevant compared to the cascading impact on your own SLA."
+  - q: "Do probe frequency and probe locations affect measured uptime?"
+    a: "Completely. A 60-second probe from one location has ~1 minute resolution, so a 40-second outage might not register at all. For a 99.99% target (4 min/month budget) probe every 10-30 seconds from multiple regions, otherwise N=3 consecutive failures at 60s intervals means a 3-minute floor before you even alert. Probes from 3+ regions also filter out single-region network weather that would otherwise cause false positives on your SLA dashboard."
+  - q: "What is the composite SLA problem with multiple vendors?"
+    a: "If your service depends on three vendors each at 99.9%, your theoretical ceiling is 0.999 × 0.999 × 0.999 = 99.7%, or about 26 hours of downtime a year instead of 9. And that assumes the three vendors' outages are independent, which they usually are not if they share the same cloud provider's DNS, IAM, or network. The practical rule: your SLA ceiling is always lower than your weakest vendor, and shared dependencies make it worse than the math suggests."
 ---
 
 Every vendor slide deck promises "five nines" of uptime. Most of them do not deliver it, and most customers do not need it. Understanding the math of availability tiers, and what each tier costs in architecture and process, is how you avoid over-engineering (or worse, under-engineering) your own systems.

@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
+import RelatedDocs from "../components/RelatedDocs.astro";
 import LangToggle from "../components/LangToggle.astro";
 import CrossLinks from "../components/CrossLinks.astro";
 import CompareLinks from "../components/CompareLinks.astro";
@@ -303,6 +304,9 @@ const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
       <!-- Content -->
       <main id="main-content" class="flex-1">
         <slot />
+        {activeToolId && activeToolId !== "home" && activeToolId !== "compare" && activeToolId !== "docs" && !isLegalPage && (
+          <RelatedDocs toolId={activeToolId} lang={lang} />
+        )}
         <!-- Ad banner -->
         <div class="shrink-0 px-6 py-3 border-t border-[var(--color-border)]" style="min-height: 100px;">
           <div class="mx-auto max-w-[728px]" style="min-height: 90px;">

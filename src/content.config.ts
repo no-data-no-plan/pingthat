@@ -13,6 +13,7 @@ const docs = defineCollection({
     lang: z.enum(["en", "es"]),
     tags: z.array(z.string()).default([]),
     excerpt: z.string().optional(),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
     featured: z.boolean().default(false),
   }),
 });
