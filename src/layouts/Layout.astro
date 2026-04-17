@@ -277,7 +277,7 @@ const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
           <button id="menu-toggle" class="lg:hidden p-2 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] shrink-0" aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'} aria-expanded="false" aria-controls="sidebar">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
-          {isComparePage || isLegalPage ? (
+          {isComparePage || isLegalPage || isDocsHub || isDocsArticle ? (
             <span class="text-sm font-medium text-[var(--color-text)] truncate">{title}</span>
           ) : (
             <h1 class="text-sm font-medium text-[var(--color-text)] truncate">{title}</h1>
