@@ -14,7 +14,7 @@ const resolved = toolIds
 
 const heading = lang === "es" ? "Herramientas relacionadas" : "Related tools";
 const openLabel = lang === "es" ? "Abrir" : "Open";
-const pathFor = (path: string) => (lang === "es" ? `/es${path}` : path);
+const pathFor = (path: string) => { const p = lang === "es" ? `/es${path}` : path; return p.endsWith("/") ? p : `${p}/`; };
 ---
 
 {resolved.length > 0 && (

@@ -58,7 +58,7 @@ Estos números no son científicos, pero la forma es correcta. Cada nueve requie
 
 Los SLAs de vendor suelen prometer créditos — 10% de la factura mensual si fallan su objetivo, 25% por brecha mayor, 100% en catástrofe. Lee los números reales. Un SLA 99.9% con 10% de crédito sobre una factura mensual de $500 significa $50 de vuelta si estuvieron caídos 43 minutos. Si tu sitio hizo $500/minuto durante esos 43 minutos, ese crédito cubre 6 segundos de ingresos perdidos.
 
-Los créditos SLA son palanca reputacional, no financiera. Si la disponibilidad realmente importa a tu negocio, el crédito es irrelevante — necesitas el uptime, no el reembolso. Un monitor como [is-it-up](/es/is-it-up) te da una segunda opinión independiente cuando la página de estado de tu vendor discrepa de la realidad.
+Los créditos SLA son palanca reputacional, no financiera. Si la disponibilidad realmente importa a tu negocio, el crédito es irrelevante — necesitas el uptime, no el reembolso. Un monitor como [is-it-up](/es/is-it-up/) te da una segunda opinión independiente cuando la página de estado de tu vendor discrepa de la realidad.
 
 ## Medir uptime honestamente
 
@@ -68,7 +68,7 @@ Tu uptime medido depende enteramente de tu setup de probes:
 - Probe cada 30 segundos desde 3 regiones: captura la mayoría de caídas cortas, pero pagas 3x el volumen de probes.
 - Alerta en N fallos consecutivos: suaviza blips transitorios, pero N=3 a 60s significa un suelo de 3 minutos antes de alertar.
 
-Para un objetivo de 99.99% (presupuesto 4 min/mes), hacer probe cada 60 segundos es demasiado grueso. Necesitas intervalos de 10-30s desde múltiples regiones. [Is it down](/es/is-it-down) es útil para el "alguien cree que está roto" que entra durante un incidente — compruebas desde fuera antes de gastar tiempo de ingeniería en un no-problema.
+Para un objetivo de 99.99% (presupuesto 4 min/mes), hacer probe cada 60 segundos es demasiado grueso. Necesitas intervalos de 10-30s desde múltiples regiones. [Is it down](/es/is-it-down/) es útil para el "alguien cree que está roto" que entra durante un incidente — compruebas desde fuera antes de gastar tiempo de ingeniería en un no-problema.
 
 ## El problema de disponibilidad compuesta
 

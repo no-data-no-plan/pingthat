@@ -55,7 +55,7 @@ Do not take this as legal advice. The pattern across jurisdictions is the same: 
 - CTF competitions, in-scope targets only
 - Public IP ranges your employer owns, if your job description covers security testing
 
-If you are doing learning-oriented scanning and not sure whether a target is fair game, use Hack The Box or similar. They exist precisely to avoid this problem. You can also use the [port scan tool](/port-scan) against your own servers to verify exposed services.
+If you are doing learning-oriented scanning and not sure whether a target is fair game, use Hack The Box or similar. They exist precisely to avoid this problem. You can also use the [port scan tool](/port-scan/) against your own servers to verify exposed services.
 
 ## When it is clearly a problem
 

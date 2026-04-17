@@ -22,7 +22,7 @@ Expiry is the obvious failure mode, but certs break in several other ways that a
 - A CAA record blocks your renewal CA
 - Your renewal ran, but the new cert was never loaded (nginx was not reloaded)
 
-A proper monitor checks all of these. You can verify any of them quickly with the [SSL checker](/ssl-checker) before putting a production site behind your monitoring stack.
+A proper monitor checks all of these. You can verify any of them quickly with the [SSL checker](/ssl-checker/) before putting a production site behind your monitoring stack.
 
 ## Expiry thresholds that work
 
@@ -64,7 +64,7 @@ example.com.  300  IN  CAA  0 issue "pki.goog"
 example.com.  300  IN  CAA  0 iodef "mailto:security@example.com"
 ```
 
-If you change from Let's Encrypt to ZeroSSL and forget the CAA record, the next renewal fails with a message most people ignore. Add CAA monitoring to your checklist — a CAA record that lists a CA you no longer use is a slow-motion outage. You can look up current CAA records with the [DNS lookup tool](/dns-lookup).
+If you change from Let's Encrypt to ZeroSSL and forget the CAA record, the next renewal fails with a message most people ignore. Add CAA monitoring to your checklist — a CAA record that lists a CA you no longer use is a slow-motion outage. You can look up current CAA records with the [DNS lookup tool](/dns-lookup/).
 
 ## OCSP stapling and OCSP Must-Staple
 
@@ -85,7 +85,7 @@ Let's Encrypt certs are valid for 90 days by default, and `certbot` renews at 60
 - DNS-01 challenge fails because of a stale API token
 - `certbot` renews, but the post-hook that reloads nginx never runs
 
-Add an integration test: curl your own site through the public internet once a day and check the leaf cert's "Not After" is beyond 60 days. If it drifts below 60, your renewal chain is broken and you have ~30 days to fix it before alerts fire. Pair that with an [is-it-up](/is-it-up) check to confirm the site is still responding after renewal.
+Add an integration test: curl your own site through the public internet once a day and check the leaf cert's "Not After" is beyond 60 days. If it drifts below 60, your renewal chain is broken and you have ~30 days to fix it before alerts fire. Pair that with an [is-it-up](/is-it-up/) check to confirm the site is still responding after renewal.
 
 ## What to actually alert on
 

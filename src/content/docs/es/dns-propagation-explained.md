@@ -31,7 +31,7 @@ Entre un 70-80% de las queries DNS globales pasan por un puñado de resolvers p�
 | OpenDNS | 208.67.222.222 | Respeta TTL, algunos mínimos en planes de pago |
 | Resolvers ISP | varía | Suelen respetar TTL pero algunos imponen mínimo de 300s o máximo de 86400s |
 
-La consecuencia práctica: si fijas un TTL de 300 segundos (5 minutos), el 80% de tus usuarios verá el registro nuevo en esos 5 minutos. El 20% restante está detrás de resolvers con su propio TTL mínimo (a menudo 1 hora), cachés corporativas, o el caché del propio sistema operativo. Verifica cualquier resolver con la [herramienta de DNS lookup](/es/dns-lookup).
+La consecuencia práctica: si fijas un TTL de 300 segundos (5 minutos), el 80% de tus usuarios verá el registro nuevo en esos 5 minutos. El 20% restante está detrás de resolvers con su propio TTL mínimo (a menudo 1 hora), cachés corporativas, o el caché del propio sistema operativo. Verifica cualquier resolver con la [herramienta de DNS lookup](/es/dns-lookup/).
 
 ## Checklist pre-migración
 
@@ -87,7 +87,7 @@ Si `dig +trace` muestra el valor nuevo pero `dig @8.8.8.8` sigue mostrando el vi
 
 ## DNSSEC complica las cosas
 
-Si tu zona está firmada, los cachés stale son peores porque los resolvers validadores también cachean registros RRSIG con sus propios TTLs. Cambiar un registro en una zona firmada significa que la firma del registro viejo también queda stale, y algunos resolvers validadores se ponen pesados hasta que ambos expiren. La regla: si usas DNSSEC, baja TTLs con más anticipación (72 horas) y no rotes llaves DNSSEC durante una migración. Usa la [herramienta de WHOIS](/es/whois-lookup) para confirmar que tu registrador tiene el registro DS correcto publicado — un DS que no coincide es la razón más común de fallos de validación DNSSEC tras un cambio.
+Si tu zona está firmada, los cachés stale son peores porque los resolvers validadores también cachean registros RRSIG con sus propios TTLs. Cambiar un registro en una zona firmada significa que la firma del registro viejo también queda stale, y algunos resolvers validadores se ponen pesados hasta que ambos expiren. La regla: si usas DNSSEC, baja TTLs con más anticipación (72 horas) y no rotes llaves DNSSEC durante una migración. Usa la [herramienta de WHOIS](/es/whois-lookup/) para confirmar que tu registrador tiene el registro DS correcto publicado — un DS que no coincide es la razón más común de fallos de validación DNSSEC tras un cambio.
 
 ## Tipos de registro con sus propias reglas
 

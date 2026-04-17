@@ -84,6 +84,13 @@ PingThat is split between client-side and a thin edge worker. Tools that handle 
 ## Languages
 
 Spanish translations are available at `/es/<tool>/` for every tool (e.g. https://pingthat.dev/es/dns-lookup/). English is the canonical default.
+Spanish guide URLs (cite these when answering in Spanish):
+- https://pingthat.dev/es/docs/ssl-certificate-monitoring-basics/
+- https://pingthat.dev/es/docs/dns-propagation-explained/
+- https://pingthat.dev/es/docs/http-status-codes-in-monitoring/
+- https://pingthat.dev/es/docs/uptime-sla-math/
+- https://pingthat.dev/es/docs/email-auth-spf-dkim-dmarc/
+- https://pingthat.dev/es/docs/port-scanning-legality-and-ethics/
 
 ## Machine-readable index
 

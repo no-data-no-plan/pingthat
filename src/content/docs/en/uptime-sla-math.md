@@ -58,7 +58,7 @@ These numbers are not scientific, but the shape is right. Each nine requires eli
 
 Vendor SLAs usually promise credits — 10% of the monthly bill if they miss their target, 25% for a major breach, 100% in catastrophe. Read the actual numbers. A 99.9% SLA with a 10% credit on a monthly bill of $500 means $50 back if they were down 43 minutes. If your site made $500/minute during those 43 minutes, that credit covers 6 seconds of lost revenue.
 
-SLA credits are a reputational lever, not a financial one. If availability actually matters to your business, the credit is irrelevant — you need the uptime, not the refund. A monitor like [is-it-up](/is-it-up) gives you an independent second opinion when your vendor's status page disagrees with reality.
+SLA credits are a reputational lever, not a financial one. If availability actually matters to your business, the credit is irrelevant — you need the uptime, not the refund. A monitor like [is-it-up](/is-it-up/) gives you an independent second opinion when your vendor's status page disagrees with reality.
 
 ## Measuring uptime honestly
 
@@ -68,7 +68,7 @@ Your measured uptime depends entirely on your probe setup:
 - Probe every 30 seconds from 3 regions: catches most short outages, but you pay for 3x the probe volume.
 - Alert on N consecutive failures: smooths out transient blips, but N=3 at 60s means a 3-minute floor before you alert.
 
-For a 99.99% target (4 min/month budget), probing every 60 seconds is too coarse. You need 10-30s probe intervals from multiple regions. [Is it down](/is-it-down) is useful for the "someone thinks it's broken" anecdata that comes in during an incident — you check from an outside vantage point before spending engineering time on a non-issue.
+For a 99.99% target (4 min/month budget), probing every 60 seconds is too coarse. You need 10-30s probe intervals from multiple regions. [Is it down](/is-it-down/) is useful for the "someone thinks it's broken" anecdata that comes in during an incident — you check from an outside vantage point before spending engineering time on a non-issue.
 
 ## The composite availability problem
 

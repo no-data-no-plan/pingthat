@@ -9,7 +9,7 @@ tags: ["email", "spf", "dkim", "dmarc", "deliverability"]
 excerpt: "Three records, one job: prove your email is really yours. Here is how each works, how they interact, and the traps that quietly tank your deliverability."
 ---
 
-Email authentication has three moving parts — SPF, DKIM, and DMARC — and most teams configure one of them, declare victory, and wonder why their newsletters land in spam. This guide walks through what each does, how they interact, and the specific misconfigurations that break real-world deliverability. Verify any domain's current setup with the [email authentication tool](/email-auth).
+Email authentication has three moving parts — SPF, DKIM, and DMARC — and most teams configure one of them, declare victory, and wonder why their newsletters land in spam. This guide walks through what each does, how they interact, and the specific misconfigurations that break real-world deliverability. Verify any domain's current setup with the [email authentication tool](/email-auth/).
 
 ## The three records at a glance
 
@@ -48,7 +48,7 @@ The trap: **SPF is limited to 10 DNS lookups**. Each `include:`, `a`, `mx`, or `
 "v=spf1 include:_spf.google.com include:mailgun.org include:sendgrid.net include:_spf.salesforce.com include:mktomail.com -all"
 ```
 
-Each of those nested includes has its own lookups. `_spf.google.com` alone pulls 4+. Check your own with `dig +short TXT` and count — or use the [DNS lookup tool](/dns-lookup) to see the full chain. SPF flattening (resolving everything to raw IPs once and updating on a schedule) is the common workaround; several paid services automate it.
+Each of those nested includes has its own lookups. `_spf.google.com` alone pulls 4+. Check your own with `dig +short TXT` and count — or use the [DNS lookup tool](/dns-lookup/) to see the full chain. SPF flattening (resolving everything to raw IPs once and updating on a schedule) is the common workaround; several paid services automate it.
 
 ## DKIM: cryptographic signing, per selector
 

@@ -32,7 +32,7 @@ Un 200 significa que el servidor respondió. No significa que la respuesta sea c
 - Un formulario de login porque expiró la sesión y la app no devuelve 401
 - Un JSON `{"error": "database unavailable"}` con envoltorio 200 (mal diseño de API, muy común)
 
-Un monitor HTTP real hace validación de contenido encima del status: verifica un string esperado, un campo JSON, un content-length mínimo. Si tu homepage siempre contiene `<title>Example Corp</title>`, matchea contra eso — un 200 con body vacío debería despertarte. Puedes inspeccionar cabeceras y body reales con la [herramienta de HTTP headers](/es/http-headers).
+Un monitor HTTP real hace validación de contenido encima del status: verifica un string esperado, un campo JSON, un content-length mínimo. Si tu homepage siempre contiene `<title>Example Corp</title>`, matchea contra eso — un 200 con body vacío debería despertarte. Puedes inspeccionar cabeceras y body reales con la [herramienta de HTTP headers](/es/http-headers/).
 
 ## 3xx: sigue la cadena, luego juzga
 
@@ -46,7 +46,7 @@ Códigos 3xx clave:
 - **307 Temporary Redirect / 308 Permanent Redirect** — igual que 302/301 pero preservan el método (un POST redirigido con 307 sigue siendo POST)
 - **304 Not Modified** — validación de caché; trátalo como 200 para monitoreo
 
-El [redirect checker](/es/redirect-checker) ayuda a auditar cadenas de redirección y detectar bucles. Una cadena de más de 3 saltos casi siempre es un bug.
+El [redirect checker](/es/redirect-checker/) ayuda a auditar cadenas de redirección y detectar bucles. Una cadena de más de 3 saltos casi siempre es un bug.
 
 ## 4xx: la zona de matices
 
@@ -60,7 +60,7 @@ Aquí es donde pasan la mayoría de falsos positivos. No todo 4xx es una caída:
 - **429 Too Many Requests** — rate limiting, a menudo tu propio monitor pegando en el umbral. Baja la frecuencia del probe, no alertes
 - **451 Unavailable for Legal Reasons** — tienes problemas más grandes que el monitoreo
 
-Regla: alerta por 4xx solo cuando la forma de la petición no cambió y la respuesta previa era 2xx. 404s repentinos en URLs estables son sospechosos. 401s repentinos en endpoints públicos significan que alguien pusheó middleware de auth roto. Confirma alcance desde fuera de tu red con [is-it-up](/es/is-it-up).
+Regla: alerta por 4xx solo cuando la forma de la petición no cambió y la respuesta previa era 2xx. 404s repentinos en URLs estables son sospechosos. 401s repentinos en endpoints públicos significan que alguien pusheó middleware de auth roto. Confirma alcance desde fuera de tu red con [is-it-up](/es/is-it-up/).
 
 ## 5xx: casi siempre alertar
 

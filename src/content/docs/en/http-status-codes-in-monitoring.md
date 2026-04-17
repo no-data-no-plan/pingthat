@@ -32,7 +32,7 @@ A 200 response means the server responded. It does not mean the response is corr
 - A login form because the session expired and the app does not return 401
 - A JSON `{"error": "database unavailable"}` with a 200 wrapper (bad API design, very common)
 
-A real HTTP monitor does content validation on top of status: check for an expected string, a JSON field, a content-length minimum. If your homepage always contains `<title>Example Corp</title>`, match on that — a 200 with an empty body should page you. You can inspect actual headers and body with the [HTTP headers tool](/http-headers).
+A real HTTP monitor does content validation on top of status: check for an expected string, a JSON field, a content-length minimum. If your homepage always contains `<title>Example Corp</title>`, match on that — a 200 with an empty body should page you. You can inspect actual headers and body with the [HTTP headers tool](/http-headers/).
 
 ## 3xx: follow the chain, then judge
 
@@ -46,7 +46,7 @@ Key 3xx codes:
 - **307 Temporary Redirect / 308 Permanent Redirect** — same as 302/301 but method-preserving (a POST redirected with 307 stays a POST)
 - **304 Not Modified** — cache validation; treat as 200 for monitoring purposes
 
-The [redirect checker](/redirect-checker) helps audit redirect chains and spot loops. A chain longer than 3 hops is almost always a bug.
+The [redirect checker](/redirect-checker/) helps audit redirect chains and spot loops. A chain longer than 3 hops is almost always a bug.
 
 ## 4xx: the nuance zone
 
@@ -60,7 +60,7 @@ This is where most false-positive pages happen. Not every 4xx is an outage:
 - **429 Too Many Requests** — rate limiting, often your monitor itself hitting a threshold. Back off the probe frequency, do not alert
 - **451 Unavailable for Legal Reasons** — you have bigger problems than monitoring
 
-The rule of thumb: alert on 4xx only when the request shape has not changed and the previous response was 2xx. Sudden 404s on stable URLs are suspicious. Sudden 401s on public endpoints mean someone pushed broken auth middleware. Confirm reachability from outside your network with [is-it-up](/is-it-up).
+The rule of thumb: alert on 4xx only when the request shape has not changed and the previous response was 2xx. Sudden 404s on stable URLs are suspicious. Sudden 401s on public endpoints mean someone pushed broken auth middleware. Confirm reachability from outside your network with [is-it-up](/is-it-up/).
 
 ## 5xx: almost always alert
 

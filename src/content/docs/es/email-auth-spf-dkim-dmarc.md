@@ -9,7 +9,7 @@ tags: ["email", "spf", "dkim", "dmarc", "deliverability"]
 excerpt: "Tres registros, un trabajo: probar que tu email es de verdad tuyo. Cómo funciona cada uno, cómo interactúan y las trampas que hunden tu entregabilidad en silencio."
 ---
 
-La autenticación de email tiene tres piezas — SPF, DKIM y DMARC — y la mayoría de equipos configuran una de ellas, declaran victoria y se preguntan por qué sus newsletters caen en spam. Esta guía recorre qué hace cada una, cómo interactúan y las malas configuraciones específicas que rompen la entregabilidad en el mundo real. Verifica el setup actual de cualquier dominio con la [herramienta de autenticación de email](/es/email-auth).
+La autenticación de email tiene tres piezas — SPF, DKIM y DMARC — y la mayoría de equipos configuran una de ellas, declaran victoria y se preguntan por qué sus newsletters caen en spam. Esta guía recorre qué hace cada una, cómo interactúan y las malas configuraciones específicas que rompen la entregabilidad en el mundo real. Verifica el setup actual de cualquier dominio con la [herramienta de autenticación de email](/es/email-auth/).
 
 ## Los tres registros de un vistazo
 
@@ -48,7 +48,7 @@ La trampa: **SPF está limitado a 10 lookups DNS**. Cada `include:`, `a`, `mx` o
 "v=spf1 include:_spf.google.com include:mailgun.org include:sendgrid.net include:_spf.salesforce.com include:mktomail.com -all"
 ```
 
-Cada uno de esos includes anidados tiene sus propios lookups. `_spf.google.com` solo arrastra 4+. Verifica el tuyo con `dig +short TXT` y cuenta — o usa la [herramienta de DNS lookup](/es/dns-lookup) para ver la cadena completa. SPF flattening (resolver todo a IPs raw una vez y actualizar en un horario) es el workaround común; varios servicios de pago lo automatizan.
+Cada uno de esos includes anidados tiene sus propios lookups. `_spf.google.com` solo arrastra 4+. Verifica el tuyo con `dig +short TXT` y cuenta — o usa la [herramienta de DNS lookup](/es/dns-lookup/) para ver la cadena completa. SPF flattening (resolver todo a IPs raw una vez y actualizar en un horario) es el workaround común; varios servicios de pago lo automatizan.
 
 ## DKIM: firma criptográfica, por selector
 

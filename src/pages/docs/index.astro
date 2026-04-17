@@ -49,4 +49,17 @@ const description = "Practical guides for developers on uptime monitoring, DNS, 
       </div>
     ))}
   </section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Guides",
+  "numberOfItems": docs.length,
+  "itemListElement": docs.map((d, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": `https://pingthat.dev${docPath(d)}`,
+    "name": d.data.title,
+  })),
+})} />
 </Layout>

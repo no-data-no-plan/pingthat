@@ -31,7 +31,7 @@ Roughly 70-80% of global DNS queries go through a handful of public resolvers pl
 | OpenDNS | 208.67.222.222 | Respects TTL, some minimums on paid plans |
 | Most ISP resolvers | varies | Usually respect TTL but some enforce 300s minimum or 86400s maximum |
 
-The practical upshot: if you set a TTL of 300 seconds (5 minutes), 80% of your users will see the new record within 5 minutes of the change. The remaining 20% are behind resolvers with their own minimum TTL (often 1 hour), corporate caches, or their local OS cache. Verify any resolver with the [DNS lookup tool](/dns-lookup).
+The practical upshot: if you set a TTL of 300 seconds (5 minutes), 80% of your users will see the new record within 5 minutes of the change. The remaining 20% are behind resolvers with their own minimum TTL (often 1 hour), corporate caches, or their local OS cache. Verify any resolver with the [DNS lookup tool](/dns-lookup/).
 
 ## The pre-migration checklist
 
@@ -87,7 +87,7 @@ If `dig +trace` shows the new value but `dig @8.8.8.8` still shows the old one, 
 
 ## DNSSEC complicates things
 
-If your zone is signed, stale caches are worse because validating resolvers also cache RRSIG records with their own TTLs. Changing a record in a signed zone means the old record's signature becomes stale too, and some validating resolvers get unhappy until both expire. The rule: if you use DNSSEC, lower TTLs further ahead (72 hours) and do not rotate DNSSEC keys during a migration. Use the [WHOIS lookup tool](/whois-lookup) to confirm your registrar has the correct DS record published — a mismatched DS is the most common reason DNSSEC validation fails after a change.
+If your zone is signed, stale caches are worse because validating resolvers also cache RRSIG records with their own TTLs. Changing a record in a signed zone means the old record's signature becomes stale too, and some validating resolvers get unhappy until both expire. The rule: if you use DNSSEC, lower TTLs further ahead (72 hours) and do not rotate DNSSEC keys during a migration. Use the [WHOIS lookup tool](/whois-lookup/) to confirm your registrar has the correct DS record published — a mismatched DS is the most common reason DNSSEC validation fails after a change.
 
 ## Record types that have their own rules
 

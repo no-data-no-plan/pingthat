@@ -22,7 +22,7 @@ La expiración es el modo de fallo obvio, pero los certificados se rompen de var
 - Un registro CAA bloquea tu CA de renovación
 - La renovación corrió, pero el certificado nuevo nunca se cargó (no se recargó nginx)
 
-Un monitor serio verifica todo esto. Puedes comprobar cualquiera rápido con el [SSL checker](/es/ssl-checker) antes de poner un sitio de producción detrás de tu stack de monitorización.
+Un monitor serio verifica todo esto. Puedes comprobar cualquiera rápido con el [SSL checker](/es/ssl-checker/) antes de poner un sitio de producción detrás de tu stack de monitorización.
 
 ## Umbrales de expiración que funcionan
 
@@ -64,7 +64,7 @@ example.com.  300  IN  CAA  0 issue "pki.goog"
 example.com.  300  IN  CAA  0 iodef "mailto:security@example.com"
 ```
 
-Si cambias de Let's Encrypt a ZeroSSL y olvidas el registro CAA, la siguiente renovación falla con un mensaje que casi todo el mundo ignora. Añade monitorización CAA a tu checklist — un CAA que lista una CA que ya no usas es una caída a cámara lenta. Puedes consultar los registros CAA actuales con la [herramienta de DNS lookup](/es/dns-lookup).
+Si cambias de Let's Encrypt a ZeroSSL y olvidas el registro CAA, la siguiente renovación falla con un mensaje que casi todo el mundo ignora. Añade monitorización CAA a tu checklist — un CAA que lista una CA que ya no usas es una caída a cámara lenta. Puedes consultar los registros CAA actuales con la [herramienta de DNS lookup](/es/dns-lookup/).
 
 ## OCSP stapling y OCSP Must-Staple
 
@@ -85,7 +85,7 @@ Los certificados Let's Encrypt son válidos 90 días por defecto, y `certbot` re
 - El challenge DNS-01 falla por un token de API caducado
 - `certbot` renueva, pero el post-hook que recarga nginx nunca corre
 
-Añade un test de integración: haz curl a tu propio sitio por la internet pública una vez al día y verifica que el "Not After" del certificado hoja está más allá de 60 días. Si baja de 60, tu cadena de renovación está rota y tienes ~30 días para arreglarla antes de que salten las alertas. Combínalo con un check de [is-it-up](/es/is-it-up) para confirmar que el sitio sigue respondiendo tras la renovación.
+Añade un test de integración: haz curl a tu propio sitio por la internet pública una vez al día y verifica que el "Not After" del certificado hoja está más allá de 60 días. Si baja de 60, tu cadena de renovación está rota y tienes ~30 días para arreglarla antes de que salten las alertas. Combínalo con un check de [is-it-up](/es/is-it-up/) para confirmar que el sitio sigue respondiendo tras la renovación.
 
 ## Sobre qué alertar realmente
 

@@ -55,7 +55,7 @@ No tomes esto como asesoría legal. El patrón en todas las jurisdicciones es el
 - Competiciones CTF, solo objetivos in-scope
 - Rangos de IP públicos que tu empleador posee, si tu descripción de puesto cubre testing de seguridad
 
-Si haces escaneo con fines de aprendizaje y no estás seguro de si un objetivo es válido, usa Hack The Box o similar. Existen precisamente para evitar este problema. También puedes usar la [herramienta de port scan](/es/port-scan) contra tus propios servidores para verificar los servicios expuestos.
+Si haces escaneo con fines de aprendizaje y no estás seguro de si un objetivo es válido, usa Hack The Box o similar. Existen precisamente para evitar este problema. También puedes usar la [herramienta de port scan](/es/port-scan/) contra tus propios servidores para verificar los servicios expuestos.
 
 ## Cuándo es claramente un problema
 
