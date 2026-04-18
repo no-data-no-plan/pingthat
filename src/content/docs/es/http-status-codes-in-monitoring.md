@@ -2,7 +2,7 @@
 title: "Códigos de estado HTTP en monitoreo — Cuáles disparan alertas y cuáles no"
 description: "No todo no-200 es una caída. Guía práctica de qué códigos HTTP deberían despertarte y cuáles son solo ruido."
 category: http
-relatedToolIds: ["http-headers", "redirect-checker", "is-it-up"]
+relatedToolIds: ["http-headers", "redirect-checker", "is-it-up", "site-speed"]
 publishedAt: 2026-04-17
 lang: es
 tags: ["http", "monitoring", "status-codes", "alerts"]

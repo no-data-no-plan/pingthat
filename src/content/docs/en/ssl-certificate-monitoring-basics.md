@@ -2,7 +2,7 @@
 title: "SSL Certificate Monitoring — What to Watch and When to Alert"
 description: "Practical guide to monitoring TLS certificates — expiry thresholds, CAA records, OCSP stapling, and what actually breaks in production."
 category: monitoring
-relatedToolIds: ["ssl-checker", "is-it-up"]
+relatedToolIds: ["ssl-checker", "is-it-up", "caa-lookup", "dnssec-check"]
 publishedAt: 2026-04-17
 lang: en
 tags: ["ssl", "tls", "certificates", "monitoring"]

@@ -2,7 +2,7 @@
 title: "DNS Propagation — Why \"Wait 48 Hours\" Is Mostly Wrong"
 description: "DNS changes do not propagate — caches expire. Here is how TTL, negative caching, and public resolvers actually work during a migration."
 category: dns
-relatedToolIds: ["dns-lookup", "whois-lookup"]
+relatedToolIds: ["dns-lookup", "whois-lookup", "resolver-compare", "dnssec-check", "reverse-dns"]
 publishedAt: 2026-04-17
 lang: en
 tags: ["dns", "ttl", "propagation", "resolvers"]

@@ -2,7 +2,7 @@
 title: "Email Authentication — SPF, DKIM, and DMARC Explained Properly"
 description: "How SPF, DKIM and DMARC actually work together to authenticate email, with the gotchas that break deliverability in production."
 category: email
-relatedToolIds: ["email-auth", "dns-lookup"]
+relatedToolIds: ["email-auth", "dns-lookup", "reverse-dns"]
 publishedAt: 2026-04-17
 lang: en
 tags: ["email", "spf", "dkim", "dmarc", "deliverability"]

@@ -2,7 +2,7 @@
 title: "Monitoreo de certificados SSL — Qué vigilar y cuándo alertar"
 description: "Guía práctica para monitorizar certificados TLS — umbrales de expiración, registros CAA, OCSP stapling y lo que realmente falla en producción."
 category: monitoring
-relatedToolIds: ["ssl-checker", "is-it-up"]
+relatedToolIds: ["ssl-checker", "is-it-up", "caa-lookup", "dnssec-check"]
 publishedAt: 2026-04-17
 lang: es
 tags: ["ssl", "tls", "certificates", "monitoring"]

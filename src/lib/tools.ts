@@ -9,9 +9,9 @@ export interface Tool {
 }
 
 export const groups = [
-  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check", "reverse-dns", "resolver-compare"] },
+  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "ipv6-check", "reverse-dns", "resolver-compare"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup", "dnssec-check"] },
-  { label: "Performance", ids: ["site-speed"] },
+  { label: "Speed & Uptime", ids: ["is-it-up", "is-it-down", "site-speed"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
 
@@ -122,7 +122,7 @@ export const tools: Tool[] = [
     description: "Check if a website is down for everyone or just you",
     icon: "Dw",
     keywords: ["is it down", "website down checker", "is this site down", "site status"],
-    group: "Network",
+    group: "Speed & Uptime",
   },
   {
     id: "is-it-up",
@@ -131,7 +131,7 @@ export const tools: Tool[] = [
     description: "Check website uptime, response time, and server status",
     icon: "Up",
     keywords: ["is it up", "website status", "uptime checker", "response time"],
-    group: "Network",
+    group: "Speed & Uptime",
   },
   {
     id: "ipv6-check",
@@ -167,7 +167,7 @@ export const tools: Tool[] = [
     description: "Check Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real Chrome user data",
     icon: "Sp",
     keywords: ["site speed", "core web vitals", "lcp", "inp", "cls", "page speed", "crux", "web performance"],
-    group: "Performance",
+    group: "Speed & Uptime",
   },
   {
     id: "http-headers",

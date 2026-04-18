@@ -473,6 +473,6 @@ export const toolDescriptionsI18n: Record<string, Record<Lang, string>> = {
 export const groupLabelsI18n: Record<string, Record<Lang, string>> = {
   Network: { en: "Network", es: "Red" },
   Security: { en: "Security", es: "Seguridad" },
-  Performance: { en: "Performance", es: "Rendimiento" },
+  "Speed & Uptime": { en: "Speed & Uptime", es: "Velocidad y Uptime" },
   Calculators: { en: "Calculators", es: "Calculadoras" },
 };

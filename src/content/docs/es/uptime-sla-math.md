@@ -2,7 +2,7 @@
 title: "Matemática de SLA de uptime — Qué significa realmente 99.9% vs 99.99% (y qué cuesta)"
 description: "El coste real de cada nueve adicional en tu SLA de uptime, en minutos de caída, cambios de arquitectura y esfuerzo de ingeniería."
 category: monitoring
-relatedToolIds: ["is-it-up", "is-it-down"]
+relatedToolIds: ["is-it-up", "is-it-down", "site-speed"]
 publishedAt: 2026-04-17
 lang: es
 tags: ["sla", "uptime", "monitoring", "availability"]

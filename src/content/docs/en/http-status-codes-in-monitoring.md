@@ -2,7 +2,7 @@
 title: "HTTP Status Codes in Monitoring — Which Trigger Alerts, Which Don't"
 description: "Not every non-200 is an outage. A practical guide to which HTTP status codes should page you and which are just noise."
 category: http
-relatedToolIds: ["http-headers", "redirect-checker", "is-it-up"]
+relatedToolIds: ["http-headers", "redirect-checker", "is-it-up", "site-speed"]
 publishedAt: 2026-04-17
 lang: en
 tags: ["http", "monitoring", "status-codes", "alerts"]
