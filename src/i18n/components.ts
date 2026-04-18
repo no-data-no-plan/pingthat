@@ -540,6 +540,55 @@ export const caaLookupI18n = {
 export function getCaaLookup(lang: Lang) { return caaLookupI18n[lang]; }
 
 
+// ─── Ipv6Check ──────────────────────────────────────────────────────────────
+
+export const ipv6CheckI18n = {
+  en: {
+    domainLabel: "Domain Name",
+    placeholder: "example.com",
+    check: "Check IPv6",
+    checking: "Checking...",
+    lookupFailed: "IPv6 check failed. Check the domain and try again.",
+    invalidDomain: "Invalid domain format. Enter a domain like example.com.",
+    scoreExplanation: "Apex AAAA, www AAAA, nameserver AAAA, mail AAAA coverage.",
+    hostResolution: "Host resolution",
+    infrastructure: "Infrastructure",
+    nameservers: "Nameservers with AAAA",
+    mailServers: "Mail servers with AAAA",
+    colHost: "Host",
+    noAaaa: "No AAAA record",
+    noMail: "No MX records",
+    ratingFullReady: "Fully IPv6-ready",
+    ratingGood: "IPv6-ready",
+    ratingPartial: "Partial IPv6",
+    ratingMinimal: "Minimal IPv6",
+    ratingNone: "No IPv6",
+  },
+  es: {
+    domainLabel: "Nombre de Dominio",
+    placeholder: "ejemplo.com",
+    check: "Comprobar IPv6",
+    checking: "Comprobando...",
+    lookupFailed: "La comprobaci\u00f3n IPv6 fall\u00f3. Verifica el dominio e int\u00e9ntalo de nuevo.",
+    invalidDomain: "Formato de dominio no v\u00e1lido. Introduce un dominio como ejemplo.com.",
+    scoreExplanation: "AAAA del apex, AAAA del www, AAAA de los nameservers, AAAA de los MX.",
+    hostResolution: "Resoluci\u00f3n del host",
+    infrastructure: "Infraestructura",
+    nameservers: "Nameservers con AAAA",
+    mailServers: "Servidores de correo con AAAA",
+    colHost: "Host",
+    noAaaa: "Sin registro AAAA",
+    noMail: "Sin registros MX",
+    ratingFullReady: "Totalmente listo para IPv6",
+    ratingGood: "Listo para IPv6",
+    ratingPartial: "IPv6 parcial",
+    ratingMinimal: "IPv6 m\u00ednimo",
+    ratingNone: "Sin IPv6",
+  },
+} as const;
+export function getIpv6Check(lang: Lang) { return ipv6CheckI18n[lang]; }
+
+
 // ─── SslChecker ─────────────────────────────────────────────────────────────
 
 export const sslCheckerI18n = {

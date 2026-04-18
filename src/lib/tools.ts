@@ -9,7 +9,7 @@ export interface Tool {
 }
 
 export const groups = [
-  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up"] },
+  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
@@ -130,6 +130,15 @@ export const tools: Tool[] = [
     description: "Check website uptime, response time, and server status",
     icon: "Up",
     keywords: ["is it up", "website status", "uptime checker", "response time"],
+    group: "Network",
+  },
+  {
+    id: "ipv6-check",
+    name: "IPv6 Readiness",
+    path: "/ipv6-check",
+    description: "Check if a domain has IPv6 (AAAA) records for apex, www, nameservers, and mail",
+    icon: "I6",
+    keywords: ["ipv6 check", "ipv6 readiness", "aaaa record", "dual stack", "ipv6 test"],
     group: "Network",
   },
   {
