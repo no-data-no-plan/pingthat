@@ -94,7 +94,7 @@ export async function onRequestPost(context: { request: Request }) {
     try {
       const crtRes = await fetch(
         `https://crt.sh/?q=${encodeURIComponent(domain)}&output=json&exclude=expired`,
-        { signal: AbortSignal.timeout(8000) }
+        { signal: AbortSignal.timeout(15000) }
       );
       if (crtRes.ok) {
         const allCerts = await crtRes.json() as any[];
