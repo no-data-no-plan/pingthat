@@ -672,8 +672,46 @@ export function getDnssecCheck(lang: Lang) { return dnssecCheckI18n[lang]; }
 // ─── SslChecker ─────────────────────────────────────────────────────────────
 
 export const sslCheckerI18n = {
-  en: { domainLabel: "Domain", placeholder: "example.com", check: "Check SSL", checking: "Checking...", checkFailed: "SSL check failed. Try again.", sslStatus: "SSL/TLS Status", secure: "HTTPS Secure", insecure: "HTTPS Failed", notSet: "Not set (recommended)", certificates: "Certificates", issuer: "Issuer", validFrom: "Valid from", validUntil: "Valid until" },
-  es: { domainLabel: "Dominio", placeholder: "ejemplo.com", check: "Verificar SSL", checking: "Verificando...", checkFailed: "La verificaci\u00f3n SSL fall\u00f3. Int\u00e9ntalo de nuevo.", sslStatus: "Estado SSL/TLS", secure: "HTTPS Seguro", insecure: "HTTPS Fall\u00f3", notSet: "No configurado (recomendado)", certificates: "Certificados", issuer: "Emisor", validFrom: "V\u00e1lido desde", validUntil: "V\u00e1lido hasta" },
+  en: {
+    domainLabel: "Domain", placeholder: "example.com", check: "Check SSL", checking: "Checking...",
+    checkFailed: "SSL check failed. Try again.", sslStatus: "SSL/TLS Status",
+    secure: "HTTPS Secure", insecure: "HTTPS Failed", notSet: "Not set (recommended)",
+    certificates: "Certificates", issuer: "Issuer", validFrom: "Valid from", validUntil: "Valid until",
+    activeCertificate: "Active certificate",
+    certHistory: "Recent certificates",
+    sans: "Subject Alternative Names",
+    more: "more",
+    expired: "Expired",
+    expiresToday: "Expires today",
+    expires1Day: "Expires in 1 day",
+    expiresInDays: "Expires in {days} days",
+    unknownExpiry: "Expiry unknown",
+    hstsEnabled: "HSTS enabled",
+    preloadEligible: "Preload-eligible",
+    preloadNeeds: "(needs max-age \u2265 1y + includeSubDomains + preload)",
+    yes: "Yes",
+    no: "No",
+  },
+  es: {
+    domainLabel: "Dominio", placeholder: "ejemplo.com", check: "Verificar SSL", checking: "Verificando...",
+    checkFailed: "La verificaci\u00f3n SSL fall\u00f3. Int\u00e9ntalo de nuevo.", sslStatus: "Estado SSL/TLS",
+    secure: "HTTPS Seguro", insecure: "HTTPS Fall\u00f3", notSet: "No configurado (recomendado)",
+    certificates: "Certificados", issuer: "Emisor", validFrom: "V\u00e1lido desde", validUntil: "V\u00e1lido hasta",
+    activeCertificate: "Certificado activo",
+    certHistory: "Certificados recientes",
+    sans: "Nombres alternativos del sujeto",
+    more: "m\u00e1s",
+    expired: "Caducado",
+    expiresToday: "Caduca hoy",
+    expires1Day: "Caduca en 1 d\u00eda",
+    expiresInDays: "Caduca en {days} d\u00edas",
+    unknownExpiry: "Caducidad desconocida",
+    hstsEnabled: "HSTS activo",
+    preloadEligible: "Elegible para preload",
+    preloadNeeds: "(necesita max-age \u2265 1a\u00f1o + includeSubDomains + preload)",
+    yes: "S\u00ed",
+    no: "No",
+  },
 } as const;
 export function getSslChecker(lang: Lang) { return sslCheckerI18n[lang]; }
 

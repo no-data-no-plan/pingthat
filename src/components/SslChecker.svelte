@@ -52,6 +52,29 @@
       if (myId === requestId) loading = false;
     }
   }
+
+  function expiryColor(days: number | null): string {
+    if (days === null) return "var(--color-text-muted, #64748b)";
+    if (days < 0) return "var(--color-red, #ef4444)";
+    if (days <= 7) return "var(--color-red, #ef4444)";
+    if (days <= 30) return "var(--color-yellow, #eab308)";
+    return "var(--color-green, #22c55e)";
+  }
+
+  function expiryLabel(days: number | null): string {
+    if (days === null) return t.unknownExpiry;
+    if (days < 0) return t.expired;
+    if (days === 0) return t.expiresToday;
+    if (days === 1) return t.expires1Day;
+    return t.expiresInDays.replace("{days}", String(days));
+  }
+
+  function formatMaxAge(seconds: number | null): string {
+    if (seconds === null) return "—";
+    const days = Math.round(seconds / 86400);
+    if (days >= 365) return `${(days / 365).toFixed(1)}y (${seconds.toLocaleString()}s)`;
+    return `${days}d (${seconds.toLocaleString()}s)`;
+  }
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
@@ -77,22 +100,82 @@
         <div style="font-size: 13px; color: var(--color-text-muted);">
           <div>HTTPS Status: {result.httpsStatus} &middot; {result.responseTime}ms</div>
           {#if result.server}<div>Server: {result.server}</div>{/if}
-          {#if result.hsts}<div>HSTS: {result.hsts}</div>{:else}<div style="color: var(--color-red);">HSTS: {t.notSet}</div>{/if}
         </div>
       </div>
     </div>
 
-    {#if result.certificates?.length > 0}
+    {#if result.activeCertificate}
+      {@const ac = result.activeCertificate}
+      <div class="card" style="border-left: 3px solid {expiryColor(ac.daysRemaining)};">
+        <div class="card-header"><span class="card-title">{t.activeCertificate}</span></div>
+        <div class="card-body space-y-2">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">{ac.commonName}</div>
+              <div style="font-size: 12px; color: var(--color-text-muted);">{t.issuer}: {ac.issuer}</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 700; color: {expiryColor(ac.daysRemaining)};">{expiryLabel(ac.daysRemaining)}</div>
+              <div style="font-size: 11px; color: var(--color-text-muted);">{t.validUntil}: {ac.notAfter || "—"}</div>
+            </div>
+          </div>
+          {#if ac.sans.length > 0}
+            <div style="margin-top: 8px;">
+              <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">{t.sans} ({ac.sans.length})</div>
+              <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                {#each ac.sans.slice(0, 30) as san}
+                  <span style="font-family: monospace; font-size: 11px; padding: 2px 8px; background: var(--color-bg-muted, #f1f5f9); border-radius: 4px; word-break: break-all;">{san}</span>
+                {/each}
+                {#if ac.sans.length > 30}
+                  <span style="font-size: 11px; color: var(--color-text-muted); padding: 2px 8px;">+{ac.sans.length - 30} {t.more}</span>
+                {/if}
+              </div>
+            </div>
+          {/if}
+        </div>
+      </div>
+    {/if}
+
+    <div class="card">
+      <div class="card-header"><span class="card-title">HSTS</span></div>
+      <div class="card-body space-y-2">
+        {#if result.hstsDetails}
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: var(--color-green);">\u2713</span>
+            <span style="font-weight: 600;">{t.hstsEnabled}</span>
+          </div>
+          <div style="font-size: 12px; color: var(--color-text-muted); display: grid; grid-template-columns: auto 1fr; gap: 4px 12px;">
+            <span>max-age:</span><span>{formatMaxAge(result.hstsDetails.maxAge)}</span>
+            <span>includeSubDomains:</span><span>{result.hstsDetails.includeSubDomains ? "\u2713" : "\u2717"}</span>
+            <span>preload:</span><span>{result.hstsDetails.preload ? "\u2713" : "\u2717"}</span>
+            <span>{t.preloadEligible}:</span>
+            <span style="color: {result.hstsDetails.preloadEligible ? 'var(--color-green)' : 'var(--color-yellow)'};">
+              {result.hstsDetails.preloadEligible ? t.yes : t.no}
+              {#if !result.hstsDetails.preloadEligible}
+                <span style="color: var(--color-text-muted); font-size: 11px; margin-left: 6px;">{t.preloadNeeds}</span>
+              {/if}
+            </span>
+          </div>
+          <div style="font-family: monospace; font-size: 11px; color: var(--color-text-muted); word-break: break-all; padding-top: 4px; border-top: 1px solid var(--color-border);">{result.hstsDetails.raw}</div>
+        {:else}
+          <div style="color: var(--color-red); font-weight: 600;">{t.notSet}</div>
+        {/if}
+      </div>
+    </div>
+
+    {#if result.certificates?.length > 1}
       <div class="card">
-        <div class="card-header"><span class="card-title">{t.certificates} ({result.certificates.length})</span></div>
+        <div class="card-header"><span class="card-title">{t.certHistory} ({result.certificates.length})</span></div>
         <div class="card-body">
           {#each result.certificates as cert}
             <div style="padding: 10px 0; border-bottom: 1px solid var(--color-border);">
-              <div style="font-weight: 600; font-size: 13px;">{cert.commonName}</div>
+              <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+                <div style="font-weight: 600; font-size: 13px;">{cert.commonName}</div>
+                <div style="font-size: 12px; color: {expiryColor(cert.daysRemaining)};">{expiryLabel(cert.daysRemaining)}</div>
+              </div>
               <div style="font-size: 12px; color: var(--color-text-muted);">
                 {t.issuer}: {cert.issuer}<br />
-                {t.validFrom}: {cert.notBefore || "N/A"}<br />
-                {t.validUntil}: {cert.notAfter || "N/A"}
+                {t.validFrom}: {cert.notBefore || "—"} → {cert.notAfter || "—"}
               </div>
             </div>
           {/each}

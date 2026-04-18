@@ -43,6 +43,16 @@ export interface SslCertificate {
   notBefore: string | null;
   notAfter: string | null;
   serialNumber: string | null;
+  sans: string[];
+  daysRemaining: number | null;
+}
+
+export interface HstsDetails {
+  raw: string;
+  maxAge: number | null;
+  includeSubDomains: boolean;
+  preload: boolean;
+  preloadEligible: boolean;
 }
 
 /** Returned by /api/ssl-checker */
@@ -52,8 +62,10 @@ export interface SslCheckerResult {
   httpsOk: boolean;
   responseTime: number;
   hsts: string | null;
+  hstsDetails: HstsDetails | null;
   server: string | null;
   certificates: SslCertificate[];
+  activeCertificate: SslCertificate | null;
   error?: string;
 }
 
