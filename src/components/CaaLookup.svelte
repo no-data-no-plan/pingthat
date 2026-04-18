@@ -133,6 +133,51 @@
     if (!entry) return "";
     return lang === "es" ? entry.es : entry.en;
   }
+
+  const COMMON_CAS = [
+    { value: "letsencrypt.org", label: "Let's Encrypt" },
+    { value: "pki.goog", label: "Google Trust Services" },
+    { value: "digicert.com", label: "DigiCert" },
+    { value: "sectigo.com", label: "Sectigo" },
+    { value: "comodoca.com", label: "Comodo CA" },
+    { value: "ssl.com", label: "SSL.com" },
+    { value: "amazon.com", label: "Amazon" },
+    { value: "buypass.com", label: "Buypass" },
+  ];
+
+  let selectedCa = $state("");
+
+  interface CaCheckResult { ca: string; allowed: boolean; allowedWildcard: boolean; reason: string; }
+  const caResult = $derived.by<CaCheckResult | null>(() => {
+    if (!state || state.noPolicy || !selectedCa) return null;
+    const ca = selectedCa.trim().toLowerCase();
+    // RFC 8659: if no issue tag, no CA is allowed. An empty value denies issuance.
+    const issueRecords = state.records.filter((r) => r.tag === "issue");
+    const issueWildRecords = state.records.filter((r) => r.tag === "issuewild");
+
+    const matches = (records: CaaRecord[]): { allowed: boolean; empty: boolean } => {
+      if (records.length === 0) return { allowed: false, empty: true };
+      for (const r of records) {
+        const val = r.value.split(";")[0].trim().toLowerCase();
+        if (val === "") continue; // explicit deny record
+        if (val === ca || ca.endsWith("." + val) || val.endsWith("." + ca)) return { allowed: true, empty: false };
+      }
+      return { allowed: false, empty: false };
+    };
+
+    const issueCheck = matches(issueRecords);
+    // issuewild falls back to issue when no issuewild records exist per RFC 8659
+    const wildCheck = issueWildRecords.length > 0 ? matches(issueWildRecords) : issueCheck;
+
+    const allowed = issueCheck.allowed;
+    const allowedWildcard = wildCheck.allowed;
+    let reason: string;
+    if (allowed && allowedWildcard) reason = t.reasonAllowedAll;
+    else if (allowed) reason = t.reasonAllowedNonWildcard;
+    else if (issueCheck.empty) reason = t.reasonNoIssueRecords;
+    else reason = t.reasonNotListed;
+    return { ca, allowed, allowedWildcard, reason };
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
@@ -165,6 +210,30 @@
           <div style="font-weight: 600; margin-bottom: 4px;">{t.policyFoundTitle}</div>
           {#if state.resolvedFrom && state.resolvedFrom !== domain.trim().toLowerCase()}
             <div style="font-size: 13px; color: var(--color-text-muted);">{t.inheritedFrom} <code>{state.resolvedFrom}</code></div>
+          {/if}
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 16px;">
+        <div class="card-header"><span class="card-title">{t.caCheckTitle}</span></div>
+        <div class="card-body space-y-3">
+          <div style="font-size: 12px; color: var(--color-text-muted);">{t.caCheckHint}</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            {#each COMMON_CAS as ca}
+              <button type="button" class={selectedCa === ca.value ? "btn-primary" : "btn-secondary"} style="padding: 6px 12px; font-size: 12px;" onclick={() => { selectedCa = ca.value; }}>{ca.label}</button>
+            {/each}
+          </div>
+          <input type="text" bind:value={selectedCa} placeholder={t.caCheckPlaceholder} style="width: 100%;" spellcheck="false" autocapitalize="off" autocorrect="off" />
+          {#if caResult}
+            <div style="padding: 10px 14px; border-radius: 6px; border-left: 3px solid {caResult.allowed ? 'var(--color-green)' : 'var(--color-red)'}; background: var(--color-bg-muted, #f1f5f9);">
+              <div style="font-weight: 700; color: {caResult.allowed ? 'var(--color-green)' : 'var(--color-red)'};">
+                {caResult.allowed ? t.allowed : t.notAllowed}: <span style="font-family: monospace;">{caResult.ca}</span>
+              </div>
+              <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">{caResult.reason}</div>
+              {#if caResult.allowed && !caResult.allowedWildcard}
+                <div style="font-size: 12px; color: var(--color-yellow); margin-top: 4px;">{t.wildcardBlocked}</div>
+              {/if}
+            </div>
           {/if}
         </div>
       </div>
