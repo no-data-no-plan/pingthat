@@ -235,4 +235,118 @@ export const faqs: Record<string, FAQByLang> = {
       ],
     },
   },
+
+  "caa-lookup": {
+    en: {
+      faqs: [
+        { question: "What does a CAA record actually do?", answer: "A CAA record tells Certificate Authorities whether they are allowed to issue certificates for your domain. CAs are required by the CA/Browser Forum Baseline Requirements to check CAA before issuance. If your record says only Let's Encrypt is allowed and someone tries to get a cert from a different CA, that CA must refuse. Without CAA, any trusted public CA can issue for you — including attackers who social-engineer a different CA." },
+        { question: "What's the difference between issue and issuewild?", answer: "The issue tag authorises a CA to issue standard certificates for the domain. The issuewild tag controls wildcard certificates (*.example.com) specifically. If you publish issuewild records, wildcards fall under that policy and ignore the issue policy. If you publish only issue records, wildcards inherit it. A common pattern: allow LE for standard certs via issue, but exclude wildcards by publishing issuewild with an empty value." },
+        { question: "Does CAA apply to the apex or to subdomains?", answer: "CAA is inherited down the tree. A CA checks the exact domain first, then walks up: api.app.example.com → app.example.com → example.com. The first zone with CAA records applies — that's why PingThat shows 'Policy inherited from X' when a subdomain has no records but an ancestor does. Publish policy at the apex to cover everything below it." },
+        { question: "What happens if I don't publish CAA?", answer: "Any trusted public CA can issue certificates for your domain. That's how most of the internet operates today, and for most sites it's acceptable because of Certificate Transparency — any mis-issuance gets logged publicly and you'd notice via CT monitoring. But CAA is a cheap additional layer: five minutes of DNS config prevents an entire class of attacks involving compromised or misled CAs." },
+      ],
+    },
+    es: {
+      faqs: [
+        { question: "¿Qué hace realmente un registro CAA?", answer: "Un registro CAA le dice a las Autoridades Certificadoras si pueden emitir certificados para tu dominio. Las CAs están obligadas por los CA/Browser Forum Baseline Requirements a comprobar CAA antes de emitir. Si tu registro solo permite Let's Encrypt y alguien pide un cert en otra CA, esa CA debe rechazar. Sin CAA, cualquier CA pública de confianza puede emitir por ti — incluidos atacantes que engañen a otra CA." },
+        { question: "¿Cuál es la diferencia entre issue e issuewild?", answer: "La etiqueta issue autoriza a una CA a emitir certificados estándar. La etiqueta issuewild controla específicamente los wildcard (*.ejemplo.com). Si publicas issuewild, los wildcard siguen esa política e ignoran issue. Si solo publicas issue, los wildcard la heredan. Patrón común: permitir LE para certs estándar via issue, pero excluir wildcards publicando issuewild con valor vacío." },
+        { question: "¿CAA aplica al apex o a subdominios?", answer: "CAA se hereda hacia abajo del árbol. Una CA comprueba el dominio exacto primero y luego sube: api.app.ejemplo.com → app.ejemplo.com → ejemplo.com. La primera zona con registros CAA se aplica — por eso PingThat muestra 'Política heredada de X' cuando un subdominio carece de registros pero un ancestro sí tiene. Publica la política en el apex para cubrir todo lo que cuelgue debajo." },
+        { question: "¿Qué pasa si no publico CAA?", answer: "Cualquier CA pública de confianza puede emitir certificados para tu dominio. Así funciona la mayor parte de internet y para muchos sitios es aceptable gracias a Certificate Transparency — cualquier emisión indebida queda en logs públicos y lo detectas con monitorización CT. Pero CAA es una capa extra barata: cinco minutos de config DNS previenen toda una clase de ataques con CAs comprometidas o engañadas." },
+      ],
+    },
+  },
+
+  "ipv6-check": {
+    en: {
+      faqs: [
+        { question: "Why does IPv6 readiness matter if my site already works?", answer: "Mobile carriers, datacentres, and many ISPs run IPv6-only networks. When those users hit your IPv4-only site they go through NAT64/DNS64 which adds latency, breaks some protocols, and is a known source of intermittent failures. Full dual-stack (apex + www + NS + MX with AAAA) serves them directly over v6, faster and more reliably. The score surfaces exactly which layer is still v4-only." },
+        { question: "Do nameservers and mail servers need AAAA too?", answer: "Yes — otherwise IPv6-only resolvers can't reach your nameservers (DNS resolution fails), and IPv6-only mail servers can't deliver to you (mail bounces). The apex and www are the obvious parts but the infrastructure layers are where most domains still fail. PingThat flags those separately so you know where the real gap is." },
+        { question: "Is getting a 4/4 expensive?", answer: "Not if you use a modern DNS provider and a modern mail provider — both Cloudflare and major mail services publish AAAA automatically for their infrastructure. You inherit that just by delegating your domain there. The only gap for most hosting setups is ensuring your own origin has an AAAA record; most VPS and cloud providers give you an IPv6 address for free." },
+        { question: "Why is the www check special?", answer: "Many setups make apex work via an ALIAS/ANAME that includes AAAA but forget to configure www the same way. PingThat tests them separately because they commonly diverge. If www.example.com is v4-only but the apex is dual-stack, IPv6-only users typing www in the browser still hit the NAT64 fallback path." },
+      ],
+    },
+    es: {
+      faqs: [
+        { question: "¿Por qué importa la preparación IPv6 si mi sitio ya funciona?", answer: "Las operadoras móviles, los datacentres y muchos ISPs usan redes IPv6-only. Cuando esos usuarios entran en tu sitio IPv4-only pasan por NAT64/DNS64 que añade latencia, rompe algunos protocolos y causa fallos intermitentes. El dual-stack completo (apex + www + NS + MX con AAAA) les sirve directamente por v6, más rápido y fiable. La puntuación revela exactamente qué capa sigue siendo solo v4." },
+        { question: "¿Los nameservers y servidores de correo también necesitan AAAA?", answer: "Sí — si no, los resolvers IPv6-only no pueden llegar a tus nameservers (falla la resolución DNS) y los servidores de correo IPv6-only no pueden entregarte correo (rebotan). Apex y www son la parte obvia pero las capas de infraestructura son donde siguen fallando la mayoría de dominios. PingThat las marca por separado para que sepas dónde está el hueco real." },
+        { question: "¿Llegar a 4/4 es caro?", answer: "No si usas un proveedor DNS y de correo modernos — Cloudflare y los servicios de correo mayores publican AAAA automáticamente para su infraestructura. Lo heredas solo con delegar el dominio ahí. El único hueco en muchos hostings es asegurar que tu origen tenga AAAA; la mayoría de VPS y cloud te dan IPv6 gratis." },
+        { question: "¿Por qué el check de www es especial?", answer: "Muchas configuraciones hacen que el apex funcione vía ALIAS/ANAME que incluye AAAA pero olvidan configurar www igual. PingThat los prueba por separado porque suelen divergir. Si www.ejemplo.com es solo v4 pero el apex es dual-stack, los usuarios IPv6-only que escriban www seguirán cayendo por el camino de NAT64." },
+      ],
+    },
+  },
+
+  "dnssec-check": {
+    en: {
+      faqs: [
+        { question: "What's the difference between Bogus and Insecure?", answer: "Insecure means the zone isn't signed at all — no DNSKEY, no DS — and resolvers accept answers without validation. It's the default for most domains and it's fine. Bogus means the zone IS signed but validation fails — DS says 'this zone is signed' but the signatures don't check out. Bogus is a production outage: validating resolvers return SERVFAIL instead of your records, so every user on those resolvers can't reach you. Always fix Bogus urgently." },
+        { question: "Why does my DNSKEY query return empty on a Bogus zone?", answer: "Cloudflare's 1.1.1.1 is a validating resolver. When DNSSEC validation fails, it refuses to return the signed records to you — that's the whole point of DNSSEC. So on a Bogus zone, DNSKEY appears as 0 answers even though the authoritative server is serving them. PingThat detects this by combining Status=2 (SERVFAIL) on the A query with DS presence at the parent, which is the exact fingerprint of a Bogus zone." },
+        { question: "Should I enable DNSSEC?", answer: "Most hosting setups don't strictly need it — HTTPS already authenticates the server, so DNS tampering is caught at the TLS layer. DNSSEC matters more for DANE-based email, DoT/DoH authentication, and some government compliance. And crucially: enabling DNSSEC adds a failure mode (Bogus) that can take your domain offline if keys expire or mis-sign. If you turn it on, monitor it continuously." },
+        { question: "What algorithms should I use?", answer: "ECDSA P-256/SHA-256 (algorithm 13) or Ed25519 (algorithm 15) for new zones. Both are small, fast, and broadly supported. Avoid RSA/SHA-1 (algorithm 5 or 7) — it's deprecated. Most modern DNS providers (Cloudflare, Google Cloud DNS, Route 53) use algorithm 13 or 14 by default. PingThat shows the algorithm name in the DS and DNSKEY tables so you can verify." },
+      ],
+    },
+    es: {
+      faqs: [
+        { question: "¿Cuál es la diferencia entre Bogus e Insecure?", answer: "Insecure significa que la zona no está firmada — sin DNSKEY, sin DS — y los resolvers aceptan respuestas sin validar. Es el comportamiento por defecto y es correcto. Bogus significa que la zona SÍ está firmada pero la validación falla — DS dice 'esta zona está firmada' pero las firmas no cuadran. Bogus es un incidente en producción: los resolvers validadores devuelven SERVFAIL y todos los usuarios con esos resolvers no pueden llegar a ti. Arregla Bogus con urgencia." },
+        { question: "¿Por qué mi consulta DNSKEY devuelve vacío en una zona Bogus?", answer: "Cloudflare 1.1.1.1 es un resolver validador. Cuando falla la validación DNSSEC, se niega a devolver los registros firmados — ese es el propósito de DNSSEC. Así que en zona Bogus, DNSKEY aparece con 0 respuestas aunque el servidor autoritativo los esté sirviendo. PingThat detecta esto combinando Status=2 (SERVFAIL) en la consulta A con presencia de DS en el padre, firma exacta de una zona Bogus." },
+        { question: "¿Debo habilitar DNSSEC?", answer: "La mayoría de hostings no lo necesitan estrictamente — HTTPS ya autentica el servidor y el tampering DNS se detecta en TLS. DNSSEC importa más para correo DANE, autenticación DoT/DoH y ciertos compliance gubernamentales. Y crucial: habilitarlo añade un modo de fallo (Bogus) que puede tirar tu dominio si las claves caducan o firman mal. Si lo activas, monitorízalo continuamente." },
+        { question: "¿Qué algoritmos debo usar?", answer: "ECDSA P-256/SHA-256 (algoritmo 13) o Ed25519 (algoritmo 15) para zonas nuevas. Ambos son pequeños, rápidos y bien soportados. Evita RSA/SHA-1 (algoritmo 5 o 7) — está deprecado. Los proveedores DNS modernos (Cloudflare, Google Cloud DNS, Route 53) usan algoritmo 13 o 14 por defecto. PingThat muestra el nombre del algoritmo en las tablas DS y DNSKEY para verificarlo." },
+      ],
+    },
+  },
+
+  "reverse-dns": {
+    en: {
+      faqs: [
+        { question: "Why would an IP have no PTR record?", answer: "PTR is optional from the IP owner's side. Residential ISPs almost never publish meaningful PTR for consumer IPs — you'll see generic ones like c-72-123-45-67.hsd1.ca.comcast.net or nothing at all. Some cloud providers leave PTR empty by default for tenants. Missing PTR is a strong negative signal for mail servers (many will reject or greylist) but is fine for general web traffic." },
+        { question: "How do I set up reverse DNS?", answer: "PTR records live in the in-addr.arpa or ip6.arpa zone, which is controlled by whoever owns the IP block — usually your ISP, hosting provider, or cloud vendor. You don't control PTR through your own DNS. Most cloud platforms expose a PTR field in the instance config (AWS EC2, GCP VM, Hetzner, etc.). For colocated hardware, ask your ISP to delegate the PTR zone to you or to set specific records on request." },
+        { question: "Should forward and reverse match for mail servers?", answer: "Yes. Many mail servers reject or heavily penalise senders where the PTR doesn't forward-resolve back to the same IP. The chain is: your mail server's IP has a PTR of mail.example.com; an A query on mail.example.com returns the same IP. Mismatches look like misconfigured or hijacked senders. Use PingThat's DNS Lookup tool to verify the forward resolution after checking the PTR." },
+        { question: "Does PTR work for IPv6?", answer: "Yes — same principle with a different arpa zone. IPv6 PTR uses ip6.arpa with each of the 32 nibbles reversed and dotted, so 2606:4700:4700::1111 becomes 1.1.1.1.0.0.0.0...7.4.6.0.6.2.ip6.arpa. PingThat constructs it automatically so you just paste the IP. v6 PTR adoption is much lower than v4, especially in residential ranges." },
+      ],
+    },
+    es: {
+      faqs: [
+        { question: "¿Por qué una IP no tiene PTR?", answer: "PTR es opcional desde el lado del propietario de la IP. Los ISPs residenciales casi nunca publican PTR con sentido para IPs de cliente — verás genéricos tipo c-72-123-45-67.hsd1.ca.comcast.net o nada. Algunos cloud providers dejan PTR vacío por defecto. Su ausencia es señal negativa fuerte para correo (muchos rechazan o meten en greylist) pero es irrelevante para tráfico web general." },
+        { question: "¿Cómo configuro DNS inverso?", answer: "Los PTR viven en la zona in-addr.arpa o ip6.arpa, controlada por el dueño del bloque IP — normalmente tu ISP, hosting o cloud. No controlas PTR desde tu propio DNS. Las plataformas cloud exponen un campo PTR en la config de la instancia (AWS EC2, GCP VM, Hetzner, etc.). Para hardware colocado, pide a tu ISP que te delegue la zona PTR o que configure registros concretos bajo petición." },
+        { question: "¿Deben coincidir forward y reverse en servidores de correo?", answer: "Sí. Muchos servidores de correo rechazan o penalizan fuerte a remitentes cuyo PTR no resuelve hacia adelante a la misma IP. La cadena: tu IP de correo tiene un PTR mail.ejemplo.com; una consulta A a mail.ejemplo.com devuelve la misma IP. La discrepancia parece un emisor mal configurado o secuestrado. Usa DNS Lookup de PingThat para verificar la resolución forward tras comprobar el PTR." },
+        { question: "¿Funciona PTR en IPv6?", answer: "Sí — mismo principio con zona arpa distinta. IPv6 PTR usa ip6.arpa con los 32 nibbles invertidos separados por puntos, así 2606:4700:4700::1111 se convierte en 1.1.1.1.0.0.0.0...7.4.6.0.6.2.ip6.arpa. PingThat lo construye automáticamente, solo pegas la IP. La adopción PTR en v6 es mucho más baja que en v4, especialmente en rangos residenciales." },
+      ],
+    },
+  },
+
+  "resolver-compare": {
+    en: {
+      faqs: [
+        { question: "Why would resolvers disagree on an answer?", answer: "Three common causes. (1) Propagation: you changed DNS and some resolvers still have the old record cached until TTL expires. (2) GeoDNS: the authoritative server returns different answers depending on where the query comes from — resolvers in different regions see different IPs legitimately. (3) Bugs or outages at a specific resolver. The consistency verdict tells you there's divergence; the per-resolver answer tells you which flavour you're seeing." },
+        { question: "How is this different from a 'DNS propagation checker'?", answer: "Traditional propagation checkers query the authoritative server from multiple geographic locations to see whether the change has been rolled out. Resolver Compare queries what end users actually see — the public recursive resolvers they use daily (Cloudflare 1.1.1.1, Google 8.8.8.8, etc.). The end-user view is what matters because resolvers cache; propagation is only one cause of divergence." },
+        { question: "Why Cloudflare, Google, AdGuard, NextDNS specifically?", answer: "All four offer JSON-format DNS-over-HTTPS, which is what PingThat queries against. Between them they cover the bulk of public recursive DNS traffic. Quad9 and OpenDNS also offer DoH but not in compatible JSON form, so they're excluded for now. The four represent a geographically diverse and technically diverse sample — divergence between them tends to be meaningful." },
+        { question: "What's a good latency number?", answer: "Under 150 ms (green) means the resolver is nearby and responsive. 150–400 ms (yellow) suggests a longer route or a less optimised POP. Over 400 ms (red) is unusual — it indicates either a transit problem from PingThat's edge to that resolver, or the resolver itself is slow on this specific query. Retry; if it persists, the resolver may be rate-limiting or have an issue." },
+      ],
+    },
+    es: {
+      faqs: [
+        { question: "¿Por qué los resolvers podrían discrepar?", answer: "Tres causas comunes. (1) Propagación: cambiaste DNS y algunos resolvers aún tienen el registro viejo en caché hasta que el TTL caduque. (2) GeoDNS: el servidor autoritativo devuelve respuestas distintas según el origen de la consulta — resolvers en regiones distintas ven IPs distintas legítimamente. (3) Bugs o incidencias en un resolver concreto. El veredicto de consistencia te avisa de divergencia; la respuesta por resolver te dice cuál estás viendo." },
+        { question: "¿En qué se diferencia de un 'DNS propagation checker'?", answer: "Los checkers clásicos consultan al servidor autoritativo desde varias ubicaciones geográficas para ver si el cambio se ha desplegado. Resolver Compare consulta lo que realmente ven los usuarios finales — los resolvers recursivos públicos que usan a diario (Cloudflare 1.1.1.1, Google 8.8.8.8, etc.). La vista del usuario final es la que importa porque los resolvers cachean; la propagación es solo una de las causas de divergencia." },
+        { question: "¿Por qué Cloudflare, Google, AdGuard, NextDNS en particular?", answer: "Los cuatro ofrecen DNS-over-HTTPS en formato JSON, que es lo que PingThat consulta. Entre ellos cubren el grueso del tráfico DNS público recursivo. Quad9 y OpenDNS también ofrecen DoH pero no en JSON compatible, así que quedan fuera por ahora. Los cuatro representan una muestra diversa geográfica y técnicamente — la divergencia entre ellos suele ser significativa." },
+        { question: "¿Qué latencia es buena?", answer: "Menos de 150 ms (verde): el resolver está cerca y responde bien. 150–400 ms (amarillo): ruta más larga o POP menos optimizado. Más de 400 ms (rojo): inusual — indica o un problema de tránsito desde el edge de PingThat hacia ese resolver, o que el resolver va lento en esta consulta. Repite; si persiste, puede estar rate-limitando o tener un incidente." },
+      ],
+    },
+  },
+
+  "site-speed": {
+    en: {
+      faqs: [
+        { question: "Why is this different from Lighthouse or PageSpeed Insights?", answer: "Lighthouse runs a single synthetic probe from a clean environment — one device, one network, no real users. Site Speed reads the Chrome UX Report, which is aggregated real-field data from every Chrome user who opted in. Google uses CrUX for ranking; Lighthouse is a diagnostic tool. Both matter: Lighthouse tells you what could be faster in a lab, CrUX tells you what actually is faster for real visitors." },
+        { question: "What does 'not enough data' mean?", answer: "CrUX only publishes data for origins and URLs with enough Chrome traffic to aggregate anonymously. Below that threshold — typically a few hundred real visitors per 28-day window — Google withholds the metrics to prevent single-user inference. If your site shows 'not enough data', run Lighthouse or WebPageTest for synthetic measurements instead." },
+        { question: "What's the difference between URL-level and origin-level scope?", answer: "URL-level measures the specific URL you entered (e.g. /pricing). Origin-level aggregates every URL across the entire hostname. PingThat tries URL-level first because it's more actionable. If URL-level has no data, it falls back to origin-level, which usually has enough traffic. Origin-level is coarser: you see the typical experience across the site, not the specific page." },
+        { question: "Which metric should I optimise first?", answer: "Whichever is rated Poor. In 2024-2025, INP is where most sites fail first because it was recently tightened. If INP is Good and LCP is Poor, optimise LCP: preload the hero image, reduce render-blocking CSS, and ship critical JS earlier. CLS is Poor usually because images or ads load without reserved space — that's the cheapest fix." },
+      ],
+    },
+    es: {
+      faqs: [
+        { question: "¿En qué se diferencia de Lighthouse o PageSpeed Insights?", answer: "Lighthouse hace una sonda sintética desde un entorno limpio — un dispositivo, una red, sin usuarios reales. Site Speed lee el Chrome UX Report, datos reales agregados de cada usuario de Chrome que ha optado. Google usa CrUX para ranking; Lighthouse es diagnóstico. Ambos importan: Lighthouse te dice qué podría ser más rápido en laboratorio, CrUX lo que realmente lo es para visitantes reales." },
+        { question: "¿Qué significa 'datos insuficientes'?", answer: "CrUX solo publica datos de orígenes y URLs con suficiente tráfico Chrome para agregar anónimamente. Por debajo — típicamente unos cientos de visitantes reales por ventana de 28 días — Google retiene las métricas para evitar inferir por usuario único. Si tu sitio muestra 'datos insuficientes', ejecuta Lighthouse o WebPageTest como alternativa sintética." },
+        { question: "¿Cuál es la diferencia entre ámbito URL y origen?", answer: "URL mide la URL específica que introdujiste (p. ej. /precios). Origen agrega todas las URLs del hostname completo. PingThat intenta URL primero porque es más accionable. Si URL no tiene datos, cae a origen que suele tener suficiente tráfico. Origen es más grueso: ves la experiencia típica del sitio, no la página concreta." },
+        { question: "¿Qué métrica debo optimizar primero?", answer: "La que esté en Deficiente. En 2024-2025, INP es donde más sitios fallan primero porque se endureció recientemente. Si INP es Bueno y LCP Deficiente, optimiza LCP: precarga la imagen hero, reduce CSS bloqueante y envía JS crítico antes. CLS suele estar Deficiente porque imágenes o anuncios cargan sin reservar espacio — ese es el arreglo más barato." },
+      ],
+    },
+  },
 };

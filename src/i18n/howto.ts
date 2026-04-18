@@ -369,6 +369,132 @@ export const howtoSteps: Record<string, HowToByLang> = {
       ],
     },
   },
+
+  "caa-lookup": {
+    en: {
+      name: "How to Check a Domain's CAA Policy",
+      steps: [
+        { name: "Enter the domain", text: "Type the apex domain you want to audit (e.g. example.com). No www prefix needed — CAA policy applies at the zone level." },
+        { name: "Read the policy", text: "PingThat walks up the DNS tree and shows every CAA record with its tag (issue, issuewild, iodef) and the critical bit when set." },
+        { name: "Verify a specific CA", text: "Pick one of the common CAs or type any identifier (e.g. letsencrypt.org) to confirm whether that authority is allowed to issue." },
+        { name: "Fix gaps", text: "If the domain has no CAA records, any trusted CA can issue certificates for it. Publish a policy listing only the CAs you actually use." },
+      ],
+    },
+    es: {
+      name: "Cómo comprobar la política CAA de un dominio",
+      steps: [
+        { name: "Introduce el dominio", text: "Escribe el dominio raíz que quieras auditar (p. ej. ejemplo.com). Sin www — la política CAA se aplica a nivel de zona." },
+        { name: "Lee la política", text: "PingThat recorre el árbol DNS y muestra cada registro CAA con su etiqueta (issue, issuewild, iodef) y el bit crítico si está activo." },
+        { name: "Verifica una CA concreta", text: "Elige una CA común o escribe cualquier identificador (p. ej. letsencrypt.org) para confirmar si esa autoridad está autorizada a emitir." },
+        { name: "Corrige carencias", text: "Si el dominio no tiene CAA, cualquier CA de confianza puede emitir certificados. Publica una política con solo las CAs que realmente uses." },
+      ],
+    },
+  },
+
+  "ipv6-check": {
+    en: {
+      name: "How to Audit a Domain's IPv6 Readiness",
+      steps: [
+        { name: "Enter the domain", text: "Type the apex domain. PingThat audits the apex, www, nameservers, and mail servers in parallel." },
+        { name: "Review the 0–4 score", text: "Each missing AAAA costs a point. Scores of 3–4 mean dual-stack works; 0–2 means mobile and IPv6-only users will struggle." },
+        { name: "Spot infrastructure gaps", text: "The infrastructure card shows NS-with-AAAA and MX-with-AAAA ratios so you can see exactly which hosts still lack IPv6." },
+        { name: "Fix missing records", text: "Ask your DNS provider to publish AAAA for apex and www. For mail, coordinate with your provider to add v6 listeners before publishing MX AAAA." },
+      ],
+    },
+    es: {
+      name: "Cómo auditar la preparación IPv6 de un dominio",
+      steps: [
+        { name: "Introduce el dominio", text: "Escribe el dominio raíz. PingThat audita apex, www, nameservers y servidores de correo en paralelo." },
+        { name: "Revisa la puntuación 0–4", text: "Cada AAAA ausente resta un punto. 3–4 indica dual-stack funcional; 0–2 implica problemas con usuarios móviles o IPv6-only." },
+        { name: "Detecta huecos de infraestructura", text: "La tarjeta de infraestructura muestra el ratio NS-con-AAAA y MX-con-AAAA para ver exactamente qué hosts siguen sin IPv6." },
+        { name: "Corrige los registros ausentes", text: "Pide a tu proveedor DNS que publique AAAA para apex y www. Para correo, coordina con tu proveedor antes de publicar MX AAAA." },
+      ],
+    },
+  },
+
+  "dnssec-check": {
+    en: {
+      name: "How to Validate DNSSEC on a Domain",
+      steps: [
+        { name: "Enter the domain", text: "Type the apex domain. PingThat queries DNSKEY at the zone, DS at the parent, and asks Cloudflare 1.1.1.1 to validate." },
+        { name: "Read the verdict", text: "Secure means DNSKEY+DS+AD flag all agree. Bogus means the zone is signed but validation fails — users on validating resolvers get SERVFAIL." },
+        { name: "Inspect the algorithms", text: "Review the DS and DNSKEY tables to confirm modern signing algorithms (ECDSA P-256 or Ed25519). Avoid RSA/SHA-1." },
+        { name: "Fix bogus signing", text: "Bogus DNSSEC takes your domain offline for validating users. Either roll keys, re-sign the zone, or temporarily ask the registrar to remove the DS record." },
+      ],
+    },
+    es: {
+      name: "Cómo validar DNSSEC en un dominio",
+      steps: [
+        { name: "Introduce el dominio", text: "Escribe el dominio raíz. PingThat consulta DNSKEY en la zona, DS en el padre y pide a Cloudflare 1.1.1.1 que valide." },
+        { name: "Lee el veredicto", text: "Seguro significa DNSKEY+DS+flag AD coinciden. Bogus significa zona firmada pero la validación falla — los usuarios con resolver validador reciben SERVFAIL." },
+        { name: "Inspecciona algoritmos", text: "Revisa las tablas DS y DNSKEY para confirmar algoritmos modernos (ECDSA P-256 o Ed25519). Evita RSA/SHA-1." },
+        { name: "Arregla el signing roto", text: "DNSSEC Bogus tira tu dominio para usuarios validadores. Rota claves, re-firma la zona o pide temporalmente al registrador que retire el DS." },
+      ],
+    },
+  },
+
+  "reverse-dns": {
+    en: {
+      name: "How to Run a Reverse DNS (PTR) Lookup",
+      steps: [
+        { name: "Enter an IP address", text: "Type an IPv4 (a.b.c.d) or IPv6 address. PingThat accepts :: compression and brackets." },
+        { name: "See the PTR record", text: "PingThat constructs the correct in-addr.arpa or ip6.arpa label and queries Cloudflare DoH for PTR." },
+        { name: "Interpret 'no PTR'", text: "A missing PTR is common for residential and some cloud IPs. For a mail server it strongly hurts deliverability — ask your provider to set one." },
+        { name: "Cross-check forward", text: "For mail, the PTR should resolve forward back to the same IP. Use the DNS Lookup tool to verify forward resolution matches." },
+      ],
+    },
+    es: {
+      name: "Cómo hacer un DNS inverso (PTR)",
+      steps: [
+        { name: "Introduce una IP", text: "Escribe una IPv4 (a.b.c.d) o IPv6. PingThat acepta compresión :: y corchetes." },
+        { name: "Obtén el PTR", text: "PingThat construye el label correcto in-addr.arpa o ip6.arpa y consulta PTR vía Cloudflare DoH." },
+        { name: "Interpreta 'sin PTR'", text: "PTR ausente es común en IPs residenciales y algunos rangos cloud. En servidores de correo afecta gravemente la entregabilidad — pide al proveedor que lo configure." },
+        { name: "Verifica el forward", text: "En correo, el PTR debería resolver hacia adelante a la misma IP. Usa DNS Lookup para confirmar que la resolución forward coincide." },
+      ],
+    },
+  },
+
+  "resolver-compare": {
+    en: {
+      name: "How to Compare DNS Across Major Resolvers",
+      steps: [
+        { name: "Enter the domain", text: "Type the domain and pick a record type (A, AAAA, MX, NS, TXT, CNAME)." },
+        { name: "Read the consistency verdict", text: "Green means every resolver returned the same answer set. Yellow means at least one differs — propagation, GeoDNS, or resolver caching issue." },
+        { name: "Check per-resolver latency", text: "The colour-coded response time tells you which resolvers are fast or slow for this query from PingThat's CF edge." },
+        { name: "Wait out the TTL", text: "If you just changed DNS and see divergence, note the TTL. Full global convergence waits for the longest TTL to expire across all resolver caches." },
+      ],
+    },
+    es: {
+      name: "Cómo comparar DNS entre resolvers mayores",
+      steps: [
+        { name: "Introduce el dominio", text: "Escribe el dominio y elige un tipo de registro (A, AAAA, MX, NS, TXT, CNAME)." },
+        { name: "Lee el veredicto de consistencia", text: "Verde: todos los resolvers devuelven la misma respuesta. Amarillo: al menos uno difiere — propagación, GeoDNS o cache del resolver." },
+        { name: "Comprueba latencia por resolver", text: "El tiempo de respuesta con código de color indica qué resolvers son rápidos o lentos para esta consulta desde el edge CF de PingThat." },
+        { name: "Espera el TTL", text: "Si acabas de cambiar DNS y ves divergencia, mira el TTL. La convergencia global espera a que caduque el TTL mayor en todas las cachés." },
+      ],
+    },
+  },
+
+  "site-speed": {
+    en: {
+      name: "How to Check Real-User Core Web Vitals",
+      steps: [
+        { name: "Enter the URL or origin", text: "Type a full URL or the origin. PingThat tries URL-level first, falling back to origin-level when URL data is too sparse." },
+        { name: "Pick the form factor", text: "Toggle Mobile or Desktop. Mobile is usually where Core Web Vitals fail first — mobile CPUs are slower and connections spottier." },
+        { name: "Read the five metrics", text: "LCP, INP, and CLS are the ranking signals. FCP and TTFB are supporting diagnostics. Each is rated Good / Needs improvement / Poor at p75." },
+        { name: "Fix the worst metric first", text: "If INP is poor, cut long tasks and third-party JS. If LCP is poor, preload hero assets. If CLS is poor, reserve space for images and ads." },
+      ],
+    },
+    es: {
+      name: "Cómo comprobar Core Web Vitals con usuarios reales",
+      steps: [
+        { name: "Introduce URL u origen", text: "Escribe una URL completa o el origen. PingThat intenta primero nivel URL; si hay pocos datos usa origen." },
+        { name: "Elige el dispositivo", text: "Alterna Móvil o Escritorio. En móvil es donde más suelen fallar los Core Web Vitals — CPUs más lentas y redes peores." },
+        { name: "Lee las cinco métricas", text: "LCP, INP y CLS son las señales de ranking. FCP y TTFB son diagnóstico de apoyo. Cada una se valora Bueno / Mejorable / Deficiente al p75." },
+        { name: "Arregla la peor métrica primero", text: "Si INP es mala, corta tareas largas y JS de terceros. Si LCP es mala, pre-carga recursos hero. Si CLS es mala, reserva espacio para imágenes y anuncios." },
+      ],
+    },
+  },
 };
 
 export function getHowTo(toolId: string, lang: Lang): ToolHowTo | undefined {
