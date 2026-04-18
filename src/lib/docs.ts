@@ -71,3 +71,18 @@ export function formatDate(date: Date, lang: DocLang): string {
     day: "numeric",
   });
 }
+
+export async function getAdjacentDocs(currentSlug: string, currentCategory: Category, lang: DocLang): Promise<{ prev: Doc | null; next: Doc | null; categorySiblings: Doc[] }> {
+  // Navigate within the same category first; fall back to all docs if only one in category.
+  const allInCategory = await getDocsByCategory(currentCategory, lang);
+  const sortedCategory = allInCategory.slice().sort((a, b) => a.data.title.localeCompare(b.data.title));
+  const fallbackAll = (await getAllDocs(lang)).slice().sort((a, b) => a.data.title.localeCompare(b.data.title));
+  const pool = sortedCategory.length > 1 ? sortedCategory : fallbackAll;
+  const idx = pool.findIndex((d) => docSlug(d) === currentSlug);
+  if (idx === -1) return { prev: null, next: null, categorySiblings: sortedCategory };
+  return {
+    prev: idx > 0 ? pool[idx - 1] : null,
+    next: idx < pool.length - 1 ? pool[idx + 1] : null,
+    categorySiblings: sortedCategory,
+  };
+}

@@ -3,7 +3,8 @@ import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import FaqBlock from "../../components/FaqBlock.astro";
-import { CATEGORY_LABELS, docSlug, formatDate } from "../../lib/docs";
+import DocNav from "../../components/DocNav.astro";
+import { CATEGORY_LABELS, docSlug, formatDate , getAdjacentDocs } from "../../lib/docs";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs", (d) => d.data.lang === "en");
@@ -16,6 +17,7 @@ export async function getStaticPaths() {
 const { doc } = Astro.props;
 const { Content } = await render(doc);
 const categoryLabel = CATEGORY_LABELS.en[doc.data.category];
+const { prev, next } = await getAdjacentDocs(docSlug(doc), doc.data.category, "en");
 const lang = "en" as const;
 ---
 
@@ -54,6 +56,7 @@ const lang = "en" as const;
     {doc.data.faq && doc.data.faq.length > 0 && (
       <FaqBlock items={doc.data.faq} lang={lang} />
     )}
+    <DocNav prev={prev} next={next} lang={lang} />
   </article>
 </Layout>
 

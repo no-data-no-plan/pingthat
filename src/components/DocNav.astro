@@ -1,0 +1,68 @@
+---
+import type { Lang } from "../i18n/index";
+import { docPath, type Doc } from "../lib/docs";
+
+interface Props {
+  prev: Doc | null;
+  next: Doc | null;
+  lang?: Lang;
+}
+
+const { prev, next, lang = "en" } = Astro.props;
+const prevLabel = lang === "es" ? "Anterior" : "Previous";
+const nextLabel = lang === "es" ? "Siguiente" : "Next";
+const hubLabel = lang === "es" ? "Todas las guías" : "All guides";
+const hubPath = lang === "es" ? "/es/docs/" : "/docs/";
+
+const textColor = "var(--color-text-primary, var(--color-text))";
+const mutedColor = "var(--color-text-muted)";
+const accentColor = "var(--color-accent-fg)";
+---
+
+<nav class="mt-10 pt-6 border-t border-[var(--color-border)]" aria-label={lang === "es" ? "Navegación entre guías" : "Guide navigation"}>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+    {prev ? (
+      <a
+        href={docPath(prev)}
+        class="block p-4 rounded border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors group"
+        style="background: var(--color-bg-secondary, var(--color-surface));"
+        rel="prev"
+      >
+        <div class="text-[10px] uppercase tracking-wider mb-1 flex items-center gap-1" style={`color: ${mutedColor};`}>
+          <span aria-hidden="true">←</span>
+          <span>{prevLabel}</span>
+        </div>
+        <div class="text-sm font-medium leading-snug group-hover:text-[var(--color-accent-fg)] transition-colors" style={`color: ${textColor};`}>{prev.data.title}</div>
+      </a>
+    ) : <div></div>}
+
+    {next ? (
+      <a
+        href={docPath(next)}
+        class="block p-4 rounded border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors group text-right"
+        style="background: var(--color-bg-secondary, var(--color-surface));"
+        rel="next"
+      >
+        <div class="text-[10px] uppercase tracking-wider mb-1 flex items-center justify-end gap-1" style={`color: ${mutedColor};`}>
+          <span>{nextLabel}</span>
+          <span aria-hidden="true">→</span>
+        </div>
+        <div class="text-sm font-medium leading-snug group-hover:text-[var(--color-accent-fg)] transition-colors" style={`color: ${textColor};`}>{next.data.title}</div>
+      </a>
+    ) : <div></div>}
+  </div>
+
+  <div class="text-center">
+    <a
+      href={hubPath}
+      class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors"
+      style={`color: ${accentColor};`}
+    >
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M3 2h7l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+        <path d="M10 2v3h3M5 8h6M5 11h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <span>↑ {hubLabel}</span>
+    </a>
+  </div>
+</nav>
