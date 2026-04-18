@@ -1,4 +1,4 @@
-import { isValidDomain, jsonResponse, errorResponse, parseBody, isBodyTooLarge } from "./_shared";
+import { isValidDomain, isBlockedHost, jsonResponse, errorResponse, parseBody, isBodyTooLarge } from "./_shared";
 import { getLang, getApiErrors } from "./_i18n";
 
 const TLD_RDAP: Record<string, string> = {
@@ -28,7 +28,11 @@ const MAX_REDIRECT_HOPS = 4;
 async function fetchRdap(rdapUrl: string): Promise<Response> {
   let current = rdapUrl;
   for (let hop = 0; hop <= MAX_REDIRECT_HOPS; hop++) {
-    const res = await fetch(current, {
+    let parsed: URL;
+    try { parsed = new URL(current); } catch { return new Response(null, { status: 502 }); }
+    if (!/^https?:$/.test(parsed.protocol)) return new Response(null, { status: 502 });
+    if (isBlockedHost(parsed.hostname)) return new Response(null, { status: 502 });
+    const res = await fetch(parsed.toString(), {
       signal: AbortSignal.timeout(RDAP_TIMEOUT_MS),
       redirect: "manual",
       headers: { Accept: "application/rdap+json, application/json" },
@@ -36,8 +40,11 @@ async function fetchRdap(rdapUrl: string): Promise<Response> {
     if (res.status >= 300 && res.status < 400) {
       const loc = res.headers.get("location");
       if (!loc) return res;
-      current = new URL(loc, current).toString();
-      if (!/^https?:\/\//.test(current)) return res;
+      try {
+        current = new URL(loc, parsed).toString();
+      } catch {
+        return new Response(null, { status: 502 });
+      }
       continue;
     }
     return res;

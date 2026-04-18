@@ -84,7 +84,7 @@ const errors: Record<SupportedLang, ApiErrors> = {
     emailAuthFailed: 'Email authentication check failed',
 
     portScanFailed: 'Port scan failed',
-    invalidPorts: 'Invalid ports: provide 1-20 ports, each between 1 and 65535',
+    invalidPorts: 'Invalid ports: provide 1-5 ports, each between 1 and 65535',
 
     whoisLookupFailed: 'WHOIS lookup failed',
     domainNotFoundInRdap: 'Domain not found in RDAP',
@@ -121,7 +121,7 @@ const errors: Record<SupportedLang, ApiErrors> = {
     emailAuthFailed: 'La verificacion de autenticacion de email fallo',
 
     portScanFailed: 'El escaneo de puertos fallo',
-    invalidPorts: 'Puertos no validos: proporciona entre 1 y 20 puertos, cada uno entre 1 y 65535',
+    invalidPorts: 'Puertos no validos: proporciona entre 1 y 5 puertos, cada uno entre 1 y 65535',
 
     whoisLookupFailed: 'Consulta WHOIS fallida',
     domainNotFoundInRdap: 'Dominio no encontrado en RDAP',

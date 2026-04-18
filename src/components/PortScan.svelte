@@ -37,7 +37,7 @@
     if (!input.trim()) return null; // use defaults
     const parts = input.split(",").map((s) => s.trim()).filter(Boolean);
     if (parts.length === 0) return null;
-    if (parts.length > 20) return [];
+    if (parts.length > 5) return [];
     const ports: number[] = [];
     for (const part of parts) {
       const n = parseInt(part, 10);

@@ -40,10 +40,14 @@
     return res.json();
   }
 
-  function parseDnskey(raw: string): DnskeyRecord {
+  function parseDnskey(raw: string): DnskeyRecord | null {
     // Format: "<flags> <protocol> <algorithm> <base64 key>"
     const parts = raw.split(/\s+/);
-    return { flags: parseInt(parts[0], 10), algorithm: parseInt(parts[2], 10), raw };
+    if (parts.length < 4) return null;
+    const flags = parseInt(parts[0], 10);
+    const algorithm = parseInt(parts[2], 10);
+    if (isNaN(flags) || isNaN(algorithm)) return null;
+    return { flags, algorithm, raw };
   }
 
   const ALGORITHMS: Record<number, string> = {
@@ -63,17 +67,17 @@
     return ALGORITHM_NAMES[key] ?? NaN;
   }
 
-  function parseDs(raw: string): DsRecord {
+  function parseDs(raw: string): DsRecord | null {
     // DoH returns either "<key tag> <algo num> <digest type> <digest>"
     // or "<key tag> <ALGO NAME> <digest type> <digest>" (e.g. ECDSAP256SHA256).
     const parts = raw.split(/\s+/);
-    return {
-      keyTag: parseInt(parts[0], 10),
-      algorithm: parseAlgorithm(parts[1] || ""),
-      digestType: parseInt(parts[2], 10),
-      digest: parts.slice(3).join("").toLowerCase(),
-      raw,
-    };
+    if (parts.length < 4) return null;
+    const keyTag = parseInt(parts[0], 10);
+    const algorithm = parseAlgorithm(parts[1]);
+    const digestType = parseInt(parts[2], 10);
+    const digest = parts.slice(3).join("").toLowerCase();
+    if (isNaN(keyTag) || isNaN(algorithm) || isNaN(digestType) || digest.length === 0) return null;
+    return { keyTag, algorithm, digestType, digest, raw };
   }
 
   function algorithmName(n: number): string {
@@ -104,8 +108,8 @@
 
       const dnskeyAnswers = (dnskey.Answer || []).filter((r: any) => r.type === 48);
       const dsAnswers = (ds.Answer || []).filter((r: any) => r.type === 43);
-      const dnskeys = dnskeyAnswers.map((r: any) => parseDnskey(r.data));
-      const dsRecords = dsAnswers.map((r: any) => parseDs(r.data));
+      const dnskeys = dnskeyAnswers.map((r: any) => parseDnskey(r.data)).filter((r: DnskeyRecord | null): r is DnskeyRecord => r !== null);
+      const dsRecords = dsAnswers.map((r: any) => parseDs(r.data)).filter((r: DsRecord | null): r is DsRecord => r !== null);
 
       const isValidated = validated.AD === true && validated.Status === 0 && (validated.Answer || []).length > 0;
       // Bogus: parent published DS (chain of trust claimed) and resolver SERVFAILs on A lookup.

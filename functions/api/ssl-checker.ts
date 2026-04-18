@@ -92,12 +92,21 @@ export async function onRequestPost(context: { request: Request }) {
 
     let certs: any[] = [];
     try {
+      // crt.sh can return multi-MB JSON for popular domains; cap body at 1 MB.
+      // `limit=50` is also honoured by crt.sh as an upstream guard.
+      const MAX_CRT_BYTES = 1 * 1024 * 1024;
       const crtRes = await fetch(
-        `https://crt.sh/?q=${encodeURIComponent(domain)}&output=json&exclude=expired`,
+        `https://crt.sh/?q=${encodeURIComponent(domain)}&output=json&exclude=expired&limit=50`,
         { signal: AbortSignal.timeout(15000) }
       );
       if (crtRes.ok) {
-        const allCerts = await crtRes.json() as any[];
+        const contentLength = crtRes.headers.get("content-length");
+        if (contentLength && parseInt(contentLength, 10) > MAX_CRT_BYTES) {
+          throw new Error("crt.sh response too large");
+        }
+        const text = await crtRes.text();
+        if (text.length > MAX_CRT_BYTES) throw new Error("crt.sh response too large");
+        const allCerts = JSON.parse(text) as any[];
         // Sort by not_before desc so most recent cert is first
         allCerts.sort((a, b) => {
           const ta = Date.parse(a.not_before || "");

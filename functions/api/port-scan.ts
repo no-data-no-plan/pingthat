@@ -55,10 +55,13 @@ export async function onRequestPost(context: { request: Request }) {
   if (!isValidDomain(host)) return errorResponse(e.invalidDomain);
   if (isBlockedHost(host)) return errorResponse(e.blockedDomain);
 
+  // Custom-port cap kept small (5) to cap outbound fan-out amplification against
+  // arbitrary targets. The default 17-port list is a fixed allow-list.
+  const MAX_CUSTOM_PORTS = 5;
   let ports = DEFAULT_PORTS;
   if (body.ports !== undefined) {
     if (!Array.isArray(body.ports)) return errorResponse(e.invalidPorts);
-    if (body.ports.length === 0 || body.ports.length > 20) return errorResponse(e.invalidPorts);
+    if (body.ports.length === 0 || body.ports.length > MAX_CUSTOM_PORTS) return errorResponse(e.invalidPorts);
     for (const p of body.ports) {
       if (typeof p !== "number" || !Number.isInteger(p) || p < 1 || p > 65535) {
         return errorResponse(e.invalidPorts);
