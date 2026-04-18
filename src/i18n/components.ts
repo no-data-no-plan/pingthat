@@ -669,6 +669,39 @@ export const dnssecCheckI18n = {
 export function getDnssecCheck(lang: Lang) { return dnssecCheckI18n[lang]; }
 
 
+// ─── ReverseDns ──────────────────────────────────────────────────────────────
+
+export const reverseDnsI18n = {
+  en: {
+    ipLabel: "IP Address",
+    placeholder: "1.1.1.1 or 2606:4700:4700::1111",
+    hint: "IPv4 (a.b.c.d) or IPv6 (hex groups, :: allowed)",
+    lookup: "Lookup PTR",
+    looking: "Looking up...",
+    lookupFailed: "Reverse DNS lookup failed.",
+    invalidIp: "Invalid IP address. Enter an IPv4 or IPv6 address.",
+    resolving: "Resolving",
+    ptrFound: "PTR records",
+    noPtr: "No PTR record",
+    noPtrHint: "The IP owner has not published a reverse DNS record. This is common for residential IPs and some cloud ranges; it can affect mail deliverability.",
+  },
+  es: {
+    ipLabel: "Direcci\u00f3n IP",
+    placeholder: "1.1.1.1 o 2606:4700:4700::1111",
+    hint: "IPv4 (a.b.c.d) o IPv6 (grupos hex, se admite ::)",
+    lookup: "Buscar PTR",
+    looking: "Buscando...",
+    lookupFailed: "La b\u00fasqueda DNS inversa fall\u00f3.",
+    invalidIp: "Direcci\u00f3n IP no v\u00e1lida. Introduce una IPv4 o IPv6.",
+    resolving: "Resolviendo",
+    ptrFound: "Registros PTR",
+    noPtr: "Sin registro PTR",
+    noPtrHint: "El propietario de la IP no ha publicado registro DNS inverso. Es com\u00fan en IPs residenciales y algunos rangos cloud; puede afectar la entregabilidad de correo.",
+  },
+} as const;
+export function getReverseDns(lang: Lang) { return reverseDnsI18n[lang]; }
+
+
 // ─── SslChecker ─────────────────────────────────────────────────────────────
 
 export const sslCheckerI18n = {

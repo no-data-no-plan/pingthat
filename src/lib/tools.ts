@@ -9,7 +9,7 @@ export interface Tool {
 }
 
 export const groups = [
-  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check"] },
+  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check", "reverse-dns"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup", "dnssec-check"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
@@ -139,6 +139,15 @@ export const tools: Tool[] = [
     description: "Check if a domain has IPv6 (AAAA) records for apex, www, nameservers, and mail",
     icon: "I6",
     keywords: ["ipv6 check", "ipv6 readiness", "aaaa record", "dual stack", "ipv6 test"],
+    group: "Network",
+  },
+  {
+    id: "reverse-dns",
+    name: "Reverse DNS",
+    path: "/reverse-dns",
+    description: "Resolve PTR records for any IPv4 or IPv6 address",
+    icon: "Rv",
+    keywords: ["reverse dns", "ptr lookup", "rdns", "ip to hostname", "reverse ip lookup"],
     group: "Network",
   },
   {
