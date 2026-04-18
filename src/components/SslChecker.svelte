@@ -29,7 +29,7 @@
     try {
       const res = await fetch(`/api/ssl-checker?lang=${lang}`, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ domain: domain.trim() }), signal: AbortSignal.timeout(15000),
+        body: JSON.stringify({ domain: domain.trim() }), signal: AbortSignal.timeout(30000),
       });
       if (myId !== requestId) return;
       if (!res.ok) {
