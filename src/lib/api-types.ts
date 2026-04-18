@@ -86,7 +86,7 @@ export interface EmailAuthResult {
 /** Single port scan entry returned within PortScanResult */
 export interface PortScanEntry {
   port: number;
-  status: "open" | "closed" | "filtered";
+  status: "open" | "closed" | "filtered" | "unverifiable";
   service: string;
 }
 

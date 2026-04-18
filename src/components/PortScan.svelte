@@ -17,15 +17,19 @@
   let result = $state<PortScanResult | null>(null);
   let requestId = $state(0);
 
-  function statusColor(status: "open" | "closed" | "filtered"): string {
+  type PortStatus = "open" | "closed" | "filtered" | "unverifiable";
+
+  function statusColor(status: PortStatus): string {
     if (status === "open") return "var(--color-green, #22c55e)";
     if (status === "closed") return "var(--color-red, #ef4444)";
+    if (status === "unverifiable") return "var(--color-text-muted, #64748b)";
     return "var(--color-yellow, #eab308)";
   }
 
-  function statusLabel(status: "open" | "closed" | "filtered"): string {
+  function statusLabel(status: PortStatus): string {
     if (status === "open") return t.statusOpen;
     if (status === "closed") return t.statusClosed;
+    if (status === "unverifiable") return t.statusUnverifiable;
     return t.statusFiltered;
   }
 
@@ -94,14 +98,15 @@
     }
   }
 
-  function summary(results: PortScanEntry[]): { open: number; closed: number; filtered: number } {
-    let open = 0, closed = 0, filtered = 0;
+  function summary(results: PortScanEntry[]): { open: number; closed: number; filtered: number; unverifiable: number } {
+    let open = 0, closed = 0, filtered = 0, unverifiable = 0;
     for (const r of results) {
       if (r.status === "open") open++;
       else if (r.status === "closed") closed++;
+      else if (r.status === "unverifiable") unverifiable++;
       else filtered++;
     }
-    return { open, closed, filtered };
+    return { open, closed, filtered, unverifiable };
   }
 </script>
 
@@ -145,6 +150,12 @@
           <div style="font-size: 24px; font-weight: 700; color: var(--color-yellow, #eab308);">{stats.filtered}</div>
           <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;">{t.statusFiltered}</div>
         </div>
+        {#if stats.unverifiable > 0}
+        <div style="text-align: center;">
+          <div style="font-size: 24px; font-weight: 700; color: var(--color-text-muted, #64748b);">{stats.unverifiable}</div>
+          <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;">{t.statusUnverifiable}</div>
+        </div>
+        {/if}
       </div>
     </div>
 

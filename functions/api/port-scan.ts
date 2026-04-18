@@ -7,23 +7,35 @@ const SERVICES: Record<number, string> = {
   995: "POP3S", 3306: "MySQL", 3389: "RDP", 5432: "PostgreSQL", 8080: "HTTP-Alt", 8443: "HTTPS-Alt",
 };
 
+// Ports where an HTTP fetch is semantically meaningful. For anything else
+// (SSH, FTP, SMTP, DB, etc.) an HTTP probe cannot validate the service —
+// a successful fetch may just mean the edge (e.g. Cloudflare) absorbed
+// the request, and a failure may just mean HTTP was spoken to a non-HTTP
+// service. We report those as "unverifiable" to avoid false positives.
+const HTTP_PORTS = new Set<number>([80, 443, 3000, 5000, 8000, 8080, 8443, 8888, 2052, 2082, 2086, 2095, 2053, 2083, 2087, 2096]);
+
 const DEFAULT_PORTS = [21, 22, 25, 53, 80, 110, 143, 443, 465, 587, 993, 995, 3306, 3389, 5432, 8080, 8443];
 
-async function checkPort(host: string, port: number): Promise<{ port: number; status: "open" | "closed" | "filtered"; service: string }> {
-  const protocol = [443, 8443].includes(port) ? "https" : "http";
+type Status = "open" | "closed" | "filtered" | "unverifiable";
+
+async function checkPort(host: string, port: number): Promise<{ port: number; status: Status; service: string }> {
+  const protocol = [443, 8443, 2053, 2083, 2087, 2096].includes(port) ? "https" : "http";
   const service = SERVICES[port] || "unknown";
+  const isHttp = HTTP_PORTS.has(port);
   try {
     await fetch(`${protocol}://${host}:${port}/`, {
       method: "HEAD",
       signal: AbortSignal.timeout(3000),
       redirect: "manual",
     });
-    return { port, status: "open", service };
+    // For HTTP-typical ports, a successful fetch means the port is open.
+    // For non-HTTP ports, a "successful" fetch is ambiguous (likely an edge
+    // proxy accepted it regardless of the actual service on that port).
+    return { port, status: isHttp ? "open" : "unverifiable", service };
   } catch (e: any) {
     if (e?.name === "AbortError" || e?.name === "TimeoutError") {
       return { port, status: "filtered", service };
     }
-    // Connection refused = port is closed but host is reachable
     if (e?.cause?.code === "ECONNREFUSED" || e?.message?.includes("ECONNREFUSED")) {
       return { port, status: "closed", service };
     }
@@ -43,7 +55,6 @@ export async function onRequestPost(context: { request: Request }) {
   if (!isValidDomain(host)) return errorResponse(e.invalidDomain);
   if (isBlockedHost(host)) return errorResponse(e.blockedDomain);
 
-  // Validate optional custom ports array
   let ports = DEFAULT_PORTS;
   if (body.ports !== undefined) {
     if (!Array.isArray(body.ports)) return errorResponse(e.invalidPorts);
@@ -66,7 +77,6 @@ export async function onRequestPost(context: { request: Request }) {
       return { port: ports[i], status: "filtered" as const, service: SERVICES[ports[i]] || "unknown" };
     });
 
-    // Sort by port number
     results.sort((a, b) => a.port - b.port);
 
     return jsonResponse({ host, results });
