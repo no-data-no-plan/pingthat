@@ -10,7 +10,7 @@ export interface Tool {
 
 export const groups = [
   { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up"] },
-  { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker"] },
+  { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
 
@@ -157,6 +157,15 @@ export const tools: Tool[] = [
     description: "Trace the full redirect chain of any URL with status codes",
     icon: "Rd",
     keywords: ["redirect checker", "redirect trace", "url redirect", "301 redirect checker"],
+    group: "Security",
+  },
+  {
+    id: "caa-lookup",
+    name: "CAA Checker",
+    path: "/caa-lookup",
+    description: "Check which Certificate Authorities are authorized to issue certificates for a domain",
+    icon: "Ca",
+    keywords: ["caa checker", "caa record", "caa lookup", "certificate authority authorization", "ssl policy"],
     group: "Security",
   },
   {

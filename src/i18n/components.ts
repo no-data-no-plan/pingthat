@@ -497,6 +497,49 @@ export const dnsLookupI18n = {
 export function getDnsLookup(lang: Lang) { return dnsLookupI18n[lang]; }
 
 
+// ─── CaaLookup ──────────────────────────────────────────────────────────────
+
+export const caaLookupI18n = {
+  en: {
+    domainLabel: "Domain Name",
+    placeholder: "example.com",
+    lookup: "Check CAA",
+    looking: "Checking...",
+    results: "CAA Records",
+    colTag: "Tag",
+    colValue: "Value",
+    colFlags: "Flags",
+    lookupFailed: "CAA lookup failed. Check the domain and try again.",
+    invalidDomain: "Invalid domain format. Enter a domain like example.com.",
+    policyFoundTitle: "CAA policy in place",
+    noPolicyTitle: "No CAA policy found",
+    noPolicyExplanation: "Any public CA can issue certificates for this domain. Add CAA records to restrict which CAs are allowed.",
+    inheritedFrom: "Policy inherited from",
+    critical: "Critical",
+    anyCa: "(any CA — empty value denies issuance)",
+  },
+  es: {
+    domainLabel: "Nombre de Dominio",
+    placeholder: "ejemplo.com",
+    lookup: "Comprobar CAA",
+    looking: "Comprobando...",
+    results: "Registros CAA",
+    colTag: "Etiqueta",
+    colValue: "Valor",
+    colFlags: "Flags",
+    lookupFailed: "La consulta CAA fall\u00f3. Comprueba el dominio e int\u00e9ntalo de nuevo.",
+    invalidDomain: "Formato de dominio no v\u00e1lido. Introduce un dominio como ejemplo.com.",
+    policyFoundTitle: "Pol\u00edtica CAA configurada",
+    noPolicyTitle: "No se encontr\u00f3 pol\u00edtica CAA",
+    noPolicyExplanation: "Cualquier CA p\u00fablica puede emitir certificados para este dominio. A\u00f1ade registros CAA para restringir qu\u00e9 CAs est\u00e1n autorizadas.",
+    inheritedFrom: "Pol\u00edtica heredada de",
+    critical: "Cr\u00edtico",
+    anyCa: "(cualquier CA \u2014 valor vac\u00edo deniega la emisi\u00f3n)",
+  },
+} as const;
+export function getCaaLookup(lang: Lang) { return caaLookupI18n[lang]; }
+
+
 // ─── SslChecker ─────────────────────────────────────────────────────────────
 
 export const sslCheckerI18n = {

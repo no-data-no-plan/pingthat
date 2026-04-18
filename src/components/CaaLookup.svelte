@@ -1,0 +1,210 @@
+<script lang="ts">
+  import type { Lang } from '../i18n/index';
+  import { getCaaLookup } from '../i18n/components';
+
+  interface Props { lang?: Lang; }
+  let { lang = "en" }: Props = $props();
+  const t = $derived(getCaaLookup(lang));
+
+  interface CaaRecord { flags: number; tag: string; value: string; ttl: number; critical: boolean; raw: string; }
+  interface LookupState {
+    records: CaaRecord[];
+    resolvedFrom: string | null;
+    noPolicy: boolean;
+  }
+
+  let domain = $state("");
+  let state = $state<LookupState | null>(null);
+  let loading = $state(false);
+  let error = $state("");
+  let requestId = $state(0);
+
+  const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  function parseGenericRdata(hex: string): { flags: number; tag: string; value: string } | null {
+    // RFC 3597 generic RDATA: "\# <length-in-decimal> <hex-bytes>"
+    const cleaned = hex.trim().replace(/^\\#\s+\d+\s+/, "");
+    const bytes = cleaned.split(/\s+/).map((h) => parseInt(h, 16));
+    if (bytes.length < 2 || bytes.some(isNaN)) return null;
+    const flags = bytes[0];
+    const tagLen = bytes[1];
+    if (bytes.length < 2 + tagLen) return null;
+    const tag = String.fromCharCode(...bytes.slice(2, 2 + tagLen));
+    const value = String.fromCharCode(...bytes.slice(2 + tagLen));
+    return { flags, tag, value };
+  }
+
+  function parseInlineCaa(data: string): { flags: number; tag: string; value: string } | null {
+    // Parsed format: "0 issue \"letsencrypt.org\""
+    const m = data.match(/^(\d+)\s+(\w+)\s+"?([^"]*)"?$/);
+    if (!m) return null;
+    return { flags: parseInt(m[1], 10), tag: m[2], value: m[3] };
+  }
+
+  async function queryDomain(name: string): Promise<{ records: CaaRecord[]; hasAuthority: boolean }> {
+    const res = await fetch(
+      `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(name)}&type=CAA`,
+      { headers: { Accept: "application/dns-json" }, signal: AbortSignal.timeout(5000) }
+    );
+    if (!res.ok) throw new Error("DNS query failed");
+    const data = await res.json();
+    const answers = (data.Answer || []) as Array<{ name: string; type: number; TTL: number; data: string }>;
+    const authority = (data.Authority || []) as Array<{ name: string; type: number }>;
+    const records: CaaRecord[] = [];
+    for (const a of answers) {
+      if (a.type !== 257) continue;
+      const parsed = a.data.startsWith("\\#") ? parseGenericRdata(a.data) : parseInlineCaa(a.data);
+      if (!parsed) continue;
+      records.push({
+        flags: parsed.flags,
+        tag: parsed.tag,
+        value: parsed.value,
+        ttl: a.TTL,
+        critical: (parsed.flags & 0x80) !== 0,
+        raw: a.data,
+      });
+    }
+    return { records, hasAuthority: authority.length > 0 };
+  }
+
+  async function lookup() {
+    if (!domain.trim()) return;
+    requestId++;
+    const myId = requestId;
+    loading = true; error = ""; state = null;
+
+    const target = domain.trim().toLowerCase();
+    if (!domainRegex.test(target)) {
+      error = t.invalidDomain;
+      loading = false;
+      return;
+    }
+
+    try {
+      // Walk up the tree: CAA policy applies from nearest ancestor with records
+      const parts = target.split(".");
+      let resolvedFrom: string | null = null;
+      let records: CaaRecord[] = [];
+      for (let i = 0; i < parts.length - 1; i++) {
+        const candidate = parts.slice(i).join(".");
+        const { records: recs } = await queryDomain(candidate);
+        if (myId !== requestId) return;
+        if (recs.length > 0) { records = recs; resolvedFrom = candidate; break; }
+      }
+      if (myId !== requestId) return;
+      state = { records, resolvedFrom, noPolicy: records.length === 0 };
+    } catch (e: any) {
+      if (myId !== requestId) return;
+      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
+        error = lang === 'es' ? 'La petici\u00f3n ha tardado demasiado. Int\u00e9ntalo de nuevo.' : 'Request timed out. Please try again.';
+      } else {
+        error = t.lookupFailed;
+      }
+    } finally {
+      if (myId === requestId) loading = false;
+    }
+  }
+
+  const TAG_DESCRIPTIONS: Record<string, { en: string; es: string }> = {
+    issue: {
+      en: "Authorizes a CA to issue certificates for this domain",
+      es: "Autoriza a una CA a emitir certificados para este dominio",
+    },
+    issuewild: {
+      en: "Authorizes a CA to issue wildcard certificates",
+      es: "Autoriza a una CA a emitir certificados wildcard",
+    },
+    iodef: {
+      en: "URL or email for the CA to report policy violations",
+      es: "URL o email para que la CA reporte violaciones de pol\u00edtica",
+    },
+    contactemail: {
+      en: "Email for the domain operator",
+      es: "Email del operador del dominio",
+    },
+    contactphone: {
+      en: "Phone for the domain operator",
+      es: "Tel\u00e9fono del operador del dominio",
+    },
+  };
+
+  function tagDescription(tag: string): string {
+    const entry = TAG_DESCRIPTIONS[tag];
+    if (!entry) return "";
+    return lang === "es" ? entry.es : entry.en;
+  }
+</script>
+
+<div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
+  <div class="card">
+    <div class="card-body space-y-3">
+      <label for="caa-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
+      <input id="caa-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
+      <button class="btn-primary" onclick={lookup} disabled={loading || !domain.trim()}>
+        {loading ? t.looking : t.lookup}
+      </button>
+    </div>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
+  {#if error}
+    <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
+  {/if}
+
+  {#if state}
+    {#if state.noPolicy}
+      <div class="card" style="border-left: 3px solid var(--color-yellow, #eab308);">
+        <div class="card-body">
+          <div style="font-weight: 600; margin-bottom: 4px;">{t.noPolicyTitle}</div>
+          <div style="font-size: 13px; color: var(--color-text-muted);">{t.noPolicyExplanation}</div>
+        </div>
+      </div>
+    {:else}
+      <div class="card" style="border-left: 3px solid var(--color-green, #22c55e); margin-bottom: 16px;">
+        <div class="card-body">
+          <div style="font-weight: 600; margin-bottom: 4px;">{t.policyFoundTitle}</div>
+          {#if state.resolvedFrom && state.resolvedFrom !== domain.trim().toLowerCase()}
+            <div style="font-size: 13px; color: var(--color-text-muted);">{t.inheritedFrom} <code>{state.resolvedFrom}</code></div>
+          {/if}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">{t.records} ({state.records.length})</span></div>
+        <div class="card-body" style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--color-border);">
+                <th style="text-align: left; padding: 6px; color: var(--color-text-muted);">{t.colTag}</th>
+                <th style="text-align: left; padding: 6px; color: var(--color-text-muted);">{t.colValue}</th>
+                <th style="text-align: left; padding: 6px; color: var(--color-text-muted);">{t.colFlags}</th>
+                <th style="text-align: left; padding: 6px; color: var(--color-text-muted);">TTL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {#each state.records as r}
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td style="padding: 6px; font-weight: 600; color: var(--color-accent-fg);">
+                    {r.tag}
+                    {#if tagDescription(r.tag)}
+                      <div style="font-size: 11px; font-weight: 400; color: var(--color-text-muted); margin-top: 2px;">{tagDescription(r.tag)}</div>
+                    {/if}
+                  </td>
+                  <td style="padding: 6px; font-family: monospace; word-break: break-all;">{r.value || t.anyCa}</td>
+                  <td style="padding: 6px;">
+                    {r.flags}
+                    {#if r.critical}
+                      <span style="display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 9999px; font-size: 10px; font-weight: 700; color: #fff; background: var(--color-red, #ef4444);">{t.critical}</span>
+                    {/if}
+                  </td>
+                  <td style="padding: 6px; color: var(--color-text-muted);">{r.ttl}s</td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {/if}
+  {/if}
+  </div>
+</div>
