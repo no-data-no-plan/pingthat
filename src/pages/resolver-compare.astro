@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ResolverCompare from "../components/ResolverCompare.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["resolver-compare"].en;
+---
+
+<Layout title={p.title} description={p.description} activeToolId="resolver-compare">
+  <ResolverCompare client:only="svelte" />
+  <SeoContent heading={p.seoHeading} text={p.seoText} relatedToolIds={["dns-lookup", "dnssec-check", "reverse-dns"]} />
+  <SeoBlock heading={p.seoBlockHeading} text={p.seoBlockText} features={p.seoFeatures} />
+</Layout>

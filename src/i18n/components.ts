@@ -771,6 +771,43 @@ export const siteSpeedI18n = {
 export function getSiteSpeed(lang: Lang) { return siteSpeedI18n[lang]; }
 
 
+// ─── ResolverCompare ─────────────────────────────────────────────────────────
+
+export const resolverCompareI18n = {
+  en: {
+    domainLabel: "Domain Name",
+    placeholder: "example.com",
+    recordType: "Record Type",
+    compare: "Compare resolvers",
+    comparing: "Comparing...",
+    lookupFailed: "Resolver comparison failed.",
+    consistent: "All resolvers agree",
+    inconsistent: "Divergent answers",
+    consistentHint: "Every resolver returned the same answer set. DNS has converged globally.",
+    inconsistentHint: "Resolvers returned {n} different answer sets. This can happen during propagation, with GeoDNS, or if a resolver is caching a stale record.",
+    resolverResults: "Per-resolver results",
+    record: "record",
+    records: "records",
+  },
+  es: {
+    domainLabel: "Nombre de Dominio",
+    placeholder: "ejemplo.com",
+    recordType: "Tipo de Registro",
+    compare: "Comparar resolvers",
+    comparing: "Comparando...",
+    lookupFailed: "La comparaci\u00f3n de resolvers fall\u00f3.",
+    consistent: "Todos los resolvers coinciden",
+    inconsistent: "Respuestas divergentes",
+    consistentHint: "Todos los resolvers devuelven la misma respuesta. El DNS ha convergido globalmente.",
+    inconsistentHint: "Los resolvers devolvieron {n} conjuntos de respuestas diferentes. Puede ocurrir durante la propagaci\u00f3n, con GeoDNS, o si un resolver cachea un registro obsoleto.",
+    resolverResults: "Resultados por resolver",
+    record: "registro",
+    records: "registros",
+  },
+} as const;
+export function getResolverCompare(lang: Lang) { return resolverCompareI18n[lang]; }
+
+
 // ─── SslChecker ─────────────────────────────────────────────────────────────
 
 export const sslCheckerI18n = {

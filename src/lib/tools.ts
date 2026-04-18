@@ -9,7 +9,7 @@ export interface Tool {
 }
 
 export const groups = [
-  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check", "reverse-dns"] },
+  { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check", "reverse-dns", "resolver-compare"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup", "dnssec-check"] },
   { label: "Performance", ids: ["site-speed"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
@@ -149,6 +149,15 @@ export const tools: Tool[] = [
     description: "Resolve PTR records for any IPv4 or IPv6 address",
     icon: "Rv",
     keywords: ["reverse dns", "ptr lookup", "rdns", "ip to hostname", "reverse ip lookup"],
+    group: "Network",
+  },
+  {
+    id: "resolver-compare",
+    name: "Resolver Compare",
+    path: "/resolver-compare",
+    description: "Compare DNS answers and latency across Cloudflare, Google, AdGuard, and NextDNS",
+    icon: "Rc",
+    keywords: ["dns propagation", "resolver compare", "global dns check", "dns consistency", "dns propagation checker"],
     group: "Network",
   },
   {
