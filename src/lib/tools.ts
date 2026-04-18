@@ -10,7 +10,7 @@ export interface Tool {
 
 export const groups = [
   { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check"] },
-  { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup"] },
+  { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup", "dnssec-check"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
 
@@ -175,6 +175,15 @@ export const tools: Tool[] = [
     description: "Check which Certificate Authorities are authorized to issue certificates for a domain",
     icon: "Ca",
     keywords: ["caa checker", "caa record", "caa lookup", "certificate authority authorization", "ssl policy"],
+    group: "Security",
+  },
+  {
+    id: "dnssec-check",
+    name: "DNSSEC Check",
+    path: "/dnssec-check",
+    description: "Validate DNSSEC signing status, DS chain of trust, and resolver validation for a domain",
+    icon: "Ds",
+    keywords: ["dnssec check", "dnssec validator", "dnskey", "ds record", "dns security", "chain of trust"],
     group: "Security",
   },
   {

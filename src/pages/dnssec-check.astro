@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import DnssecCheck from "../components/DnssecCheck.svelte";
+import SeoContent from "../components/SeoContent.astro";
+import SeoBlock from "../components/SeoBlock.astro";
+import { pageI18n } from "../i18n/pages";
+
+const p = pageI18n["dnssec-check"].en;
+---
+
+<Layout
+  title={p.title}
+  description={p.description}
+  activeToolId="dnssec-check"
+>
+  <DnssecCheck client:only="svelte" />
+
+  <SeoContent
+    heading={p.seoHeading}
+    text={p.seoText}
+    relatedToolIds={["dns-lookup", "caa-lookup", "ssl-checker"]}
+  />
+
+  <SeoBlock
+    heading={p.seoBlockHeading}
+    text={p.seoBlockText}
+    features={p.seoFeatures}
+  />
+</Layout>

@@ -143,6 +143,16 @@
   </url>
 
   <url>
+    <loc>https://pingthat.dev/dnssec-check/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/dnssec-check/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/dnssec-check/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/dnssec-check/" />
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+
+  <url>
     <loc>https://pingthat.dev/is-it-down/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-down/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-down/" />
