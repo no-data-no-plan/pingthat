@@ -11,6 +11,7 @@ export interface Tool {
 export const groups = [
   { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "is-it-down", "is-it-up", "ipv6-check", "reverse-dns"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup", "dnssec-check"] },
+  { label: "Performance", ids: ["site-speed"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
 
@@ -149,6 +150,15 @@ export const tools: Tool[] = [
     icon: "Rv",
     keywords: ["reverse dns", "ptr lookup", "rdns", "ip to hostname", "reverse ip lookup"],
     group: "Network",
+  },
+  {
+    id: "site-speed",
+    name: "Site Speed",
+    path: "/site-speed",
+    description: "Check Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real Chrome user data",
+    icon: "Sp",
+    keywords: ["site speed", "core web vitals", "lcp", "inp", "cls", "page speed", "crux", "web performance"],
+    group: "Performance",
   },
   {
     id: "http-headers",

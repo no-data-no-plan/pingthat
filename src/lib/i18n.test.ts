@@ -7,6 +7,7 @@ import {
   dnsLookupI18n, sslCheckerI18n, isItDownI18n, isItUpI18n,
   httpHeadersI18n, whoisLookupI18n, redirectCheckerI18n, urlParserI18n,
   emailAuthI18n, portScanI18n, caaLookupI18n, ipv6CheckI18n, dnssecCheckI18n, reverseDnsI18n,
+  siteSpeedI18n,
 } from '../i18n/components';
 import { getCommon } from '../i18n/common';
 
@@ -272,7 +273,7 @@ describe('tool count consistency', () => {
     expect(Object.keys(toolDescriptionsI18n).length).toBe(tools.length);
   });
 
-  it('component i18n exports cover all 21 tools', () => {
+  it('component i18n exports cover all 22 tools', () => {
     // There should be a component i18n for each tool
     const componentCount = [
       myIpI18n, ipConverterI18n, jwtDecoderI18n, passwordStrengthI18n,
@@ -280,7 +281,7 @@ describe('tool count consistency', () => {
       dnsLookupI18n, sslCheckerI18n, isItDownI18n, isItUpI18n,
       httpHeadersI18n, whoisLookupI18n, redirectCheckerI18n, urlParserI18n,
       emailAuthI18n, portScanI18n, caaLookupI18n, ipv6CheckI18n, dnssecCheckI18n,
-      reverseDnsI18n,
+      reverseDnsI18n, siteSpeedI18n,
     ].length;
     expect(componentCount).toBe(tools.length);
   });

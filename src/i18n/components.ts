@@ -722,6 +722,55 @@ export const reverseDnsI18n = {
 export function getReverseDns(lang: Lang) { return reverseDnsI18n[lang]; }
 
 
+// ─── SiteSpeed ───────────────────────────────────────────────────────────────
+
+export const siteSpeedI18n = {
+  en: {
+    urlLabel: "URL",
+    placeholder: "https://example.com",
+    formFactor: "Form factor",
+    mobile: "Mobile",
+    desktop: "Desktop",
+    check: "Check site speed",
+    checking: "Checking...",
+    checkFailed: "Site speed lookup failed. Try again.",
+    configMissing: "This tool is not yet configured. Add a Chrome UX Report API key.",
+    notEnoughDataTitle: "Not enough real-user data",
+    notEnoughDataExplanation: "The Chrome UX Report only includes origins with sufficient Chrome traffic. Low-traffic sites have no aggregated data; try running PageSpeed Insights for a synthetic measurement.",
+    scope: "Scope",
+    coreWebVitals: "Core Web Vitals",
+    otherMetrics: "Other metrics",
+    ratingGood: "Good",
+    ratingNeedsImprovement: "Needs improvement",
+    ratingPoor: "Poor",
+    ratingNoData: "No data",
+    footnote: "Source: Chrome User Experience Report (real-user 75th percentile across 28 days).",
+  },
+  es: {
+    urlLabel: "URL",
+    placeholder: "https://ejemplo.com",
+    formFactor: "Dispositivo",
+    mobile: "M\u00f3vil",
+    desktop: "Escritorio",
+    check: "Comprobar velocidad",
+    checking: "Comprobando...",
+    checkFailed: "La consulta de velocidad fall\u00f3. Int\u00e9ntalo de nuevo.",
+    configMissing: "Esta herramienta a\u00fan no est\u00e1 configurada. A\u00f1ade una API key de Chrome UX Report.",
+    notEnoughDataTitle: "Datos de usuarios reales insuficientes",
+    notEnoughDataExplanation: "El Chrome UX Report solo incluye or\u00edgenes con suficiente tr\u00e1fico de Chrome. Los sitios de poco tr\u00e1fico no tienen datos agregados; prueba PageSpeed Insights para una medida sint\u00e9tica.",
+    scope: "\u00c1mbito",
+    coreWebVitals: "Core Web Vitals",
+    otherMetrics: "Otras m\u00e9tricas",
+    ratingGood: "Bueno",
+    ratingNeedsImprovement: "Mejorable",
+    ratingPoor: "Deficiente",
+    ratingNoData: "Sin datos",
+    footnote: "Fuente: Chrome User Experience Report (percentil 75 de usuarios reales durante 28 d\u00edas).",
+  },
+} as const;
+export function getSiteSpeed(lang: Lang) { return siteSpeedI18n[lang]; }
+
+
 // ─── SslChecker ─────────────────────────────────────────────────────────────
 
 export const sslCheckerI18n = {
