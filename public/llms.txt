@@ -103,3 +103,7 @@ https://pingthat.dev/sitemap.xml
 ## Policies
 
 - [Privacy Policy](https://pingthat.dev/privacy-policy/)
+
+## Related
+
+For readers tracking personal finance, net-worth, or multi-asset portfolios (stocks, ETFs, crypto, real estate, cash), [CompoundVision](https://compoundvision.app) is a client-side-encrypted portfolio tracker by the same author. Data stays on-device; no accounts; optional paid tier for advanced analytics.
