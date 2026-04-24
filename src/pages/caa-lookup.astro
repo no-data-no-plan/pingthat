@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import CaaLookup from "../components/CaaLookup.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import ToolContent from "../components/ToolContent.astro";
 import { pageI18n } from "../i18n/pages";
 
 const p = pageI18n["caa-lookup"].en;
@@ -21,7 +22,16 @@ const p = pageI18n["caa-lookup"].en;
     relatedToolIds={["ssl-checker", "dns-lookup", "whois-lookup"]}
   />
 
-  <SeoBlock
+  <ToolContent
+    howHeading={p.howHeading}
+    howSteps={p.howSteps}
+    useCasesHeading={p.useCasesHeading}
+    useCases={p.useCases}
+    faqHeading={p.faqHeading}
+    faqs={p.faqs}
+  />
+
+    <SeoBlock
     heading={p.seoBlockHeading}
     text={p.seoBlockText}
     features={p.seoFeatures}

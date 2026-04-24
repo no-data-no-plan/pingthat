@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import DnssecCheck from "../components/DnssecCheck.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import ToolContent from "../components/ToolContent.astro";
 import { pageI18n } from "../i18n/pages";
 
 const p = pageI18n["dnssec-check"].en;
@@ -21,7 +22,16 @@ const p = pageI18n["dnssec-check"].en;
     relatedToolIds={["dns-lookup", "caa-lookup", "ssl-checker"]}
   />
 
-  <SeoBlock
+  <ToolContent
+    howHeading={p.howHeading}
+    howSteps={p.howSteps}
+    useCasesHeading={p.useCasesHeading}
+    useCases={p.useCases}
+    faqHeading={p.faqHeading}
+    faqs={p.faqs}
+  />
+
+    <SeoBlock
     heading={p.seoBlockHeading}
     text={p.seoBlockText}
     features={p.seoFeatures}

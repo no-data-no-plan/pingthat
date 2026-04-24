@@ -1,0 +1,57 @@
+---
+import type { Lang } from "../i18n/index";
+
+interface Faq {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  howHeading?: string;
+  howSteps?: string[];
+  useCasesHeading?: string;
+  useCases?: string[];
+  faqHeading?: string;
+  faqs?: Faq[];
+  lang?: Lang;
+}
+
+const { howHeading, howSteps, useCasesHeading, useCases, faqHeading, faqs } = Astro.props;
+const hasHow = Array.isArray(howSteps) && howSteps.length > 0;
+const hasUseCases = Array.isArray(useCases) && useCases.length > 0;
+const hasFaq = Array.isArray(faqs) && faqs.length > 0;
+---
+
+{(hasHow || hasUseCases || hasFaq) && (
+  <section class="px-6 py-6 border-t border-[var(--color-border)] bg-[var(--color-bg-primary)] space-y-6 text-sm leading-relaxed">
+    {hasHow && (
+      <div>
+        <h2 class="text-base font-semibold text-[var(--color-text-primary)] mb-2">{howHeading}</h2>
+        <ol class="list-decimal list-inside space-y-1 text-[var(--color-text-muted)]">
+          {howSteps!.map((s) => <li>{s}</li>)}
+        </ol>
+      </div>
+    )}
+    {hasUseCases && (
+      <div>
+        <h2 class="text-base font-semibold text-[var(--color-text-primary)] mb-2">{useCasesHeading}</h2>
+        <ul class="list-disc list-inside space-y-1 text-[var(--color-text-muted)]">
+          {useCases!.map((u) => <li>{u}</li>)}
+        </ul>
+      </div>
+    )}
+    {hasFaq && (
+      <div>
+        <h2 class="text-base font-semibold text-[var(--color-text-primary)] mb-2">{faqHeading}</h2>
+        <div class="space-y-3">
+          {faqs!.map((f) => (
+            <div>
+              <h3 class="font-medium text-[var(--color-text-secondary)]">{f.q}</h3>
+              <p class="text-[var(--color-text-muted)]">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
+)}
