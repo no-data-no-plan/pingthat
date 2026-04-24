@@ -1,4 +1,14 @@
 ---
+/*
+ * Consent management is handled by Google's Funding Choices CMP (loaded in
+ * Layout.astro <head>). This component only exposes a "Cookie preferences"
+ * button that re-opens the Google consent dialog so users can withdraw or
+ * change their choice at any time (GDPR Art. 7(3): withdrawing consent must
+ * be as easy as giving it).
+ *
+ * Google's CMP only shows UI for users in regulated regions (EEA / UK / CH /
+ * California). For other users, the button is a no-op — which is fine.
+ */
 import type { Lang } from "../i18n/index";
 
 interface Props {
@@ -6,75 +16,37 @@ interface Props {
 }
 
 const { lang = "en" } = Astro.props;
-
-const privacyHref = lang === "es" ? "/es/privacy-policy" : "/privacy-policy";
-const text = lang === "es"
-  ? {
-      message: "Usamos cookies de Google AdSense para mostrar anuncios personalizados. Tus datos de las herramientas se procesan localmente en el navegador.",
-      accept: "Aceptar",
-      reject: "Rechazar",
-      policy: "Política de privacidad",
-    }
-  : {
-      message: "We use Google AdSense cookies to serve personalized ads. Your tool data is processed locally in your browser.",
-      accept: "Accept",
-      reject: "Decline",
-      policy: "Privacy policy",
-    };
+const label = lang === "es" ? "Preferencias de cookies" : "Cookie preferences";
 ---
 
-<div id="cookie-banner" role="alertdialog" aria-label="Cookie consent" class="fixed bottom-0 left-0 right-0 z-[9999] p-3 border-t shadow-lg" style="display: none; background: var(--color-surface); border-color: var(--color-border);">
-  <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-3 text-xs" style="color: var(--color-text-muted);">
-    <p class="flex-1">
-      {text.message}
-      {" "}
-      <a href={privacyHref} class="underline hover:text-[var(--color-accent)]">{text.policy}</a>
-    </p>
-    <div class="flex gap-2 shrink-0">
-      <button id="cookie-reject" class="px-3 py-1.5 rounded text-xs font-medium transition-colors" style="background: var(--color-surface2); color: var(--color-text-muted); border: 1px solid var(--color-border); cursor:pointer;">
-        {text.reject}
-      </button>
-      <button id="cookie-accept" class="px-3 py-1.5 rounded text-white text-xs font-medium hover:opacity-90 transition-opacity" style="background: var(--color-accent); cursor:pointer;">
-        {text.accept}
-      </button>
-    </div>
-  </div>
-</div>
+<button
+  id="cookie-prefs-btn"
+  class="hover:text-[var(--color-accent)] transition-colors"
+  aria-label={label}
+  type="button"
+>{label}</button>
 
 <script is:inline>
-(function() {
-  var consent = localStorage.getItem("cookie-consent");
-  var banner = document.getElementById("cookie-banner");
-
-  if (consent === null) {
-    if (banner) banner.style.display = "block";
-  } else if (consent === "accepted") {
-    loadAdsense();
-  }
-
-  document.getElementById("cookie-accept")?.addEventListener("click", function() {
-    localStorage.setItem("cookie-consent", "accepted");
-    if (banner) banner.style.display = "none";
-    loadAdsense();
-  });
-
-  document.getElementById("cookie-reject")?.addEventListener("click", function() {
-    localStorage.setItem("cookie-consent", "rejected");
-    if (banner) banner.style.display = "none";
-  });
-
-  function loadAdsense() {
-    if (document.querySelector('script[src*="adsbygoogle"]')) return;
-    var s = document.createElement("script");
-    s.async = true;
-    s.crossOrigin = "anonymous";
-    s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8761907366448308";
-    document.head.appendChild(s);
-    s.onload = function() {
-      document.querySelectorAll(".adsbygoogle").forEach(function() {
-        try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+  document.getElementById("cookie-prefs-btn")?.addEventListener("click", function() {
+    // Google Funding Choices exposes `googlefc.showRevocationMessage()` once
+    // the CMP script has initialized. Fall back to alert for users whose
+    // region means the CMP never loaded (non-regulated).
+    if (window.googlefc && typeof window.googlefc.showRevocationMessage === "function") {
+      window.googlefc.showRevocationMessage();
+    } else if (window.googlefc && window.googlefc.callbackQueue) {
+      window.googlefc.callbackQueue.push({
+        'CONSENT_DATA_READY': function() {
+          if (typeof window.googlefc.showRevocationMessage === "function") {
+            window.googlefc.showRevocationMessage();
+          }
+        }
       });
-    };
-  }
-})();
+    } else {
+      // Non-regulated region: no consent UI to reopen.
+      var msg = document.documentElement.lang === "es"
+        ? "No se muestra diálogo de consentimiento en tu región porque no es obligatorio por GDPR/CCPA. Puedes gestionar cookies desde la configuración de tu navegador."
+        : "No consent dialog is shown in your region because GDPR/CCPA don't apply. You can manage cookies from your browser settings.";
+      alert(msg);
+    }
+  });
 </script>
