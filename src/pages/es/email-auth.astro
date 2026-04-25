@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import CompareLinks from "../../components/CompareLinks.astro";
 import EmailAuth from "../../components/EmailAuth.svelte";
 import SeoContent from "../../components/SeoContent.astro";
 import SeoBlock from "../../components/SeoBlock.astro";
@@ -12,4 +13,6 @@ const p = pageI18n["email-auth"].es;
   <SeoContent heading={p.seoHeading} text={p.seoText} relatedToolIds={["dns-lookup", "ssl-checker", "http-headers"]} lang="es" />
   <ToolContent howHeading={p.howHeading} howSteps={p.howSteps} useCasesHeading={p.useCasesHeading} useCases={p.useCases} faqHeading={p.faqHeading} faqs={p.faqs} lang="es" />
   <SeoBlock heading={p.seoBlockHeading} text={p.seoBlockText} features={p.seoFeatures} lang="es" />
+
+  <CompareLinks lang="es" competitors={["mxtoolbox"]} />
 </Layout>

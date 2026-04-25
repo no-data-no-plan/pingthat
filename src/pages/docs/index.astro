@@ -22,6 +22,33 @@ const description = "Practical guides for developers on uptime monitoring, DNS, 
       </p>
     </header>
 
+    <div class="prose-block mb-10 text-sm text-[var(--color-text-muted)] leading-relaxed space-y-4 max-w-2xl">
+      <p>
+        Network and security work pairs badly with vague advice. These guides
+        come from running real production traffic across DNS, certificates,
+        HTTP, and email auth. We cover the gotchas that show up under pressure
+        — the kind of thing you Google at 2am when something stops resolving.
+      </p>
+      <p>
+        Each topic is short on theory and heavy on what to actually do: the
+        commands, the response codes, the propagation timelines, the failure
+        modes. Where there's a quirk in the spec, we point at it instead of
+        glossing over. Where vendors disagree, we say which one to follow.
+      </p>
+      <p>
+        Every guide is paired with a PingThat tool that runs the check live
+        in your browser — DNS lookup, SSL inspection, header dump, JWT decode,
+        subnet math. Read the guide, jump to the tool, verify against your
+        own infrastructure. No upload, no signup, no tracking pixels.
+      </p>
+      <p>
+        Categories below are organized roughly by stack layer: networking
+        first (IP, DNS, TCP), then transport (TLS, HTTPS), then application
+        (HTTP semantics, redirects, JWT), then operations (uptime SLAs,
+        monitoring math, email deliverability). Pick what bites you today.
+      </p>
+    </div>
+
     {docs.length === 0 && (
       <div class="p-4 rounded border border-[var(--color-border)] text-sm text-[var(--color-text-muted)]" style="background: var(--color-surface);">
         No guides published yet. Check back soon.

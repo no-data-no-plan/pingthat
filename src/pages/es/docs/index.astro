@@ -22,6 +22,36 @@ const description = "Guías prácticas para desarrolladores sobre monitoreo de u
       </p>
     </header>
 
+    <div class="prose-block mb-10 text-sm text-[var(--color-text-muted)] leading-relaxed space-y-4 max-w-2xl">
+      <p>
+        Trabajar con redes y seguridad cuadra mal con consejos vagos. Estas
+        guías salen de operar tráfico real en producción: DNS, certificados,
+        HTTP, autenticación de email. Cubren los gotchas que aparecen bajo
+        presión — esas cosas que buscas en Google a las 2 de la mañana
+        cuando algo deja de resolver.
+      </p>
+      <p>
+        Cada tema va al grano: los comandos, los códigos de respuesta, los
+        plazos de propagación, los modos de fallo. Donde hay rarezas en la
+        especificación, las señalamos en vez de pasar por encima. Donde los
+        proveedores no coinciden, decimos a cuál hacer caso.
+      </p>
+      <p>
+        Cada guía va con una herramienta de PingThat que ejecuta la
+        comprobación en vivo en tu navegador — DNS lookup, inspección SSL,
+        cabeceras HTTP, decode JWT, cálculo de subredes. Lees la guía, saltas
+        a la herramienta, lo verificas contra tu propia infraestructura. Sin
+        subidas, sin registro, sin píxeles de tracking.
+      </p>
+      <p>
+        Las categorías de abajo siguen las capas del stack: red primero (IP,
+        DNS, TCP), luego transporte (TLS, HTTPS), después aplicación
+        (semántica HTTP, redirects, JWT), y finalmente operaciones (cálculos
+        de SLA uptime, matemáticas de monitoreo, deliverability de email).
+        Elige lo que te muerda hoy.
+      </p>
+    </div>
+
     {docs.length === 0 && (
       <div class="p-4 rounded border border-[var(--color-border)] text-sm text-[var(--color-text-muted)]" style="background: var(--color-surface);">
         Sin guías publicadas todavía. Vuelve pronto.
