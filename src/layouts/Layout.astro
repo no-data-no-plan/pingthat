@@ -369,10 +369,16 @@ const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
       <footer class="px-6 py-4 border-t border-[var(--color-border)] text-[11px] text-[var(--color-text-dim)]">
         <div class="flex justify-between items-center mb-2">
           <span>{c.networkToolsForDevs}</span>
-          <span class="flex items-center gap-2">
-            <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">{c.buyMeACoffee}</a>
+          <span class="flex items-center gap-2 flex-wrap">
+            <a href={lang === "es" ? "/es/about/" : "/about/"} class="hover:text-[var(--color-accent)] transition-colors">{lang === "es" ? "Acerca de" : "About"}</a>
             <span style="color: var(--color-border);">&middot;</span>
-            <span>{c.private100}</span>
+            <a href={lang === "es" ? "/es/contact/" : "/contact/"} class="hover:text-[var(--color-accent)] transition-colors">{lang === "es" ? "Contacto" : "Contact"}</a>
+            <span style="color: var(--color-border);">&middot;</span>
+            <a href={lang === "es" ? "/es/privacy-policy/" : "/privacy-policy/"} class="hover:text-[var(--color-accent)] transition-colors">{lang === "es" ? "Privacidad" : "Privacy"}</a>
+            <span style="color: var(--color-border);">&middot;</span>
+            <a href={lang === "es" ? "/es/terms/" : "/terms/"} class="hover:text-[var(--color-accent)] transition-colors">{lang === "es" ? "Términos" : "Terms"}</a>
+            <span style="color: var(--color-border);">&middot;</span>
+            <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">{c.buyMeACoffee}</a>
           </span>
         </div>
         <form id="feedback-form" action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">

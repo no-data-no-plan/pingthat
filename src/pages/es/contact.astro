@@ -1,0 +1,82 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const LAST_UPDATED = "2026-04-27";
+---
+
+<Layout
+  title="Contacto — PingThat"
+  description="Contacto PingThat: formulario de feedback, tiempos de respuesta, qué incluir en reportes de bug."
+  activeToolId=""
+>
+  <article class="p-6 sm:p-8 max-w-3xl mx-auto space-y-8 text-sm" style="color: var(--color-text-muted);">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-bold" style="color: var(--color-text);">Contacto PingThat</h1>
+      <p class="text-xs" style="color: var(--color-text-dim);">Última actualización: 2026-04-27</p>
+    </header>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Envía un mensaje</h2>
+      <p>Usa el formulario para reportar bugs, pedir funciones, corregir contenido, avisar de enlaces rotos, problemas de accesibilidad o preguntas generales sobre PingThat. El formulario usa <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" class="underline" style="color: var(--color-accent);">Formspree</a>; los mensajes llegan a la bandeja del operador sin pasar por ningún CRM de terceros.</p>
+    </section>
+
+    <form action="https://formspree.io/f/mpqoddwl" method="POST" class="space-y-3">
+      <input type="hidden" name="app" value="PingThat" />
+      <input type="hidden" name="page" value="/es/contact/" />
+      <input type="hidden" name="_subject" value="Formulario contacto — PingThat" />
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <label class="block">
+        <span class="text-xs uppercase tracking-wide" style="color: var(--color-text-dim);">Tu email (opcional)</span>
+        <input type="email" name="email" placeholder="tu@ejemplo.com" class="w-full mt-1 px-3 py-2 rounded text-sm" style="background: var(--color-bg-tertiary); color: var(--color-text); border: 1px solid var(--color-border);" />
+      </label>
+
+      <label class="block">
+        <span class="text-xs uppercase tracking-wide" style="color: var(--color-text-dim);">Asunto</span>
+        <select name="topic" class="w-full mt-1 px-3 py-2 rounded text-sm" style="background: var(--color-bg-tertiary); color: var(--color-text); border: 1px solid var(--color-border);">
+          <option value="bug">Reporte de bug</option>
+          <option value="feature">Petición de función</option>
+          <option value="content">Corrección de contenido / datos</option>
+          <option value="accessibility">Problema de accesibilidad</option>
+          <option value="press">Prensa / partnership</option>
+          <option value="other">Otro</option>
+        </select>
+      </label>
+
+      <label class="block">
+        <span class="text-xs uppercase tracking-wide" style="color: var(--color-text-dim);">Mensaje</span>
+        <textarea name="message" required rows="6" placeholder="¿Qué intentaste, qué esperabas, qué ocurrió? Incluir la URL de la herramienta afectada ayuda mucho." class="w-full mt-1 px-3 py-2 rounded text-sm" style="background: var(--color-bg-tertiary); color: var(--color-text); border: 1px solid var(--color-border);"></textarea>
+      </label>
+
+      <button type="submit" class="px-4 py-2 rounded text-sm font-semibold" style="background: var(--color-accent); color: var(--color-bg);">Enviar</button>
+    </form>
+
+    <section class="space-y-2 pt-4">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Tiempo de respuesta</h2>
+      <ul class="list-disc list-inside space-y-1 pl-2">
+        <li><strong>Bugs y errores en herramientas:</strong> normalmente menos de 24h en días laborables.</li>
+        <li><strong>Peticiones de funciones y preguntas generales:</strong> 48-72h en días laborables.</li>
+        <li><strong>Prensa, partnerships y casos inusuales:</strong> habitualmente en una semana.</li>
+      </ul>
+      <p>El operador es una persona en la UE (zona horaria CET). Fines de semana y festivos españoles pueden extender los tiempos de respuesta.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Cosas que ayudan a ayudarte</h2>
+      <ul class="list-disc list-inside space-y-1 pl-2">
+        <li>La URL exacta de la herramienta o página donde ocurrió el problema.</li>
+        <li>Tu navegador y sistema operativo (ej. "Chrome 132 en macOS 15").</li>
+        <li>Qué escribiste/pegaste/subiste como entrada (o un ejemplo pequeño que reproduzca el problema).</li>
+        <li>Qué esperabas que pasara y qué pasó realmente.</li>
+      </ul>
+      <p>Para problemas de accesibilidad, describe la tecnología asistiva que usas y la barrera concreta que encontraste. Los reportes de accesibilidad son prioritarios.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Otros canales</h2>
+      <ul class="list-disc list-inside space-y-1 pl-2">
+        <li><strong>Buy Me a Coffee:</strong> <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="underline" style="color: var(--color-accent);">buymeacoffee.com/allopen</a> — para un "gracias" rápido si una herramienta te ahorró tiempo.</li>
+        <li><strong>Preguntas de privacidad:</strong> mira la <a href="/es/privacy/" class="underline" style="color: var(--color-accent);">Política de Privacidad</a> para el flujo de derechos (Artículos 15-22 RGPD).</li>
+      </ul>
+    </section>
+  </article>
+</Layout>

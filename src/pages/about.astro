@@ -1,0 +1,50 @@
+---
+import Layout from "../layouts/Layout.astro";
+const LAST_UPDATED = "2026-04-27";
+---
+
+<Layout
+  title="About — PingThat"
+  description="About PingThat: who we are, why these network tools exist, how the site is funded."
+  activeToolId=""
+>
+  <article class="p-6 sm:p-8 max-w-3xl mx-auto space-y-8 text-sm" style="color: var(--color-text-muted);">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-bold" style="color: var(--color-text);">About PingThat</h1>
+      <p class="text-xs" style="color: var(--color-text-dim);">Last updated: 2026-04-27</p>
+    </header>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">What this is</h2>
+      <p>PingThat is a suite of 17 free network tools that run entirely in your browser. 17 privacy-first network and security tools — dns, ssl, whois, http headers, jwt decoder, subnet calc. No file you load and no value you type is uploaded to a server — every calculation, conversion or transformation happens locally on your device, and the result is visible only to you.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Why it exists</h2>
+      <p>Most network tools online today follow the same pattern: a slow page filled with intrusive ads, a paywall hiding the actually useful features, a forced signup, and an upload step that puts your data on someone else's server. After running into one too many of those, the operator (an independent developer based in Spain) started building self-contained alternatives one tool at a time. PingThat is the result for the network category.</p>
+      <p>The design philosophy has stayed the same since the first commit: every tool must work without an account, without uploading anything sensitive, and without locking the obvious feature behind a "Pro" button. If a feature genuinely needs server-side computation, it is documented as such and the alternative is offered.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">How it is funded</h2>
+      <p>PingThat is free, with no signup, no premium tier and no upsell. The site is funded by display ads (Google AdSense) shown around the tools, and by occasional Buy Me a Coffee tips from people who liked the result and wanted to say thanks.</p>
+      <p>This means the site is sustainable without harvesting your data, gating tools behind a paywall, or pushing you toward a desktop app. If you find one of the tools genuinely useful and want to support continued development, the Buy Me a Coffee link in the footer is the most direct way.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Who is behind it</h2>
+      <p>PingThat is built and maintained by Marco Bia, an independent developer based in Spain. The site is part of a small portfolio of utility web apps (CompoundVision for finance, AllYouNeed for general tools, JSONCraft for developers, OpenImages for image work, OpenPDF for PDFs, PingThat for networking). Each one shares the same private-by-default design.</p>
+      <p>If you would like to talk to a human about a tool, a bug or a feature you wish existed, the <a href="/contact/" class="underline" style="color: var(--color-accent);">Contact page</a> has a feedback form that lands in the operator's inbox within a few hours during EU working days.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Stack and openness</h2>
+      <p>The site is built with Astro, Svelte 5 and Tailwind CSS 4, deployed on Cloudflare Pages, and uses no third-party trackers beyond aggregate Google Analytics 4 (with EU/UK consent gated to "denied" by default). Tool inputs never leave your browser, so there is nothing on a server to ask about under GDPR Article 15 — but if you want to know what we collect, the <a href="/privacy/" class="underline" style="color: var(--color-accent);">Privacy Policy</a> spells it out fully.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Editorial independence</h2>
+      <p>The advertising network (Google AdSense) does not influence which tools are built or how they work. There are no sponsored articles, no "best of" lists pushing affiliate links, and no editorial choices made to favour an advertiser. If a tool exists on the site, it is because it was useful enough to the operator to build and ship it.</p>
+    </section>
+  </article>
+</Layout>

@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+const LAST_UPDATED = "2026-04-27";
+---
+
+<Layout
+  title="Contact — PingThat"
+  description="Contact PingThat: feedback form, response times, what to include in bug reports."
+  activeToolId=""
+>
+  <article class="p-6 sm:p-8 max-w-3xl mx-auto space-y-8 text-sm" style="color: var(--color-text-muted);">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-bold" style="color: var(--color-text);">Contact PingThat</h1>
+      <p class="text-xs" style="color: var(--color-text-dim);">Last updated: 2026-04-27</p>
+    </header>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Send a message</h2>
+      <p>Use the form below for bug reports, feature requests, content corrections, broken-link reports, accessibility issues, or general questions about PingThat. The form is powered by <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" class="underline" style="color: var(--color-accent);">Formspree</a>; messages land in the operator's inbox without going through any third-party CRM.</p>
+    </section>
+
+    <form action="https://formspree.io/f/mpqoddwl" method="POST" class="space-y-3">
+      <input type="hidden" name="app" value="PingThat" />
+      <input type="hidden" name="page" value="/contact/" />
+      <input type="hidden" name="_subject" value="Contact form — PingThat" />
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <label class="block">
+        <span class="text-xs uppercase tracking-wide" style="color: var(--color-text-dim);">Your email (optional)</span>
+        <input type="email" name="email" placeholder="you@example.com" class="w-full mt-1 px-3 py-2 rounded text-sm" style="background: var(--color-bg-tertiary); color: var(--color-text); border: 1px solid var(--color-border);" />
+      </label>
+
+      <label class="block">
+        <span class="text-xs uppercase tracking-wide" style="color: var(--color-text-dim);">Subject</span>
+        <select name="topic" class="w-full mt-1 px-3 py-2 rounded text-sm" style="background: var(--color-bg-tertiary); color: var(--color-text); border: 1px solid var(--color-border);">
+          <option value="bug">Bug report</option>
+          <option value="feature">Feature request</option>
+          <option value="content">Content / data correction</option>
+          <option value="accessibility">Accessibility issue</option>
+          <option value="press">Press / partnership</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
+      <label class="block">
+        <span class="text-xs uppercase tracking-wide" style="color: var(--color-text-dim);">Message</span>
+        <textarea name="message" required rows="6" placeholder="What did you try, what did you expect, what happened? Including the URL of the affected tool helps a lot." class="w-full mt-1 px-3 py-2 rounded text-sm" style="background: var(--color-bg-tertiary); color: var(--color-text); border: 1px solid var(--color-border);"></textarea>
+      </label>
+
+      <button type="submit" class="px-4 py-2 rounded text-sm font-semibold" style="background: var(--color-accent); color: var(--color-bg);">Send</button>
+    </form>
+
+    <section class="space-y-2 pt-4">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Response time</h2>
+      <ul class="list-disc list-inside space-y-1 pl-2">
+        <li><strong>Bug reports and broken-tool errors:</strong> typically within 24h on weekdays.</li>
+        <li><strong>Feature requests and general questions:</strong> within 48-72h on weekdays.</li>
+        <li><strong>Press, partnership and unusual cases:</strong> usually within a week.</li>
+      </ul>
+      <p>The operator is one human in the EU (CET timezone). Weekends and Spanish public holidays may extend response times.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Things that help us help you</h2>
+      <ul class="list-disc list-inside space-y-1 pl-2">
+        <li>The exact URL of the tool or page where the issue occurred.</li>
+        <li>Your browser and operating system (e.g. "Chrome 132 on macOS 15").</li>
+        <li>What you typed/pasted/uploaded as input (or a small example that reproduces the issue).</li>
+        <li>What you expected to happen and what actually happened.</li>
+      </ul>
+      <p>For accessibility issues, please describe the assistive technology you use and the specific barrier you encountered. Accessibility reports are prioritised.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Other channels</h2>
+      <ul class="list-disc list-inside space-y-1 pl-2">
+        <li><strong>Buy Me a Coffee:</strong> <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="underline" style="color: var(--color-accent);">buymeacoffee.com/allopen</a> — for a quick "thanks" if a tool saved you time.</li>
+        <li><strong>Privacy questions:</strong> see the <a href="/privacy/" class="underline" style="color: var(--color-accent);">Privacy Policy</a> for the data-rights workflow (Article 15-22 GDPR).</li>
+      </ul>
+    </section>
+  </article>
+</Layout>

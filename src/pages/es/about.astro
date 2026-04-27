@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const LAST_UPDATED = "2026-04-27";
+---
+
+<Layout
+  title="Acerca de — PingThat"
+  description="Acerca de PingThat: quiénes somos, por qué existen estas herramientas de red, cómo se financia el sitio."
+  activeToolId=""
+>
+  <article class="p-6 sm:p-8 max-w-3xl mx-auto space-y-8 text-sm" style="color: var(--color-text-muted);">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-bold" style="color: var(--color-text);">Acerca de PingThat</h1>
+      <p class="text-xs" style="color: var(--color-text-dim);">Última actualización: 2026-04-27</p>
+    </header>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Qué es</h2>
+      <p>PingThat es un conjunto de 17 herramientas de red gratuitas que se ejecutan íntegramente en tu navegador. 17 herramientas de red y seguridad privadas — DNS, SSL, WHOIS, cabeceras HTTP, decodificador JWT, calc subred. Ningún archivo que cargues ni ningún valor que escribas se envía a un servidor — cada cálculo, conversión o transformación ocurre localmente en tu dispositivo, y el resultado sólo lo ves tú.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Por qué existe</h2>
+      <p>La mayoría de herramientas de red online siguen el mismo patrón: una página lenta llena de anuncios intrusivos, un muro de pago que esconde las funciones realmente útiles, un registro forzado y un paso de subida que pone tus datos en el servidor de otro. Tras tropezar una vez de más con eso, el operador (un desarrollador independiente afincado en España) empezó a construir alternativas autónomas, una herramienta cada vez. PingThat es el resultado para la categoría de red.</p>
+      <p>La filosofía de diseño no ha cambiado desde el primer commit: cada herramienta debe funcionar sin cuenta, sin subir nada sensible y sin esconder la función obvia tras un botón "Pro". Si una función necesita realmente cómputo en servidor, se documenta como tal y se ofrece la alternativa.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Cómo se financia</h2>
+      <p>PingThat es gratis, sin registro, sin nivel premium y sin upsells. El sitio se financia con anuncios de Google AdSense alrededor de las herramientas, y con propinas ocasionales en Buy Me a Coffee de personas a las que el resultado les sirvió.</p>
+      <p>Esto permite que el sitio sea sostenible sin recolectar tus datos, sin esconder herramientas tras pago y sin empujarte a una app de escritorio. Si una de las herramientas te resulta genuinamente útil y quieres apoyar el desarrollo, el enlace Buy Me a Coffee del pie de página es la vía más directa.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Quién hay detrás</h2>
+      <p>PingThat lo construye y mantiene Marco Bia, un desarrollador independiente afincado en España. El sitio forma parte de un pequeño portafolio de utility web apps (CompoundVision para finanzas, AllYouNeed para utilidades generales, JSONCraft para desarrolladores, OpenImages para imagen, OpenPDF para PDFs, PingThat para red). Todas comparten el mismo diseño privado por defecto.</p>
+      <p>Si quieres hablar con un humano sobre una herramienta, un bug o una función que echas en falta, la <a href="/es/contact/" class="underline" style="color: var(--color-accent);">página de Contacto</a> tiene un formulario de feedback que llega a la bandeja del operador en pocas horas durante días laborables UE.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Stack y apertura</h2>
+      <p>El sitio está construido con Astro, Svelte 5 y Tailwind CSS 4, desplegado en Cloudflare Pages, y no usa trackers de terceros más allá de Google Analytics 4 agregado (con consentimiento UE/UK puesto en "denegado" por defecto). Las entradas de las herramientas nunca salen de tu navegador, así que no hay nada en un servidor sobre lo que preguntar bajo el Artículo 15 del RGPD — pero si quieres saber qué recopilamos, la <a href="/es/privacy/" class="underline" style="color: var(--color-accent);">Política de Privacidad</a> lo detalla.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Independencia editorial</h2>
+      <p>La red publicitaria (Google AdSense) no influye en qué herramientas se construyen ni cómo funcionan. No hay artículos patrocinados, ni listas "los mejores de" empujando enlaces de afiliado, ni decisiones editoriales tomadas para favorecer a un anunciante. Si una herramienta existe en el sitio, es porque fue suficientemente útil al operador como para construirla.</p>
+    </section>
+  </article>
+</Layout>

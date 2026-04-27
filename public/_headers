@@ -1,0 +1,37 @@
+# Mark static assets as non-indexable so they don't appear in Bing/Google
+# search reports. They're loaded by browsers, not landed on by users.
+/fonts/*
+  X-Robots-Tag: noindex
+
+/_astro/*
+  X-Robots-Tag: noindex
+
+/assets/*
+  X-Robots-Tag: noindex
+
+/*.woff2
+  X-Robots-Tag: noindex
+
+/*.woff
+  X-Robots-Tag: noindex
+
+/*.css
+  X-Robots-Tag: noindex
+
+/*.js
+  X-Robots-Tag: noindex
+
+/og-image.png
+  X-Robots-Tag: noindex
+
+/favicon.svg
+  X-Robots-Tag: noindex
+
+/icon-192.png
+  X-Robots-Tag: noindex
+
+/icon-512.png
+  X-Robots-Tag: noindex
+
+/apple-touch-icon.png
+  X-Robots-Tag: noindex

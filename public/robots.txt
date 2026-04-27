@@ -17,6 +17,12 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
+# ClaudeBot is the user-facing citation bot for Claude (mirrors
+# PerplexityBot / ChatGPT-User). Training opt-out is preserved via
+# anthropic-ai + Google-Extended below.
+User-agent: ClaudeBot
+Allow: /
+
 # Independent / privacy-first search engines
 User-agent: Bravebot
 Allow: /
@@ -44,9 +50,6 @@ User-agent: Google-Extended
 Disallow: /
 
 User-agent: CCBot
-Disallow: /
-
-User-agent: ClaudeBot
 Disallow: /
 
 User-agent: anthropic-ai
