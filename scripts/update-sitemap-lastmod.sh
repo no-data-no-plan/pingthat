@@ -1,5 +1,5 @@
 #!/bin/bash
-# Updates all <lastmod> dates in sitemap.xml to today's date
-TODAY=$(date +%Y-%m-%d)
-sed -i "s|<lastmod>[0-9-]*</lastmod>|<lastmod>${TODAY}</lastmod>|g" public/sitemap.xml
-echo "Sitemap lastmod dates updated to ${TODAY}"
+# Honest per-URL sitemap <lastmod> bump.
+# Delegates to ~/scripts/sitemap-lastmod-honest.sh which uses git history per source file
+# (page + shared layout/i18n/header/footer) — no lying to Google about freshness.
+exec bash "$HOME/scripts/sitemap-lastmod-honest.sh" "$(cd "$(dirname "$0")/.." && pwd)" --apply
