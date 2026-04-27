@@ -126,25 +126,10 @@ const schemas: SchemaObject[] = [
   },
 ];
 
-// HowTo schema for tool pages only. Skipped for legal + compare + docs.
+// HowTo schema removed 2026-04-27 — Google deprecated non-recipe HowTo
+// rich-results in Aug 2023. i18n/howto.ts data kept for in-page rendering.
+// FAQPage block kept (still useful for AI/Bing ingestion + topical relevance).
 if (!isLegalPage && !isComparePage && !isHome && !isDocsArticle && !isDocsHub) {
-  const howto = getHowTo(activeToolId, lang);
-  if (howto) {
-    schemas.push({
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: howto.name,
-      description,
-      inLanguage: lang,
-      tool: [{ "@type": "HowToTool", name: `PingThat ${title}` }],
-      step: howto.steps.map((s, i) => ({
-        "@type": "HowToStep",
-        position: i + 1,
-        name: s.name,
-        text: s.text,
-      })),
-    });
-  }
   // FAQPage for top 5 tools (see i18n/faq.ts)
   if (faqs[activeToolId]) {
     const faqContent = faqs[activeToolId][lang];

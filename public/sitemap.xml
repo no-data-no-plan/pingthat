@@ -7,8 +7,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/" />
-    <priority>1.0</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -17,8 +15,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/my-ip/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/my-ip/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/my-ip/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -27,8 +23,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-check/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-check/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-check/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -37,8 +31,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/webrtc-leak-test/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/webrtc-leak-test/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/webrtc-leak-test/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -47,8 +39,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/subnet-calculator/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/subnet-calculator/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/subnet-calculator/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -57,8 +47,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ip-converter/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ip-converter/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ip-converter/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -67,8 +55,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/password-strength/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/password-strength/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/password-strength/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -77,8 +63,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/jwt-decoder/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/jwt-decoder/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/jwt-decoder/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -87,8 +71,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/dns-lookup/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/dns-lookup/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/dns-lookup/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -97,8 +79,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/email-auth/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/email-auth/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/email-auth/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -107,8 +87,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/port-scan/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/port-scan/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/port-scan/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -117,8 +95,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ssl-checker/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ssl-checker/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ssl-checker/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -127,8 +103,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/caa-lookup/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/caa-lookup/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/caa-lookup/" />
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -137,8 +111,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ipv6-check/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ipv6-check/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ipv6-check/" />
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -147,8 +119,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/dnssec-check/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/dnssec-check/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/dnssec-check/" />
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -157,8 +127,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/reverse-dns/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/reverse-dns/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/reverse-dns/" />
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -167,8 +135,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/site-speed/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/site-speed/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/site-speed/" />
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -177,8 +143,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/resolver-compare/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/resolver-compare/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/resolver-compare/" />
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -187,8 +151,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-down/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-down/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-down/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -197,8 +159,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-up/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-up/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-up/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -207,8 +167,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/http-headers/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/http-headers/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/http-headers/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -217,8 +175,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/whois-lookup/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/whois-lookup/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/whois-lookup/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -227,8 +183,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/redirect-checker/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/redirect-checker/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/redirect-checker/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -237,8 +191,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/url-parser/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/url-parser/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/url-parser/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -247,8 +199,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-policy/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-policy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-policy/" />
-    <priority>0.3</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -257,8 +207,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/" />
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -267,8 +215,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/my-ip/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/my-ip/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/my-ip/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -277,8 +223,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-check/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-check/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-check/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -287,8 +231,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/webrtc-leak-test/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/webrtc-leak-test/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/webrtc-leak-test/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -297,8 +239,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/subnet-calculator/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/subnet-calculator/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/subnet-calculator/" />
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -307,8 +247,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ip-converter/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ip-converter/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ip-converter/" />
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -317,8 +255,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/password-strength/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/password-strength/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/password-strength/" />
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -327,8 +263,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/jwt-decoder/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/jwt-decoder/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/jwt-decoder/" />
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -337,8 +271,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/dns-lookup/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/dns-lookup/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/dns-lookup/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -347,8 +279,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/email-auth/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/email-auth/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/email-auth/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -357,8 +287,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/port-scan/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/port-scan/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/port-scan/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -367,8 +295,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ssl-checker/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ssl-checker/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ssl-checker/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -377,8 +303,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-down/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-down/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-down/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -387,8 +311,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-up/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/is-it-up/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/is-it-up/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -397,8 +319,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/http-headers/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/http-headers/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/http-headers/" />
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -407,8 +327,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/whois-lookup/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/whois-lookup/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/whois-lookup/" />
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -417,8 +335,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/redirect-checker/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/redirect-checker/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/redirect-checker/" />
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -427,8 +343,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/url-parser/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/url-parser/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/url-parser/" />
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
   
@@ -437,8 +351,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-policy/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-policy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-policy/" />
-    <priority>0.3</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -447,8 +359,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-mxtoolbox/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-mxtoolbox/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-mxtoolbox/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -457,8 +367,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-dnschecker/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-dnschecker/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-dnschecker/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -467,8 +375,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-securityheaders/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-securityheaders/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-securityheaders/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -477,8 +383,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-hackertarget/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-hackertarget/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-hackertarget/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -487,8 +391,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-whatismyip/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-whatismyip/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-whatismyip/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -497,8 +399,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-mxtoolbox/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-mxtoolbox/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-mxtoolbox/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -507,8 +407,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-dnschecker/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-dnschecker/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-dnschecker/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -517,8 +415,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-securityheaders/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-securityheaders/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-securityheaders/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -527,8 +423,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-hackertarget/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-hackertarget/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-hackertarget/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -537,8 +431,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/vs-whatismyip/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/vs-whatismyip/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/vs-whatismyip/" />
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
     <lastmod>2026-04-27</lastmod>
   </url>
 
@@ -548,14 +440,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/" />
-    <priority>0.8</priority><changefreq>weekly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/es/docs/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/" />
-    <priority>0.8</priority><changefreq>weekly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <!-- Docs articles (6 × EN + ES) -->
   <url>
@@ -563,83 +455,83 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/ssl-certificate-monitoring-basics/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/es/docs/ssl-certificate-monitoring-basics/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/ssl-certificate-monitoring-basics/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/ssl-certificate-monitoring-basics/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/docs/dns-propagation-explained/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/dns-propagation-explained/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/dns-propagation-explained/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/dns-propagation-explained/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/es/docs/dns-propagation-explained/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/dns-propagation-explained/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/dns-propagation-explained/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/dns-propagation-explained/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/docs/http-status-codes-in-monitoring/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/http-status-codes-in-monitoring/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/es/docs/http-status-codes-in-monitoring/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/http-status-codes-in-monitoring/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/http-status-codes-in-monitoring/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/docs/uptime-sla-math/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/uptime-sla-math/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/uptime-sla-math/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/uptime-sla-math/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/es/docs/uptime-sla-math/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/uptime-sla-math/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/uptime-sla-math/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/uptime-sla-math/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/email-auth-spf-dkim-dmarc/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/es/docs/email-auth-spf-dkim-dmarc/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/email-auth-spf-dkim-dmarc/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/email-auth-spf-dkim-dmarc/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/docs/port-scanning-legality-and-ethics/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/port-scanning-legality-and-ethics/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
   <url>
     <loc>https://pingthat.dev/es/docs/port-scanning-legality-and-ethics/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/docs/port-scanning-legality-and-ethics/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/docs/port-scanning-legality-and-ethics/" />
-    <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-27</lastmod>
   </url>
 </urlset>
