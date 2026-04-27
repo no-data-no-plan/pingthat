@@ -37,9 +37,20 @@ const popular = popularIds.map(id => tools.find(t => t.id === id)).filter(Boolea
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied',
-      analytics_storage: 'granted',
+      analytics_storage: 'denied',
       wait_for_update: 500,
     });
+      // [GEO-GATE-V1] analytics_storage stays denied for EU/EEA/UK; granted elsewhere.
+      // Fires inside wait_for_update window (500ms) so non-EU pings still flow.
+      // CF /cdn-cgi/trace responds <100ms — well within the budget.
+      fetch("/cdn-cgi/trace").then(function(r){return r.text();}).then(function(t){
+        var m = t.match(/loc=([A-Z]{2})/);
+        var cc = m ? m[1] : "";
+        var EU = ["AT","BE","BG","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR","HU","IE","IT","LT","LU","LV","MT","NL","PL","PT","RO","SE","SI","SK","GB","UK","IS","LI","NO","CH"];
+        if (cc && EU.indexOf(cc) === -1) {
+          gtag("consent","update",{analytics_storage:"granted"});
+        }
+      }).catch(function(){});
     gtag('js', new Date());
     gtag('config', 'G-MRBSLR79JG', { anonymize_ip: true });
   </script>
