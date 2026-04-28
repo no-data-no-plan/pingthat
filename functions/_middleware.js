@@ -20,6 +20,8 @@ function buildCSP(nonce) {
     "base-uri 'self'",
     "form-action 'self' https://formspree.io",
     "frame-ancestors 'none'",
+    "report-to csp",
+    "report-uri https://csp.pingthat.dev/r",
     "upgrade-insecure-requests",
   ].join('; ');
 }
@@ -38,6 +40,8 @@ const CSP_STATIC = [
   "base-uri 'self'",
   "form-action 'self' https://formspree.io",
   "frame-ancestors 'none'",
+  "report-to csp",
+  "report-uri https://csp.pingthat.dev/r",
   "upgrade-insecure-requests",
 ].join('; ');
 
@@ -109,6 +113,7 @@ export async function onRequest(context) {
   newHeaders.set('X-Content-Type-Options', 'nosniff');
   newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   newHeaders.set('Permissions-Policy', PERMISSIONS_POLICY);
+  newHeaders.set('Reporting-Endpoints', 'csp="https://csp.pingthat.dev/r"');
   newHeaders.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   newHeaders.set('Content-Security-Policy', isHtml ? buildCSP(nonce) : CSP_STATIC);
   newHeaders.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
