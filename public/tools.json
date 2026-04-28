@@ -1,449 +1,689 @@
 {
-  "$schema": "https://schema.org/SoftwareApplication",
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "PingThat — Tools Index",
-  "description": "Free, privacy-first suite of network and security tools for developers and sysadmins: DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder, subnet calculator, IP converter, email authentication (SPF/DKIM/DMARC), and more.",
+  "name": "PingThat tools",
+  "description": "Machine-readable catalogue of all tools/calculators on PingThat, with URLs, descriptions, and language coverage. Intended for AI crawlers and search engines.",
   "url": "https://pingthat.dev/tools.json",
-  "publisher": {
-    "@type": "Organization",
-    "name": "PingThat",
-    "url": "https://pingthat.dev"
-  },
-  "inLanguage": [
-    "en",
-    "es"
-  ],
-  "dateModified": "2026-04-13",
-  "numberOfItems": 17,
+  "numberOfItems": 40,
   "itemListElement": [
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 1,
-      "name": "What Is My IP",
-      "url": "https://pingthat.dev/my-ip/",
-      "alternateUrl": "https://pingthat.dev/es/my-ip/",
-      "description": "See your public IP address, location, ISP, and network details",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "what is my ip",
-        "my ip address",
-        "check ip",
-        "public ip"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "CAA Record Checker Online Free",
+        "url": "https://pingthat.dev/caa-lookup/",
+        "description": "Check CAA records for any domain. See which Certificate Authorities can issue SSL certificates. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 2,
-      "name": "Browser Privacy Check",
-      "url": "https://pingthat.dev/privacy-check/",
-      "alternateUrl": "https://pingthat.dev/es/privacy-check/",
-      "description": "Check your browser's privacy settings, tracking protection, and fingerprint exposure",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "browser privacy check",
-        "privacy test",
-        "tracking protection",
-        "fingerprint test"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "DNS Lookup Online Free",
+        "url": "https://pingthat.dev/dns-lookup/",
+        "description": "Query DNS records for any domain. A, AAAA, MX, CNAME, TXT, NS, SOA. Uses Cloudflare DNS. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 3,
-      "name": "WebRTC Leak Test",
-      "url": "https://pingthat.dev/webrtc-leak-test/",
-      "alternateUrl": "https://pingthat.dev/es/webrtc-leak-test/",
-      "description": "Check if WebRTC is leaking your real IP address",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "webrtc leak test",
-        "webrtc ip leak",
-        "vpn leak test"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "DNSSEC Validator Online Free",
+        "url": "https://pingthat.dev/dnssec-check/",
+        "description": "Validate DNSSEC signing, DS chain of trust, and resolver validation for any domain. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 4,
-      "name": "Subnet Calculator",
-      "url": "https://pingthat.dev/subnet-calculator/",
-      "alternateUrl": "https://pingthat.dev/es/subnet-calculator/",
-      "description": "Calculate network address, broadcast, host range from CIDR notation",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "subnet calculator",
-        "cidr calculator",
-        "ip subnet",
-        "network calculator"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Email Auth Checker - SPF, DKIM & DMARC",
+        "url": "https://pingthat.dev/email-auth/",
+        "description": "Check SPF, DKIM, and DMARC records for any domain. Verify email authentication, troubleshoot deliverability, and audit your domain's email security.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 5,
-      "name": "IP Address Converter",
-      "url": "https://pingthat.dev/ip-converter/",
-      "alternateUrl": "https://pingthat.dev/es/ip-converter/",
-      "description": "Convert IP addresses between decimal, binary, hexadecimal, and octal",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "ip converter",
-        "ip to binary",
-        "ip to hex",
-        "decimal to ip"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Búsqueda DNS Online Gratis",
+        "url": "https://pingthat.dev/es/dns-lookup/",
+        "description": "Consulta registros DNS de cualquier dominio. A, AAAA, MX, CNAME, TXT, NS, SOA. Usa Cloudflare DNS. Gratis, instantáneo.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 6,
-      "name": "Password Strength Checker",
-      "url": "https://pingthat.dev/password-strength/",
-      "alternateUrl": "https://pingthat.dev/es/password-strength/",
-      "description": "Analyze password entropy, crack time estimation, and strength rating",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "password strength",
-        "password checker",
-        "how strong is my password",
-        "password entropy"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Verificador de Email Auth - SPF, DKIM y DMARC",
+        "url": "https://pingthat.dev/es/email-auth/",
+        "description": "Verifica registros SPF, DKIM y DMARC de cualquier dominio. Comprueba la configuracion de autenticacion de email. Gratis, instantaneo.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 7,
-      "name": "JWT Decoder",
-      "url": "https://pingthat.dev/jwt-decoder/",
-      "alternateUrl": "https://pingthat.dev/es/jwt-decoder/",
-      "description": "Decode and inspect JSON Web Tokens — header, payload, and signature",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "jwt decoder",
-        "jwt debugger",
-        "decode jwt",
-        "json web token"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Verificador de Cabeceras HTTP Online Gratis",
+        "url": "https://pingthat.dev/es/http-headers/",
+        "description": "Inspecciona cabeceras HTTP de respuesta y verifica cabeceras de seguridad de cualquier URL. Gratis, instantáneo.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 8,
-      "name": "DNS Lookup",
-      "url": "https://pingthat.dev/dns-lookup/",
-      "alternateUrl": "https://pingthat.dev/es/dns-lookup/",
-      "description": "Query DNS records for any domain — A, AAAA, MX, CNAME, TXT, NS, SOA",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "dns lookup",
-        "dns checker",
-        "dns query",
-        "nslookup online"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Conversor de Direcciones IP",
+        "url": "https://pingthat.dev/es/ip-converter/",
+        "description": "Convierte direcciones IPv4 entre formatos decimal, binario, hexadecimal, octal y entero. Conversor gratuito — 100% en tu navegador.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 9,
-      "name": "Email Auth",
-      "url": "https://pingthat.dev/email-auth/",
-      "alternateUrl": "https://pingthat.dev/es/email-auth/",
-      "description": "Check SPF, DKIM, and DMARC records for any domain",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "spf checker",
-        "dkim checker",
-        "dmarc checker",
-        "email authentication",
-        "spf record",
-        "dkim record",
-        "dmarc record",
-        "email security"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "¿Está Caída? Verificador de Sitios Web",
+        "url": "https://pingthat.dev/es/is-it-down/",
+        "description": "Comprueba si un sitio web está caído para todos o solo para ti. Verificación instantánea. Gratis.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 10,
-      "name": "Port Scanner",
-      "url": "https://pingthat.dev/port-scan/",
-      "alternateUrl": "https://pingthat.dev/es/port-scan/",
-      "description": "Scan common ports on any host to check which services are reachable",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "port scanner",
-        "port check",
-        "open ports",
-        "port scan online",
-        "port checker"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Verificador de Estado Web — Uptime y Tiempo de Respuesta",
+        "url": "https://pingthat.dev/es/is-it-up/",
+        "description": "Verifica estado del sitio web, tiempo de respuesta, info del servidor. Informe detallado. Gratis.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 11,
-      "name": "SSL Checker",
-      "url": "https://pingthat.dev/ssl-checker/",
-      "alternateUrl": "https://pingthat.dev/es/ssl-checker/",
-      "description": "Check SSL/TLS certificate status, HSTS, and certificate transparency logs",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "ssl checker",
-        "ssl test",
-        "ssl certificate checker",
-        "https checker"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Decodificador JWT",
+        "url": "https://pingthat.dev/es/jwt-decoder/",
+        "description": "Decodifica e inspecciona JSON Web Tokens — cabecera, payload y firma. 100% en el cliente, tu token nunca sale de tu navegador.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 12,
-      "name": "Is It Down?",
-      "url": "https://pingthat.dev/is-it-down/",
-      "alternateUrl": "https://pingthat.dev/es/is-it-down/",
-      "description": "Check if a website is down for everyone or just you",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "is it down",
-        "website down checker",
-        "is this site down",
-        "site status"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Cuál Es Mi IP",
+        "url": "https://pingthat.dev/es/my-ip/",
+        "description": "Consulta tu dirección IPv4 e IPv6 pública, geolocalización, ISP y ASN en tiempo real. Gratis, instantáneo, sin rastreo ni registro.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 13,
-      "name": "Website Status",
-      "url": "https://pingthat.dev/is-it-up/",
-      "alternateUrl": "https://pingthat.dev/es/is-it-up/",
-      "description": "Check website uptime, response time, and server status",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "is it up",
-        "website status",
-        "uptime checker",
-        "response time"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Comprobador de Fortaleza de Contraseñas",
+        "url": "https://pingthat.dev/es/password-strength/",
+        "description": "Analiza entropía de contraseñas, tiempo de descifrado y fortaleza. 100% en el cliente — tu contraseña nunca sale de tu navegador.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 14,
-      "name": "HTTP Headers",
-      "url": "https://pingthat.dev/http-headers/",
-      "alternateUrl": "https://pingthat.dev/es/http-headers/",
-      "description": "Inspect HTTP response headers and security header analysis",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "http headers",
-        "response headers",
-        "security headers",
-        "header checker"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Escaner de Puertos Online Gratis",
+        "url": "https://pingthat.dev/es/port-scan/",
+        "description": "Escanea puertos comunes de cualquier host. Comprueba que servicios son accesibles -- HTTP, HTTPS, SSH, FTP y mas. Gratis, instantaneo.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 15,
-      "name": "WHOIS Lookup",
-      "url": "https://pingthat.dev/whois-lookup/",
-      "alternateUrl": "https://pingthat.dev/es/whois-lookup/",
-      "description": "Look up domain registration details, registrar, and nameservers via RDAP",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "whois lookup",
-        "domain whois",
-        "domain lookup",
-        "who owns domain"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Comprobación de Privacidad del Navegador",
+        "url": "https://pingthat.dev/es/privacy-check/",
+        "description": "Comprueba la privacidad del navegador: protección contra rastreo, cookies y huella digital. Gratis, instantáneo y 100% en el cliente.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 16,
-      "name": "Redirect Checker",
-      "url": "https://pingthat.dev/redirect-checker/",
-      "alternateUrl": "https://pingthat.dev/es/redirect-checker/",
-      "description": "Trace the full redirect chain of any URL with status codes",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "redirect checker",
-        "redirect trace",
-        "url redirect",
-        "301 redirect checker"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Verificador de Redirecciones Online Gratis",
+        "url": "https://pingthat.dev/es/redirect-checker/",
+        "description": "Traza la cadena completa de redirecciones de cualquier URL. Ve cada 301, 302 con códigos de estado. Gratis.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "ListItem",
       "position": 17,
-      "name": "URL Parser",
-      "url": "https://pingthat.dev/url-parser/",
-      "alternateUrl": "https://pingthat.dev/es/url-parser/",
-      "description": "Parse and break down URLs into protocol, host, path, query params, and hash",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web browser",
-      "keywords": [
-        "url parser",
-        "url decoder",
-        "parse url",
-        "url breakdown"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "url": "https://pingthat.dev/"
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Verificador de Certificado SSL Online Gratis",
+        "url": "https://pingthat.dev/es/ssl-checker/",
+        "description": "Verifica el estado SSL/TLS, cabeceras HSTS y detalles del certificado de cualquier dominio. Gratis, instantáneo.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 18,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Calculadora de Subredes",
+        "url": "https://pingthat.dev/es/subnet-calculator/",
+        "description": "Calcula dirección de red, broadcast, rango de hosts, máscara y wildcard desde cualquier CIDR. Planificador IPv4 gratuito en tu navegador.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 19,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Analizador de URL Online Gratis",
+        "url": "https://pingthat.dev/es/url-parser/",
+        "description": "Analiza y descompone cualquier URL en sus componentes: protocolo, host, ruta, parámetros, hash. Gratis.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 20,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Test de Fugas WebRTC",
+        "url": "https://pingthat.dev/es/webrtc-leak-test/",
+        "description": "Comprueba si WebRTC está filtrando tu dirección IP real. Detecta IPs locales y públicas expuestas a través de candidatos ICE.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 21,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Búsqueda WHOIS Online Gratis",
+        "url": "https://pingthat.dev/es/whois-lookup/",
+        "description": "Consulta detalles de registro de dominio, registrador, nameservers y fechas de expiración. WHOIS gratuito vía RDAP.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 22,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "HTTP Header Checker Online Free",
+        "url": "https://pingthat.dev/http-headers/",
+        "description": "Inspect HTTP response headers and check security headers for any URL. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 23,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "IP Address Converter",
+        "url": "https://pingthat.dev/ip-converter/",
+        "description": "Convert IPv4 addresses between decimal, binary, hexadecimal, octal, and integer formats. Free and instant — runs 100% in your browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 24,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "IPv6 Readiness Checker Online Free",
+        "url": "https://pingthat.dev/ipv6-check/",
+        "description": "Check if a domain is IPv6-ready. Tests AAAA records for apex, www, nameservers, and mail. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 25,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Is It Down? Website Down Checker",
+        "url": "https://pingthat.dev/is-it-down/",
+        "description": "Check if a website is down for everyone or just you. Instant status check. Free.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 26,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Website Status Checker — Uptime & Response Time",
+        "url": "https://pingthat.dev/is-it-up/",
+        "description": "Check website status, response time, server info. Detailed uptime report. Free.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 27,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "JWT Decoder",
+        "url": "https://pingthat.dev/jwt-decoder/",
+        "description": "Decode and inspect JSON Web Tokens — header, payload, and signature. 100% client-side, your token never leaves your browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 28,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "What Is My IP",
+        "url": "https://pingthat.dev/my-ip/",
+        "description": "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup with no tracking or signup.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 29,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Password Strength Checker",
+        "url": "https://pingthat.dev/password-strength/",
+        "description": "Analyze password entropy, crack time estimation, and strength rating. 100% client-side, your password never leaves your browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 30,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Port Scanner Online Free",
+        "url": "https://pingthat.dev/port-scan/",
+        "description": "Scan common ports on any host: HTTP, HTTPS, SSH, FTP, SMTP, databases and more. Check which services are reachable from the public internet.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 31,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Browser Privacy Check",
+        "url": "https://pingthat.dev/privacy-check/",
+        "description": "Check your browser's privacy settings, tracking protection, cookies, and fingerprint exposure. Free, instant, runs 100% client-side.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 32,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Redirect Checker Online Free",
+        "url": "https://pingthat.dev/redirect-checker/",
+        "description": "Trace the full redirect chain of any URL. See every 301, 302 redirect with status codes. Free.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 33,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "DNS Resolver Comparison Online Free",
+        "url": "https://pingthat.dev/resolver-compare/",
+        "description": "Compare DNS answers and latency across Cloudflare, Google, AdGuard, and NextDNS. Detect propagation lag. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 34,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Reverse DNS Lookup Online Free",
+        "url": "https://pingthat.dev/reverse-dns/",
+        "description": "Resolve PTR records for any IPv4 or IPv6 address. Free, instant, no signup.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 35,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Site Speed Check â Core Web Vitals",
+        "url": "https://pingthat.dev/site-speed/",
+        "description": "Check LCP, INP, CLS, FCP, and TTFB from real Chrome users. Backed by the Chrome UX Report. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 36,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "SSL Certificate Checker Online Free",
+        "url": "https://pingthat.dev/ssl-checker/",
+        "description": "Check SSL/TLS status, HSTS headers, and certificate details for any domain. Free, instant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 37,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Subnet Calculator",
+        "url": "https://pingthat.dev/subnet-calculator/",
+        "description": "Calculate network address, broadcast address, host range, subnet mask, and wildcard from any CIDR block. Free IPv4 subnet planner in browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 38,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "URL Parser Online Free",
+        "url": "https://pingthat.dev/url-parser/",
+        "description": "Parse and break down any URL into its components: protocol, host, path, query parameters, hash. Free.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 39,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "WebRTC Leak Test",
+        "url": "https://pingthat.dev/webrtc-leak-test/",
+        "description": "Check if WebRTC is leaking your real IP behind a VPN. Detects local and public IPs exposed through ICE candidates. Free, runs in your browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 40,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "WHOIS Lookup Online Free",
+        "url": "https://pingthat.dev/whois-lookup/",
+        "description": "Look up domain registration details, registrar, nameservers, and expiration dates. Free WHOIS via RDAP.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     }
   ]
