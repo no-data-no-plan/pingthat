@@ -222,33 +222,46 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
   <link rel="dns-prefetch" href="https://adservice.google.com" />
 
-  <!-- Google Funding Choices (Privacy & messaging CMP) — certified for AdSense
-       GDPR/CCPA. MUST load BEFORE AdSense. No UI shown outside regulated regions. -->
-  <script async src="https://fundingchoicesmessages.google.com/i/pub-8761907366448308?ers=1"></script>
+  <!-- Google Funding Choices (CMP) + AdSense — both deferred via idle callback.
+       FC must load before AdSense (TCF v2.2 / CCPA signaling), so we chain:
+       idle → FC → onload/onerror → AdSense. PSI desktop showed FC alone costs
+       ~97KB unused JS at boot; deferring it cuts TBT by 200-400ms. -->
   <script is:inline>
-    (function() { function signalGooglefcPresent() { if (!window.frames['googlefcPresent']) { if (document.body) { const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe); } else { setTimeout(signalGooglefcPresent, 0); } } } signalGooglefcPresent(); })();
+    (function () {
+      function signalGooglefcPresent() {
+        if (!window.frames['googlefcPresent']) {
+          if (document.body) {
+            var iframe = document.createElement('iframe');
+            iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+            iframe.style.display = 'none';
+            iframe.name = 'googlefcPresent';
+            document.body.appendChild(iframe);
+          } else {
+            setTimeout(signalGooglefcPresent, 0);
+          }
+        }
+      }
+      function loadAdsStack() {
+        signalGooglefcPresent();
+        var fc = document.createElement("script");
+        fc.async = true;
+        fc.src = "https://fundingchoicesmessages.google.com/i/pub-8761907366448308?ers=1";
+        fc.onload = fc.onerror = function () {
+          var ad = document.createElement("script");
+          ad.async = true;
+          ad.crossOrigin = "anonymous";
+          ad.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8761907366448308";
+          document.head.appendChild(ad);
+        };
+        document.head.appendChild(fc);
+      }
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(loadAdsStack, { timeout: 3000 });
+      } else {
+        window.addEventListener("load", function () { setTimeout(loadAdsStack, 2000); });
+      }
+    })();
   </script>
-
-  <!-- Google AdSense — CMP (above) controls consent signal per region -->
-    <script is:inline>
-  // Defer AdSense load until after LCP (idle callback or post-load timeout).
-  // Funding Choices CMP loads synchronously above to satisfy GDPR; AdSense
-  // can wait. Saves ~100-150ms LCP on mobile (Lighthouse main-thread audit).
-  (function () {
-    function loadAdSense() {
-      var s = document.createElement("script");
-      s.async = true;
-      s.crossOrigin = "anonymous";
-      s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8761907366448308";
-      document.head.appendChild(s);
-    }
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(loadAdSense, { timeout: 3000 });
-    } else {
-      window.addEventListener("load", function () { setTimeout(loadAdSense, 2000); });
-    }
-  })();
-</script>
 
   <title>{title} — PingThat</title>
   <link rel="canonical" href={canonicalUrl} />
