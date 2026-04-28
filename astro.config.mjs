@@ -4,9 +4,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   integrations: [svelte()],
-  // Inline small CSS bundles into HTML to eliminate render-blocking round-trips.
-  // 'auto' inlines stylesheets <4KB. Saves 470-640ms FCP on home pages per
-  // PSI 2026-04-28 (largest universal opportunity).
-  build: { inlineStylesheets: "auto" },
+  // Inline ALL CSS bundles as <style> blocks. Single CSSOM build during head
+  // parse, no second-pass recalc, no network round-trip for CSS. Big-tech
+  // (Netflix 204KB, X 15KB, Airbnb 67KB) ships full-inline at 4-15× our scale.
+  // CSP-safe (style-src 'unsafe-inline' covers <style>). JS-disabled compatible.
+  build: { inlineStylesheets: "always" },
   vite: { plugins: [tailwindcss()] },
 });
