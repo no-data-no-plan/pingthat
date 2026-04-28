@@ -17,10 +17,31 @@ interface Props {
 }
 
 const { howHeading, howSteps, useCasesHeading, useCases, faqHeading, faqs } = Astro.props;
+// Infer language from URL (/es/...) so EN/ES pages don't both have to pass `lang` explicitly.
+const lang: Lang = Astro.props.lang ?? (Astro.url.pathname.startsWith("/es/") ? "es" : "en");
 const hasHow = Array.isArray(howSteps) && howSteps.length > 0;
 const hasUseCases = Array.isArray(useCases) && useCases.length > 0;
 const hasFaq = Array.isArray(faqs) && faqs.length > 0;
+
+const howToSchema = hasHow
+  ? {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": howHeading,
+      "inLanguage": lang,
+      "step": howSteps!.map((s, i) => ({
+        "@type": "HowToStep",
+        "position": i + 1,
+        "name": s.length > 80 ? s.slice(0, 77).trimEnd() + "…" : s,
+        "text": s,
+      })),
+    }
+  : null;
 ---
+
+{howToSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+)}
 
 {(hasHow || hasUseCases || hasFaq) && (
   <section class="px-6 py-6 border-t border-[var(--color-border)] bg-[var(--color-bg-primary)] space-y-6 text-sm leading-relaxed">
