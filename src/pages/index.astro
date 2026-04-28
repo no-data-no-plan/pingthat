@@ -86,6 +86,9 @@ const jsonLd = JSON.stringify([
     ],
   },
 ]);
+import fs from "node:fs";
+import path from "node:path";
+const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8");
 ---
 
 <!doctype html>
@@ -166,7 +169,7 @@ const jsonLd = JSON.stringify([
 
   <!-- Fonts (self-hosted). latin-ext only loaded on-demand via unicode-range
        in fonts.css — preloading it blocks FCP on EN/ES (which use latin only). -->
-  <link rel="stylesheet" href="/fonts/fonts.css" />
+  <style is:inline set:html={FONTS_CSS}></style>
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <meta property="og:title" content="PingThat — Network Tools for Developers" />

@@ -175,6 +175,9 @@ const jsonLd = JSON.stringify(schemas);
 const ogType = isLegalPage ? "website" : "article";
 const ogLocale = lang === "es" ? "es_ES" : "en_US";
 const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
+import fs from "node:fs";
+import path from "node:path";
+const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8");
 ---
 
 <!doctype html>
@@ -253,7 +256,7 @@ const ogLocaleAlternate = lang === "es" ? "en_US" : "es_ES";
 
   <!-- Fonts (self-hosted). latin-ext loaded on-demand via fonts.css unicode-range —
        preloading it blocks FCP on EN/ES (which use latin only). -->
-  <link rel="stylesheet" href="/fonts/fonts.css" />
+  <style is:inline set:html={FONTS_CSS}></style>
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Open Graph -->

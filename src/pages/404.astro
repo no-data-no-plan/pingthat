@@ -14,6 +14,9 @@ const popularIds = [
   "password-strength",
 ];
 const popular = popularIds.map(id => tools.find(t => t.id === id)).filter(Boolean);
+import fs from "node:fs";
+import path from "node:path";
+const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8");
 ---
 <!doctype html>
 <html lang="en">
@@ -24,7 +27,7 @@ const popular = popularIds.map(id => tools.find(t => t.id === id)).filter(Boolea
   <title>Page Not Found — PingThat</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <!-- Fonts (self-hosted). latin-ext loaded on-demand via fonts.css unicode-range. -->
-  <link rel="stylesheet" href="/fonts/fonts.css" />
+  <style is:inline set:html={FONTS_CSS}></style>
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Google Analytics 4 — Consent Mode v2. AdSense intentionally excluded: Google
