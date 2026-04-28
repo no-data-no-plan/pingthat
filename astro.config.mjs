@@ -4,10 +4,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   integrations: [svelte()],
-  // Inline ALL CSS bundles as <style> blocks. Single CSSOM build during head
-  // parse, no second-pass recalc, no network round-trip for CSS. Big-tech
-  // (Netflix 204KB, X 15KB, Airbnb 67KB) ships full-inline at 4-15× our scale.
-  // CSP-safe (style-src 'unsafe-inline' covers <style>). JS-disabled compatible.
-  build: { inlineStylesheets: "always" },
+  // 'auto' inlines stylesheets <4KB. Larger chunks stay external; we use
+  // Cloudflare Early Hints 103 (Pattern C, see scripts/early-hints.mjs) to
+  // preload them during origin think-time. Pattern A (`'always'`) was
+  // shipped earlier today but introduced 47 W3C Nu Validator errors from
+  // the inlined CSS (@layer/@property/scrollbar-gutter false positives) —
+  // migrated 2026-04-28 evening. See feedback_css_delivery_pattern_a.md.
+  build: { inlineStylesheets: "auto" },
   vite: { plugins: [tailwindcss()] },
 });
