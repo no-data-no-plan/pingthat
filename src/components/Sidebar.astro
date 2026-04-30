@@ -95,7 +95,7 @@ const langPrefix = lang === "es" ? "/es" : "";
                 ]}
                 data-tool-name={(toolNamesI18n[tool.id]?.[lang] ?? tool.name).toLowerCase()}
               >
-                <span class="text-[10px] w-5 text-center font-mono opacity-80" style="font-weight: 600;">{tool.icon}</span>
+                <span class="text-[10px] w-5 text-center font-mono opacity-80" style="font-weight: 600;" aria-hidden="true">{tool.icon}</span>
                 <span>{toolNamesI18n[tool.id]?.[lang] ?? tool.name}</span>
               </a>
             );
@@ -141,6 +141,22 @@ const langPrefix = lang === "es" ? "/es" : "";
         const items = g.querySelector('.group-items') as HTMLElement;
         if (items && q) items.style.display = '';
       });
+    });
+
+    // Global "/" focus accelerator (Nielsen audit 2026-04-30, PT F12).
+    // Skip when the user is already typing into another input/textarea
+    // or contentEditable to avoid stealing the slash keystroke.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target;
+      const isEditable =
+        t instanceof HTMLInputElement ||
+        t instanceof HTMLTextAreaElement ||
+        (t instanceof HTMLElement && t.isContentEditable);
+      if (isEditable) return;
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
     });
   }
 </script>
