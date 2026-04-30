@@ -2,6 +2,7 @@
   import type { Lang } from '../i18n/index';
   import { getSiteSpeed } from '../i18n/components';
   import { getCommon } from '../i18n/common';
+  import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -61,12 +62,8 @@
       result = data;
     } catch (e: any) {
       if (myId !== requestId) return;
-      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
-        if (ctrl.signal.reason === 'user-cancelled') {
-          error = "";
-        } else {
-          error = c.requestTimeout;
-        }
+      if (isAbortError(e)) {
+        error = isUserCancelled(ctrl.signal) ? "" : c.requestTimeout;
       } else {
         error = t.checkFailed;
       }
@@ -78,7 +75,7 @@
 
   function cancel() {
     if (!loading) return;
-    abortController?.abort('user-cancelled');
+    abortController?.abort(USER_CANCELLED_REASON);
   }
 
   const METRIC_META = {

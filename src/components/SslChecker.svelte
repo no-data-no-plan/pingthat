@@ -4,6 +4,7 @@
   import { getCommon } from '../i18n/common';
   import { isValidDomain, getValidationError } from '../lib/validation';
   import type { SslCheckerResult } from '../lib/api-types';
+  import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -51,17 +52,8 @@
       if (data.error) { error = data.error; } else { result = data; }
     } catch (e: any) {
       if (myId !== requestId) return;
-      if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
-        // Distinguish user-cancelled from a 30s timeout. `controller.abort()`
-        // with no arg sets `signal.reason` to a default DOMException — so
-        // both paths have a non-undefined reason. Discriminate by the
-        // STRING reason cancel() passes ('user-cancelled') instead.
-        // Round-2 review fix 2026-04-30.
-        if (ctrl.signal.reason === 'user-cancelled') {
-          error = "";
-        } else {
-          error = c.requestTimeout;
-        }
+      if (isAbortError(e)) {
+        error = isUserCancelled(ctrl.signal) ? "" : c.requestTimeout;
       } else {
         error = t.checkFailed;
       }
@@ -73,7 +65,7 @@
 
   function cancel() {
     if (!loading) return;
-    abortController?.abort('user-cancelled');
+    abortController?.abort(USER_CANCELLED_REASON);
   }
 
   function expiryColor(days: number | null): string {
