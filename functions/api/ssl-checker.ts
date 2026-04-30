@@ -90,41 +90,124 @@ export async function onRequestPost(context: { request: Request }) {
     const hstsRaw = httpsRes.headers.get("strict-transport-security");
     const hstsDetails = parseHsts(hstsRaw);
 
+    // CT log lookup: certspotter primary, crt.sh fallback.
+    //
+    // Pre-Nielsen-audit (2026-04-30, F1): only crt.sh was queried, with errors
+    // silently swallowed → empty `certificates: []` for popular domains where
+    // crt.sh returns 502 (e.g. google.com, microsoft.com, cloudflare.com). The
+    // tool was effectively dead despite the H1 promising "certificate
+    // transparency logs". certspotter's API is more reliable, returns smaller
+    // payloads, and still provides issuer + validity + SANs.
     let certs: any[] = [];
+    let ctSourceTried: string[] = [];
+    let ctError: string | null = null;
+    // Track per-source success/failure (Nielsen audit Round-2 review fix
+    // 2026-04-30). Without separate flags, certspotter 429 + crt.sh
+    // clean-empty-200 was misdiagnosed as "logs unavailable" even though
+    // crt.sh definitively reported "no entries". Surface "unavailable"
+    // ONLY when every queried source errored.
+    //
+    // Certspotter free tier limit is ~100 queries/day (not per-hour) shared
+    // across the CF Worker egress IP. PT will exhaust this under any real
+    // traffic — long-term plan is either an authenticated key or to swap
+    // primary back to crt.sh. Today's behavior: when certspotter 429s the
+    // crt.sh fallback runs, and only if THAT also fails do we tell the user
+    // "unavailable".
+    let certspotterFailed = false;
+    let crtShSucceeded = false;
+    let crtShFailed = false;
+
+    // Source 1: certspotter (primary). Reliable for popular domains; returns
+    // unexpired issuances by default and a manageable payload size.
     try {
-      // crt.sh can return multi-MB JSON for popular domains; cap body at 1 MB.
-      // `limit=50` is also honoured by crt.sh as an upstream guard.
-      const MAX_CRT_BYTES = 1 * 1024 * 1024;
-      const crtRes = await fetch(
-        `https://crt.sh/?q=${encodeURIComponent(domain)}&output=json&exclude=expired&limit=50`,
-        { signal: AbortSignal.timeout(15000) }
-      );
-      if (crtRes.ok) {
-        const contentLength = crtRes.headers.get("content-length");
-        if (contentLength && parseInt(contentLength, 10) > MAX_CRT_BYTES) {
-          throw new Error("crt.sh response too large");
+      ctSourceTried.push("certspotter");
+      const csRes = await fetch(
+        `https://api.certspotter.com/v1/issuances?domain=${encodeURIComponent(domain)}` +
+          `&include_subdomains=false&expand=dns_names&expand=issuer`,
+        {
+          signal: AbortSignal.timeout(8000),
+          headers: { "User-Agent": "PingThat/1.0 (https://pingthat.dev)" },
         }
-        const text = await crtRes.text();
-        if (text.length > MAX_CRT_BYTES) throw new Error("crt.sh response too large");
-        const allCerts = JSON.parse(text) as any[];
-        // Sort by not_before desc so most recent cert is first
-        allCerts.sort((a, b) => {
-          const ta = Date.parse(a.not_before || "");
-          const tb = Date.parse(b.not_before || "");
-          return (isNaN(tb) ? 0 : tb) - (isNaN(ta) ? 0 : ta);
-        });
-        certs = allCerts.slice(0, 5).map((c: any) => ({
-          issuer: c.issuer_name || "Unknown",
-          commonName: c.common_name || domain,
-          notBefore: c.not_before || null,
-          notAfter: c.not_after || null,
-          serialNumber: c.serial_number || null,
-          sans: extractSans(c.name_value),
-          daysRemaining: daysBetween(c.not_after),
-        }));
+      );
+      if (csRes.ok) {
+        const csCerts = (await csRes.json()) as any[];
+        if (Array.isArray(csCerts) && csCerts.length > 0) {
+          // Sort by not_before desc so the freshest issuance is first.
+          csCerts.sort((a, b) => {
+            const ta = Date.parse(a.not_before || "");
+            const tb = Date.parse(b.not_before || "");
+            return (isNaN(tb) ? 0 : tb) - (isNaN(ta) ? 0 : ta);
+          });
+          certs = csCerts.slice(0, 5).map((c: any) => ({
+            issuer: c.issuer?.friendly_name || c.issuer?.name || "Unknown",
+            commonName: domain,
+            notBefore: c.not_before || null,
+            notAfter: c.not_after || null,
+            serialNumber: null, // certspotter doesn't expose serial directly
+            sans: Array.isArray(c.dns_names) ? c.dns_names : [],
+            daysRemaining: daysBetween(c.not_after),
+          }));
+        }
+      } else {
+        // 4xx (incl. 429 rate-limit) or 5xx — treat as transient unavailability.
+        certspotterFailed = true;
       }
     } catch {
-      // crt.sh may be slow/unavailable
+      // certspotter timeout/network — fall through to crt.sh
+      certspotterFailed = true;
+    }
+
+    // Source 2: crt.sh fallback. Less reliable (502s on popular domains) but
+    // useful when certspotter returns nothing for niche subdomains.
+    if (certs.length === 0) {
+      try {
+        ctSourceTried.push("crt.sh");
+        const MAX_CRT_BYTES = 1 * 1024 * 1024;
+        const crtRes = await fetch(
+          `https://crt.sh/?q=${encodeURIComponent(domain)}&output=json&exclude=expired&limit=50`,
+          { signal: AbortSignal.timeout(8000) }
+        );
+        if (crtRes.ok) {
+          const contentLength = crtRes.headers.get("content-length");
+          if (contentLength && parseInt(contentLength, 10) > MAX_CRT_BYTES) {
+            throw new Error("crt.sh response too large");
+          }
+          const text = await crtRes.text();
+          if (text.length > MAX_CRT_BYTES) throw new Error("crt.sh response too large");
+          const allCerts = JSON.parse(text) as any[];
+          allCerts.sort((a, b) => {
+            const ta = Date.parse(a.not_before || "");
+            const tb = Date.parse(b.not_before || "");
+            return (isNaN(tb) ? 0 : tb) - (isNaN(ta) ? 0 : ta);
+          });
+          certs = allCerts.slice(0, 5).map((c: any) => ({
+            issuer: c.issuer_name || "Unknown",
+            commonName: c.common_name || domain,
+            notBefore: c.not_before || null,
+            notAfter: c.not_after || null,
+            serialNumber: c.serial_number || null,
+            sans: extractSans(c.name_value),
+            daysRemaining: daysBetween(c.not_after),
+          }));
+          // crt.sh returned 200 OK; whether `allCerts` was empty or not, the
+          // CT corpus has been definitively probed for this domain.
+          crtShSucceeded = true;
+        } else {
+          crtShFailed = true;
+        }
+      } catch {
+        crtShFailed = true;
+      }
+    }
+
+    if (certs.length === 0) {
+      // Surface "temporarily unavailable" ONLY when every queried source
+      // errored. If certspotter 429s but crt.sh returns clean-empty-200,
+      // we know the domain genuinely has no current CT entries — say so
+      // instead of misleading the user.
+      const allFailed =
+        certspotterFailed && (crtShFailed || (!crtShSucceeded && !crtShFailed));
+      ctError = allFailed ? e.ctLogsUnavailable : e.noCertificatesFound;
     }
 
     const activeCertificate = certs[0] || null;
@@ -139,6 +222,11 @@ export async function onRequestPost(context: { request: Request }) {
       server: httpsRes.headers.get("server") || null,
       certificates: certs,
       activeCertificate,
+      // Surface ctSourceTried only when ctError is set — diagnostic info
+      // useful in error states, noise on successful responses (Round-2
+      // review fix 2026-04-30: avoid leaking internal source names to
+      // every API consumer / scraper).
+      ...(ctError ? { ctError, ctSourceTried } : {}),
     });
   } catch (err: any) {
     let errMsg = e.httpsConnectionFailed;

@@ -104,6 +104,14 @@
       </div>
     </div>
 
+    {#if result.ctError && !result.activeCertificate}
+      <div class="card" style="border-left: 3px solid var(--color-yellow);">
+        <div class="card-body" style="font-size: 13px; color: var(--color-text-muted);">
+          {result.ctError}
+        </div>
+      </div>
+    {/if}
+
     {#if result.activeCertificate}
       {@const ac = result.activeCertificate}
       <div class="card" style="border-left: 3px solid {expiryColor(ac.daysRemaining)};">

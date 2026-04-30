@@ -187,28 +187,44 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   <script type="application/ld+json" set:html={jsonLd} />
 </head>
 <body>
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:rounded focus:text-sm focus:font-medium" style="background: var(--color-accent); color: var(--color-bg);">Saltar al contenido</a>
   <div class="min-h-screen relative" style="background: var(--color-bg); color: var(--color-text);">
 
-    <!-- Top-right language toggle -->
-    <div class="absolute top-4 right-4 z-30">
+    <!-- Top-right: Guías + language toggle (Nielsen audit 2026-04-30, PT F17). -->
+    <div class="absolute top-4 right-4 z-30 flex items-center gap-3">
+      <a href="/es/docs/" class="text-[11px] hover:text-[var(--color-accent)] transition-colors" style="color: var(--color-text-muted);">Guías</a>
       <LangToggle lang="es" enPath="/" esPath="/es/" />
     </div>
 
-    <!-- Hero -->
-    <header class="px-6 py-16 sm:py-24 text-center max-w-3xl mx-auto">
+    <!-- Hero. id="main-content" + tabindex="-1" so skip-link transfers
+         keyboard focus here. Round-2 review fix 2026-04-30. -->
+    <header id="main-content" tabindex="-1" class="px-6 py-16 sm:py-24 text-center max-w-3xl mx-auto">
       <p class="text-[10px] uppercase tracking-[0.2em] mb-4 font-semibold" style="color: var(--color-accent-fg);">{c.heroEyebrow}</p>
       <h1 class="text-4xl sm:text-5xl font-bold mb-4" style="color: var(--color-text);">
         {c.heroHeadingPrefix}<em class="italic" style="color: var(--color-accent-fg);">{c.heroHeadingEm}</em>
       </h1>
-      <p class="text-sm sm:text-base leading-relaxed" style="color: var(--color-text-muted);">
+      <p class="text-sm sm:text-base leading-relaxed mb-8" style="color: var(--color-text-muted);">
         {c.heroText}
       </p>
+      <!-- Hero search (Nielsen audit, PT F8). -->
+      <div class="max-w-xl mx-auto">
+        <input
+          id="home-search"
+          type="search"
+          placeholder={`Busca en ${tools.length} herramientas — DNS, SSL, headers, JWT, subred...`}
+          aria-label="Buscar herramientas"
+          autocomplete="off"
+          class="w-full px-4 py-3 rounded-lg text-sm"
+          style="background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text);"
+        />
+      </div>
     </header>
 
     <!-- Tool Grid -->
     <main class="px-6 pb-16 max-w-5xl mx-auto">
+      <p id="home-no-results" class="hidden text-center text-sm mb-8" style="color: var(--color-text-muted);">No hay herramientas que coincidan con tu búsqueda.</p>
       {groups.map((group) => (
-        <section class="mb-12">
+        <section class="mb-12 home-group">
           <div class="flex items-center gap-3 mb-5">
             <h2 class="text-[10px] uppercase tracking-[0.15em] font-semibold" style="color: var(--color-accent-fg);">
               {groupLabelsI18n[group.label]?.es ?? group.label}
@@ -220,11 +236,15 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
             {group.ids.map((id) => {
               const tool = tools.find(t => t.id === id);
               if (!tool) return null;
+              const localizedName = toolNamesI18n[tool.id]?.es ?? tool.name;
+              const localizedDesc = toolDescriptionsI18n[tool.id]?.es ?? tool.description;
+              const searchText = [localizedName, localizedDesc, tool.id, ...(tool.keywords || [])].join(' ').toLowerCase();
               return (
                 <a
                   href={`/es${tool.path}`}
-                  class="card group block transition-all hover:border-[var(--color-accent)]"
+                  class="card group block transition-all hover:border-[var(--color-accent)] home-tool-card"
                   style="border: 1px solid var(--color-border);"
+                  data-tool-search={searchText}
                 >
                   <div class="card-body" style="padding: 20px;">
                     <div class="flex items-start gap-3">
@@ -236,10 +256,10 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
                       </span>
                       <div class="flex-1 min-w-0">
                         <h3 class="text-sm font-medium mb-1 group-hover:text-[var(--color-accent)] transition-colors" style="color: var(--color-text);">
-                          {toolNamesI18n[tool.id]?.es ?? tool.name}
+                          {localizedName}
                         </h3>
                         <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">
-                          {toolDescriptionsI18n[tool.id]?.es ?? tool.description}
+                          {localizedDesc}
                         </p>
                       </div>
                     </div>
@@ -264,12 +284,140 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
 
     <CompareLinks lang="es" competitors={["mxtoolbox", "dnschecker", "hackertarget", "securityheaders", "whatismyip"]} />
 
-    <!-- Footer -->
-    <footer class="px-6 py-4 flex justify-between text-[11px]" style="color: var(--color-text-dim); border-top: 1px solid var(--color-border);">
-      <span>{c.footerTagline}</span>
-      <span><a href="/es/privacy-policy/" class="hover:text-[var(--color-accent)] transition-colors">{c.footerPrivacy}</a></span>
+    <!-- Footer (Nielsen audit 2026-04-30, PT F3 + F17). -->
+    <footer class="px-6 py-4 border-t border-[var(--color-border)] text-[11px]" style="color: var(--color-text-dim);">
+      <div class="flex justify-between items-center mb-2 gap-3 flex-wrap">
+        <span>{c.footerTagline}</span>
+        <span class="flex items-center gap-2 flex-wrap">
+          <a href="/es/about/" class="hover:text-[var(--color-accent)] transition-colors">Acerca de</a>
+          <span style="color: var(--color-border);">·</span>
+          <a href="/es/privacy-policy/" class="hover:text-[var(--color-accent)] transition-colors">{c.footerPrivacy}</a>
+          <span style="color: var(--color-border);">·</span>
+          <a href="/es/docs/" class="hover:text-[var(--color-accent)] transition-colors">Guías</a>
+          <span style="color: var(--color-border);">·</span>
+          <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">Buy me a coffee</a>
+        </span>
+      </div>
+      <form id="feedback-form" action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
+        <input type="hidden" name="app" value="PingThat" />
+        <input type="hidden" name="page" value="" />
+        <input type="hidden" name="_subject" value="" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="text" name="message" placeholder="Bug, idea o sugerencia..." required
+          aria-label="Bug, idea o sugerencia..."
+          class="flex-1 px-3 py-1.5 rounded text-[11px]"
+          style="background: var(--color-surface2); border: 1px solid var(--color-border); color: var(--color-text); font-family: 'Inter', sans-serif;"
+        />
+        <button type="submit" class="px-3 py-1.5 rounded text-[10px] uppercase tracking-wider"
+          style="background: var(--color-surface2); border: 1px solid var(--color-border); color: var(--color-text-muted); cursor: pointer;">
+          Enviar
+        </button>
+      </form>
     </footer>
   </div>
   <CookieConsent lang="es" />
+
+  <!-- Feedback form: AJAX submit + toast (Nielsen audit code-review 2026-04-30). -->
+  <script>
+    (function () {
+      const form = document.getElementById('feedback-form');
+      if (!(form instanceof HTMLFormElement)) return;
+      const isEs = document.documentElement.lang === 'es';
+      const MSG = {
+        success: isEs ? '¡Gracias por tu feedback!' : 'Thanks for your feedback!',
+        error: isEs ? 'Error al enviar. Inténtalo más tarde.' : 'Error sending. Please try again later.',
+      };
+      function showToast(text: string, isError: boolean) {
+        const toast = document.createElement('div');
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        toast.textContent = text;
+        Object.assign(toast.style, {
+          position: 'fixed', bottom: '24px', left: '50%',
+          transform: 'translate(-50%, 20px)', padding: '12px 20px',
+          borderRadius: '8px', background: isError ? '#dc2626' : '#059669',
+          color: '#fff', fontSize: '13px', fontWeight: '500', zIndex: '9999',
+          boxShadow: '0 10px 30px rgba(0,0,0,0.35)', opacity: '0',
+          transition: 'opacity .25s ease, transform .25s ease',
+          cursor: 'pointer', maxWidth: '90vw',
+        });
+        toast.title = isEs ? 'Clic para cerrar' : 'Click to dismiss';
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translate(-50%, 0)';
+        });
+        let dismissed = false;
+        const dismiss = () => {
+          if (dismissed) return;
+          dismissed = true;
+          toast.style.opacity = '0';
+          toast.style.transform = 'translate(-50%, 20px)';
+          setTimeout(() => toast.remove(), 300);
+        };
+        toast.addEventListener('click', dismiss);
+        setTimeout(dismiss, 5000);
+      }
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const data = new FormData(form);
+        data.set('page', location.href);
+        const appName = String(data.get('app') || 'PingThat');
+        data.set('_subject', `[${appName}] ${location.pathname}`);
+        if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = true;
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST', body: data,
+            headers: { Accept: 'application/json' },
+          });
+          if (res.ok) { showToast(MSG.success, false); form.reset(); }
+          else { showToast(MSG.error, true); }
+        } catch {
+          showToast(MSG.error, true);
+        } finally {
+          if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;
+        }
+      });
+    })();
+  </script>
+
+  <!-- Hero search filter (Nielsen audit PT F8). -->
+  <script>
+    const heroInput = document.getElementById('home-search') as HTMLInputElement | null;
+    const heroNoResults = document.getElementById('home-no-results');
+    if (heroInput) {
+      const apply = () => {
+        const q = heroInput.value.toLowerCase().trim();
+        let anyMatch = false;
+        document.querySelectorAll<HTMLElement>('.home-tool-card').forEach((el) => {
+          const text = el.dataset.toolSearch || '';
+          const match = !q || text.includes(q);
+          el.style.display = match ? '' : 'none';
+          if (match) anyMatch = true;
+        });
+        document.querySelectorAll<HTMLElement>('.home-group').forEach((section) => {
+          const visible = Array.from(section.querySelectorAll<HTMLElement>('.home-tool-card'))
+            .some((c) => c.style.display !== 'none');
+          section.style.display = visible ? '' : 'none';
+        });
+        if (heroNoResults) heroNoResults.classList.toggle('hidden', !q || anyMatch);
+      };
+      heroInput.addEventListener('input', apply);
+      heroInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && heroInput.value) {
+          heroInput.value = '';
+          apply();
+        }
+      });
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          heroInput.focus();
+          heroInput.select();
+        }
+      });
+    }
+  </script>
 </body>
 </html>

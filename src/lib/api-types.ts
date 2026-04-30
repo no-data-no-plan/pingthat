@@ -66,6 +66,11 @@ export interface SslCheckerResult {
   server: string | null;
   certificates: SslCertificate[];
   activeCertificate: SslCertificate | null;
+  /** Sources tried for CT log lookup, in order. Surfaced for diagnostics. */
+  ctSourceTried?: string[];
+  /** Non-fatal: CT log lookup failed or returned no certs. HTTPS/HSTS data
+   *  still valid. */
+  ctError?: string;
   error?: string;
 }
 

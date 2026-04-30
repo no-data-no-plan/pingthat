@@ -33,6 +33,8 @@ export interface ApiErrors {
 
   // ssl-checker
   httpsConnectionFailed: string;
+  ctLogsUnavailable: string;
+  noCertificatesFound: string;
 
   // redirect-checker
   redirectCheckFailed: string;
@@ -77,6 +79,8 @@ const errors: Record<SupportedLang, ApiErrors> = {
     couldNotFetchHeaders: 'Could not fetch headers',
 
     httpsConnectionFailed: 'HTTPS connection failed',
+    ctLogsUnavailable: 'Certificate transparency logs are temporarily unavailable. Try again in a moment.',
+    noCertificatesFound: 'No certificates found in CT logs for this domain.',
 
     redirectCheckFailed: 'Redirect check failed',
     redirectToBlockedHost: 'Redirect to blocked host',
@@ -114,6 +118,8 @@ const errors: Record<SupportedLang, ApiErrors> = {
     couldNotFetchHeaders: 'No se pudieron obtener las cabeceras',
 
     httpsConnectionFailed: 'Conexion HTTPS fallida',
+    ctLogsUnavailable: 'Los registros de transparencia de certificados no estan disponibles temporalmente. Reintenta en un momento.',
+    noCertificatesFound: 'No se encontraron certificados en los registros CT para este dominio.',
 
     redirectCheckFailed: 'Comprobacion de redireccion fallida',
     redirectToBlockedHost: 'Redireccion a host bloqueado',
