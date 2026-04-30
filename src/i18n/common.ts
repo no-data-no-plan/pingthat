@@ -14,6 +14,8 @@ const common = {
     generateStrong: "Generate Strong",
     show: "Show",
     hide: "Hide",
+    cancel: "Cancel",
+    cancelled: "Cancelled",
 
     // Errors
     requestTimeout: "Request timed out. Please try again.",
@@ -66,6 +68,8 @@ const common = {
     generateStrong: "Generar Segura",
     show: "Mostrar",
     hide: "Ocultar",
+    cancel: "Cancelar",
+    cancelled: "Cancelado",
 
     // Errors
     requestTimeout: "La petici\u00f3n ha tardado demasiado. Int\u00e9ntalo de nuevo.",

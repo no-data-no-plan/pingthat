@@ -1238,7 +1238,7 @@ export const pageI18n: Record<
   },
   "site-speed": {
     en: {
-      title: "Site Speed Check â Core Web Vitals",
+      title: "Site Speed Check — Core Web Vitals",
       description: "Check LCP, INP, CLS, FCP, and TTFB from real Chrome users. Backed by the Chrome UX Report. Free, instant.",
       seoHeading: "About this tool",
       seoText: "Enter a URL or origin to fetch its Core Web Vitals from the Chrome User Experience Report. Results are the 75th percentile across real Chrome users over the past 28 days — the exact dataset Google uses for ranking signals. Lab tests (Lighthouse, WebPageTest) run a single synthetic probe; this tool shows what actual visitors experienced.",
