@@ -37,6 +37,27 @@ describe('pageI18n completeness', () => {
     }
   });
 
+  // Helper: a pageI18n array is non-empty AND every item is either a non-empty
+  // string (seoFeatures, howSteps, useCases) OR a {q,a} FAQ object with non-
+  // empty q AND a fields. The original test only handled strings → failed on
+  // the first tool iterated (my-ip) because faqs is an array of objects.
+  function assertArrayItemsNonEmpty(
+    items: unknown[],
+    label: string,
+  ) {
+    for (const item of items) {
+      if (typeof item === 'string') {
+        expect(item.trim().length, `${label} has empty string item`).toBeGreaterThan(0);
+      } else if (item && typeof item === 'object' && 'q' in item && 'a' in item) {
+        const faq = item as { q: unknown; a: unknown };
+        expect(typeof faq.q === 'string' && faq.q.trim().length > 0, `${label} FAQ has empty q`).toBe(true);
+        expect(typeof faq.a === 'string' && faq.a.trim().length > 0, `${label} FAQ has empty a`).toBe(true);
+      } else {
+        throw new Error(`${label} has unrecognized item type: ${JSON.stringify(item)}`);
+      }
+    }
+  }
+
   it('no empty values in pageI18n EN', () => {
     for (const [id, langs] of Object.entries(pageI18n)) {
       for (const [key, val] of Object.entries(langs.en)) {
@@ -45,9 +66,7 @@ describe('pageI18n completeness', () => {
         }
         if (Array.isArray(val)) {
           expect(val.length, `pageI18n["${id}"].en.${key} is empty array`).toBeGreaterThan(0);
-          for (const item of val) {
-            expect(typeof item === 'string' && item.trim().length > 0, `pageI18n["${id}"].en.${key} has empty array item`).toBe(true);
-          }
+          assertArrayItemsNonEmpty(val, `pageI18n["${id}"].en.${key}`);
         }
       }
     }
@@ -61,9 +80,7 @@ describe('pageI18n completeness', () => {
         }
         if (Array.isArray(val)) {
           expect(val.length, `pageI18n["${id}"].es.${key} is empty array`).toBeGreaterThan(0);
-          for (const item of val) {
-            expect(typeof item === 'string' && item.trim().length > 0, `pageI18n["${id}"].es.${key} has empty array item`).toBe(true);
-          }
+          assertArrayItemsNonEmpty(val, `pageI18n["${id}"].es.${key}`);
         }
       }
     }
