@@ -15,6 +15,7 @@
   let error = $state("");
   let result = $state<RedirectCheckerResult | null>(null);
   let requestId = $state(0);
+  let abortController: AbortController | null = null;
 
   async function check() {
     if (!url.trim()) return;
@@ -26,10 +27,14 @@
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;
+    abortController?.abort();
+    abortController = new AbortController();
+    const ctrl = abortController;
+    const timeoutId = setTimeout(() => ctrl.abort(), 15000);
     try {
       const res = await fetch(`/api/redirect-checker?lang=${lang}`, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: url.trim() }), signal: AbortSignal.timeout(15000),
+        body: JSON.stringify({ url: url.trim() }), signal: ctrl.signal,
       });
       if (myId !== requestId) return;
       if (!res.ok) {
@@ -44,13 +49,23 @@
     } catch (e: any) {
       if (myId !== requestId) return;
       if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
-        error = c.requestTimeout;
+        if (ctrl.signal.reason === 'user-cancelled') {
+          error = "";
+        } else {
+          error = c.requestTimeout;
+        }
       } else {
         error = t.checkFailed;
       }
     } finally {
+      clearTimeout(timeoutId);
       if (myId === requestId) loading = false;
     }
+  }
+
+  function cancel() {
+    if (!loading) return;
+    abortController?.abort('user-cancelled');
   }
 
   function statusColor(status: number): string {
@@ -65,7 +80,22 @@
     <div class="card-body space-y-3">
       <label for="redirect-url" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.urlLabel}</label>
       <input id="redirect-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={url} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && check()} style="width: 100%;" />
-      <button class="btn-primary" onclick={check} disabled={loading || !url.trim()}>{loading ? t.checking : t.check}</button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-primary" onclick={check} disabled={loading || !url.trim()} style="flex: 1;">{loading ? t.checking : t.check}</button>
+        {#if loading}
+          <button type="button" onclick={cancel} aria-label={c.cancel}
+                  style="padding: 0 16px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); border-radius: 4px; cursor: pointer;">
+            {c.cancel}
+          </button>
+        {/if}
+      </div>
+      {#if loading}
+        <div role="status" aria-live="polite"
+             style="font-size: 12px; color: var(--color-text-muted); display: flex; align-items: center; gap: 8px; padding-top: 4px;">
+          <span class="pt-spinner" aria-hidden="true"></span>
+          <span>{t.checking}</span>
+        </div>
+      {/if}
     </div>
   </div>
 
@@ -99,3 +129,18 @@
   {/if}
   </div>
 </div>
+
+<style>
+  .pt-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: pt-spinner-spin 0.8s linear infinite;
+  }
+  @keyframes pt-spinner-spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
