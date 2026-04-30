@@ -52,9 +52,12 @@
     } catch (e: any) {
       if (myId !== requestId) return;
       if (e?.name === 'AbortError' || e?.name === 'TimeoutError') {
-        // Distinguish user-cancelled (no error message) from a real timeout.
-        if (ctrl.signal.aborted && ctrl.signal.reason !== undefined) {
-          // Manual cancel from cancel(); leave error empty so the UI clears.
+        // Distinguish user-cancelled from a 30s timeout. `controller.abort()`
+        // with no arg sets `signal.reason` to a default DOMException — so
+        // both paths have a non-undefined reason. Discriminate by the
+        // STRING reason cancel() passes ('user-cancelled') instead.
+        // Round-2 review fix 2026-04-30.
+        if (ctrl.signal.reason === 'user-cancelled') {
           error = "";
         } else {
           error = c.requestTimeout;
@@ -114,12 +117,9 @@
       {#if loading}
         <div role="status" aria-live="polite"
              style="font-size: 12px; color: var(--color-text-muted); display: flex; align-items: center; gap: 8px; padding-top: 4px;">
-          <span style="display: inline-block; width: 12px; height: 12px; border: 2px solid var(--color-border); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 0.8s linear infinite;" aria-hidden="true"></span>
+          <span class="ssl-spinner" aria-hidden="true"></span>
           <span>{t.checking}</span>
         </div>
-        <style>
-          @keyframes spin { to { transform: rotate(360deg); } }
-        </style>
       {/if}
     </div>
   </div>
@@ -231,3 +231,21 @@
   {/if}
   </div>
 </div>
+
+<style>
+  /* Top-level scoped style (Round-2 review fix 2026-04-30): a <style> tag
+     inside an {#if} block injects a raw <style> node on every mount and
+     never cleans up — duplicate @keyframes accumulate in the DOM head. */
+  .ssl-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: ssl-spinner-spin 0.8s linear infinite;
+  }
+  @keyframes ssl-spinner-spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
