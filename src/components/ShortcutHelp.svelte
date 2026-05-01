@@ -60,7 +60,7 @@
       // Forward to a focusable search input when one exists. Common
       // selectors used across the AY tool pages + home.
       const search = document.querySelector<HTMLInputElement>(
-        "input[type=search], input[id=tool-search], input[placeholder*=Search]",
+        "input[id=sidebar-search], input[type=search], input[placeholder*=Search]",
       );
       if (search) {
         e.preventDefault();
