@@ -2,6 +2,7 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getJwtDecoder } from '../i18n/components';
+  import { verifyJwt, type VerifyResult, type JwtAlg } from '../lib/jwt-verify';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -9,6 +10,9 @@
 
   let token = $state("");
   let copiedSection = $state("");
+  let verifyKey = $state("");
+  let verifyResult = $state<VerifyResult | null>(null);
+  let verifying = $state(false);
 
   interface DecodedJwt {
     header: any;
@@ -100,6 +104,61 @@
   const noneAlgBody = $derived(lang === 'es'
     ? 'Este token usa alg=none, lo que significa que no tiene firma. Cualquiera puede haber creado o modificado las claims. No confíes en este token.'
     : 'This token uses alg=none, meaning it has NO signature. Anyone could have created or modified the claims. Do not trust this token.');
+
+  // Detected algorithm drives the key-input label + placeholder so users know
+  // whether to paste a shared secret (HS256) or a PEM public key (RS256/ES256).
+  const detectedAlg = $derived.by((): JwtAlg | null => {
+    const a = decoded?.header?.alg;
+    if (a === "HS256" || a === "RS256" || a === "ES256") return a;
+    return null;
+  });
+
+  const keyLabel = $derived(
+    detectedAlg === "HS256" ? t.verifyKeyLabelHs
+      : detectedAlg === "RS256" || detectedAlg === "ES256" ? t.verifyKeyLabelPem
+      : t.verifyKeyLabelGeneric,
+  );
+  const keyPlaceholder = $derived(
+    detectedAlg === "HS256" ? t.verifyKeyPlaceholderHs : t.verifyKeyPlaceholderPem,
+  );
+
+  // Debounced live verification. Re-runs whenever the token or key changes,
+  // cancels the previous timer if still pending, and discards stale results
+  // so a fast typer never sees an out-of-order response.
+  $effect(() => {
+    const tk = token.trim();
+    const k = verifyKey;
+    if (!tk || !k.trim()) {
+      verifyResult = null;
+      verifying = false;
+      return;
+    }
+    let cancelled = false;
+    verifying = true;
+    const id = setTimeout(async () => {
+      const r = await verifyJwt(tk, k);
+      if (cancelled) return;
+      verifyResult = r;
+      verifying = false;
+    }, 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
+  });
+
+  function verifyMessage(r: VerifyResult): string {
+    if (r.ok) return t.verifyValid;
+    switch (r.reason) {
+      case "signature-mismatch": return t.verifyInvalidSignature;
+      case "invalid-key-format": return t.verifyInvalidKeyFormat;
+      case "empty-key": return t.verifyEmptyKey;
+      case "alg-none-rejected": return t.verifyAlgNone;
+      case "unsupported-alg": return `${t.verifyAlgUnsupported}${r.detail ? ` (${r.detail})` : ""}`;
+      case "alg-mismatch": return t.verifyAlgMismatch;
+      case "malformed-token": return t.verifyMalformed;
+    }
+  }
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
@@ -196,6 +255,49 @@
           <p style="font-size: 11px; color: var(--color-text-dim); margin-top: 8px;">
             {t.signatureNote}
           </p>
+        </div>
+      </div>
+
+      <!-- Verify Signature -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">{t.verifyTitle} <InfoTip text={t.verifyTip} /></span>
+          {#if detectedAlg}
+            <span class="badge" style="font-family: monospace; background: var(--color-surface2); color: var(--color-text-muted); border: 1px solid var(--color-border2);">{detectedAlg}</span>
+          {/if}
+        </div>
+        <div class="card-body" style="display: flex; flex-direction: column; gap: 10px;">
+          <label for="jwt-verify-key" style="font-size: 12px; color: var(--color-text-muted);">{keyLabel}</label>
+          <textarea
+            id="jwt-verify-key"
+            bind:value={verifyKey}
+            placeholder={keyPlaceholder}
+            rows={detectedAlg === "HS256" ? 2 : 5}
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            style="width: 100%; font-family: monospace; font-size: 12px; resize: vertical; background: var(--color-surface2); border: 1px solid var(--color-border2); border-radius: 8px; padding: 12px; color: var(--color-text);"
+          ></textarea>
+          <p style="font-size: 11px; color: var(--color-text-dim); margin: 0;">{t.verifyAutoNote}</p>
+
+          {#if verifying}
+            <div role="status" aria-live="polite" style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 8px; background: var(--color-surface2); border: 1px solid var(--color-border2); font-size: 13px; color: var(--color-text-muted);">
+              {t.verifyChecking}
+            </div>
+          {:else if verifyResult}
+            {#if verifyResult.ok}
+              <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-accent-dim); border: 1px solid rgba(16, 185, 129, 0.35);">
+                <p style="font-size: 13px; color: var(--color-accent-fg); margin: 0; font-weight: 500;">
+                  {t.verifyValid} <span style="font-family: monospace; opacity: 0.7;">({verifyResult.alg})</span>
+                </p>
+                <p style="font-size: 11px; color: var(--color-text-muted); margin: 4px 0 0;">{t.verifyValidNote}</p>
+              </div>
+            {:else}
+              <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-red-dim); border: 1px solid rgba(255, 107, 107, 0.35);">
+                <p style="font-size: 13px; color: var(--color-red); margin: 0; font-weight: 500;">{verifyMessage(verifyResult)}</p>
+              </div>
+            {/if}
+          {/if}
         </div>
       </div>
     {/if}
