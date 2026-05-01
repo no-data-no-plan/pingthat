@@ -242,10 +242,29 @@ select {
   transition: border-color 0.15s;
 }
 
+/*
+  WCAG 2.4.7 + 2.4.11 AA — manual audit 2026-05-01 (PT F5) flagged the
+  reliance on Chromium's 1px default focus ring as fragile on the dark
+  theme + on result-chip tints. Add a global :focus-visible cascade that
+  ships an explicit 2px accent outline, while keeping the border-tint
+  on mouse :focus for visual continuity.
+*/
 input:focus,
 textarea:focus,
 select:focus {
-  outline: none;
+  border-color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
   border-color: var(--color-accent);
 }
 
