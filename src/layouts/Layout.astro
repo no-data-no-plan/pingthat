@@ -6,6 +6,7 @@ import LangToggle from "../components/LangToggle.astro";
 import CrossLinks from "../components/CrossLinks.astro";
 import CompareLinks from "../components/CompareLinks.astro";
 import CookieConsent from "../components/CookieConsent.astro";
+import ShortcutHelp from "../components/ShortcutHelp.svelte";
 import { tools } from "../lib/tools";
 import type { Lang } from "../i18n/index";
 import { getCommon } from "../i18n/common";
@@ -523,5 +524,10 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
       });
     })();
   </script>
+
+  <!-- Global keyboard-shortcut help (Nielsen re-audit 2026-05-01: H7).
+       Same pattern shipped to AY/JC. client:only because the listener
+       attaches to document at onMount. -->
+  <ShortcutHelp client:only="svelte" lang={lang} />
 </body>
 </html>

@@ -5,6 +5,8 @@
   import { isValidUrl, getValidationError } from '../lib/validation';
   import type { HttpHeadersResult } from '../lib/api-types';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
+  import { onMount } from 'svelte';
+  import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -18,6 +20,14 @@
   let requestId = $state(0);
   // User-cancellable abort handle (Phase 6.5 — propagating SslChecker pattern).
   let abortController: AbortController | null = null;
+  let recent = $state<string[]>([]);
+
+  onMount(() => {
+    const q = readQuery(["url"]);
+    if (q.url) url = q.url;
+    recent = getRecent("http-headers");
+    if (q.url) check();
+  });
 
   async function check() {
     if (!url.trim()) return;
@@ -26,6 +36,9 @@
       result = null;
       return;
     }
+    updateQuery({ url: url.trim() });
+    pushRecent("http-headers", url.trim());
+    recent = getRecent("http-headers");
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;
@@ -83,6 +96,14 @@
     <div class="card-body space-y-3">
       <label for="headers-url" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.urlLabel}</label>
       <input id="headers-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={url} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && check()} style="width: 100%;" />
+      {#if recent.length > 0}
+        <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;" aria-label={lang === 'es' ? 'Consultas recientes' : 'Recent queries'}>
+          <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{lang === 'es' ? 'Recientes' : 'Recent'}</span>
+          {#each recent.slice(0, 5) as q}
+            <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 11px; min-height: auto;" onclick={() => { url = q; check(); }}>{q}</button>
+          {/each}
+        </div>
+      {/if}
       <div style="display: flex; gap: 8px;">
         <button class="btn-primary" onclick={check} disabled={loading || !url.trim()} style="flex: 1;">{loading ? t.checking : t.check}</button>
         {#if loading}

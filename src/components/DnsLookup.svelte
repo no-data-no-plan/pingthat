@@ -1,6 +1,8 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getDnsLookup } from '../i18n/components';
+  import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -12,8 +14,18 @@
   let loading = $state(false);
   let error = $state("");
   let requestId = $state(0);
+  let recent = $state<string[]>([]);
 
   const types = ["A", "AAAA", "CNAME", "MX", "NS", "TXT", "SOA", "SRV"];
+
+  onMount(() => {
+    // Hydrate from URL (?domain=...&type=...) for shareable links.
+    const q = readQuery(["domain", "type"]);
+    if (q.domain) domain = q.domain;
+    if (q.type && types.includes(q.type)) recordType = q.type;
+    recent = getRecent("dns-lookup");
+    if (q.domain) lookup();
+  });
 
   const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -30,6 +42,13 @@
       loading = false;
       return;
     }
+
+    // Mirror the input state into the URL + recent history. Done here
+    // (not on every keystroke) so only successful-format queries are
+    // persisted.
+    updateQuery({ domain: domain.trim(), type: recordType });
+    pushRecent("dns-lookup", domain.trim());
+    recent = getRecent("dns-lookup");
 
     try {
       const res = await fetch(
@@ -67,6 +86,14 @@
     <div class="card-body space-y-3">
       <label for="dns-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
       <input id="dns-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
+      {#if recent.length > 0}
+        <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;" aria-label={lang === 'es' ? 'Consultas recientes' : 'Recent queries'}>
+          <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{lang === 'es' ? 'Recientes' : 'Recent'}</span>
+          {#each recent.slice(0, 5) as q}
+            <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 11px; min-height: auto;" onclick={() => { domain = q; lookup(); }}>{q}</button>
+          {/each}
+        </div>
+      {/if}
       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;" role="group" aria-label={t.recordType}>
         <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.recordType}</span>
         {#each types as rt}

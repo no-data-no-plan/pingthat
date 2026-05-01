@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getSslChecker } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidDomain, getValidationError } from '../lib/validation';
   import type { SslCheckerResult } from '../lib/api-types';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
+  import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -20,6 +22,14 @@
   // we relied on AbortSignal.timeout(30s); now we own the AbortController
   // so the Cancel button can abort imperatively.
   let abortController: AbortController | null = null;
+  let recent = $state<string[]>([]);
+
+  onMount(() => {
+    const q = readQuery(["domain"]);
+    if (q.domain) domain = q.domain;
+    recent = getRecent("ssl-checker");
+    if (q.domain) check();
+  });
 
   async function check() {
     if (!domain.trim()) return;
@@ -28,6 +38,9 @@
       result = null;
       return;
     }
+    updateQuery({ domain: domain.trim() });
+    pushRecent("ssl-checker", domain.trim());
+    recent = getRecent("ssl-checker");
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;
@@ -97,6 +110,14 @@
     <div class="card-body space-y-3">
       <label for="ssl-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
       <input id="ssl-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeypress={(e) => e.key === 'Enter' && check()} style="width: 100%;" />
+      {#if recent.length > 0}
+        <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;" aria-label={lang === 'es' ? 'Consultas recientes' : 'Recent queries'}>
+          <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{lang === 'es' ? 'Recientes' : 'Recent'}</span>
+          {#each recent.slice(0, 5) as q}
+            <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 11px; min-height: auto;" onclick={() => { domain = q; check(); }}>{q}</button>
+          {/each}
+        </div>
+      {/if}
       <div style="display: flex; gap: 8px;">
         <button class="btn-primary" onclick={check} disabled={loading || !domain.trim()} style="flex: 1;">{loading ? t.checking : t.check}</button>
         {#if loading}
