@@ -170,14 +170,18 @@
   <!-- Input -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">{t.jwtToken}</span>
+      <label for="jwt-token-input" class="card-title">{t.jwtToken}</label>
       <button class="btn-secondary" onclick={() => (token = sampleJwt)}>{t.loadExample}</button>
     </div>
     <div class="card-body">
       <textarea
+        id="jwt-token-input"
         bind:value={token}
         placeholder={t.placeholder}
         rows="4"
+        spellcheck="false"
+        autocapitalize="off"
+        autocomplete="off"
         style="width: 100%; font-family: monospace; font-size: 12px; resize: vertical; background: var(--color-surface2); border: 1px solid var(--color-border2); border-radius: 8px; padding: 12px; color: var(--color-text);"
       ></textarea>
     </div>
