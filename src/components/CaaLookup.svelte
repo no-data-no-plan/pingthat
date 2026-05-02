@@ -1,6 +1,8 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getCaaLookup } from '../i18n/components';
+  import { readQuery, updateQuery } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -67,6 +69,15 @@
     return { records, hasAuthority: authority.length > 0 };
   }
 
+  // CW-PT-04 / Theme A (2026-05-02): Hydrate from URL.
+  onMount(() => {
+    const q = readQuery(["domain"]);
+    if (q.domain) {
+      domain = q.domain;
+      lookup();
+    }
+  });
+
   async function lookup() {
     if (!domain.trim()) return;
     requestId++;
@@ -79,6 +90,7 @@
       loading = false;
       return;
     }
+    updateQuery({ domain: target });
 
     try {
       // Walk up the tree: CAA policy applies from nearest ancestor with records

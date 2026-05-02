@@ -26,10 +26,39 @@ const relatedTools = relatedToolIds
     <div class="flex flex-wrap gap-2 mt-3">
       <span class="text-[10px]" style="color: var(--color-text-dim);">{c.related}</span>
       {relatedTools.map((tool) => (
-        <a href={`${prefix}${tool.path}`} class="text-[10px] underline" style="color: var(--color-accent-fg);">
+        <a href={`${prefix}${tool.path}`} class="text-[10px] underline" data-related-tool style="color: var(--color-accent-fg);">
           {toolNamesI18n[tool.id]?.[lang] ?? tool.name}
         </a>
       ))}
     </div>
   )}
 </section>
+
+<script>
+  // Carry shareable query params (domain/host/url) into related-tool links so
+  // DNS → WHOIS → SSL → DNSSEC chains preserve the user's input context.
+  // CW-PT-04 / Theme A starter (2026-05-02). Pure client-side enhancement —
+  // SSR markup stays plain anchors, so noscript + crawlers see the canonical
+  // related-tool URLs.
+  (() => {
+    const carryKeys = ['domain', 'host', 'url'];
+    const here = new URLSearchParams(window.location.search);
+    const carry = new URLSearchParams();
+    for (const k of carryKeys) {
+      const v = here.get(k);
+      if (v) carry.set(k, v);
+    }
+    if (!Array.from(carry).length) return;
+    document.querySelectorAll<HTMLAnchorElement>('a[data-related-tool]').forEach((a) => {
+      try {
+        const url = new URL(a.href);
+        for (const [k, v] of carry) {
+          if (!url.searchParams.has(k)) url.searchParams.set(k, v);
+        }
+        a.href = url.toString();
+      } catch {
+        /* malformed href — leave alone */
+      }
+    });
+  })();
+</script>

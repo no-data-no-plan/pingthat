@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getPortScan } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidDomain, getValidationError } from '../lib/validation';
   import type { PortScanResult, PortScanEntry } from '../lib/api-types';
+  import { readQuery, updateQuery } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -16,6 +18,17 @@
   let error = $state("");
   let result = $state<PortScanResult | null>(null);
   let requestId = $state(0);
+
+  // CW-PT-04 / Theme A (2026-05-02): Hydrate from URL so chains preserve
+  // host context. Accepts ?domain= as well as ?host= for cross-tool handoff.
+  onMount(() => {
+    const q = readQuery(["host", "domain"]);
+    const incoming = q.host || q.domain;
+    if (incoming) {
+      host = incoming;
+      scan();
+    }
+  });
 
   type PortStatus = "open" | "closed" | "filtered" | "unverifiable";
 
@@ -62,6 +75,7 @@
       return;
     }
 
+    updateQuery({ host: host.trim() });
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;

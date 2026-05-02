@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getEmailAuth } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidDomain, getValidationError } from '../lib/validation';
   import type { EmailAuthResult } from '../lib/api-types';
+  import { readQuery, updateQuery } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -11,6 +13,15 @@
   const c = $derived(getCommon(lang));
 
   let domain = $state("");
+
+  // CW-PT-04 / Theme A (2026-05-02): Hydrate from URL.
+  onMount(() => {
+    const q = readQuery(["domain"]);
+    if (q.domain) {
+      domain = q.domain;
+      check();
+    }
+  });
   let loading = $state(false);
   let error = $state("");
   let result = $state<EmailAuthResult | null>(null);
@@ -35,6 +46,7 @@
       result = null;
       return;
     }
+    updateQuery({ domain: domain.trim() });
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;

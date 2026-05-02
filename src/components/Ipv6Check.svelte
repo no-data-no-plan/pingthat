@@ -1,6 +1,8 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getIpv6Check } from '../i18n/components';
+  import { readQuery, updateQuery } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -46,6 +48,15 @@
     return { label, records, hasIpv6, total: records.length };
   }
 
+  // CW-PT-04 / Theme A (2026-05-02): Hydrate from URL.
+  onMount(() => {
+    const q = readQuery(["domain"]);
+    if (q.domain) {
+      domain = q.domain;
+      runCheck();
+    }
+  });
+
   async function runCheck() {
     if (!domain.trim()) return;
     requestId++;
@@ -58,6 +69,7 @@
       loading = false;
       return;
     }
+    updateQuery({ domain: target });
 
     try {
       const apex = await lookupHost(target);
