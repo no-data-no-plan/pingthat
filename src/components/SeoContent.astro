@@ -40,24 +40,40 @@ const relatedTools = relatedToolIds
   // CW-PT-04 / Theme A starter (2026-05-02). Pure client-side enhancement —
   // SSR markup stays plain anchors, so noscript + crawlers see the canonical
   // related-tool URLs.
+  //
+  // Rewrite is **lazy** (per-link, on pointer/focus) so it picks up params the
+  // user added after page load via in-tool lookups (which call updateQuery →
+  // replaceState). Rewriting once on DOMContentLoaded would miss that flow.
   (() => {
-    const carryKeys = ['domain', 'host', 'url'];
-    const here = new URLSearchParams(window.location.search);
-    const carry = new URLSearchParams();
-    for (const k of carryKeys) {
-      const v = here.get(k);
-      if (v) carry.set(k, v);
-    }
-    if (!Array.from(carry).length) return;
-    document.querySelectorAll<HTMLAnchorElement>('a[data-related-tool]').forEach((a) => {
+    const CARRY_KEYS = ['domain', 'host', 'url'];
+    const ORIGINAL_HREF = '__ptOriginalHref';
+
+    function rewrite(a: HTMLAnchorElement) {
       try {
-        const url = new URL(a.href);
-        for (const [k, v] of carry) {
-          if (!url.searchParams.has(k)) url.searchParams.set(k, v);
+        const original = (a as any)[ORIGINAL_HREF] ?? a.getAttribute('href') ?? '';
+        (a as any)[ORIGINAL_HREF] = original;
+        const url = new URL(original, window.location.href);
+        const here = new URLSearchParams(window.location.search);
+        let touched = false;
+        for (const k of CARRY_KEYS) {
+          const v = here.get(k);
+          if (v && !url.searchParams.has(k)) {
+            url.searchParams.set(k, v);
+            touched = true;
+          }
         }
-        a.href = url.toString();
+        if (touched) a.href = url.toString();
       } catch {
         /* malformed href — leave alone */
+      }
+    }
+
+    const links = document.querySelectorAll<HTMLAnchorElement>('a[data-related-tool]');
+    if (!links.length) return;
+    const events = ['pointerdown', 'focus', 'mouseenter', 'touchstart', 'click'];
+    links.forEach((a) => {
+      for (const ev of events) {
+        a.addEventListener(ev, () => rewrite(a), { passive: true });
       }
     });
   })();
