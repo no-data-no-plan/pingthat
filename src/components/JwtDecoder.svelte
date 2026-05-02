@@ -121,6 +121,14 @@
   const keyPlaceholder = $derived(
     detectedAlg === "HS256" ? t.verifyKeyPlaceholderHs : t.verifyKeyPlaceholderPem,
   );
+  // CW-PT-01 + CW-PT-02 (2026-05-02): Verify panel renders even before
+  // a token is pasted so users can discover the workflow.
+  const verifyEnabled = $derived(!!decoded && !decoded.error);
+  const keyHint = $derived(
+    detectedAlg === "HS256" ? t.verifyKeyHintHs
+      : (detectedAlg === "RS256" || detectedAlg === "ES256") ? t.verifyKeyHintPem
+      : "",
+  );
 
   // Debounced live verification. Re-runs whenever the token or key changes,
   // cancels the previous timer if still pending, and discards stale results
@@ -262,48 +270,59 @@
         </div>
       </div>
 
-      <!-- Verify Signature -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">{t.verifyTitle} <InfoTip text={t.verifyTip} /></span>
-          {#if detectedAlg}
-            <span class="badge" style="font-family: monospace; background: var(--color-surface2); color: var(--color-text-muted); border: 1px solid var(--color-border2);">{detectedAlg}</span>
-          {/if}
-        </div>
-        <div class="card-body" style="display: flex; flex-direction: column; gap: 10px;">
-          <label for="jwt-verify-key" style="font-size: 12px; color: var(--color-text-muted);">{keyLabel}</label>
-          <textarea
-            id="jwt-verify-key"
-            bind:value={verifyKey}
-            placeholder={keyPlaceholder}
-            rows={detectedAlg === "HS256" ? 2 : 5}
-            spellcheck="false"
-            autocapitalize="off"
-            autocomplete="off"
-            style="width: 100%; font-family: monospace; font-size: 12px; resize: vertical; background: var(--color-surface2); border: 1px solid var(--color-border2); border-radius: 8px; padding: 12px; color: var(--color-text);"
-          ></textarea>
-          <p style="font-size: 11px; color: var(--color-text-dim); margin: 0;">{t.verifyAutoNote}</p>
-
-          {#if verifying}
-            <div role="status" aria-live="polite" style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 8px; background: var(--color-surface2); border: 1px solid var(--color-border2); font-size: 13px; color: var(--color-text-muted);">
-              {t.verifyChecking}
-            </div>
-          {:else if verifyResult}
-            {#if verifyResult.ok}
-              <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-accent-dim); border: 1px solid rgba(16, 185, 129, 0.35);">
-                <p style="font-size: 13px; color: var(--color-accent-fg); margin: 0; font-weight: 500;">
-                  {t.verifyValid} <span style="font-family: monospace; opacity: 0.7;">({verifyResult.alg})</span>
-                </p>
-                <p style="font-size: 11px; color: var(--color-text-muted); margin: 4px 0 0;">{t.verifyValidNote}</p>
-              </div>
-            {:else}
-              <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-red-dim); border: 1px solid rgba(255, 107, 107, 0.35);">
-                <p style="font-size: 13px; color: var(--color-red); margin: 0; font-weight: 500;">{verifyMessage(verifyResult)}</p>
-              </div>
-            {/if}
-          {/if}
-        </div>
-      </div>
     {/if}
   {/if}
+
+  <!-- Verify Signature — always rendered so the workflow is discoverable
+       even before a token is pasted. CW-PT-01 + CW-PT-02 (2026-05-02). -->
+  <div class="card" style={verifyEnabled ? "" : "opacity: 0.6;"}>
+    <div class="card-header">
+      <span class="card-title">{t.verifyTitle} <InfoTip text={t.verifyTip} /></span>
+      {#if verifyEnabled && detectedAlg}
+        <span class="badge" style="font-family: monospace; background: var(--color-surface2); color: var(--color-text-muted); border: 1px solid var(--color-border2);">alg: {detectedAlg}</span>
+      {/if}
+    </div>
+    <div class="card-body" style="display: flex; flex-direction: column; gap: 10px;">
+      <label for="jwt-verify-key" style="font-size: 12px; color: var(--color-text-muted);">{keyLabel}</label>
+      <textarea
+        id="jwt-verify-key"
+        bind:value={verifyKey}
+        placeholder={keyPlaceholder}
+        rows={detectedAlg === "HS256" ? 2 : 5}
+        spellcheck="false"
+        autocapitalize="off"
+        autocomplete="off"
+        disabled={!verifyEnabled}
+        style="width: 100%; font-family: monospace; font-size: 12px; resize: vertical; background: var(--color-surface2); border: 1px solid var(--color-border2); border-radius: 8px; padding: 12px; color: var(--color-text);"
+      ></textarea>
+      <p style="font-size: 11px; color: var(--color-text-dim); margin: 0;">{t.verifyAutoNote}</p>
+
+      {#if !verifyEnabled}
+        <div role="status" aria-live="polite" style="padding: 10px 14px; border-radius: 8px; background: var(--color-surface2); border: 1px solid var(--color-border2); font-size: 12px; color: var(--color-text-muted);">
+          {t.verifyNoTokenYet}
+        </div>
+      {:else if !verifyKey.trim()}
+        <div role="status" aria-live="polite" style="padding: 10px 14px; border-radius: 8px; background: var(--color-surface2); border: 1px solid var(--color-border2); font-size: 12px; color: var(--color-text-muted);">
+          {keyHint || t.verifyEmptyKey}
+        </div>
+      {:else if verifying}
+        <div role="status" aria-live="polite" style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 8px; background: var(--color-surface2); border: 1px solid var(--color-border2); font-size: 13px; color: var(--color-text-muted);">
+          {t.verifyChecking}
+        </div>
+      {:else if verifyResult}
+        {#if verifyResult.ok}
+          <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-accent-dim); border: 1px solid rgba(16, 185, 129, 0.35);">
+            <p style="font-size: 13px; color: var(--color-accent-fg); margin: 0; font-weight: 500;">
+              {t.verifyValid} <span style="font-family: monospace; opacity: 0.7;">({verifyResult.alg})</span>
+            </p>
+            <p style="font-size: 11px; color: var(--color-text-muted); margin: 4px 0 0;">{t.verifyValidNote}</p>
+          </div>
+        {:else}
+          <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-red-dim); border: 1px solid rgba(255, 107, 107, 0.35);">
+            <p style="font-size: 13px; color: var(--color-red); margin: 0; font-weight: 500;">{verifyMessage(verifyResult)}</p>
+          </div>
+        {/if}
+      {/if}
+    </div>
+  </div>
 </div>
