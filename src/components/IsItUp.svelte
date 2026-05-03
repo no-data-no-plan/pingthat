@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getIsItUp } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidUrl, getValidationError } from '../lib/validation';
+  import { readQuery, updateQuery } from '../lib/share-state';
   import type { CheckSiteResult } from '../lib/api-types';
 
   interface Props { lang?: Lang; }
@@ -16,6 +18,15 @@
   let result = $state<CheckSiteResult | null>(null);
   let requestId = $state(0);
 
+  // CW-PT-04 / Theme A (2026-05-03): Hydrate from URL.
+  onMount(() => {
+    const q = readQuery(["url"]);
+    if (q.url) {
+      url = q.url;
+      check();
+    }
+  });
+
   async function check() {
     if (!url.trim()) return;
     if (!isValidUrl(url.trim())) {
@@ -26,6 +37,7 @@
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;
+    updateQuery({ url: url.trim() });
     try {
       const res = await fetch(`/api/check-site?lang=${lang}`, {
         method: "POST", headers: { "Content-Type": "application/json" },

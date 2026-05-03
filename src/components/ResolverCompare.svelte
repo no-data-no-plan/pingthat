@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getResolverCompare } from '../i18n/components';
   import { getCommon } from '../i18n/common';
+  import { readQuery, updateQuery } from '../lib/share-state';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -21,11 +23,21 @@
 
   const types = ["A", "AAAA", "MX", "NS", "TXT", "CNAME"] as const;
 
+  // CW-PT-04 / Theme A (2026-05-03): Hydrate from URL.
+  onMount(() => {
+    const q = readQuery(["domain"]);
+    if (q.domain) {
+      domain = q.domain;
+      compare();
+    }
+  });
+
   async function compare() {
     if (!domain.trim()) return;
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;
+    updateQuery({ domain: domain.trim() });
     try {
       const res = await fetch(`/api/resolver-compare?lang=${lang}`, {
         method: "POST",

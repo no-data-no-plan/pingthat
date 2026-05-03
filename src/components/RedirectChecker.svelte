@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
   import { getRedirectChecker } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidUrl, getValidationError } from '../lib/validation';
+  import { readQuery, updateQuery } from '../lib/share-state';
   import type { RedirectCheckerResult } from '../lib/api-types';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
 
@@ -18,6 +20,15 @@
   let requestId = $state(0);
   let abortController: AbortController | null = null;
 
+  // CW-PT-04 / Theme A (2026-05-03): Hydrate from URL.
+  onMount(() => {
+    const q = readQuery(["url"]);
+    if (q.url) {
+      url = q.url;
+      check();
+    }
+  });
+
   async function check() {
     if (!url.trim()) return;
     if (!isValidUrl(url.trim())) {
@@ -28,6 +39,7 @@
     requestId++;
     const myId = requestId;
     loading = true; error = ""; result = null;
+    updateQuery({ url: url.trim() });
     abortController?.abort();
     abortController = new AbortController();
     const ctrl = abortController;
