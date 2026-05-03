@@ -303,6 +303,18 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">Buy me a coffee</a>
         </span>
       </div>
+      <!-- Identity strip — Stanford Web Credibility (T-02/T-04/T-06).
+           Mirrors the strip in Layout.astro so the homepage and the
+           tool-page chrome surface the same trust signals. -->
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2" style="color: var(--color-text-muted); font-size: 11px;">
+        <span>{c.footerMaintainedBy} · <span style="color: var(--color-text-dim);">{c.footerSince}</span></span>
+        <span style="color: var(--color-border);">·</span>
+        <a href={`mailto:${c.footerSupportEmail}?subject=${encodeURIComponent('PingThat — support')}`}
+           class="hover:text-[var(--color-accent)] transition-colors inline-block py-1"
+           title={c.footerSupportEmailSub}>{c.footerSupportEmail}</a>
+        <span style="color: var(--color-border);">·</span>
+        <span style="color: var(--color-text-dim);">{c.footerLastVerified}</span>
+      </div>
       <form id="feedback-form" action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
         <input type="hidden" name="app" value="PingThat" />
         <input type="hidden" name="page" value="" />

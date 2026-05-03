@@ -54,6 +54,16 @@ const common = {
     bottomCtaText: "DNS lookup, port scanner, SSL checker, HTTP headers, and more.",
     footerTagline: "PingThat \u2014 Network tools for developers",
     footerPrivacy: "No data collected. 100% private.",
+
+    // Identity strip \u2014 Stanford Web Credibility signals (T-02 maintenance,
+    // T-04 visible email, T-06 last-verified). Compatible with the warm-dark
+    // redesign: when the v2 footer ships, these strings move into the new
+    // identity-strip layout unchanged.
+    footerSince: "since 2025",
+    footerMaintainedBy: "maintained by Marco \u2014 solo dev",
+    footerSupportEmail: "support@pingthat.dev",
+    footerSupportEmailSub: "typically replies within 24h",
+    footerLastVerified: "Last verified May 2026 \u2014 all 23 tools passing",
   },
   es: {
     // Buttons
@@ -108,6 +118,15 @@ const common = {
     bottomCtaText: "B\u00fasqueda DNS, esc\u00e1ner de puertos, comprobador SSL, cabeceras HTTP y m\u00e1s.",
     footerTagline: "PingThat \u2014 Herramientas de red para desarrolladores",
     footerPrivacy: "Sin recogida de datos. 100% privado.",
+
+    // Identity strip \u2014 Stanford Web Credibility (T-02 mantenimiento,
+    // T-04 email visible, T-06 \u00faltima verificaci\u00f3n). Compatible con el
+    // redise\u00f1o warm-dark futuro.
+    footerSince: "desde 2025",
+    footerMaintainedBy: "mantenido por Marco \u2014 solo dev",
+    footerSupportEmail: "support@pingthat.dev",
+    footerSupportEmailSub: "respuesta en menos de 24h",
+    footerLastVerified: "\u00daltima verificaci\u00f3n mayo 2026 \u2014 las 23 herramientas pasando",
   },
 };
 

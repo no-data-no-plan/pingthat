@@ -386,6 +386,26 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
             <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors inline-block py-1">{c.buyMeACoffee}</a>
           </span>
         </div>
+        <!--
+          Identity strip — Stanford Web Credibility signals.
+          Three short lines that survive the 5-second cold-visitor test:
+          (1) maintainer + since-year answers "is this abandoned?"
+          (2) visible email is the highest-weight Stanford signal for
+              independent sites
+          (3) last-verified stamp tells the user the tools are checked
+              against current standards
+          Strings live in i18n/common.ts so the warm-dark v2 footer can
+          re-arrange them without prose churn.
+        -->
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2 text-[var(--color-text-muted)]" style="font-size: 11px;">
+          <span>{c.footerMaintainedBy} · <span style="color: var(--color-text-dim);">{c.footerSince}</span></span>
+          <span style="color: var(--color-border);">&middot;</span>
+          <a href={`mailto:${c.footerSupportEmail}?subject=${encodeURIComponent('PingThat — ' + (lang === 'es' ? 'consulta' : 'support'))}`}
+             class="hover:text-[var(--color-accent)] transition-colors inline-block py-1"
+             title={c.footerSupportEmailSub}>{c.footerSupportEmail}</a>
+          <span style="color: var(--color-border);">&middot;</span>
+          <span title={c.footerSupportEmailSub} style="color: var(--color-text-dim);">{c.footerLastVerified}</span>
+        </div>
         <form id="feedback-form" action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
           <input type="hidden" name="app" value="PingThat" />
           <input type="hidden" name="page" value="" />
