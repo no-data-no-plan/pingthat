@@ -64,6 +64,10 @@ const common = {
     footerSupportEmail: "support@pingthat.dev",
     footerSupportEmailSub: "typically replies within 24h",
     footerLastVerified: "Last verified May 2026 \u2014 all 23 tools passing",
+    // Per-tool stamp \u2014 short variant of footerLastVerified, sits below the
+    // sticky header on every tool page (Stanford T-06 \u2014 visitor sees the
+    // maintenance signal before the input field, not only after scrolling).
+    toolLastVerified: "Last verified May 2026 \u2014 runs in your browser",
   },
   es: {
     // Buttons
@@ -127,6 +131,7 @@ const common = {
     footerSupportEmail: "support@pingthat.dev",
     footerSupportEmailSub: "respuesta en menos de 24h",
     footerLastVerified: "\u00daltima verificaci\u00f3n mayo 2026 \u2014 las 23 herramientas pasando",
+    toolLastVerified: "\u00daltima verificaci\u00f3n mayo 2026 \u2014 corre en tu navegador",
   },
 };
 

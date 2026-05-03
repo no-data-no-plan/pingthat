@@ -347,6 +347,21 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
         }
       </style>
 
+      <!--
+        Tool-page maintenance stamp — Stanford T-06 (CW audit 2026-05-03).
+        Only renders on actual tool pages (not docs, legal, compare, home).
+        Sits between the sticky header and the tool component so a cold
+        visitor sees the freshness signal before deciding to interact.
+      -->
+      {activeToolId && activeToolId !== "home" && activeToolId !== "compare" && activeToolId !== "docs" && !isLegalPage && !isDocsArticle && !isDocsHub && (
+        <div class="px-4 sm:px-6 py-1.5 border-b border-[var(--color-border)]" style="background: var(--color-surface); font-size: 11px; color: var(--color-text-muted);">
+          <div class="flex items-center gap-2">
+            <span aria-hidden="true" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);"></span>
+            <span>{c.toolLastVerified}</span>
+          </div>
+        </div>
+      )}
+
       <!-- Content -->
       <main id="main-content" class="flex-1">
         <slot />
