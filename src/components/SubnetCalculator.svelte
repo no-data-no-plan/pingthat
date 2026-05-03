@@ -10,6 +10,27 @@
   let ipInput = $state("192.168.1.0");
   let cidr = $state(24);
 
+  // Unified-input parser: accepts either "192.168.1.0/24" or "192.168.1.0".
+  // The engagement audit (2026-05-03) flagged that visitors arriving from
+  // top GSC queries paste the full CIDR notation into the IP field — the
+  // `/` then breaks the legacy 4-octet split parser silently and the
+  // result panel goes empty with no guidance. This handler splits the two
+  // parts and feeds the slider, keeping the existing reactive pipeline.
+  function handleIpInput(raw: string) {
+    const slashIdx = raw.indexOf("/");
+    if (slashIdx === -1) {
+      ipInput = raw;
+      return;
+    }
+    const ipPart = raw.slice(0, slashIdx).trim();
+    const cidrPart = raw.slice(slashIdx + 1).trim();
+    const cidrNum = parseInt(cidrPart, 10);
+    ipInput = ipPart;
+    if (!isNaN(cidrNum) && cidrNum >= 0 && cidrNum <= 32) {
+      cidr = cidrNum;
+    }
+  }
+
   interface SubnetResult {
     networkAddress: string;
     broadcastAddress: string;
@@ -121,7 +142,8 @@
       <div style="display: flex; gap: 12px; align-items: end; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 160px;">
           <label for="subnet-ip" style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">{t.ipAddress}</label>
-          <input id="subnet-ip" type="text" bind:value={ipInput} placeholder="192.168.1.0" style="width: 100%;" />
+          <input id="subnet-ip" type="text" value={ipInput} oninput={(e) => handleIpInput((e.target as HTMLInputElement).value)} placeholder="192.168.1.0/24" style="width: 100%;" />
+          <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 4px;">{t.unifiedHint}</div>
         </div>
         <div style="width: 100px;">
           <label for="subnet-cidr-range" style="font-size: 11px; color: var(--color-text-muted); display: block; margin-bottom: 6px;">CIDR (/{cidr}) <InfoTip text={t.cidrTip} /></label>

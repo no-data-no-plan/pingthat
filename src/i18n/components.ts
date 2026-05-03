@@ -433,6 +433,7 @@ export const subnetCalculatorI18n = {
     commonSubnets: "Common Subnets",
     cidr: "CIDR",
     usableHosts: "Usable Hosts",
+    unifiedHint: "Accepts 192.168.1.0/24 (full CIDR) or just 192.168.1.0",
   },
   es: {
     input: "Entrada",
@@ -460,6 +461,7 @@ export const subnetCalculatorI18n = {
     commonSubnets: "Subredes Comunes",
     cidr: "CIDR",
     usableHosts: "Hosts Utilizables",
+    unifiedHint: "Acepta 192.168.1.0/24 (CIDR completo) o solo 192.168.1.0",
   },
 } as const;
 
