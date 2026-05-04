@@ -22,9 +22,9 @@ export const pageI18n: Record<
 > = {
   "my-ip": {
     en: {
-      title: "What Is My IP",
+      title: "What Is My IP — IPv4, IPv6 & Location",
       description: "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup with no tracking or signup.",
-      seoHeading: "About this tool",
+      seoHeading: "Find My Public IP Address (IPv4 & IPv6)",
       seoText: "Instantly see your public IP address along with your approximate location, ISP, timezone, and connection details. We fetch your IP from public APIs and display it locally \u2014 no data is stored or logged.",
       seoBlockHeading: "How does IP detection work?",
       seoBlockText: "When you visit any website, your public IP address is visible to the server. This tool uses third-party APIs (ipapi.co and ipify.org) to retrieve your IP and associated geolocation data. The results are displayed in your browser and never stored.",
@@ -58,11 +58,11 @@ export const pageI18n: Record<
       ],
     },
     es: {
-      title: "Cu\u00e1l Es Mi IP",
+      title: "Cu\u00e1l Es Mi IP \u2014 P\u00fablica, IPv4 e IPv6",
       description: "Consulta tu direcci\u00f3n IPv4 e IPv6 p\u00fablica, geolocalizaci\u00f3n, ISP y ASN en tiempo real. Gratis, instant\u00e1neo, sin rastreo ni registro.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Mi IP P\u00fablica e IPv4 con Geolocalizaci\u00f3n",
       seoText: "Consulta instant\u00e1neamente tu direcci\u00f3n IP p\u00fablica junto con tu ubicaci\u00f3n aproximada, ISP, zona horaria y detalles de conexi\u00f3n. Obtenemos tu IP de APIs p\u00fablicas y la mostramos localmente \u2014 no se almacena ni registra ning\u00fan dato.",
-      seoBlockHeading: "\u00bfC\u00f3mo funciona la detecci\u00f3n de IP?",
+      seoBlockHeading: "Direcci\u00f3n IP P\u00fablica vs Privada \u2014 C\u00f3mo se Detecta",
       seoBlockText: "Cuando visitas cualquier sitio web, tu direcci\u00f3n IP p\u00fablica es visible para el servidor. Esta herramienta utiliza APIs de terceros (ipapi.co e ipify.org) para obtener tu IP y los datos de geolocalizaci\u00f3n asociados. Los resultados se muestran en tu navegador y nunca se almacenan.",
       seoFeatures: [
         "Detecci\u00f3n de direcci\u00f3n IPv4 p\u00fablica",
@@ -249,11 +249,11 @@ export const pageI18n: Record<
 
   "subnet-calculator": {
     en: {
-      title: "Subnet Calculator",
+      title: "IPv4 / IPv6 Subnet Calculator — CIDR & Mask",
       description: "Calculate network address, broadcast address, host range, subnet mask, and wildcard from any CIDR block. Free IPv4 subnet planner in browser.",
-      seoHeading: "About this tool",
+      seoHeading: "IPv4 & IPv6 Subnet Calculator with Wildcard Mask",
       seoText: "Enter an IP address and CIDR prefix length to instantly calculate network details including network address, broadcast address, host range, subnet mask, wildcard mask, and IP class. Includes a common subnet cheatsheet.",
-      seoBlockHeading: "Understanding CIDR notation",
+      seoBlockHeading: "CIDR Notation, Subnet Mask & Wildcard Explained",
       seoBlockText: "CIDR (Classless Inter-Domain Routing) notation combines an IP address with a prefix length (e.g., 192.168.1.0/24). The prefix length indicates how many bits of the address identify the network, with the remaining bits available for host addresses.",
       seoFeatures: [
         "Network and broadcast address calculation",
@@ -288,11 +288,11 @@ export const pageI18n: Record<
       ],
     },
     es: {
-      title: "Calculadora de Subredes",
+      title: "Calculadora Subnetting \u2014 Subneteo IPv4 / IPv6 CIDR",
       description: "Calcula direcci\u00f3n de red, broadcast, rango de hosts, m\u00e1scara y wildcard desde cualquier CIDR. Planificador IPv4 gratuito en tu navegador.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Calculadora de Subneteo IPv4 e IPv6 con M\u00e1scara",
       seoText: "Introduce una direcci\u00f3n IP y la longitud del prefijo CIDR para calcular instant\u00e1neamente los detalles de red, incluyendo direcci\u00f3n de red, direcci\u00f3n de broadcast, rango de hosts, m\u00e1scara de subred, m\u00e1scara wildcard y clase IP. Incluye una tabla de referencia de subredes comunes.",
-      seoBlockHeading: "Entendiendo la notaci\u00f3n CIDR",
+      seoBlockHeading: "Subnetting Paso a Paso: CIDR y M\u00e1scara de Subred",
       seoBlockText: "La notaci\u00f3n CIDR (Classless Inter-Domain Routing) combina una direcci\u00f3n IP con una longitud de prefijo (p. ej., 192.168.1.0/24). La longitud del prefijo indica cu\u00e1ntos bits de la direcci\u00f3n identifican la red, y los bits restantes est\u00e1n disponibles para direcciones de host.",
       seoFeatures: [
         "C\u00e1lculo de direcci\u00f3n de red y broadcast",
@@ -411,11 +411,11 @@ export const pageI18n: Record<
 
   "password-strength": {
     en: {
-      title: "Password Strength Checker",
+      title: "Password Strength Checker & Tester",
       description: "Analyze password entropy, crack time estimation, and strength rating. 100% client-side, your password never leaves your browser.",
-      seoHeading: "About this tool",
+      seoHeading: "Password Strength Meter \u2014 Test, Verify & Measure",
       seoText: "Check how strong your password is with entropy analysis, crack time estimation at different attack speeds, composition breakdown, and common password detection. Your password is never sent anywhere \u2014 all analysis happens in your browser.",
-      seoBlockHeading: "How password strength is measured",
+      seoBlockHeading: "How Password Strength is Measured (Entropy & Crack Time)",
       seoBlockText: "Password strength is primarily determined by entropy \u2014 the number of bits of randomness. Higher entropy means more possible combinations an attacker must try. Entropy depends on password length and the character set used (lowercase, uppercase, digits, special characters).",
       seoFeatures: [
         "Entropy calculation in bits",
@@ -449,11 +449,11 @@ export const pageI18n: Record<
       ],
     },
     es: {
-      title: "Comprobador de Fortaleza de Contrase\u00f1as",
+      title: "Comprobar Fortaleza de Contrase\u00f1a \u2014 Test de Seguridad",
       description: "Analiza entrop\u00eda de contrase\u00f1as, tiempo de descifrado y fortaleza. 100% en el cliente — tu contrase\u00f1a nunca sale de tu navegador.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Probar Seguridad y Fortaleza de Contrase\u00f1a",
       seoText: "Comprueba la fortaleza de tu contrase\u00f1a con an\u00e1lisis de entrop\u00eda, estimaci\u00f3n de tiempo de descifrado a diferentes velocidades de ataque, desglose de composici\u00f3n y detecci\u00f3n de contrase\u00f1as comunes. Tu contrase\u00f1a nunca se env\u00eda a ning\u00fan sitio \u2014 todo el an\u00e1lisis ocurre en tu navegador.",
-      seoBlockHeading: "C\u00f3mo se mide la fortaleza de una contrase\u00f1a",
+      seoBlockHeading: "Seguridad de Contrase\u00f1as: Entrop\u00eda y Tiempo de Descifrado",
       seoBlockText: "La fortaleza de una contrase\u00f1a se determina principalmente por la entrop\u00eda \u2014 el n\u00famero de bits de aleatoriedad. Mayor entrop\u00eda significa m\u00e1s combinaciones posibles que un atacante debe probar. La entrop\u00eda depende de la longitud de la contrase\u00f1a y del conjunto de caracteres utilizado (min\u00fasculas, may\u00fasculas, d\u00edgitos, caracteres especiales).",
       seoFeatures: [
         "C\u00e1lculo de entrop\u00eda en bits",
@@ -492,9 +492,9 @@ export const pageI18n: Record<
     en: {
       title: "JWT Decoder & Verifier",
       description: "Decode and verify JSON Web Tokens \u2014 HS256, RS256, ES256 signatures. 100% client-side: your token and key never leave your browser.",
-      seoHeading: "About this tool",
+      seoHeading: "Decode JWT Token Online — Parser & Verifier",
       seoText: "Paste a JWT to instantly decode its header, payload and signature. Timestamps (exp, iat, nbf) become human-readable dates and expired tokens are flagged. Paste a shared secret or PEM public key to verify the signature in the browser — HS256, RS256 and ES256 are all supported via the Web Crypto API. The unsafe alg=none algorithm is explicitly rejected.",
-      seoBlockHeading: "Understanding JSON Web Tokens",
+      seoBlockHeading: "How to Decode a JWT Token (Parser & Verifier)",
       seoBlockText: "A JWT consists of three Base64URL-encoded parts separated by dots: header (algorithm and type — RFC 7519 §5), payload (claims like subject, expiration and custom data — §4), and signature (RFC 7515 / JWS). JWTs are widely used for authentication and API authorization. The signature is what proves a token has not been tampered with — without verifying it against the issuer's secret or public key, decoded claims should never be trusted.",
       seoFeatures: [
         "Header decoding (algorithm, type)",
@@ -536,9 +536,9 @@ export const pageI18n: Record<
     es: {
       title: "Decodificador y Verificador JWT",
       description: "Decodifica y verifica JSON Web Tokens \u2014 firmas HS256, RS256, ES256. 100% en el cliente: tu token y clave nunca salen de tu navegador.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Decodificador JWT Online — Parser y Verificador",
       seoText: "Pega un JWT para decodificar instant\u00e1neamente su cabecera, payload y firma. Las marcas de tiempo (exp, iat, nbf) se convierten a fechas legibles y los tokens expirados se se\u00f1alan. Pega un secreto compartido o una clave p\u00fablica PEM para verificar la firma en el navegador \u2014 HS256, RS256 y ES256 est\u00e1n soportados v\u00eda Web Crypto API. El algoritmo inseguro alg=none se rechaza expl\u00edcitamente.",
-      seoBlockHeading: "Entendiendo los JSON Web Tokens",
+      seoBlockHeading: "Cómo Decodificar JWT Online (Parser y Verificación)",
       seoBlockText: "Un JWT consiste en tres partes codificadas en Base64URL separadas por puntos: cabecera (algoritmo y tipo \u2014 RFC 7519 \u00a75), payload (claims como sujeto, expiraci\u00f3n y datos personalizados \u2014 \u00a74) y firma (RFC 7515 / JWS). Los JWT se usan ampliamente para autenticaci\u00f3n y autorizaci\u00f3n de APIs. La firma es lo que prueba que un token no ha sido manipulado \u2014 sin verificarla contra el secreto o la clave p\u00fablica del emisor, los claims decodificados nunca deber\u00edan considerarse fiables.",
       seoFeatures: [
         "Decodificaci\u00f3n de la cabecera (algoritmo, tipo)",
@@ -658,9 +658,9 @@ export const pageI18n: Record<
     en: {
       title: "Port Scanner Online Free",
       description: "Scan common ports on any host: HTTP, HTTPS, SSH, FTP, SMTP, databases and more. Check which services are reachable from the public internet.",
-      seoHeading: "About this tool",
+      seoHeading: "Online Port Scanner — Open Ports & Service Detection",
       seoText: "Enter a domain or hostname to scan common service ports. The tool attempts HTTP/HTTPS connections to each port and reports whether it is open, closed, or filtered. You can also specify up to 5 custom ports.",
-      seoBlockHeading: "How port scanning works",
+      seoBlockHeading: "Online Port Scanner — Open Ports & nmap Equivalent",
       seoBlockText: "Port scanning probes a host to discover which network services are running. Open ports accept connections, closed ports actively refuse them, and filtered ports give no response (typically blocked by a firewall). This tool uses HTTP-based probes from a Cloudflare edge server.",
       seoFeatures: [
         "17 common ports scanned by default",
@@ -695,9 +695,9 @@ export const pageI18n: Record<
     es: {
       title: "Escaner de Puertos Online Gratis",
       description: "Escanea puertos comunes de cualquier host. Comprueba que servicios son accesibles -- HTTP, HTTPS, SSH, FTP y mas. Gratis, instantaneo.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Escanear Puertos Abiertos Online — Test de Servicios",
       seoText: "Introduce un dominio o nombre de host para escanear puertos de servicio comunes. La herramienta intenta conexiones HTTP/HTTPS a cada puerto y reporta si esta abierto, cerrado o filtrado. Tambien puedes especificar hasta 5 puertos personalizados.",
-      seoBlockHeading: "Como funciona el escaneo de puertos",
+      seoBlockHeading: "Escanear Puertos Abiertos Online — Alternativa a nmap",
       seoBlockText: "El escaneo de puertos sondea un host para descubrir que servicios de red estan activos. Los puertos abiertos aceptan conexiones, los cerrados las rechazan activamente y los filtrados no dan respuesta (normalmente bloqueados por un firewall). Esta herramienta usa sondas HTTP desde un servidor edge de Cloudflare.",
       seoFeatures: [
         "17 puertos comunes escaneados por defecto",
@@ -734,9 +734,9 @@ export const pageI18n: Record<
     en: {
       title: "DNS Lookup Online Free",
       description: "Query DNS records for any domain. A, AAAA, MX, CNAME, TXT, NS, SOA. Uses Cloudflare DNS. Free, instant.",
-      seoHeading: "About this tool",
+      seoHeading: "DNS Query Tool — A, MX, TXT, NS Records & NSLookup",
       seoText: "Enter a domain to query DNS records using Cloudflare's DNS-over-HTTPS. See A, AAAA, MX, CNAME, TXT, NS, and SOA records with TTL values.",
-      seoBlockHeading: "How DNS lookup works",
+      seoBlockHeading: "DNS Query, NSLookup & DIG — A, MX, TXT Records",
       seoBlockText: "DNS translates domain names to IP addresses. This tool queries Cloudflare's public DNS resolver (1.1.1.1) via DNS-over-HTTPS for fast, private results.",
       seoFeatures: [
         "A, AAAA, MX, CNAME, TXT, NS, SOA records",
@@ -768,11 +768,11 @@ export const pageI18n: Record<
       ],
     },
     es: {
-      title: "Búsqueda DNS Online Gratis",
+      title: "Consulta DNS Online — NSLookup, A, MX, TXT",
       description: "Consulta registros DNS de cualquier dominio. A, AAAA, MX, CNAME, TXT, NS, SOA. Usa Cloudflare DNS. Gratis, instantáneo.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Consulta y Buscar DNS — Registros A, MX, TXT y Nslookup",
       seoText: "Introduce un dominio para consultar registros DNS usando DNS-over-HTTPS de Cloudflare. Ve registros A, AAAA, MX, CNAME, TXT, NS y SOA con valores TTL.",
-      seoBlockHeading: "Cómo funciona la búsqueda DNS",
+      seoBlockHeading: "Buscar DNS: Registros A, MX, TXT y Nslookup",
       seoBlockText: "DNS traduce nombres de dominio a direcciones IP. Esta herramienta consulta el resolver DNS público de Cloudflare (1.1.1.1) via DNS-over-HTTPS para resultados rápidos y privados.",
       seoFeatures: [
         "Registros A, AAAA, MX, CNAME, TXT, NS, SOA",
@@ -808,7 +808,7 @@ export const pageI18n: Record<
     en: {
       title: "SSL Certificate Checker Online Free",
       description: "Check SSL/TLS status, HSTS headers, and certificate details for any domain. Free, instant.",
-      seoHeading: "About this tool",
+      seoHeading: "SSL/TLS Test — Certificate Checker & HTTPS Validation",
       seoText: "Enter a domain to check its SSL/TLS certificate status. See HTTPS connectivity, HSTS configuration, server info, and certificate transparency logs.",
       seoBlockHeading: "Why check SSL certificates?",
       seoBlockText: "SSL/TLS certificates encrypt traffic between browsers and servers. An expired or misconfigured certificate can cause security warnings and lost trust.",
@@ -844,9 +844,9 @@ export const pageI18n: Record<
     es: {
       title: "Verificador de Certificado SSL Online Gratis",
       description: "Verifica el estado SSL/TLS, cabeceras HSTS y detalles del certificado de cualquier dominio. Gratis, instantáneo.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Comprobar Certificado SSL/TLS — Verificar HTTPS",
       seoText: "Introduce un dominio para verificar el estado de su certificado SSL/TLS. Ve conectividad HTTPS, configuración HSTS, info del servidor y logs de transparencia de certificados.",
-      seoBlockHeading: "¿Por qué verificar certificados SSL?",
+      seoBlockHeading: "Comprobar SSL/TLS — Test de Certificado y HTTPS",
       seoBlockText: "Los certificados SSL/TLS cifran el tráfico entre navegadores y servidores. Un certificado expirado o mal configurado puede causar advertencias de seguridad y pérdida de confianza.",
       seoFeatures: [
         "Verificación de conectividad HTTPS",
@@ -1102,9 +1102,9 @@ export const pageI18n: Record<
     en: {
       title: "WHOIS Lookup Online Free",
       description: "Look up domain registration details, registrar, nameservers, and expiration dates. Free WHOIS via RDAP.",
-      seoHeading: "About this tool",
+      seoHeading: "WHOIS Lookup — Domain Owner, Registrant & Age",
       seoText: "Enter a domain to look up registration details via RDAP. See registrar, creation/expiration dates, nameservers, and domain statuses.",
-      seoBlockHeading: "How WHOIS/RDAP works",
+      seoBlockHeading: "WHOIS Domain & IP Lookup — Owner, Registrant, Age",
       seoBlockText: "RDAP (Registration Data Access Protocol) is the modern replacement for WHOIS. It provides domain registration data in a structured JSON format.",
       seoFeatures: [
         "Registrar identification",
@@ -1138,9 +1138,9 @@ export const pageI18n: Record<
     es: {
       title: "Búsqueda WHOIS Online Gratis",
       description: "Consulta detalles de registro de dominio, registrador, nameservers y fechas de expiración. WHOIS gratuito vía RDAP.",
-      seoHeading: "Sobre esta herramienta",
+      seoHeading: "Búsqueda WHOIS Dominio — Titular y Datos del Registrador",
       seoText: "Introduce un dominio para consultar detalles de registro vía RDAP. Ve registrador, fechas de creación/expiración, nameservers y estados del dominio.",
-      seoBlockHeading: "Cómo funciona WHOIS/RDAP",
+      seoBlockHeading: "WHOIS Dominio e IP — Buscar Titular y Datos del Registrante",
       seoBlockText: "RDAP (Registration Data Access Protocol) es el reemplazo moderno de WHOIS. Proporciona datos de registro de dominio en formato JSON estructurado.",
       seoFeatures: [
         "Identificación del registrador",
