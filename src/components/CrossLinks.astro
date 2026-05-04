@@ -30,7 +30,7 @@ const categories = [
 const visible = categories.filter(c => c.id !== exclude);
 ---
 
-<div class="px-6 py-4">
+<nav aria-label={lang === "es" ? "Más herramientas gratuitas" : "More free tools"} class="px-6 py-4">
   <p class="text-[10px] font-semibold uppercase tracking-wider mb-3" style="color: var(--color-text-muted, #888);">
     {lang === "es" ? "Más herramientas gratuitas" : "More free tools"}
   </p>
@@ -54,7 +54,7 @@ const visible = categories.filter(c => c.id !== exclude);
       </div>
     ))}
   </div>
-</div>
+</nav>
 
 <style>
   .cross-link {
