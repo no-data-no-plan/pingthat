@@ -1,0 +1,108 @@
+---
+import Layout from "../layouts/Layout.astro";
+const LAST_UPDATED = "2026-05-06";
+---
+
+<Layout
+  title="How PingThat is built and verified"
+  description="Per-tool breakdown of what runs in your browser vs. what queries an external API, how reliability is checked, and what the site does and doesn't do."
+  activeToolId=""
+>
+  <article class="p-6 sm:p-8 max-w-3xl mx-auto space-y-8 text-sm" style="color: var(--color-text-muted);">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-bold" style="color: var(--color-text);">How PingThat is built and verified</h1>
+      <p class="text-xs" style="color: var(--color-text-dim);">Last updated: {LAST_UPDATED}</p>
+    </header>
+
+    <section class="space-y-2">
+      <p>PingThat is an independent project run by one developer. Network and security tools fall into two groups: those that can answer locally (a JWT decoder, a subnet calculator) and those that need to ask the outside world (a DNS lookup, an SSL check). This page describes which is which, how each tool is verified, and what the site does and doesn't do.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">What runs in your browser, and what queries an API</h2>
+      <p>Of the 23 tools on PingThat, 7 run entirely client-side: your input never leaves your browser. The other 16 need to resolve a real-world fact (a DNS record, a certificate chain, a WHOIS owner) and query a public API or a small project-owned backend. The table below names the endpoint each one talks to.</p>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="border-b" style="border-color: var(--color-border);">
+              <th class="text-left py-2 pr-3 font-semibold" style="color: var(--color-text);">Tool</th>
+              <th class="text-left py-2 pr-3 font-semibold" style="color: var(--color-text);">Where it runs</th>
+              <th class="text-left py-2 font-semibold" style="color: var(--color-text);">Endpoint</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b" style="border-color: var(--color-border-dim);">
+              <td colspan="3" class="py-2 font-semibold" style="color: var(--color-text);">Client-side (7)</td>
+            </tr>
+            <tr><td class="py-1 pr-3">Subnet calculator</td><td class="py-1 pr-3">browser</td><td class="py-1">—</td></tr>
+            <tr><td class="py-1 pr-3">IP converter</td><td class="py-1 pr-3">browser</td><td class="py-1">—</td></tr>
+            <tr><td class="py-1 pr-3">JWT decoder</td><td class="py-1 pr-3">browser</td><td class="py-1">—</td></tr>
+            <tr><td class="py-1 pr-3">Password strength</td><td class="py-1 pr-3">browser</td><td class="py-1">—</td></tr>
+            <tr><td class="py-1 pr-3">Privacy check</td><td class="py-1 pr-3">browser</td><td class="py-1">—</td></tr>
+            <tr><td class="py-1 pr-3">URL parser</td><td class="py-1 pr-3">browser</td><td class="py-1">—</td></tr>
+            <tr><td class="py-1 pr-3">WebRTC leak test</td><td class="py-1 pr-3">browser</td><td class="py-1">—</td></tr>
+            <tr class="border-b" style="border-color: var(--color-border-dim);">
+              <td colspan="3" class="py-2 pt-3 font-semibold" style="color: var(--color-text);">API-querying (16)</td>
+            </tr>
+            <tr><td class="py-1 pr-3">DNS lookup</td><td class="py-1 pr-3">DoH</td><td class="py-1"><code>cloudflare-dns.com</code></td></tr>
+            <tr><td class="py-1 pr-3">CAA lookup</td><td class="py-1 pr-3">DoH</td><td class="py-1"><code>cloudflare-dns.com</code></td></tr>
+            <tr><td class="py-1 pr-3">DNSSEC check</td><td class="py-1 pr-3">DoH</td><td class="py-1"><code>cloudflare-dns.com</code></td></tr>
+            <tr><td class="py-1 pr-3">IPv6 check</td><td class="py-1 pr-3">DoH</td><td class="py-1"><code>cloudflare-dns.com</code></td></tr>
+            <tr><td class="py-1 pr-3">Reverse DNS</td><td class="py-1 pr-3">DoH + backend</td><td class="py-1"><code>cloudflare-dns.com</code> + <code>/api/</code></td></tr>
+            <tr><td class="py-1 pr-3">My IP</td><td class="py-1 pr-3">external</td><td class="py-1"><code>ipapi.co</code> + <code>api.ipify.org</code></td></tr>
+            <tr><td class="py-1 pr-3">Resolver compare</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/resolver-compare</code></td></tr>
+            <tr><td class="py-1 pr-3">Is it up</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/check-site</code></td></tr>
+            <tr><td class="py-1 pr-3">Is it down</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/check-site</code></td></tr>
+            <tr><td class="py-1 pr-3">HTTP headers</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/http-headers</code></td></tr>
+            <tr><td class="py-1 pr-3">Site speed</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/site-speed</code></td></tr>
+            <tr><td class="py-1 pr-3">Redirect checker</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/redirect-checker</code></td></tr>
+            <tr><td class="py-1 pr-3">WHOIS lookup</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/whois-lookup</code></td></tr>
+            <tr><td class="py-1 pr-3">Port scan</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/port-scan</code></td></tr>
+            <tr><td class="py-1 pr-3">SSL checker</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/ssl-checker</code></td></tr>
+            <tr><td class="py-1 pr-3">Email auth (SPF/DKIM/DMARC)</td><td class="py-1 pr-3">backend</td><td class="py-1"><code>/api/email-auth</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>For API-querying tools, what gets sent is the lookup target you typed — a domain, an IP, an email, a URL — and nothing else.</p>
+      <p>Ads come from Google AdSense (publisher ID <code>ca-pub-8761907366448308</code>). AdSense uses cookies and shares limited data with Google's ad network when you consent. The cookie banner is a real consent gate: AdSense scripts do not load until you accept. If you decline, no ad cookies are set. Ad slots are clearly marked <code>Sponsored</code>.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">How tool reliability is verified</h2>
+      <p>Every tool is covered by an automated end-to-end test that runs on every deploy. The "Last verified — N tools passing" line in the footer is set by CI: it reflects the date of the last green run and the count of tools that passed. If a test breaks, the footer reflects that on the next build, and the broken tool is fixed before the line goes back to all-passing.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">How content is written</h2>
+      <p>Tool behavior is implemented and verified by hand against the source RFCs and standards: RFC 1035 for DNS, RFC 4632 for CIDR / subnetting, RFC 5280 for X.509 certificates, RFC 7519 for JWT, RFC 8484 for DNS-over-HTTPS, RFC 7208 / 6376 / 7489 for SPF / DKIM / DMARC, and the IANA registries for port assignments and protocol numbers. Where an algorithm is implemented in the browser (CIDR math, JWT signature verification, password entropy estimation), the test suite pins it to the spec-mandated output.</p>
+      <p>Long-form guides under <a href="/docs/" class="underline" style="color: var(--color-accent);">/docs/</a> are drafted with AI assistance and lightly reviewed before publishing. The technical facts in those guides — what an RFC says, how a header is parsed — are independently verifiable.</p>
+      <p>Comparison pages ("X vs Y") were previously published with light review. Those pages have been removed because the project couldn't maintain the factual bar they required. If a comparison page redirected you here, please use the actual products to compare them.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">What the site doesn't do</h2>
+      <ul class="list-disc list-outside ml-5 space-y-1">
+        <li>Paid placements, sponsored editorial, or guest posts. AdSense ads are clearly marked <code>Sponsored</code> and separate from editorial.</li>
+        <li>Paraphrase competitor blog posts.</li>
+        <li>Sell or share your queries with third parties. The backend uses standard rate limits to stay usable but keeps no per-user query log.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">How content stays current</h2>
+      <p>When an RFC is revised, when a public resolver changes its policy, or when a TLS / DNSSEC algorithm is deprecated, the affected page is updated. The CI test suite catches behavioral regressions on every deploy, and visible errors are fixed on the next deploy.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Reporting errors</h2>
+      <p>If you spot a factual error, a broken tool, a missing citation, or content that's outdated, email <a href="mailto:support@pingthat.dev" class="underline" style="color: var(--color-accent);">support@pingthat.dev</a>. The operator reads incoming email and replies as soon as possible. Substantive corrections are published with a <code>Corrected YYYY-MM-DD</code> note next to the affected paragraph.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Funding and monetization</h2>
+      <p>PingThat accepts no payment for tool listings, no affiliate revenue, and no sponsored editorial content. Monetization is via Google AdSense display ads (where approved) and occasional Buy Me a Coffee tips. Ad slots are clearly marked <code>Sponsored</code> and separate from the rest of the page.</p>
+    </section>
+  </article>
+</Layout>
