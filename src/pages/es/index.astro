@@ -8,6 +8,12 @@ import { toolNamesI18n, toolDescriptionsI18n, groupLabelsI18n } from "../../i18n
 
 const c = getCommon("es");
 
+// Build-time month for "Last verified" footer (Bloque 1b — CI-set, mirrors Layout.astro pattern).
+const MONTHS_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const _bd = new Date();
+const monthYear = `${MONTHS_ES[_bd.getMonth()]} ${_bd.getFullYear()}`;
+const lastVerifiedFooter = c.footerLastVerified.replace("{{month}}", monthYear);
+
 const jsonLd = JSON.stringify([
   {
     "@context": "https://schema.org",
@@ -290,6 +296,8 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           <span style="color: var(--color-border);">·</span>
           <a href="/es/privacy-policy/" class="hover:text-[var(--color-accent)] transition-colors">{c.footerPrivacy}</a>
           <span style="color: var(--color-border);">·</span>
+          <a href="/es/methodology/" class="hover:text-[var(--color-accent)] transition-colors">{c.footerMethodology}</a>
+          <span style="color: var(--color-border);">·</span>
           <a href="/es/docs/" class="hover:text-[var(--color-accent)] transition-colors">Guías</a>
           <span style="color: var(--color-border);">·</span>
           <a href="https://buymeacoffee.com/allopen" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">Buy me a coffee</a>
@@ -303,7 +311,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
            class="hover:text-[var(--color-accent)] transition-colors inline-block py-1"
            title={c.footerSupportEmailSub}>{c.footerSupportEmail}</a>
         <span style="color: var(--color-border);">·</span>
-        <span style="color: var(--color-text-dim);">{c.footerLastVerified}</span>
+        <span style="color: var(--color-text-dim);">{lastVerifiedFooter}</span>
       </div>
       <form id="feedback-form" action="https://formspree.io/f/mpqoddwl" method="POST" class="flex gap-2">
         <input type="hidden" name="app" value="PingThat" />
