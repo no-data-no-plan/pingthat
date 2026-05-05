@@ -38,6 +38,10 @@ const monthYear = lang === "es"
 const lastVerifiedFooter = c.footerLastVerified.replace("{{month}}", monthYear);
 const lastVerifiedTool = c.toolLastVerified.replace("{{month}}", monthYear);
 
+// Methodology URL — bridge target for Organization.publishingPrinciples and
+// isPartOf on per-page schemas (Bloque 1c+1d).
+const methodologyUrl = lang === "es" ? "https://pingthat.dev/es/methodology/" : "https://pingthat.dev/methodology/";
+
 const activeTool = tools.find(t => t.id === activeToolId);
 // For resolved tools, tool.path is the EN canonical path. For unresolved
 // (compare pages, docs), Astro.url.pathname is the full request path already
@@ -112,7 +116,10 @@ if (isLegalPage || isComparePage) {
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    isPartOf: { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
+    isPartOf: [
+      { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
+      { "@type": "WebPage", "@id": methodologyUrl, url: methodologyUrl, name: lang === "es" ? "Metodología" : "Methodology" },
+    ],
   };
 }
 
@@ -134,6 +141,19 @@ const schemas: SchemaObject[] = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: breadcrumbItems,
+  },
+  // Organization schema with publishingPrinciples → methodology (Bloque 1c).
+  // Emitted on every page so search engines see the site-level E-E-A-T bridge
+  // regardless of which URL they crawl first.
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PingThat",
+    url: "https://pingthat.dev/",
+    logo: "https://pingthat.dev/og-image.png",
+    email: "support@pingthat.dev",
+    publishingPrinciples: methodologyUrl,
+    actionableFeedbackPolicy: `${methodologyUrl}#reporting-errors`,
   },
 ];
 
@@ -168,17 +188,8 @@ if (isHome) {
     description: "Free network tools: IP lookup, privacy check, WebRTC leak test, subnet calculator, JWT decoder and more.",
     inLanguage: ["en", "es"],
   });
-  schemas.push({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "PingThat",
-    url: "https://pingthat.dev",
-    logo: "https://pingthat.dev/og-image.png",
-    description: "Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser.",
-    sameAs: [
-      "https://buymeacoffee.com/allopen",
-    ],
-  });
+  // (Home-only Organization schema removed — the top-level Organization
+  // emitted on every page above already carries publishingPrinciples.)
 }
 
 const jsonLd = JSON.stringify(schemas);
