@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ReverseDns from "../../components/ReverseDns.svelte";
 import SeoContent from "../../components/SeoContent.astro";
 import SeoBlock from "../../components/SeoBlock.astro";
+import SourcesBlock from "../../components/SourcesBlock.astro";
 import ToolContent from "../../components/ToolContent.astro";
 import { pageI18n } from "../../i18n/pages";
 const p = pageI18n["reverse-dns"].es;
@@ -12,4 +13,5 @@ const p = pageI18n["reverse-dns"].es;
   <SeoContent heading={p.seoHeading} text={p.seoText} relatedToolIds={["dns-lookup", "my-ip", "whois-lookup"]} lang="es" />
   <ToolContent howHeading={p.howHeading} howSteps={p.howSteps} useCasesHeading={p.useCasesHeading} useCases={p.useCases} faqHeading={p.faqHeading} faqs={p.faqs} lang="es" />
   <SeoBlock heading={p.seoBlockHeading} text={p.seoBlockText} features={p.seoFeatures} lang="es" />
+  <SourcesBlock slug="reverse-dns" lang="es" />
 </Layout>

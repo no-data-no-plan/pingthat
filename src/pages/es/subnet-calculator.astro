@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import SubnetCalculator from "../../components/SubnetCalculator.svelte";
 import SeoContent from "../../components/SeoContent.astro";
 import SeoBlock from "../../components/SeoBlock.astro";
+import SourcesBlock from "../../components/SourcesBlock.astro";
 import ToolContent from "../../components/ToolContent.astro";
 import { pageI18n } from "../../i18n/pages";
 
@@ -40,4 +41,5 @@ const p = pageI18n["subnet-calculator"].es;
     features={p.seoFeatures}
     lang="es"
   />
+  <SourcesBlock slug="subnet-calculator" lang="es" />
 </Layout>

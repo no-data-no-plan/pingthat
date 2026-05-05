@@ -1,0 +1,32 @@
+---
+import { getSources } from "../data/sources";
+import { getCommon } from "../i18n/common";
+import type { Lang } from "../i18n/index";
+
+interface Props {
+  slug: string;
+  lang?: Lang;
+}
+
+const { slug, lang = "en" } = Astro.props;
+const sources = getSources(slug);
+const c = getCommon(lang);
+---
+
+{sources.length > 0 && (
+  <details class="px-8 py-3 border-t border-[var(--color-border)] text-sm" style="background: var(--color-bg);">
+    <summary class="cursor-pointer text-xs select-none" style="color: var(--color-amber); letter-spacing: 0.05em;">
+      {c.sourcesHeading} ({sources.length})
+    </summary>
+    <ul class="mt-3 list-none space-y-2 pb-1 pl-0">
+      {sources.map((s) => (
+        <li class="text-xs leading-relaxed" style="color: var(--color-text-muted);">
+          <cite class="not-italic">
+            {s.authors} ({s.year}). {s.title}.{s.venue && ` ${s.venue}.`}
+          </cite>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-2 text-[10px]" style="color: var(--color-text-dim);">{c.sourcesNote}</p>
+  </details>
+)}

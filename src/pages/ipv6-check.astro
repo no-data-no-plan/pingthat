@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Ipv6Check from "../components/Ipv6Check.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
+import SourcesBlock from "../components/SourcesBlock.astro";
 import ToolContent from "../components/ToolContent.astro";
 import { pageI18n } from "../i18n/pages";
 
@@ -36,4 +37,5 @@ const p = pageI18n["ipv6-check"].en;
     text={p.seoBlockText}
     features={p.seoFeatures}
   />
+  <SourcesBlock slug="ipv6-check" lang="en" />
 </Layout>

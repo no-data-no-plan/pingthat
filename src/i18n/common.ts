@@ -70,6 +70,10 @@ const common = {
     // sticky header on every tool page (Stanford T-06 \u2014 visitor sees the
     // maintenance signal before the input field, not only after scrolling).
     toolLastVerified: "Last verified {{month}} \u2014 runs in your browser",
+    // SourcesBlock \u2014 primary RFCs/standards per page (Bloque 1b Phase 2).
+    // Only rendered when src/data/sources.ts has entries for the slug.
+    sourcesHeading: "Sources",
+    sourcesNote: "These are the IETF RFCs, NIST publications, and W3C standards the tool implements or queries. Locate them on the IETF Datatracker (datatracker.ietf.org) or the official standards body.",
   },
   es: {
     // Buttons
@@ -135,6 +139,8 @@ const common = {
     footerLastVerified: "\u00daltima verificaci\u00f3n {{month}} \u2014 las 23 herramientas pasando",
     footerMethodology: "Metodolog\u00eda",
     toolLastVerified: "\u00daltima verificaci\u00f3n {{month}} \u2014 corre en tu navegador",
+    sourcesHeading: "Fuentes",
+    sourcesNote: "Son los RFCs del IETF, las publicaciones del NIST y los est\u00e1ndares del W3C que la herramienta implementa o consulta. Local\u00edzalos en el IETF Datatracker (datatracker.ietf.org) o en el organismo correspondiente.",
   },
 };
 
