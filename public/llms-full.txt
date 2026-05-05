@@ -71,11 +71,6 @@ Practical, honest guides for sysadmins and DevOps engineers on monitoring, DNS, 
 ## Comparison with alternatives
 
 PingThat is positioned as a privacy-first, ad-light alternative to mainstream net-tool sites:
-- [vs MXToolbox](https://pingthat.dev/vs-mxtoolbox/)
-- [vs DNSChecker](https://pingthat.dev/vs-dnschecker/)
-- [vs HackerTarget](https://pingthat.dev/vs-hackertarget/)
-- [vs SecurityHeaders](https://pingthat.dev/vs-securityheaders/)
-- [vs WhatIsMyIP](https://pingthat.dev/vs-whatismyip/)
 
 ## Privacy & data handling
 
@@ -546,7 +541,6 @@ No. A responsible disclosure or security.txt file tells you how to report a vuln
 Stop immediately, preserve your logs (what was scanned, when, under what authorization), and do not argue the technical point with the complainant. The legal question is never 'was the scan harmful?' but 'was it authorized?' — arguing otherwise only creates more record. If the complaint comes from a cloud provider, reply briefly acknowledging receipt and stop scanning from that source. If it escalates to a cease-and-desist or law enforcement contact, get a lawyer before responding further. Keeping clean authorization records upfront is the best defense.
 
 
-## https://pingthat.dev/vs-mxtoolbox/
 
 **PingThat vs MXToolbox**
 
@@ -573,7 +567,6 @@ Both PingThat and MXToolbox offer free DNS lookups. PingThat provides a faster, 
 MXToolbox does not require registration for basic lookups. However, monitoring features, blacklist alerts, and advanced reports require a free account. Paid plans ($129-$399/month) unlock full monitoring, API access, and expanded blacklist checks. PingThat never requires registration for any feature.
 
 
-## https://pingthat.dev/vs-dnschecker/
 
 **PingThat vs DNSChecker**
 
@@ -600,7 +593,6 @@ For standard DNS lookups, both tools work well. DNSChecker excels at DNS propaga
 Yes, DNSChecker is free to use. However, the site is heavily ad-supported with multiple display and interstitial ads that can make the experience slower. PingThat is also free with no ads, no registration, and no usage limits on any of its 17 tools.
 
 
-## https://pingthat.dev/vs-hackertarget/
 
 **PingThat vs HackerTarget**
 
@@ -627,7 +619,6 @@ Yes, HackerTarget limits free users to 100 scans per day across all tools. This 
 HackerTarget is better for active security testing — it offers port scanning, WordPress vulnerability scanning, and reverse IP lookups designed for penetration testing and reconnaissance. PingThat focuses on passive checks (SSL verification, header inspection, WebRTC leak detection) and developer utilities. For security auditing, use HackerTarget. For everyday network diagnostics and developer tools, PingThat is the better choice.
 
 
-## https://pingthat.dev/vs-securityheaders/
 
 **PingThat vs SecurityHeaders**
 
@@ -654,7 +645,6 @@ SecurityHeaders.com is better for dedicated security header auditing — it grad
 Yes, SecurityHeaders.com is free for individual header scans. It has a clean, minimal interface with no registration required. The site is maintained by Scott Helme, a well-known security researcher. PingThat is also free, offering 17 tools with no registration, no limits, and no ads.
 
 
-## https://pingthat.dev/vs-whatismyip/
 
 **PingThat vs WhatIsMyIP**
 

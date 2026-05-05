@@ -3,7 +3,6 @@ import "../styles/global.css";
 import { tools, groups } from "../lib/tools";
 import { getCommon } from "../i18n/common";
 import CookieConsent from "../components/CookieConsent.astro";
-import CompareLinks from "../components/CompareLinks.astro";
 import LangToggle from "../components/LangToggle.astro";
 
 const c = getCommon("en");
@@ -14,7 +13,7 @@ const jsonLd = JSON.stringify([
     "@type": "WebApplication",
     name: "PingThat",
     url: "https://pingthat.dev",
-    description: "Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser, no tracking.",
+    description: "Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser.",
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -34,7 +33,7 @@ const jsonLd = JSON.stringify([
     name: "PingThat",
     url: "https://pingthat.dev",
     logo: "https://pingthat.dev/og-image.png",
-    description: "Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser, no tracking.",
+    description: "Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser.",
     sameAs: [
       "https://buymeacoffee.com/allopen",
     ],
@@ -48,7 +47,7 @@ const jsonLd = JSON.stringify([
         name: "What is the best free online DNS lookup tool?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "PingThat offers a free DNS lookup tool as part of its collection of 17 network and security tools. It returns A, AAAA, MX, NS, TXT, and CNAME records instantly. All lookups run in the browser with no tracking or data collection.",
+          text: "PingThat offers a free DNS lookup tool as part of its collection of 17 network and security tools. It returns A, AAAA, MX, NS, TXT, and CNAME records instantly. All lookups query Cloudflare DoH and run in the browser; PingThat does not log query content. See /methodology/ for the per-tool breakdown.",
         },
       },
       {
@@ -96,7 +95,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser, no tracking." />
+  <meta name="description" content="Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser." />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
 
@@ -173,14 +172,14 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <meta property="og:title" content="PingThat — Network Tools for Developers" />
-  <meta property="og:description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
+  <meta property="og:description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser or query public APIs (DoH/RDAP/cert logs)." />
   <meta property="og:url" content="https://pingthat.dev/" />
   <meta property="og:site_name" content="PingThat" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://pingthat.dev/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PingThat — Network Tools for Developers" />
-  <meta name="twitter:description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser with no tracking." />
+  <meta name="twitter:description" content="PingThat is a free collection of 17 network and security tools — DNS lookup, SSL checker, WHOIS, HTTP headers, JWT decoder — that run in your browser or query public APIs (DoH/RDAP/cert logs)." />
   <meta name="twitter:image" content="https://pingthat.dev/og-image.png" />
 
   <script type="application/ld+json" set:html={jsonLd} />
@@ -284,9 +283,6 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
         </p>
       </div>
     </main>
-
-    <CompareLinks lang="en" competitors={["mxtoolbox", "dnschecker", "hackertarget", "securityheaders", "whatismyip"]} />
-
     <!-- Footer (Nielsen audit 2026-04-30, PT F3 + F17): match tool-page
          chrome. Pre-fix /about/, /docs/, BMC, and Formspree feedback were
          unreachable from `/`. -->

@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import CompareLinks from "../components/CompareLinks.astro";
 import SslChecker from "../components/SslChecker.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
@@ -37,6 +36,4 @@ const p = pageI18n["ssl-checker"].en;
     text={p.seoBlockText}
     features={p.seoFeatures}
   />
-
-  <CompareLinks lang="en" competitors={["hackertarget", "securityheaders"]} />
 </Layout>

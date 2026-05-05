@@ -71,11 +71,6 @@ Practical, honest guides for sysadmins and DevOps engineers on monitoring, DNS, 
 ## Comparison with alternatives
 
 PingThat is positioned as a privacy-first, ad-light alternative to mainstream net-tool sites:
-- [vs MXToolbox](https://pingthat.dev/vs-mxtoolbox/)
-- [vs DNSChecker](https://pingthat.dev/vs-dnschecker/)
-- [vs HackerTarget](https://pingthat.dev/vs-hackertarget/)
-- [vs SecurityHeaders](https://pingthat.dev/vs-securityheaders/)
-- [vs WhatIsMyIP](https://pingthat.dev/vs-whatismyip/)
 
 ## Privacy & data handling
 

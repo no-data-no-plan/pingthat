@@ -4,7 +4,6 @@ import Sidebar from "../components/Sidebar.astro";
 import RelatedDocs from "../components/RelatedDocs.astro";
 import LangToggle from "../components/LangToggle.astro";
 import CrossLinks from "../components/CrossLinks.astro";
-import CompareLinks from "../components/CompareLinks.astro";
 import CookieConsent from "../components/CookieConsent.astro";
 import ShortcutHelp from "../components/ShortcutHelp.svelte";
 import { tools } from "../lib/tools";
@@ -164,7 +163,7 @@ if (isHome) {
     name: "PingThat",
     url: "https://pingthat.dev",
     logo: "https://pingthat.dev/og-image.png",
-    description: "Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser, no tracking.",
+    description: "Free privacy-first suite of 17 network & security tools — DNS, SSL, WHOIS, HTTP headers, JWT decoder, subnet calc. Runs in your browser.",
     sameAs: [
       "https://buymeacoffee.com/allopen",
     ],
@@ -379,9 +378,6 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
                  data-full-width-responsive="true"></ins>
           </div>
         </div>
-        {!isComparePage && (
-          <CompareLinks lang={lang} competitors={["mxtoolbox", "dnschecker", "hackertarget", "securityheaders", "whatismyip"]} />
-        )}
         <CrossLinks exclude="dev" lang={lang} />
       </main>
 

@@ -35,25 +35,25 @@ const common = {
     // Layout
     networkTools: "Network Tools",
     networkToolsForDevs: "PingThat \u2014 Network tools for developers",
-    noDataCollectedPrivate: "No data collected \u00b7 100% private",
+    noDataCollectedPrivate: "Browser-side \u00b7 queries to public APIs",
     buyMeACoffee: "Buy me a coffee",
-    private100: "100% private",
+    private100: "Browser-side",
     feedbackPlaceholder: "Bug, idea, or feedback...",
-    noDataCollectedFull: "100% free. No signup. No data collected.",
+    noDataCollectedFull: "Free. No signup. Most tools run in your browser; some query public APIs.",
     searchTools: "Search tools...",
     networkToolsUppercase: "NETWORK TOOLS FOR DEVELOPERS",
     related: "Related:",
-    noDataDisclaimer: "100% free. No signup. No data collected anywhere.",
+    noDataDisclaimer: "Free. No signup. Browser tools (subnet, JWT, password strength) run locally; lookup tools query public APIs (Cloudflare DoH, RDAP, certificate logs).",
 
     // Landing
     heroEyebrow: "Network Tools",
     heroHeadingPrefix: "Ping, check, ",
     heroHeadingEm: "analyze",
-    heroText: "Network diagnostics and developer tools that run entirely in your browser. No data collected, no accounts, no tracking. Your information stays on your device.",
+    heroText: "Network diagnostics and developer tools. Some run entirely in your browser (subnet math, JWT decoding, password strength); others query public APIs (Cloudflare DoH, RDAP, certificate logs) when they need real internet data. No accounts.",
     bottomCtaLabel: "More tools coming soon",
     bottomCtaText: "DNS lookup, port scanner, SSL checker, HTTP headers, and more.",
     footerTagline: "PingThat \u2014 Network tools for developers",
-    footerPrivacy: "No data collected. 100% private.",
+    footerPrivacy: "Browser-side · public-API queries · AdSense after consent",
 
     // Identity strip \u2014 Stanford Web Credibility signals (T-02 maintenance,
     // T-04 visible email, T-06 last-verified). Compatible with the warm-dark
@@ -103,25 +103,25 @@ const common = {
     // Layout
     networkTools: "Herramientas de Red",
     networkToolsForDevs: "PingThat \u2014 Herramientas de red para desarrolladores",
-    noDataCollectedPrivate: "Sin recogida de datos \u00b7 100% privado",
+    noDataCollectedPrivate: "En el navegador \u00b7 consultas a APIs p\u00fablicas",
     buyMeACoffee: "Inv\u00edtame a un caf\u00e9",
-    private100: "100% privado",
+    private100: "En el navegador",
     feedbackPlaceholder: "Bug, idea o sugerencia...",
-    noDataCollectedFull: "100% gratis. Sin registro. Sin recogida de datos.",
+    noDataCollectedFull: "Gratis. Sin registro. La mayoría de tools corren en tu navegador; algunas consultan APIs públicas.",
     searchTools: "Buscar herramientas...",
     networkToolsUppercase: "HERRAMIENTAS DE RED PARA DESARROLLADORES",
     related: "Relacionado:",
-    noDataDisclaimer: "100% gratis. Sin registro. Tus datos no se recogen ni env\u00edan a ning\u00fan sitio.",
+    noDataDisclaimer: "Gratis. Sin registro. Las tools de navegador (subred, JWT, fuerza de contrase\u00f1a) corren localmente; las de consulta usan APIs p\u00fablicas (Cloudflare DoH, RDAP, registros de certs).",
 
     // Landing
     heroEyebrow: "Herramientas de Red",
     heroHeadingPrefix: "Analiza, comprueba, ",
     heroHeadingEm: "diagnostica",
-    heroText: "Herramientas de diagn\u00f3stico de red y desarrollo que se ejecutan \u00edntegramente en tu navegador. Sin recogida de datos, sin cuentas, sin rastreo. Tu informaci\u00f3n permanece en tu dispositivo.",
+    heroText: "Herramientas de diagn\u00f3stico de red y desarrollo. Algunas se ejecutan en tu navegador (c\u00e1lculo de subred, decodificaci\u00f3n JWT, fuerza de contrase\u00f1a); otras consultan APIs p\u00fablicas (Cloudflare DoH, RDAP, registros de certificados) cuando necesitan datos reales de internet. Sin cuentas.",
     bottomCtaLabel: "M\u00e1s herramientas pr\u00f3ximamente",
     bottomCtaText: "B\u00fasqueda DNS, esc\u00e1ner de puertos, comprobador SSL, cabeceras HTTP y m\u00e1s.",
     footerTagline: "PingThat \u2014 Herramientas de red para desarrolladores",
-    footerPrivacy: "Sin recogida de datos. 100% privado.",
+    footerPrivacy: "En el navegador · consultas a APIs públicas · AdSense con consentimiento",
 
     // Identity strip \u2014 Stanford Web Credibility (T-02 mantenimiento,
     // T-04 email visible, T-06 \u00faltima verificaci\u00f3n). Compatible con el

@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import CompareLinks from "../../components/CompareLinks.astro";
 import MyIp from "../../components/MyIp.svelte";
 import SeoContent from "../../components/SeoContent.astro";
 import SeoBlock from "../../components/SeoBlock.astro";
@@ -41,6 +40,4 @@ const p = pageI18n["my-ip"].es;
     features={p.seoFeatures}
     lang="es"
   />
-
-  <CompareLinks lang="es" competitors={["whatismyip"]} />
 </Layout>

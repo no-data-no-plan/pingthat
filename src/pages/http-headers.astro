@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import CompareLinks from "../components/CompareLinks.astro";
 import HttpHeaders from "../components/HttpHeaders.svelte";
 import SeoContent from "../components/SeoContent.astro";
 import SeoBlock from "../components/SeoBlock.astro";
@@ -37,6 +36,4 @@ const p = pageI18n["http-headers"].en;
     text={p.seoBlockText}
     features={p.seoFeatures}
   />
-
-  <CompareLinks lang="en" competitors={["securityheaders", "mxtoolbox"]} />
 </Layout>

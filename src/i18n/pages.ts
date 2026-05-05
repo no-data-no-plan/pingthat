@@ -23,7 +23,7 @@ export const pageI18n: Record<
   "my-ip": {
     en: {
       title: "What Is My IP — IPv4, IPv6 & Location",
-      description: "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup with no tracking or signup.",
+      description: "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup; data fetched from public IP-info APIs (ipapi.co, ipify).",
       seoHeading: "Find My Public IP Address (IPv4 & IPv6)",
       seoText: "Instantly see your public IP address along with your approximate location, ISP, timezone, and connection details. We fetch your IP from public APIs and display it locally \u2014 no data is stored or logged.",
       seoBlockHeading: "How does IP detection work?",
@@ -59,7 +59,7 @@ export const pageI18n: Record<
     },
     es: {
       title: "Cu\u00e1l Es Mi IP \u2014 P\u00fablica, IPv4 e IPv6",
-      description: "Consulta tu direcci\u00f3n IPv4 e IPv6 p\u00fablica, geolocalizaci\u00f3n, ISP y ASN en tiempo real. Gratis, instant\u00e1neo, sin rastreo ni registro.",
+      description: "Consulta tu direcci\u00f3n IPv4 e IPv6 p\u00fablica, geolocalizaci\u00f3n, ISP y ASN en tiempo real. Gratis e instant\u00e1neo; los datos se obtienen de APIs p\u00fablicas de IP (ipapi.co, ipify).",
       seoHeading: "Mi IP P\u00fablica e IPv4 con Geolocalizaci\u00f3n",
       seoText: "Consulta instant\u00e1neamente tu direcci\u00f3n IP p\u00fablica junto con tu ubicaci\u00f3n aproximada, ISP, zona horaria y detalles de conexi\u00f3n. Obtenemos tu IP de APIs p\u00fablicas y la mostramos localmente \u2014 no se almacena ni registra ning\u00fan dato.",
       seoBlockHeading: "Direcci\u00f3n IP P\u00fablica vs Privada \u2014 C\u00f3mo se Detecta",
