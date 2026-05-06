@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import PortScan from "../../components/PortScan.svelte";
 import SeoContent from "../../components/SeoContent.astro";
 import SeoBlock from "../../components/SeoBlock.astro";
+import SourcesBlock from "../../components/SourcesBlock.astro";
 import ToolContent from "../../components/ToolContent.astro";
 import { pageI18n } from "../../i18n/pages";
 const p = pageI18n["port-scan"].es;
@@ -12,4 +13,5 @@ const p = pageI18n["port-scan"].es;
   <SeoContent heading={p.seoHeading} text={p.seoText} relatedToolIds={["ssl-checker", "http-headers", "is-it-up"]} lang="es" />
   <ToolContent howHeading={p.howHeading} howSteps={p.howSteps} useCasesHeading={p.useCasesHeading} useCases={p.useCases} faqHeading={p.faqHeading} faqs={p.faqs} lang="es" />
   <SeoBlock heading={p.seoBlockHeading} text={p.seoBlockText} features={p.seoFeatures} lang="es" />
+  <SourcesBlock slug="port-scan" lang="es" />
 </Layout>

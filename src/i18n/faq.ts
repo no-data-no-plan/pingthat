@@ -349,4 +349,106 @@ export const faqs: Record<string, FAQByLang> = {
       ],
     },
   },
+
+  "port-scan": {
+    en: {
+      faqs: [
+        {
+          question: "What's the difference between filtered and closed?",
+          answer: "Both states indicate the service isn't reachable, but the wire-level signature differs. A closed port returns a TCP RST flag immediately — RFC 9293 §3.10.7 specifies this as the kernel's response when no socket is listening on the probed port. The host is alive; it just isn't running that service. Filtered means the probe got no answer at all within the timeout. Three different conditions produce that same silence: a stateful firewall dropped the SYN packet, the route to the host is broken upstream, or the host itself is offline. The scanner cannot distinguish among them without TCP traceroute or ICMP echo. Filtered is a 'something is between you and the service' signal, not a confirmed firewall verdict.",
+        },
+        {
+          question: "Is port scanning legal?",
+          answer: "Scanning your own infrastructure or systems you have written permission to test is legal everywhere. Scanning third-party hosts without authorisation occupies a grey zone that varies by jurisdiction. In the United States, Moulton v. VC3, Inc. (USDC ND Ga 2000) ruled that an unauthorised port scan and throughput test against VC3's servers — absent damage exceeding the $5,000 CFAA threshold — did not violate 18 USC §1030 or the Georgia Computer Systems Protection Act. The court found the activity reckless but the statutory damage requirement unmet. That precedent applies to facts resembling Moulton; courts in other circuits have decided differently. In Germany, §202c StGB ('Hacker-Paragraph', 2007 amendment) criminalises preparation of data interception and has been read to cover unauthorised scanning tools. Written authorisation is the only safe operating principle, regardless of jurisdiction.",
+        },
+        {
+          question: "Why does a port appear open from this tool but closed when scanned from inside the network?",
+          answer: "Cloud-hosted scanners hit your perimeter the way the internet sees it — through the public-facing security group, load balancer, or NAT gateway. Internal scans run after that perimeter and only see the host firewall (iptables, Windows Firewall). A port can be open at the perimeter (security group permits 22/tcp) but blocked at the host (iptables drops it). The reverse is also common: the host listens but the perimeter blocks. The verdict you trust depends on the threat model: external scans answer 'what can the internet reach?', internal scans answer 'what would a compromised internal box reach?'. Both views are useful; neither is wrong.",
+        },
+        {
+          question: "Why is HTTP-based probing different from nmap?",
+          answer: "nmap's default scan (-sS, SYN scan) crafts raw IP packets and reads TCP flags directly. It can complete a half-open handshake — SYN/ACK received, RST sent in reply — without making the application layer aware of a connection attempt. Application logs stay clean. Cloudflare Workers do not expose raw sockets, so this tool issues full HTTP/HTTPS connections from edge POPs: the handshake completes, the application logs the connection, and any rate-limit or fail2ban rule fires as it would for a real client. The trade-off is fidelity to what an actual external client experiences versus stealth — impossible from this runtime. For broad reachability checks the HTTP probe is sufficient; for protocol-specific deep inspection, nmap from a host you control remains the right tool.",
+        },
+        {
+          question: "How does IANA decide which ports get assigned numbers?",
+          answer: "RFC 6335 (Cotton, Eggert, Touch, Westerlund & Cheshire, 2011) defines three procedures by range. System Ports (0–1023) require IETF Review or IESG Approval — registration usually accompanies a published RFC, which is why every entry in this range traces to a standards-track document. User Ports (1024–49151) accept Expert Review submissions: the requester documents the protocol, IANA's expert checks for conflicts and assigns. Dynamic and/or Private Ports (49152–65535) are not assigned by IANA; operating systems pick from this range when an application opens an outbound connection without specifying a source port. Many third-party services bind in the User range (Redis 6379, PostgreSQL 5432, MySQL 3306) — their numbers are advisory only; nothing in the protocol layer forces a server to use them.",
+        },
+      ],
+    },
+    es: {
+      faqs: [
+        {
+          question: "¿Cuál es la diferencia entre filtrado y cerrado?",
+          answer: "Ambos estados indican que el servicio no está alcanzable, pero la firma a nivel de paquete difiere. Un puerto cerrado devuelve un flag TCP RST de inmediato — RFC 9293 §3.10.7 lo especifica como la respuesta del kernel cuando no hay socket escuchando en el puerto sondeado. El host está vivo; simplemente no está ejecutando ese servicio. Filtrado significa que el sondeo no recibió respuesta dentro del timeout. Tres condiciones distintas producen ese mismo silencio: un firewall stateful descartó el paquete SYN, la ruta al host está rota aguas arriba o el host está offline. El escáner no puede distinguir entre ellas sin TCP traceroute o ICMP echo. Filtrado es una señal de 'algo se interpone entre ti y el servicio', no un veredicto confirmado de firewall.",
+        },
+        {
+          question: "¿Es legal escanear puertos?",
+          answer: "Escanear tu propia infraestructura o sistemas para los que tienes permiso escrito es legal en todas partes. Escanear hosts de terceros sin autorización ocupa una zona gris que varía por jurisdicción. En Estados Unidos, Moulton v. VC3, Inc. (USDC ND Ga 2000) dictaminó que un escaneo de puertos y test de throughput sin autorización contra los servidores de VC3 — en ausencia de daños superiores al umbral CFAA de 5.000 dólares — no violaba 18 USC §1030 ni la Georgia Computer Systems Protection Act. El tribunal consideró la actividad imprudente pero el requisito estatutario de daños no cumplido. Ese precedente aplica a hechos similares a Moulton; tribunales de otros circuitos han decidido distinto. En Alemania, §202c StGB ('Hacker-Paragraph', enmienda 2007) criminaliza la preparación de interceptación de datos y se ha interpretado que cubre herramientas de escaneo no autorizadas. La autorización por escrito es el único principio operativo seguro, sea cual sea la jurisdicción.",
+        },
+        {
+          question: "¿Por qué un puerto aparece abierto en esta herramienta pero cerrado al escanearlo desde dentro de la red?",
+          answer: "Los escáneres alojados en cloud golpean tu perímetro como lo ve internet — a través del security group público, balanceador o gateway NAT. Los escaneos internos corren después de ese perímetro y sólo ven el firewall del host (iptables, Windows Firewall). Un puerto puede estar abierto en el perímetro (el security group permite 22/tcp) pero bloqueado en el host (iptables lo descarta). El caso contrario también es común: el host escucha pero el perímetro bloquea. El veredicto en el que confías depende del modelo de amenaza: los escaneos externos responden '¿qué alcanza internet?', los internos responden '¿qué alcanzaría una caja interna comprometida?'. Ambas vistas son útiles; ninguna está mal.",
+        },
+        {
+          question: "¿En qué se diferencia el sondeo HTTP de nmap?",
+          answer: "El escaneo por defecto de nmap (-sS, SYN scan) construye paquetes IP en crudo y lee los flags TCP directamente. Puede completar un handshake medio-abierto — recibido SYN/ACK, enviado RST en respuesta — sin que la capa de aplicación se entere del intento de conexión. Los logs de aplicación permanecen limpios. Cloudflare Workers no expone sockets en crudo, así que esta herramienta emite conexiones HTTP/HTTPS completas desde sus POPs edge: el handshake se completa, la aplicación registra la conexión y cualquier regla de rate-limit o fail2ban se dispara como lo haría para un cliente real. El trade-off es fidelidad a lo que ve un cliente externo real frente a sigilo — imposible desde este runtime. Para chequeos amplios de alcanzabilidad el sondeo HTTP basta; para inspección profunda de protocolo, nmap desde un host que controles sigue siendo la herramienta correcta.",
+        },
+        {
+          question: "¿Cómo decide IANA qué puertos reciben número asignado?",
+          answer: "RFC 6335 (Cotton, Eggert, Touch, Westerlund y Cheshire, 2011) define tres procedimientos por rango. Los System Ports (0–1023) requieren IETF Review o IESG Approval — el registro suele acompañar a un RFC publicado, razón por la que cada entrada de este rango remite a un documento standards-track. Los User Ports (1024–49151) aceptan envíos de Expert Review: el solicitante documenta el protocolo, el experto IANA verifica conflictos y asigna. Los Dynamic and/or Private Ports (49152–65535) no son asignados por IANA; los sistemas operativos eligen de este rango cuando una aplicación abre una conexión saliente sin especificar puerto de origen. Muchos servicios de terceros se enlazan en el rango User (Redis 6379, PostgreSQL 5432, MySQL 3306) — sus números son orientativos; nada en la capa de protocolo obliga al servidor a usarlos.",
+        },
+      ],
+    },
+  },
+
+  "ip-converter": {
+    en: {
+      faqs: [
+        {
+          question: "Why does my IPv6 address show as ::ffff:192.168.1.1 in some logs?",
+          answer: "That's an IPv4-mapped IPv6 address, defined in RFC 4291 §2.5.5.2 (Hinden & Deering, 2006). The prefix ::ffff:0:0/96 lets a dual-stack socket receive both IPv4 and IPv6 connections on a single AF_INET6 file descriptor — when an IPv4 client connects, the kernel synthesises this textual form so the application can treat the address uniformly. Java in particular surfaces these mappings: InetAddress.getByName(\"192.168.1.1\") may stringify as /192.168.1.1 but bind() returns it as ::ffff:c0a8:0101 on a v6 socket. Logs that mix v4 and v6 traffic on the same listener show this form for everything the kernel mapped, which surprises engineers the first time they see it. The underlying address is still the 32-bit IPv4 value; only the textual form changed.",
+        },
+        {
+          question: "Why does the canonical IPv6 form use lowercase letters and one specific compression?",
+          answer: "RFC 5952 (Kawamura & Kawashima, 2010) tightens RFC 4291 by mandating one textual form per address, removing ambiguity that had broken string-equality comparisons across systems. §4.3 requires lowercase hex ('a' through 'f', not 'A' through 'F'). §4.2.3 mandates :: compress the longest run of consecutive 16-bit zero fields; when two runs tie, the first one wins. §4.2.2 forbids using :: to elide a single zero field. So 2001:DB8:0:0:0:0:0:1 must canonicalise to 2001:db8::1 — not 2001:db8:0:0::1 or 2001:DB8::1. Tools that fail to canonicalise inputs frequently mis-compare addresses or duplicate firewall entries; the converter normalises every IPv6 input to the §4 form before showing the alternative representations.",
+        },
+        {
+          question: "What's the difference between RFC 1918 private space and the 100.64.0.0/10 CGNAT range?",
+          answer: "RFC 1918 (Rekhter et al., 1996) reserved 10/8, 172.16/12, and 192.168/16 for organisations using NAT — these ranges are routable inside an enterprise but never on the public internet. ISPs hit a problem as IPv4 exhaustion approached: their customer routers already used RFC 1918 ranges internally, so the carrier-side NAT layer needed a different range to avoid collisions when both endpoints used 10/8. RFC 6598 (Weil, Kuarsingh, Donley, Liljenstolpe & Azinger, 2012) carved 100.64.0.0/10 out of the unallocated v4 space specifically for that ISP-CGNAT tier. A packet may traverse three layers of NAT: customer LAN (RFC 1918) → ISP CGNAT (RFC 6598 100.64/10) → public internet. Tools that only flag RFC 1918 as 'private' miss the 100.64/10 carrier scope, which is why the converter highlights both.",
+        },
+        {
+          question: "Are class A, B, and C still meaningful?",
+          answer: "Functionally, no. The 1981 IPv4 specification (RFC 791) introduced classful addressing — class A reserved 1.0.0.0–127.255.255.255 with an 8-bit network mask, B 128–191 with /16, C 192–223 with /24, plus class D for multicast and class E reserved. As routing tables exploded in the early 1990s, the IETF deprecated the classful scheme and replaced it with CIDR (Classless Inter-Domain Routing). The original CIDR documents (RFC 1518/1519, September 1993) defined the variable-length prefix system; RFC 4632 (Fuller & Li, 2006) is the current canonical specification. Modern routers, allocators, and registries do not use classes; addresses are described by /CIDR alone. The terminology survives in legacy curriculum, some Cisco IOS commands ('ip classless'), and shorthand among engineers who learned in that era.",
+        },
+        {
+          question: "Why does my IP show up as a giant integer in MySQL or Cloudflare logs?",
+          answer: "MySQL's INET_ATON('192.168.1.1') returns 3232235777 — the four octets read as a big-endian 32-bit unsigned integer (192*16777216 + 168*65536 + 1*256 + 1). The integer form takes 4 bytes in storage versus 15 characters for the dotted string, and integer comparisons run faster than string ops against indexed columns. INET_NTOA(3232235777) reverses the conversion. Cloudflare logs and BigQuery exports follow the same big-endian-integer pattern. IPv6 needs 16 bytes — INET6_ATON returns a binary blob, not a single Long. Network order (big-endian) is the canonical wire format defined for IP fields in RFC 791; tools that read packet captures or socket buffers see those bytes directly, while applications that handle IP addresses as integers may need POSIX htonl()/ntohl() conversions on hosts whose CPU stores integers in little-endian. The converter shows both the dotted-decimal and the integer alongside hex/binary so operators can cross-reference log dumps without manual math.",
+        },
+      ],
+    },
+    es: {
+      faqs: [
+        {
+          question: "¿Por qué mi dirección IPv6 aparece como ::ffff:192.168.1.1 en algunos logs?",
+          answer: "Esa es una dirección IPv4-mapped IPv6, definida en RFC 4291 §2.5.5.2 (Hinden y Deering, 2006). El prefijo ::ffff:0:0/96 permite a un socket dual-stack recibir conexiones IPv4 e IPv6 sobre un único descriptor AF_INET6 — cuando un cliente IPv4 conecta, el kernel sintetiza esta forma textual para que la aplicación trate la dirección de manera uniforme. Java en particular expone estos mapeos: InetAddress.getByName(\"192.168.1.1\") puede mostrar /192.168.1.1 pero bind() la devuelve como ::ffff:c0a8:0101 en un socket v6. Los logs que mezclan tráfico v4 y v6 sobre el mismo listener muestran esta forma para todo lo que el kernel mapeó, lo que sorprende a los ingenieros la primera vez que lo ven. La dirección subyacente sigue siendo el valor IPv4 de 32 bits; sólo la forma textual cambió.",
+        },
+        {
+          question: "¿Por qué la forma canónica IPv6 usa letras minúsculas y una compresión concreta?",
+          answer: "RFC 5952 (Kawamura y Kawashima, 2010) endurece RFC 4291 al imponer una única forma textual por dirección, eliminando la ambigüedad que rompía las comparaciones de igualdad de string entre sistemas. §4.3 requiere hex en minúsculas ('a' a 'f', no 'A' a 'F'). §4.2.3 obliga a que :: comprima la racha más larga de campos 16-bit cero consecutivos; cuando dos rachas empatan, gana la primera. §4.2.2 prohíbe usar :: para elidir un único campo cero. Así 2001:DB8:0:0:0:0:0:1 debe canonicalizar a 2001:db8::1 — no 2001:db8:0:0::1 ni 2001:DB8::1. Las herramientas que no canonicalizan los inputs suelen mis-comparar direcciones o duplicar entradas de firewall; el conversor normaliza cada input IPv6 a la forma §4 antes de mostrar las representaciones alternativas.",
+        },
+        {
+          question: "¿Cuál es la diferencia entre el espacio privado RFC 1918 y el rango CGNAT 100.64.0.0/10?",
+          answer: "RFC 1918 (Rekhter et al., 1996) reservó 10/8, 172.16/12 y 192.168/16 para organizaciones que usan NAT — estos rangos son enrutables dentro de una empresa pero nunca en la internet pública. Los ISPs chocaron con un problema al acercarse el agotamiento IPv4: sus routers de cliente ya usaban rangos RFC 1918 internamente, así que la capa NAT del lado del operador necesitaba un rango distinto para evitar colisiones cuando ambos extremos usaban 10/8. RFC 6598 (Weil, Kuarsingh, Donley, Liljenstolpe y Azinger, 2012) reservó 100.64.0.0/10 del espacio v4 sin asignar específicamente para esa capa ISP-CGNAT. Un paquete puede atravesar tres capas de NAT: LAN del cliente (RFC 1918) → CGNAT del ISP (RFC 6598 100.64/10) → internet pública. Las herramientas que sólo marcan RFC 1918 como 'privado' pierden el alcance carrier 100.64/10, razón por la que el conversor resalta ambos.",
+        },
+        {
+          question: "¿Siguen siendo relevantes las clases A, B y C?",
+          answer: "Funcionalmente, no. La especificación IPv4 de 1981 (RFC 791 §3.2) introdujo el direccionamiento unicast por clases — la clase A reservaba 1.0.0.0–127.255.255.255 con máscara de 8 bits, clase B 128–191 con /16, clase C 192–223 con /24. La clase D para multicast (224.0.0.0–239.255.255.255) la añadió RFC 988 (1986) y la refinó RFC 1112 (1989); la clase E (240.0.0.0/4, reservada para uso futuro) quedó apartada en RFC 1112 §4. Cuando las tablas de routing explotaron a principios de los 90, el IETF deprecó el esquema unicast por clases y lo reemplazó con CIDR (Classless Inter-Domain Routing). Los documentos originales de CIDR (RFC 1518/1519, septiembre 1993) definieron el sistema de prefijos de longitud variable; RFC 4632 (Fuller y Li, 2006) es la especificación canónica actual. Los routers, asignadores y registries modernos no usan clases; las direcciones se describen sólo por /CIDR. La terminología sobrevive en currículos legacy, algunos comandos Cisco IOS ('ip classless') y la jerga de ingenieros que aprendieron en aquella era.",
+        },
+        {
+          question: "¿Por qué mi IP aparece como un entero gigante en logs de MySQL o Cloudflare?",
+          answer: "INET_ATON('192.168.1.1') de MySQL devuelve 3232235777 — los cuatro octetos leídos como un entero sin signo de 32 bits big-endian (192*16777216 + 168*65536 + 1*256 + 1). La forma entera ocupa 4 bytes en almacenamiento frente a 15 caracteres del string punteado, y las comparaciones enteras corren más rápido que las operaciones de string contra columnas indexadas. INET_NTOA(3232235777) invierte la conversión. Los logs de Cloudflare y los exports a BigQuery siguen el mismo patrón big-endian. IPv6 necesita 16 bytes — INET6_ATON devuelve un blob binario, no un único Long. El network order (big-endian) es el formato canónico en cable definido para los campos IP en RFC 791; las herramientas que leen capturas de paquetes o buffers de socket ven esos bytes directamente, mientras que las aplicaciones que manejan direcciones IP como enteros pueden necesitar conversiones POSIX htonl()/ntohl() en hosts cuya CPU almacena enteros en little-endian. El conversor muestra la decimal punteada y el entero junto a hex/binario para que los operadores cruzen volcados de log sin matemática manual.",
+        },
+      ],
+    },
+  },
 };

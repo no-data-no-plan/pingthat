@@ -71,6 +71,24 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Mockapetris, P.", year: "1987", title: "Domain Names — Implementation and Specification", venue: "RFC 1035, IETF" },
     { authors: "Hoffman, P., & McManus, P.", year: "2018", title: "DNS Queries over HTTPS (DoH)", venue: "RFC 8484, IETF" },
   ],
+  "port-scan": [
+    { authors: "Cotton, M., Eggert, L., Touch, J., Westerlund, M., & Cheshire, S.", year: "2011", title: "Internet Assigned Numbers Authority (IANA) Procedures for the Management of the Service Name and Transport Protocol Port Number Registry", venue: "RFC 6335, IETF" },
+    { authors: "Eddy, W. (Ed.)", year: "2022", title: "Transmission Control Protocol (TCP)", venue: "RFC 9293, IETF (obsoletes RFC 793)" },
+    { authors: "Postel, J.", year: "1980", title: "User Datagram Protocol", venue: "RFC 768, IETF" },
+    { authors: "Postel, J.", year: "1981", title: "Internet Control Message Protocol", venue: "RFC 792, IETF" },
+    { authors: "Internet Assigned Numbers Authority (IANA)", year: "live", title: "Service Name and Transport Protocol Port Number Registry", venue: "iana.org/assignments/service-names-port-numbers" },
+  ],
+  "ip-converter": [
+    { authors: "Kawamura, S., & Kawashima, M.", year: "2010", title: "A Recommendation for IPv6 Address Text Representation", venue: "RFC 5952, IETF" },
+    { authors: "Hinden, R., & Deering, S.", year: "2006", title: "IP Version 6 Addressing Architecture", venue: "RFC 4291, IETF (§2.5.5.2 IPv4-Mapped IPv6 Address)" },
+    { authors: "Postel, J.", year: "1981", title: "Internet Protocol", venue: "RFC 791, IETF (§3.2 classful addressing)" },
+    { authors: "Rekhter, Y., Moskowitz, B., Karrenberg, D., de Groot, G. J., & Lear, E.", year: "1996", title: "Address Allocation for Private Internets", venue: "RFC 1918, IETF" },
+    { authors: "Weil, J., Kuarsingh, V., Donley, C., Liljenstolpe, C., & Azinger, M.", year: "2012", title: "IANA-Reserved IPv4 Prefix for Shared Address Space", venue: "RFC 6598, IETF (100.64.0.0/10 CGNAT)" },
+    { authors: "Hinden, R., & Haberman, B.", year: "2005", title: "Unique Local IPv6 Unicast Addresses", venue: "RFC 4193, IETF (fc00::/7 with FD00::/8 locally-assigned half)" },
+    { authors: "Rekhter, Y., & Li, T.", year: "1993", title: "An Architecture for IP Address Allocation with CIDR", venue: "RFC 1518, IETF (deprecated by RFC 4632)" },
+    { authors: "Fuller, V., Li, T., Yu, J., & Varadhan, K.", year: "1993", title: "Classless Inter-Domain Routing (CIDR): an Address Assignment and Aggregation Strategy", venue: "RFC 1519, IETF (obsoleted by RFC 4632)" },
+    { authors: "Fuller, V., & Li, T.", year: "2006", title: "Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan", venue: "RFC 4632, IETF (current canonical, obsoletes RFC 1519)" },
+  ],
 };
 
 export function getSources(slug: string): Source[] {
