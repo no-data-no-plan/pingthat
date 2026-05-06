@@ -89,6 +89,23 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Fuller, V., Li, T., Yu, J., & Varadhan, K.", year: "1993", title: "Classless Inter-Domain Routing (CIDR): an Address Assignment and Aggregation Strategy", venue: "RFC 1519, IETF (obsoleted by RFC 4632)" },
     { authors: "Fuller, V., & Li, T.", year: "2006", title: "Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan", venue: "RFC 4632, IETF (current canonical, obsoletes RFC 1519)" },
   ],
+  "my-ip": [
+    { authors: "Petersson, A., & Nilsson, M.", year: "2014", title: "Forwarded HTTP Extension", venue: "RFC 7239, IETF" },
+    { authors: "Postel, J.", year: "1981", title: "Internet Protocol", venue: "RFC 791, IETF (32-bit IPv4 addressing)" },
+    { authors: "Hinden, R., & Deering, S.", year: "2006", title: "IP Version 6 Addressing Architecture", venue: "RFC 4291, IETF" },
+    { authors: "Rekhter, Y., Moskowitz, B., Karrenberg, D., de Groot, G. J., & Lear, E.", year: "1996", title: "Address Allocation for Private Internets", venue: "RFC 1918, IETF (10/8, 172.16/12, 192.168/16)" },
+    { authors: "Weil, J., Kuarsingh, V., Donley, C., Liljenstolpe, C., & Azinger, M.", year: "2012", title: "IANA-Reserved IPv4 Prefix for Shared Address Space", venue: "RFC 6598, IETF (100.64.0.0/10 CGNAT)" },
+    { authors: "Hawkinson, J., & Bates, T.", year: "1996", title: "Guidelines for creation, selection, and registration of an Autonomous System (AS)", venue: "RFC 1930, IETF" },
+    { authors: "MaxMind", year: "live", title: "GeoLite2 Free Geolocation Database", venue: "maxmind.com/en/geoip2-services-and-databases" },
+  ],
+  "privacy-check": [
+    { authors: "Eckersley, P.", year: "2010", title: "How Unique Is Your Web Browser?", venue: "Privacy Enhancing Technologies Symposium (PETS) 2010, LNCS 6205, Springer Berlin Heidelberg, pp. 1–18" },
+    { authors: "Mozilla", year: "2019", title: "Resist Fingerprinting (privacy.resistFingerprinting preference, Firefox 67+ from Tor Uplift project)", venue: "support.mozilla.org/kb/resist-fingerprinting + Bugzilla 1333933" },
+    { authors: "Apple Inc.", year: "2017", title: "Intelligent Tracking Prevention", venue: "webkit.org/blog (announced WWDC June 2017, shipped Safari 11 / iOS 11 September 2017)" },
+    { authors: "W3C / WICG", year: "2021", title: "User-Agent Client Hints", venue: "wicg.github.io/ua-client-hints (shipped Chrome 89, March 2021)" },
+    { authors: "European Parliament & Council", year: "2016", title: "Regulation (EU) 2016/679 (General Data Protection Regulation)", venue: "Article 6 lawful basis for processing, eur-lex.europa.eu" },
+    { authors: "European Parliament & Council", year: "2002", title: "Directive 2002/58/EC (ePrivacy Directive), amended by Directive 2009/136/EC", venue: "Article 5(3) terminal device data consent, eur-lex.europa.eu" },
+  ],
 };
 
 export function getSources(slug: string): Source[] {
