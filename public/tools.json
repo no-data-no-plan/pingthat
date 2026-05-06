@@ -455,7 +455,7 @@
         "@type": "SoftwareApplication",
         "name": "JWT Decoder",
         "url": "https://pingthat.dev/jwt-decoder/",
-        "description": "Decode and inspect JSON Web Tokens — header, payload, and signature. 100% client-side, your token never leaves your browser.",
+        "description": "Decode and inspect JSON Web Tokens — header, payload, and signature. Browser-side decoding.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -472,7 +472,7 @@
         "@type": "SoftwareApplication",
         "name": "What Is My IP",
         "url": "https://pingthat.dev/my-ip/",
-        "description": "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup with no tracking or signup.",
+        "description": "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup with.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -489,7 +489,7 @@
         "@type": "SoftwareApplication",
         "name": "Password Strength Checker",
         "url": "https://pingthat.dev/password-strength/",
-        "description": "Analyze password entropy, crack time estimation, and strength rating. 100% client-side, your password never leaves your browser.",
+        "description": "Analyze password entropy, crack time estimation, and strength rating. Browser-side analysis.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -574,7 +574,7 @@
         "@type": "SoftwareApplication",
         "name": "Reverse DNS Lookup Online Free",
         "url": "https://pingthat.dev/reverse-dns/",
-        "description": "Resolve PTR records for any IPv4 or IPv6 address. Free, instant, no signup.",
+        "description": "Resolve PTR records for any IPv4 or IPv6 address. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "offers": {
