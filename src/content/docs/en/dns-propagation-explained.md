@@ -115,7 +115,7 @@ Some record types behave slightly differently in caching:
 
 NS changes at your registrar are the one legitimate case where "48 hours" is reasonable, because TLD nameservers themselves cache the delegation.
 
-## The honest summary
+## The practical summary
 
 DNS changes are fast if you prepared (low TTL ahead of time). DNS changes are slow if you did not (high TTL baked into every cache). If you are ever tempted to tell someone "wait 48 hours," ask first: what was the original TTL? That is your real worst case.
 

@@ -115,7 +115,7 @@ Algunos tipos de registro se comportan algo distinto en caché:
 
 Los cambios de NS en tu registrador son el único caso legítimo donde "48 horas" es razonable, porque los nameservers del TLD mismos cachean la delegación.
 
-## El resumen honesto
+## El resumen práctico
 
 Los cambios DNS son rápidos si te preparaste (TTL bajo con anticipación). Los cambios DNS son lentos si no (TTL alto incrustado en cada caché). Si alguna vez estás tentado a decirle a alguien "espera 48 horas", pregunta primero: ¿cuál era el TTL original? Ese es tu peor caso real.
 

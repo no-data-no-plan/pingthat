@@ -6,7 +6,7 @@ relatedToolIds: ["is-it-up", "is-it-down", "site-speed"]
 publishedAt: 2026-04-17
 lang: en
 tags: ["sla", "uptime", "monitoring", "availability"]
-excerpt: "Each nine gets about 10x more expensive than the last. Here is the honest math and what it takes to actually deliver each tier."
+excerpt: "Each nine gets about 10x more expensive than the last. Here is the real math and what it takes to actually deliver each tier."
 faq:
   - q: "What does 99.9% uptime actually allow per month?"
     a: "99.9% (three nines) gives you 43.8 minutes of downtime per month, 8.76 hours per year, or 10.1 minutes per week. That is enough to absorb a bad deploy with a 5-minute rollback, or one incident with 30-40 minutes of MTTR. Anything longer and you blow the budget. 99.95% tightens that to 21.9 minutes per month, and 99.99% drops it to 4.38 minutes — barely enough to notice an incident, let alone respond manually. Your MTTR target should comfortably fit inside the monthly budget."
@@ -71,7 +71,7 @@ Vendor SLAs usually promise credits — 10% of the monthly bill if they miss the
 
 SLA credits are a reputational lever, not a financial one. If availability actually matters to your business, the credit is irrelevant — you need the uptime, not the refund. A monitor like [is-it-up](/is-it-up/) gives you an independent second opinion when your vendor's status page disagrees with reality.
 
-## Measuring uptime honestly
+## Measuring uptime accurately
 
 Your measured uptime depends entirely on your probe setup:
 
