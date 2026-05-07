@@ -149,6 +149,14 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Abley, J., & Lindqvist, K.", year: "2006", title: "Operation of Anycast Services", venue: "RFC 4786, IETF (BCP 126 — multi-region anycast routing)" },
     { authors: "Rescorla, E.", year: "2018", title: "The Transport Layer Security (TLS) Protocol Version 1.3", venue: "RFC 8446, IETF (handshake failures separate from HTTP layer)" },
   ],
+  "is-it-down": [
+    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Semantics", venue: "RFC 9110, IETF (June 2022 — STD 97 — §15 status code classes; distinguishes 4xx client-side from 5xx server-side failures)" },
+    { authors: "Eddy, W. (Ed.)", year: "2022", title: "Transmission Control Protocol (TCP)", venue: "RFC 9293, IETF (August 2022 — STD 7; obsoletes RFC 793; TCP connection refused/timeout semantics for pre-HTTP failure layer)" },
+    { authors: "Mockapetris, P.", year: "1987", title: "Domain Names — Implementation and Specification", venue: "RFC 1035, IETF (November 1987 — §4.1.1 RCODE field NXDOMAIN/SERVFAIL pre-HTTP failure layer)" },
+    { authors: "Braden, R. (Ed.)", year: "1989", title: "Requirements for Internet Hosts — Communication Layers", venue: "RFC 1122, IETF (October 1989 — STD 3 — §3.2.2 ICMP error reporting + IP-layer reachability requirements)" },
+    { authors: "Abley, J., & Lindqvist, K.", year: "2006", title: "Operation of Anycast Services", venue: "RFC 4786, IETF (BCP 126, December 2006 — multi-region anycast routing foundation for distributed reachability probes)" },
+    { authors: "Rescorla, E.", year: "2018", title: "The Transport Layer Security (TLS) Protocol Version 1.3", venue: "RFC 8446, IETF (August 2018 — handshake failures separate from HTTP layer; cert/SNI errors)" },
+  ],
   "site-speed": [
     { authors: "Google (web.dev / Chrome team)", year: "live", title: "Core Web Vitals — LCP, INP, CLS thresholds", venue: "web.dev/articles/vitals (LCP <2.5s, INP <200ms, CLS <0.1)" },
     { authors: "Google Chrome team", year: "live", title: "Chrome User Experience Report (CrUX) Methodology", venue: "developer.chrome.com/docs/crux (28-day rolling window, p75)" },

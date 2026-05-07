@@ -798,4 +798,54 @@ export const faqs: Record<string, FAQByLang> = {
       ],
     },
   },
+  "is-it-down": {
+    en: {
+      faqs: [
+        {
+          question: "How does the tool tell whether the site is down for everyone or only for me?",
+          answer: "The tool runs reachability probes from multiple Cloudflare anycast points (RFC 4786 BCP 126 Abley & Lindqvist, December 2006), each in a different region. If every regional probe reports the site as unreachable, the outage is global — likely a server crash, DDoS, or origin misconfiguration. If only some regional probes fail, the issue is partial — typically a CDN POP failure, regional ISP routing problem, or DNS propagation in progress. If every regional probe succeeds but you still can't reach the site, the issue is local to your network: ISP transit problem, DNS resolver cache holding stale records, browser cache serving an outdated 5xx, antivirus/firewall blocking, or a captive-portal hijack. The tool's output explicitly distinguishes these three patterns so you don't escalate a local problem to an on-call engineer.",
+        },
+        {
+          question: "What's the difference between an HTTP 4xx and 5xx outage?",
+          answer: "Per RFC 9110 §15 (Fielding, Nottingham & Reschke, June 2022), 4xx codes mean the server processed the request but rejected it for client-side reasons — 404 Not Found (path doesn't exist), 401/403 (auth failed), 429 (rate-limited), 451 (legal). The server is up; the request is the problem. 5xx codes mean the server itself failed — 500 Internal Server Error (application crash), 502/504 (upstream gateway failures, common when origin is overloaded), 503 Service Unavailable (intentional throttling or maintenance). 5xx is the real outage signal; 4xx means the server is healthy but your request specifically isn't valid. The tool reports the exact code so you know which remediation path applies.",
+        },
+        {
+          question: "What does 'connection refused' or 'timeout' mean in the report?",
+          answer: "Both are TCP-layer failures per RFC 9293 (Eddy Ed., August 2022, STD 7 obsoleting RFC 793) — pre-HTTP. Connection refused means the TCP SYN reached the host but no service was listening on the requested port (process crashed, port firewall, server stopped). Timeout means the SYN or response packets never arrived — could be IP-layer unreachable (host down or routing broken per RFC 1122 §3.2.2 Braden, October 1989), firewall silently dropping packets, or the route between the probe and the target degrading. DNS resolves successfully and TLS hasn't started yet. The remediation differs: refused = check service health, timeout = check network path / firewall.",
+        },
+        {
+          question: "Why might DNS show NXDOMAIN or SERVFAIL?",
+          answer: "Both are DNS-layer failures per RFC 1035 §4.1.1 (Mockapetris, November 1987). NXDOMAIN (RCODE 3) means the domain doesn't exist — registrar deletion, expired registration, typo in the URL. SERVFAIL (RCODE 2) means the resolver itself broke — upstream DNS misconfigured, DNSSEC validation failure, or transient resolver bug. Both happen pre-HTTP, so no status code is available. The tool reports DNS layer separately from HTTP because remediation differs: NXDOMAIN = check registrar / WHOIS for expiration; SERVFAIL = try a different resolver (Cloudflare 1.1.1.1, Google 8.8.8.8) to confirm the issue is upstream, not your local resolver.",
+        },
+        {
+          question: "Is this tool a substitute for DownDetector or status pages?",
+          answer: "Complementary, not substitute. DownDetector aggregates user reports — it reflects perceived outages from a self-selected sample (people actively complaining), so it's noisy and lags actual outages by minutes. A site's official status page (status.example.com) reflects the operator's own monitoring and is authoritative when published, but operators sometimes delay updates during incidents. This tool is a synthetic active probe — it tells you right now whether the site responds from multiple Cloudflare regions, what HTTP/TCP/DNS layer failed if it didn't, and whether your local network is the problem. Use all three: this tool for an immediate yes/no, status page for incident transparency, DownDetector for crowd-sourced corroboration.",
+        },
+      ],
+    },
+    es: {
+      faqs: [
+        {
+          question: "¿Cómo distingue la herramienta si el sitio está caído para todos o solo para mí?",
+          answer: "La herramienta corre sondeos de alcance desde múltiples puntos anycast de Cloudflare (RFC 4786 BCP 126 Abley y Lindqvist, diciembre 2006), cada uno en una región distinta. Si cada sondeo regional reporta el sitio como inalcanzable, la caída es global — probablemente crash del servidor, DDoS o mala configuración del origen. Si solo algunos sondeos regionales fallan, el problema es parcial — típicamente fallo de POP del CDN, problema de routing de ISP regional o propagación DNS en curso. Si todos los sondeos regionales funcionan pero tú sigues sin alcanzar el sitio, el problema es local a tu red: problema de tránsito del ISP, caché del resolver DNS con registros obsoletos, caché del navegador sirviendo un 5xx desactualizado, antivirus o firewall bloqueando, o secuestro por portal cautivo. La salida de la herramienta distingue explícitamente estos tres patrones para que no escales un problema local al ingeniero de guardia.",
+        },
+        {
+          question: "¿Cuál es la diferencia entre una caída HTTP 4xx y 5xx?",
+          answer: "Según RFC 9110 §15 (Fielding, Nottingham y Reschke, junio 2022), los códigos 4xx significan que el servidor procesó la petición pero la rechazó por razones del lado del cliente — 404 Not Found (la ruta no existe), 401/403 (auth falló), 429 (rate-limited), 451 (legal). El servidor está activo; el problema es la petición. Los códigos 5xx significan que el servidor mismo falló — 500 Internal Server Error (crash de aplicación), 502/504 (fallos de gateway upstream, común cuando el origen está sobrecargado), 503 Service Unavailable (throttling intencional o mantenimiento). 5xx es la señal real de caída; 4xx significa que el servidor está sano pero tu petición específica no es válida. La herramienta reporta el código exacto para que sepas qué vía de remediación aplica.",
+        },
+        {
+          question: "¿Qué significa 'connection refused' o 'timeout' en el reporte?",
+          answer: "Ambos son fallos a nivel TCP según RFC 9293 (Eddy Ed., agosto 2022, STD 7 que deja obsoleto el RFC 793) — pre-HTTP. Connection refused significa que el SYN TCP llegó al host pero ningún servicio escuchaba en el puerto solicitado (proceso crasheado, firewall del puerto, servidor detenido). Timeout significa que los paquetes SYN o respuesta nunca llegaron — puede ser IP-layer inalcanzable (host caído o routing roto según RFC 1122 §3.2.2 Braden, octubre 1989), firewall descartando paquetes silenciosamente, o la ruta entre el sondeo y el destino degradándose. DNS resuelve correctamente y TLS no ha empezado todavía. La remediación difiere: refused = comprobar salud del servicio, timeout = comprobar ruta de red / firewall.",
+        },
+        {
+          question: "¿Por qué DNS puede mostrar NXDOMAIN o SERVFAIL?",
+          answer: "Ambos son fallos a nivel DNS según RFC 1035 §4.1.1 (Mockapetris, noviembre 1987). NXDOMAIN (RCODE 3) significa que el dominio no existe — borrado del registrador, registro expirado, error tipográfico en la URL. SERVFAIL (RCODE 2) significa que el resolver mismo se rompió — DNS upstream mal configurado, fallo de validación DNSSEC, o bug transitorio del resolver. Ambos ocurren pre-HTTP, así que no hay código de estado disponible. La herramienta reporta la capa DNS por separado de HTTP porque la remediación difiere: NXDOMAIN = comprueba registrador / WHOIS por expiración; SERVFAIL = prueba un resolver distinto (Cloudflare 1.1.1.1, Google 8.8.8.8) para confirmar que el problema es upstream, no tu resolver local.",
+        },
+        {
+          question: "¿Es esta herramienta un sustituto de DownDetector o páginas de estado?",
+          answer: "Complementaria, no sustituta. DownDetector agrega reportes de usuarios — refleja caídas percibidas desde una muestra auto-seleccionada (gente que se queja activamente), así que es ruidosa y va con minutos de retraso respecto a caídas reales. La página oficial de estado de un sitio (status.example.com) refleja el monitoreo propio del operador y es autoritativa cuando se publica, pero los operadores a veces retrasan actualizaciones durante incidentes. Esta herramienta es un sondeo activo sintético — te dice ahora mismo si el sitio responde desde múltiples regiones Cloudflare, qué capa HTTP/TCP/DNS falló si no respondió, y si tu red local es el problema. Usa las tres: esta herramienta para un sí/no inmediato, página de estado para transparencia del incidente, DownDetector para corroboración por reportes de usuarios.",
+        },
+      ],
+    },
+  },
 };
