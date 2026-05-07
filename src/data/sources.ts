@@ -19,9 +19,13 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Electronic Frontier Foundation (EFF)", year: "2016", title: "EFF's New Wordlists for Random Passphrases (long list)", venue: "eff.org/dice — 7,776 words = 6^5, ~12.9 bits/word, 6-word recommended for ~77 bits entropy" },
   ],
   "webrtc-leak-test": [
-    { authors: "Alvestrand, H.", year: "2021", title: "Overview: Real-Time Protocols for Browser-Based Applications", venue: "RFC 8825, IETF" },
-    { authors: "Uberti, J., Jennings, C., & Rescorla, E. (Eds.)", year: "2021", title: "JavaScript Session Establishment Protocol (JSEP)", venue: "RFC 8829, IETF" },
-    { authors: "Rekhter, Y., Moskowitz, B., Karrenberg, D., de Groot, G. J., & Lear, E.", year: "1996", title: "Address Allocation for Private Internets", venue: "RFC 1918, IETF (private IPv4 ranges)" },
+    { authors: "Alvestrand, H.", year: "2021", title: "Overview: Real-Time Protocols for Browser-Based Applications", venue: "RFC 8825, IETF (January 2021 — WebRTC suite overview)" },
+    { authors: "Uberti, J., Jennings, C., & Rescorla, E. (Eds.)", year: "2021", title: "JavaScript Session Establishment Protocol (JSEP)", venue: "RFC 8829, IETF (January 2021 — SDP offer/answer model used by WebRTC)" },
+    { authors: "Keränen, A., Holmberg, C., & Rosenberg, J.", year: "2018", title: "Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal", venue: "RFC 8445, IETF (July 2018 — Internet Standards Track; obsoletes RFC 5245; defines host/srflx/prflx/relay candidate types)" },
+    { authors: "Rescorla, E.", year: "2021", title: "WebRTC Security Architecture", venue: "RFC 8827, IETF (January 2021 — companion to RFC 8826 threat model)" },
+    { authors: "Rekhter, Y., Moskowitz, B., Karrenberg, D., de Groot, G. J., & Lear, E.", year: "1996", title: "Address Allocation for Private Internets", venue: "RFC 1918, IETF (private IPv4 ranges 10/8, 172.16/12, 192.168/16)" },
+    { authors: "Borst, J. de, Fablet, Y., Uberti, J., & Wang, Q.", year: "2020", title: "Using Multicast DNS to Protect Privacy When Exposing ICE Candidates", venue: "IETF draft-ietf-mmusic-mdns-ice-candidates; default in Chrome 76 (August 2019, after experimental Chrome 73 March 2019), Firefox 75 (April 2020 for outgoing obfuscation; Firefox 68 July 2019 added incoming-candidate handling only), and Safari iOS 12.2+ (March 2019); obfuscates host candidate IPs via .local mDNS hostnames" },
+    { authors: "Cheshire, S., & Krochmal, M.", year: "2013", title: "Multicast DNS", venue: "RFC 6762, IETF (February 2013 — link-local name resolution used for .local hostnames)" },
   ],
   "subnet-calculator": [
     { authors: "Fuller, V., & Li, T.", year: "2006", title: "Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan", venue: "RFC 4632, IETF" },
@@ -56,8 +60,13 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "OWASP", year: "2025", title: "OWASP Secure Headers Project", venue: "owasp.org/www-project-secure-headers — recommended baseline: HSTS preload + CSP + X-Content-Type-Options nosniff + Referrer-Policy strict-origin-when-cross-origin + Permissions-Policy" },
   ],
   "url-parser": [
-    { authors: "Berners-Lee, T., Fielding, R., & Masinter, L.", year: "2005", title: "Uniform Resource Identifier (URI): Generic Syntax", venue: "RFC 3986, IETF" },
-    { authors: "WHATWG", year: "2024", title: "URL Living Standard", venue: "WHATWG, url.spec.whatwg.org" },
+    { authors: "Berners-Lee, T., Fielding, R., & Masinter, L.", year: "2005", title: "Uniform Resource Identifier (URI): Generic Syntax", venue: "RFC 3986, IETF (January 2005 — Internet Standard STD 66; scheme/authority/path/query/fragment)" },
+    { authors: "Duerst, M., & Suignard, M.", year: "2005", title: "Internationalized Resource Identifiers (IRIs)", venue: "RFC 3987, IETF (January 2005 — Unicode/ISO 10646 in URIs; complement to RFC 3986)" },
+    { authors: "Klensin, J.", year: "2010", title: "Internationalized Domain Names for Applications (IDNA): Definitions and Document Framework", venue: "RFC 5890, IETF (August 2010 — IDNA2008 base definitions)" },
+    { authors: "Klensin, J.", year: "2010", title: "Internationalized Domain Names in Applications (IDNA): Protocol", venue: "RFC 5891, IETF (August 2010 — IDNA2008 lookup/registration; Punycode xn-- prefix; updates and replaces RFC 3490 IDNA2003)" },
+    { authors: "Costello, A.", year: "2003", title: "Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)", venue: "RFC 3492, IETF (March 2003 — encoding scheme used by IDNA2008 to map Unicode hostnames to ASCII xn-- form)" },
+    { authors: "WHATWG", year: "live", title: "URL Living Standard", venue: "url.spec.whatwg.org — browser-aligned parser; differs from RFC 3986 in error handling and percent-encoding" },
+    { authors: "WICG / W3C Web Performance WG", year: "2024", title: "URLPattern", venue: "WICG draft (urlpattern.spec.whatwg.org); shipped stable in Chromium 95 / Edge 95 (October 2021); Chrome 117 (August 2023) extended ServiceWorker Static Routing API integration; Safari support announced WWDC 2025; Firefox in development" },
   ],
   "email-auth": [
     { authors: "Kitterman, S.", year: "2014", title: "Sender Policy Framework (SPF) for Authorizing Use of Domains in Email, Version 1", venue: "RFC 7208, IETF" },

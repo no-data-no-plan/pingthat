@@ -698,4 +698,104 @@ export const faqs: Record<string, FAQByLang> = {
       ],
     },
   },
+  "webrtc-leak-test": {
+    en: {
+      faqs: [
+        {
+          question: "Why does WebRTC leak my real IP even behind a VPN?",
+          answer: "WebRTC peer connections establish via ICE (Interactive Connectivity Establishment, RFC 8445 Keränen, Holmberg & Rosenberg, July 2018), which gathers four candidate types: host (interface IPs visible to the OS — including private RFC 1918 ranges and public addresses), server-reflexive or srflx (public IP discovered by querying a STUN server), peer-reflexive or prflx (discovered during connectivity checks), and relay (TURN-allocated). When the browser queries STUN servers it can do so on any available interface — including ones outside the VPN tunnel if the VPN doesn't bind WebRTC traffic to the tunnel interface. Some VPN clients only route TCP and certain UDP through the tunnel; STUN over UDP can take a direct path to the public internet, exposing the real public IP. Host candidates expose private LAN IPs unless the browser obfuscates them via mDNS (Chrome 76 default August 2019, Firefox 75 default April 2020 — Firefox 68 July 2019 only added incoming-candidate handling).",
+        },
+        {
+          question: "What are mDNS host candidates and how do they protect privacy?",
+          answer: "Chrome 76+ (default August 2019, after experimental Chrome 73 March 2019), Firefox 75+ (April 2020 for outgoing obfuscation; Firefox 68 July 2019 added incoming-candidate handling only), and Safari iOS 12.2+ (March 2019) replace literal host candidate IPs (192.168.1.42) with random multicast DNS hostnames (abc12345-d6f7-4e8f-9a0b-1c2d3e4f5a6b.local) in SDP offers. The .local hostname only resolves on the same local subnet via mDNS (RFC 6762), so untrusted websites learning the candidate gain no information about your LAN topology. The IETF specification draft-ietf-mmusic-mdns-ice-candidates (Borst, Fablet, Uberti & Wang) standardised the approach. Limitation: mDNS only obfuscates host (private) candidates — server-reflexive (public IP via STUN) and relay (TURN) candidates are unaffected, so your public IP still leaks if the browser can reach STUN servers outside the VPN tunnel. Firefox exposes media.peerconnection.ice.obfuscate_host_addresses to control this; Chrome has no UI toggle.",
+        },
+        {
+          question: "How do I actually disable WebRTC IP leaks?",
+          answer: "Three approaches with different trade-offs: (1) Disable WebRTC entirely — Firefox: set media.peerconnection.enabled=false in about:config (breaks video calls); Chromium: no built-in toggle, requires extension like uBlock Origin's 'Prevent WebRTC from leaking local IP' setting. (2) Bind WebRTC to a specific interface — set media.peerconnection.ice.default_address_only=true in Firefox; some VPN clients (Mullvad, ProtonVPN) provide WebRTC kill switches that block STUN traffic outside the tunnel. (3) Force WebRTC through proxy — only works if the VPN runs as a system-level kill-switch firewall blocking direct UDP. Approach (1) is the most reliable for privacy but breaks WebRTC features entirely; approach (2) requires careful VPN configuration and per-browser tuning; approach (3) requires VPN client support.",
+        },
+        {
+          question: "Is the test result stored anywhere?",
+          answer: "No. The test creates a local RTCPeerConnection (W3C WebRTC 1.0 spec) using a STUN server only to discover candidates, reads the resulting ICE candidates synchronously in the browser, and renders them in the page. No data is sent to a server, no candidates are logged, and no reports are stored. The connection is torn down immediately after enumeration. WebRTC Security Architecture (RFC 8827 Rescorla, January 2021) requires user consent for media capture; this test never requests microphone or camera access — only the connectivity-establishment subset of the API runs.",
+        },
+        {
+          question: "Why might the test show different results on different runs?",
+          answer: "Three sources of variability: (1) Network interface changes — connecting/disconnecting from VPN, switching between Wi-Fi and Ethernet, or DHCP renewal can change the host candidate set. (2) STUN server reachability — public STUN servers (Google's stun.l.google.com:19302) sometimes throttle or refuse requests during peak load; the test may show fewer srflx candidates as a result. (3) mDNS rollout state — Chrome 73 (March 2019) was the experimental phase; Chrome 76 (August 2019) made mDNS default for all users; Chrome 79 (December 2019) added the WebRtcLocalIpsAllowedUrls enterprise opt-out policy. Older browsers may show literal IPs instead of .local hostnames. If your test shows literal 192.168.x.x candidates in modern Chrome/Firefox, that suggests either an explicit configuration change (Firefox media.peerconnection.ice.obfuscate_host_addresses=false) or a non-standard browser build.",
+        },
+      ],
+    },
+    es: {
+      faqs: [
+        {
+          question: "¿Por qué WebRTC filtra mi IP real incluso detrás de una VPN?",
+          answer: "Las conexiones WebRTC peer se establecen vía ICE (Interactive Connectivity Establishment, RFC 8445 Keränen, Holmberg y Rosenberg, julio 2018), que recopila cuatro tipos de candidatos: host (IPs de interfaz visibles al SO — incluyendo rangos privados RFC 1918 y direcciones públicas), server-reflexive o srflx (IP pública descubierta consultando un servidor STUN), peer-reflexive o prflx (descubierto durante chequeos de conectividad) y relay (asignado por TURN). Cuando el navegador consulta servidores STUN puede hacerlo en cualquier interfaz disponible — incluyendo las que están fuera del túnel VPN si la VPN no enlaza el tráfico WebRTC a la interfaz del túnel. Algunos clientes VPN solo enrutan TCP y ciertos UDP por el túnel; STUN sobre UDP puede tomar un camino directo al internet público, exponiendo la IP pública real. Los candidatos host exponen las IPs LAN privadas a menos que el navegador las ofusque vía mDNS (Chrome 76 por defecto agosto 2019, Firefox 75 por defecto abril 2020 — Firefox 68 julio 2019 solo añadió manejo de candidatos entrantes).",
+        },
+        {
+          question: "¿Qué son los candidatos host mDNS y cómo protegen la privacidad?",
+          answer: "Chrome 76+ (por defecto agosto 2019, tras fase experimental Chrome 73 marzo 2019), Firefox 75+ (abril 2020 para ofuscación saliente; Firefox 68 julio 2019 solo añadió manejo de candidatos entrantes) y Safari iOS 12.2+ (marzo 2019) reemplazan las IPs literales de candidatos host (192.168.1.42) con nombres de host multicast DNS aleatorios (abc12345-d6f7-4e8f-9a0b-1c2d3e4f5a6b.local) en las ofertas SDP. El nombre .local solo resuelve en la misma subred local vía mDNS (RFC 6762), así que sitios web no confiables que aprendan el candidato no ganan información sobre la topología de tu LAN. La especificación IETF draft-ietf-mmusic-mdns-ice-candidates (Borst, Fablet, Uberti y Wang) estandarizó el enfoque. Limitación: mDNS solo ofusca candidatos host (privados) — los candidatos server-reflexive (IP pública vía STUN) y relay (TURN) no se ven afectados, así que tu IP pública sigue filtrándose si el navegador puede alcanzar servidores STUN fuera del túnel VPN. Firefox expone media.peerconnection.ice.obfuscate_host_addresses para controlar esto; Chrome no tiene toggle UI.",
+        },
+        {
+          question: "¿Cómo desactivo realmente las fugas de IP WebRTC?",
+          answer: "Tres enfoques con compromisos distintos: (1) Desactivar WebRTC del todo — Firefox: pon media.peerconnection.enabled=false en about:config (rompe videollamadas); Chromium: sin toggle nativo, requiere extensión como uBlock Origin 'evitar fuga de IP local por WebRTC'. (2) Enlazar WebRTC a una interfaz específica — pon media.peerconnection.ice.default_address_only=true en Firefox; algunos clientes VPN (Mullvad, ProtonVPN) proveen kill switches WebRTC que bloquean tráfico STUN fuera del túnel. (3) Forzar WebRTC por proxy — solo funciona si la VPN corre como kill-switch a nivel de sistema bloqueando UDP directo. El enfoque (1) es el más fiable para privacidad pero rompe funciones WebRTC; el (2) requiere configuración VPN y ajuste por navegador; el (3) requiere soporte del cliente VPN.",
+        },
+        {
+          question: "¿Se guarda el resultado del test en algún sitio?",
+          answer: "No. El test crea una RTCPeerConnection local (especificación W3C WebRTC 1.0) usando un servidor STUN solo para descubrir candidatos, lee los candidatos ICE resultantes de forma síncrona en el navegador y los renderiza en la página. No se envían datos a ningún servidor, ningún candidato se registra y no se almacena ningún informe. La conexión se desmonta inmediatamente tras la enumeración. La WebRTC Security Architecture (RFC 8827 Rescorla, enero 2021) requiere consentimiento del usuario para captura de medios; este test nunca pide acceso a micrófono o cámara — solo el subconjunto de connectivity-establishment de la API corre.",
+        },
+        {
+          question: "¿Por qué el test puede mostrar resultados distintos en ejecuciones diferentes?",
+          answer: "Tres fuentes de variabilidad: (1) Cambios en interfaz de red — conectar/desconectar VPN, cambiar entre Wi-Fi y Ethernet, o renovación DHCP puede cambiar el conjunto de candidatos host. (2) Alcance del servidor STUN — los servidores STUN públicos (stun.l.google.com:19302 de Google) a veces hacen throttling o rechazan peticiones en hora pico; el test puede mostrar menos candidatos srflx como resultado. (3) Estado de despliegue mDNS — Chrome 73 (marzo 2019) fue la fase experimental; Chrome 76 (agosto 2019) hizo mDNS por defecto para todos los usuarios; Chrome 79 (diciembre 2019) añadió la política empresarial de opt-out WebRtcLocalIpsAllowedUrls. Navegadores antiguos pueden mostrar IPs literales en vez de nombres .local. Si tu test muestra candidatos 192.168.x.x literales en Chrome/Firefox modernos, eso sugiere o un cambio de configuración explícito (Firefox media.peerconnection.ice.obfuscate_host_addresses=false) o una build de navegador no estándar.",
+        },
+      ],
+    },
+  },
+  "url-parser": {
+    en: {
+      faqs: [
+        {
+          question: "RFC 3986 vs WHATWG URL Living Standard — which does the tool use?",
+          answer: "WHATWG URL Living Standard, because that's what the browser's native URL constructor implements. The two specs differ in subtle but important ways: RFC 3986 (Berners-Lee, Fielding & Masinter, January 2005, Internet Standard STD 66) defines URI generic syntax with strict ABNF rules and treats malformed input as a hard error. WHATWG URL Living Standard (url.spec.whatwg.org, continuously updated) defines a parser optimised for real-world web compatibility — it accepts inputs that violate RFC 3986 (unencoded characters, redundant slashes, missing schemes) and applies normalisation rules drawn from browser behaviour. For a parser that produces the same result as your browser would, WHATWG is correct; for strict protocol-level validation (e.g., generating canonical URIs in HTTP headers), RFC 3986 is more appropriate.",
+        },
+        {
+          question: "Does the tool decode percent-encoded characters and IRIs?",
+          answer: "Yes. Query parameter values are percent-decoded for display so you can read the original text — `name=Jos%C3%A9` becomes `name=José`. The full URL is shown unchanged at the top so you can see the encoded form. For IRIs (Internationalized Resource Identifiers, RFC 3987 Duerst & Suignard, January 2005), Unicode characters in paths and query strings are accepted directly; the WHATWG parser handles the IRI-to-URI mapping internally. For internationalised domain names (IDN — café.com), the host is shown in both Unicode form and Punycode (xn--caf-dma.com per RFC 5891 Klensin, August 2010, IDNA2008), since DNS resolves only ASCII-encoded forms.",
+        },
+        {
+          question: "What about fragments (#hash) and Single Page Application routes?",
+          answer: "The fragment is parsed and displayed separately. Modern Single Page Applications historically used fragments for client-side routing (e.g., #/users/123) because fragments don't trigger server requests — the entire URL state lives client-side. HTML5 History API and now the more modern Navigation API have shifted SPAs toward path-based routing, but fragments are still relevant for hash-based routes, deep-linking to page sections, and OAuth implicit-flow tokens. The tool extracts the fragment exactly as the browser would expose it via `URL.hash` (including the initial `#`).",
+        },
+        {
+          question: "Can the tool handle malformed URLs?",
+          answer: "The tool uses the browser's native URL parser, which follows the WHATWG specification. WHATWG explicitly handles common malformed inputs (missing schemes prepended with http://, redundant slashes collapsed, unencoded characters percent-encoded) rather than throwing. For inputs the parser truly cannot handle (e.g., empty strings, non-string types, fundamentally invalid scheme syntax), it raises a TypeError with a clear message identifying which component failed. Pasting a free-form text snippet may produce unexpected results because WHATWG aggressively interprets ambiguous inputs as URLs — for stricter validation use RFC 3986 ABNF tooling.",
+        },
+        {
+          question: "What is URLPattern and when would I use it instead of URL parsing?",
+          answer: "URLPattern (WICG draft, urlpattern.spec.whatwg.org) is a complementary API for matching URLs against pattern strings — think of it as path-to-regexp built into the browser. It shipped stable in Chromium 95 / Edge 95 (October 2021); Chrome 117 (August 2023) extended ServiceWorker Static Routing API integration; Safari support was announced at WWDC 2025; Firefox is in development. Use cases: routing in service workers, URL matching for compression-dictionary-transport, and replacing custom regex routing in front-end frameworks. URL parsing (this tool) extracts components from a single URL; URLPattern matches a URL against a pattern like `/users/:id/posts/:postId?` to extract named parameters. They complement rather than replace each other.",
+        },
+      ],
+    },
+    es: {
+      faqs: [
+        {
+          question: "RFC 3986 vs WHATWG URL Living Standard — ¿cuál usa la herramienta?",
+          answer: "WHATWG URL Living Standard, porque es lo que implementa el constructor URL nativo del navegador. Las dos especificaciones difieren en formas sutiles pero importantes: RFC 3986 (Berners-Lee, Fielding y Masinter, enero 2005, Internet Standard STD 66) define la sintaxis genérica URI con reglas ABNF estrictas y trata la entrada malformada como error duro. WHATWG URL Living Standard (url.spec.whatwg.org, actualización continua) define un parser optimizado para compatibilidad real con la web — acepta entradas que violan RFC 3986 (caracteres sin codificar, barras redundantes, esquemas ausentes) y aplica reglas de normalización extraídas del comportamiento de navegadores. Para un parser que produce el mismo resultado que tu navegador, WHATWG es correcto; para validación estricta a nivel de protocolo (p.ej., generar URIs canónicos en cabeceras HTTP), RFC 3986 es más apropiado.",
+        },
+        {
+          question: "¿La herramienta decodifica caracteres percent-encoded e IRIs?",
+          answer: "Sí. Los valores de parámetros se decodifican percent para mostrarse, así que lees el texto original — `name=Jos%C3%A9` se convierte en `name=José`. La URL íntegra se muestra sin cambios arriba para que veas la forma codificada. Para IRIs (Internationalized Resource Identifiers, RFC 3987 Duerst y Suignard, enero 2005), los caracteres Unicode en rutas y query strings se aceptan directamente; el parser WHATWG maneja el mapeo IRI-a-URI internamente. Para nombres de dominio internacionalizados (IDN — café.com), el host se muestra tanto en forma Unicode como Punycode (xn--caf-dma.com según RFC 5891 Klensin, agosto 2010, IDNA2008), ya que DNS resuelve solo formas ASCII-encoded.",
+        },
+        {
+          question: "¿Y los fragmentos (#hash) y rutas de Single Page Application?",
+          answer: "El fragmento se parsea y muestra por separado. Las Single Page Applications modernas históricamente usaban fragmentos para routing en cliente (p.ej., #/users/123) porque los fragmentos no disparan peticiones al servidor — el estado íntegro de la URL vive en cliente. La API History de HTML5 y ahora la API Navigation más moderna han desplazado las SPAs hacia routing basado en path, pero los fragmentos siguen siendo relevantes para rutas basadas en hash, deep-linking a secciones de página y tokens de flujo implícito OAuth. La herramienta extrae el fragmento exactamente como lo expondría el navegador vía `URL.hash` (incluyendo el `#` inicial).",
+        },
+        {
+          question: "¿La herramienta maneja URLs malformadas?",
+          answer: "La herramienta usa el parser de URL nativo del navegador, que sigue la especificación WHATWG. WHATWG maneja explícitamente entradas malformadas comunes (esquemas ausentes anteponiendo http://, barras redundantes colapsadas, caracteres sin codificar codificados como percent) en vez de lanzar excepciones. Para entradas que el parser realmente no puede manejar (p.ej., cadenas vacías, tipos no-string, sintaxis de esquema fundamentalmente inválida), lanza un TypeError con mensaje claro identificando qué componente falló. Pegar un fragmento de texto libre puede producir resultados inesperados porque WHATWG interpreta agresivamente entradas ambiguas como URLs — para validación más estricta usa herramientas ABNF de RFC 3986.",
+        },
+        {
+          question: "¿Qué es URLPattern y cuándo lo usaría en vez de parseo de URL?",
+          answer: "URLPattern (borrador WICG, urlpattern.spec.whatwg.org) es una API complementaria para hacer match de URLs contra strings de patrón — piénsalo como path-to-regexp integrado en el navegador. Llegó estable a Chromium 95 / Edge 95 (octubre 2021); Chrome 117 (agosto 2023) extendió la integración ServiceWorker Static Routing API; el soporte de Safari fue anunciado en WWDC 2025; Firefox está en desarrollo. Casos de uso: routing en service workers, matching de URL para compression-dictionary-transport y reemplazar routing regex personalizado en frameworks frontend. El parseo de URL (esta herramienta) extrae componentes de una sola URL; URLPattern hace match de una URL contra un patrón como `/users/:id/posts/:postId?` para extraer parámetros nombrados. Se complementan en vez de reemplazarse.",
+        },
+      ],
+    },
+  },
 };
