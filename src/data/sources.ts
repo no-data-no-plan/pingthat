@@ -106,6 +106,20 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "European Parliament & Council", year: "2016", title: "Regulation (EU) 2016/679 (General Data Protection Regulation)", venue: "Article 6 lawful basis for processing, eur-lex.europa.eu" },
     { authors: "European Parliament & Council", year: "2002", title: "Directive 2002/58/EC (ePrivacy Directive), amended by Directive 2009/136/EC", venue: "Article 5(3) terminal device data consent, eur-lex.europa.eu" },
   ],
+  "redirect-checker": [
+    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Semantics", venue: "RFC 9110, IETF (§15.4 Redirection 3xx — 301/302/303/307/308 method preservation)" },
+    { authors: "Hodges, J., Jackson, C., & Barth, A.", year: "2012", title: "HTTP Strict Transport Security (HSTS)", venue: "RFC 6797, IETF (preload list interactions)" },
+    { authors: "MITRE Corporation", year: "live", title: "CWE-601: URL Redirection to Untrusted Site ('Open Redirect')", venue: "cwe.mitre.org/data/definitions/601.html" },
+    { authors: "Open Web Application Security Project (OWASP)", year: "2021", title: "OWASP Top 10:2021 — A01 Broken Access Control", venue: "owasp.org/Top10/A01_2021-Broken_Access_Control" },
+    { authors: "Illyes, G. (Google)", year: "2016", title: "30x redirects don't lose PageRank anymore", venue: "Google Search Central confirmation (developers.google.com/search/docs/crawling-indexing/301-redirects)" },
+  ],
+  "caa-lookup": [
+    { authors: "Hallam-Baker, P., Stradling, R., & Hoffman-Andrews, J.", year: "2019", title: "DNS Certification Authority Authorization (CAA) Resource Record", venue: "RFC 8659, IETF (obsoletes RFC 6844)" },
+    { authors: "Hallam-Baker, P., & Stradling, R.", year: "2013", title: "DNS Certification Authority Authorization (CAA) Resource Record", venue: "RFC 6844, IETF (original spec, obsoleted by RFC 8659)" },
+    { authors: "Landau, H.", year: "2019", title: "CAA Record Extensions for Account URI and ACME Method Binding", venue: "RFC 8657, IETF (accounturi, validationmethods parameters)" },
+    { authors: "CA/Browser Forum", year: "2017", title: "Baseline Requirements §3.2.2.8 — CAA Records (Ballot 187 v1.4.3)", venue: "Effective 8 September 2017 (cabforum.org)" },
+    { authors: "Danyliw, R., Meijer, J., & Demchenko, Y.", year: "2007", title: "The Incident Object Description Exchange Format (IODEF)", venue: "RFC 5070, IETF (iodef tag context for incident reporting)" },
+  ],
 };
 
 export function getSources(slug: string): Source[] {
