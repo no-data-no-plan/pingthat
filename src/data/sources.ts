@@ -12,8 +12,11 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Jones, M.", year: "2015", title: "JSON Web Algorithms (JWA)", venue: "RFC 7518, IETF" },
   ],
   "password-strength": [
-    { authors: "Grassi, P. A., et al.", year: "2017", title: "Digital Identity Guidelines: Authentication and Lifecycle Management", venue: "NIST Special Publication 800-63B (Memorandum, June 2017; revisions through 2020)" },
+    { authors: "Grassi, P. A., et al.", year: "2017", title: "Digital Identity Guidelines: Authentication and Lifecycle Management", venue: "NIST Special Publication 800-63B Rev 3 (final, June 2017; updates through March 2020)" },
+    { authors: "National Institute of Standards and Technology (NIST)", year: "2025", title: "Digital Identity Guidelines (Revision 4)", venue: "NIST SP 800-63-4 (final published July 2025; supersedes 800-63-3 / 800-63B-3 series)" },
     { authors: "Wheeler, D. L.", year: "2016", title: "zxcvbn: Low-budget password strength estimation", venue: "USENIX Security Symposium 2016, 157–173" },
+    { authors: "Hunt, T.", year: "live", title: "Have I Been Pwned — Pwned Passwords API (k-anonymity model)", venue: "haveibeenpwned.com/api/v3 (5-character SHA-1 prefix, 16^5 = 1,048,576 hash range buckets)" },
+    { authors: "Electronic Frontier Foundation (EFF)", year: "2016", title: "EFF's New Wordlists for Random Passphrases (long list)", venue: "eff.org/dice — 7,776 words = 6^5, ~12.9 bits/word, 6-word recommended for ~77 bits entropy" },
   ],
   "webrtc-leak-test": [
     { authors: "Alvestrand, H.", year: "2021", title: "Overview: Real-Time Protocols for Browser-Based Applications", venue: "RFC 8825, IETF" },
@@ -56,6 +59,9 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Kitterman, S.", year: "2014", title: "Sender Policy Framework (SPF) for Authorizing Use of Domains in Email, Version 1", venue: "RFC 7208, IETF" },
     { authors: "Crocker, D., Hansen, T., & Kucherawy, M. (Eds.)", year: "2011", title: "DomainKeys Identified Mail (DKIM) Signatures", venue: "RFC 6376, IETF" },
     { authors: "Kucherawy, M., & Zwicky, E. (Eds.)", year: "2015", title: "Domain-based Message Authentication, Reporting, and Conformance (DMARC)", venue: "RFC 7489, IETF" },
+    { authors: "Andersen, K., Long, B. (Ed.), Blank, S. (Ed.), & Kucherawy, M. (Ed.)", year: "2019", title: "The Authenticated Received Chain (ARC) Protocol", venue: "RFC 8617, IETF (July 2019)" },
+    { authors: "Levine, J.", year: "2017", title: "Signaling One-Click Functionality for List Email Headers", venue: "RFC 8058, IETF" },
+    { authors: "Google + Yahoo Postmaster", year: "2024", title: "Bulk Sender Requirements (≥5,000 messages/day)", venue: "Effective 1 February 2024 — DMARC + aligned SPF/DKIM + valid PTR + TLS + one-click unsubscribe + spam rate <0.10% (support.google.com/mail/answer/81126)" },
   ],
   "whois-lookup": [
     { authors: "Daigle, L.", year: "2004", title: "WHOIS Protocol Specification", venue: "RFC 3912, IETF" },
