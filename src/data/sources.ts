@@ -47,9 +47,13 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Thomson, S., Huitema, C., Ksinant, V., & Souissi, M.", year: "2003", title: "DNS Extensions to Support IP Version 6 (ip6.arpa zone)", venue: "RFC 3596, IETF" },
   ],
   "http-headers": [
-    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Semantics", venue: "RFC 9110, IETF" },
-    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Caching", venue: "RFC 9111, IETF" },
-    { authors: "West, M.", year: "2023", title: "Content Security Policy Level 3", venue: "W3C Working Draft" },
+    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Semantics", venue: "RFC 9110, IETF (June 2022 — Internet Standard STD 97; obsoletes RFC 2818 + 7231-7233 + 7235 + 7538/7615/7694 + portions of 7230; RFC 7234 → RFC 9111; RFC 7230 messaging → RFC 9112)" },
+    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Caching", venue: "RFC 9111, IETF (June 2022 — obsoletes RFC 7234)" },
+    { authors: "Hodges, J., Jackson, C., & Barth, A.", year: "2012", title: "HTTP Strict Transport Security (HSTS)", venue: "RFC 6797, IETF (19 November 2012 — Strict-Transport-Security header field)" },
+    { authors: "West, M. (Ed.)", year: "2026", title: "Content Security Policy Level 3", venue: "W3C Working Draft (latest revision April 2026; supersedes CSP Level 2; frame-ancestors directive — introduced in CSP Level 2 (W3C Recommendation December 2016) and carried forward in Level 3 — supersedes X-Frame-Options RFC 7034)" },
+    { authors: "W3C Web Application Security WG", year: "2025", title: "Permissions Policy", venue: "W3C Working Draft (replaces deprecated Feature-Policy after 2020 split into Permissions-Policy + Document-Policy)" },
+    { authors: "Ross, D., & Gondrom, T.", year: "2013", title: "HTTP Header Field X-Frame-Options", venue: "RFC 7034, IETF (October 2013, Informational; obsoleted by CSP frame-ancestors directive introduced in CSP Level 2)" },
+    { authors: "OWASP", year: "2025", title: "OWASP Secure Headers Project", venue: "owasp.org/www-project-secure-headers — recommended baseline: HSTS preload + CSP + X-Content-Type-Options nosniff + Referrer-Policy strict-origin-when-cross-origin + Permissions-Policy" },
   ],
   "url-parser": [
     { authors: "Berners-Lee, T., Fielding, R., & Masinter, L.", year: "2005", title: "Uniform Resource Identifier (URI): Generic Syntax", venue: "RFC 3986, IETF" },
@@ -64,9 +68,13 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Google + Yahoo Postmaster", year: "2024", title: "Bulk Sender Requirements (≥5,000 messages/day)", venue: "Effective 1 February 2024 — DMARC + aligned SPF/DKIM + valid PTR + TLS + one-click unsubscribe + spam rate <0.10% (support.google.com/mail/answer/81126)" },
   ],
   "whois-lookup": [
-    { authors: "Daigle, L.", year: "2004", title: "WHOIS Protocol Specification", venue: "RFC 3912, IETF" },
-    { authors: "Hollenbeck, S., & Newton, A.", year: "2015", title: "Registration Data Access Protocol (RDAP) Query Format", venue: "RFC 7482, IETF" },
-    { authors: "Newton, A., & Hollenbeck, S.", year: "2015", title: "JSON Responses for the Registration Data Access Protocol (RDAP)", venue: "RFC 7483, IETF" },
+    { authors: "Daigle, L.", year: "2004", title: "WHOIS Protocol Specification", venue: "RFC 3912, IETF (September 2004 — TCP port 43, obsoletes RFC 954)" },
+    { authors: "Newton, A., Ellacott, B., & Kong, N.", year: "2015", title: "HTTP Usage in the Registration Data Access Protocol (RDAP)", venue: "RFC 7480, IETF (March 2015)" },
+    { authors: "Hollenbeck, S., & Newton, A.", year: "2021", title: "Registration Data Access Protocol (RDAP) Query Format", venue: "RFC 9082, IETF (June 2021 — obsoletes RFC 7482)" },
+    { authors: "Newton, A., & Hollenbeck, S.", year: "2015", title: "JSON Responses for the Registration Data Access Protocol (RDAP)", venue: "RFC 7483, IETF (March 2015)" },
+    { authors: "Blanchet, M.", year: "2015", title: "Finding the Authoritative Registration Data (RDAP) Service", venue: "RFC 7484, IETF (March 2015 — RDAP bootstrap registry; obsoleted by RFC 9224 in 2022)" },
+    { authors: "Hollenbeck, S.", year: "2009", title: "Extensible Provisioning Protocol (EPP) Domain Name Mapping", venue: "RFC 5731, IETF (August 2009 — domain status codes: clientHold, serverTransferProhibited, etc.)" },
+    { authors: "ICANN", year: "2025", title: "Registration Data Policy", venue: "ICANN consensus policy effective 21 August 2025 (codifies post-GDPR Temporary Specification, redaction rules and minimum publication requirements for gTLD registries)" },
   ],
   "resolver-compare": [
     { authors: "Mockapetris, P.", year: "1987", title: "Domain Names — Implementation and Specification", venue: "RFC 1035, IETF" },
