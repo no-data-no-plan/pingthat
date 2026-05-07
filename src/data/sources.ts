@@ -120,6 +120,19 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "CA/Browser Forum", year: "2017", title: "Baseline Requirements §3.2.2.8 — CAA Records (Ballot 187 v1.4.3)", venue: "Effective 8 September 2017 (cabforum.org)" },
     { authors: "Danyliw, R., Meijer, J., & Demchenko, Y.", year: "2007", title: "The Incident Object Description Exchange Format (IODEF)", venue: "RFC 5070, IETF (iodef tag context for incident reporting)" },
   ],
+  "is-it-up": [
+    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Semantics", venue: "RFC 9110, IETF (§15 status code classes 1xx-5xx)" },
+    { authors: "Mockapetris, P.", year: "1987", title: "Domain Names — Implementation and Specification", venue: "RFC 1035, IETF (§4.1.1 RCODE field — NXDOMAIN/SERVFAIL)" },
+    { authors: "Abley, J., & Lindqvist, K.", year: "2006", title: "Operation of Anycast Services", venue: "RFC 4786, IETF (BCP 126 — multi-region anycast routing)" },
+    { authors: "Rescorla, E.", year: "2018", title: "The Transport Layer Security (TLS) Protocol Version 1.3", venue: "RFC 8446, IETF (handshake failures separate from HTTP layer)" },
+  ],
+  "site-speed": [
+    { authors: "Google (web.dev / Chrome team)", year: "live", title: "Core Web Vitals — LCP, INP, CLS thresholds", venue: "web.dev/articles/vitals (LCP <2.5s, INP <200ms, CLS <0.1)" },
+    { authors: "Google Chrome team", year: "live", title: "Chrome User Experience Report (CrUX) Methodology", venue: "developer.chrome.com/docs/crux (28-day rolling window, p75)" },
+    { authors: "Google Search Central", year: "2024", title: "Interaction to Next Paint (INP) becomes a Core Web Vital on March 12", venue: "developers.google.com/search/blog/2023/05/introducing-inp + web.dev/blog/inp-cwv-march-12" },
+    { authors: "Belshe, M., Peon, R., & Thomson, M. (Ed.)", year: "2015", title: "Hypertext Transfer Protocol Version 2 (HTTP/2)", venue: "RFC 7540, IETF" },
+    { authors: "Bishop, M. (Ed.)", year: "2022", title: "HTTP/3", venue: "RFC 9114, IETF (HTTP semantics over QUIC)" },
+  ],
 };
 
 export function getSources(slug: string): Source[] {
