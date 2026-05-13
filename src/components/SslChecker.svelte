@@ -110,6 +110,8 @@
   $effect(() => {
     domain; loading; error; result; requestId; recent;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    if (error) return;
+    if (!result) return;
     fireToolComplete();
   });
 </script>

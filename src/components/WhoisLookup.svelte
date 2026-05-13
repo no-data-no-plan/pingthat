@@ -74,6 +74,8 @@
   $effect(() => {
     domain; loading; error; result; requestId;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    if (error) return;
+    if (!result) return;
     fireToolComplete();
   });
 </script>
