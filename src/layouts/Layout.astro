@@ -42,6 +42,9 @@ const lastVerifiedTool = c.toolLastVerified.replace("{{month}}", monthYear);
 // isPartOf on per-page schemas (Bloque 1c+1d).
 const methodologyUrl = lang === "es" ? "https://pingthat.dev/es/methodology/" : "https://pingthat.dev/methodology/";
 
+const authorUrl = lang === "es" ? "https://pingthat.dev/es/about/" : "https://pingthat.dev/about/";
+const authorPerson = { "@type": "Person", name: "Marco B.", url: authorUrl };
+
 const activeTool = tools.find(t => t.id === activeToolId);
 // For resolved tools, tool.path is the EN canonical path. For unresolved
 // (compare pages, docs), Astro.url.pathname is the full request path already
@@ -73,6 +76,7 @@ if (isLegalPage || isComparePage) {
     description,
     inLanguage: lang,
     isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
+    author: authorPerson,
   };
 } else if (isDocsArticle) {
   primarySchema = {
@@ -84,7 +88,7 @@ if (isLegalPage || isComparePage) {
     inLanguage: lang,
     datePublished: docsPublishedAt!.toISOString(),
     dateModified: (docsUpdatedAt ?? docsPublishedAt!).toISOString(),
-    author: { "@type": "Organization", name: "PingThat", url: "https://pingthat.dev" },
+    author: authorPerson,
     publisher: {
       "@type": "Organization",
       name: "PingThat",
@@ -105,6 +109,7 @@ if (isLegalPage || isComparePage) {
     description,
     inLanguage: lang,
     isPartOf: { "@type": "WebSite", name: "PingThat", url: "https://pingthat.dev" },
+    author: authorPerson,
   };
 } else {
   primarySchema = {
@@ -120,6 +125,7 @@ if (isLegalPage || isComparePage) {
       { "@type": "WebApplication", name: "PingThat", url: "https://pingthat.dev" },
       { "@type": "WebPage", "@id": methodologyUrl, url: methodologyUrl, name: lang === "es" ? "Metodología" : "Methodology" },
     ],
+    author: authorPerson,
   };
 }
 
@@ -209,6 +215,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
   <meta name="theme-color" content="#0f172a" />
+  <meta name="author" content="Marco B." />
   <meta name="google-adsense-account" content="ca-pub-8761907366448308" />
 
   <!-- Google Analytics 4 — Consent Mode v2. Default deny; Funding Choices CMP updates. -->
