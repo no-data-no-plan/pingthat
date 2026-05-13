@@ -60,7 +60,7 @@ const common = {
     // redesign: when the v2 footer ships, these strings move into the new
     // identity-strip layout unchanged.
     footerSince: "since 2025",
-    footerMaintainedBy: "maintained by Marco \u2014 solo dev",
+    footerMaintainedBy: "maintained by Marco B. \u2014 solo dev",
     footerSupportEmail: "support@pingthat.dev",
     footerSupportEmailSub: "typically replies within 24h",
     // {{month}} replaced at build time in Layout.astro frontmatter (Bloque 1b).
@@ -133,7 +133,7 @@ const common = {
     // T-04 email visible, T-06 \u00faltima verificaci\u00f3n). Compatible con el
     // redise\u00f1o warm-dark futuro.
     footerSince: "desde 2025",
-    footerMaintainedBy: "mantenido por Marco \u2014 solo dev",
+    footerMaintainedBy: "mantenido por Marco B. \u2014 solo dev",
     footerSupportEmail: "support@pingthat.dev",
     footerSupportEmailSub: "respuesta en menos de 24h",
     footerLastVerified: "\u00daltima verificaci\u00f3n {{month}} \u2014 las 23 herramientas pasando",

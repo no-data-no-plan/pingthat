@@ -41,7 +41,7 @@ function Footer() {
           © 2025–2026 pingthat.dev — runs entirely in your browser. no data collected. no accounts. no tracking.
         </div>
         <div className="footer-stamp mono">
-          built by <a href="https://github.com/allopen" style={{ color: 'var(--fg-1)' }}>marco bia</a>
+          built by <a href="https://github.com/allopen" style={{ color: 'var(--fg-1)' }}>marco b.</a>
           <span className="muted-2"> · </span>
           <a href="mailto:hello@pingthat.dev">hello@pingthat.dev</a>
           <span className="muted-2"> · </span>
