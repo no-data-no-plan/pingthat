@@ -5,6 +5,7 @@
   import { getCommon } from '../i18n/common';
   import { readQuery, updateQuery } from '../lib/share-state';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -117,6 +118,14 @@
     if (key === "cumulative_layout_shift") return v.toFixed(3);
     return `${Math.round(v)} ms`;
   }
+
+  const fireToolComplete = useToolComplete("site-speed");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    url; formFactor; loading; error; result; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

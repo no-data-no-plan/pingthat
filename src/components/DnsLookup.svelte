@@ -3,6 +3,7 @@
   import type { Lang } from '../i18n/index';
   import { getDnsLookup } from '../i18n/components';
   import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -79,6 +80,14 @@
     const map: Record<number, string> = { 1: "A", 28: "AAAA", 5: "CNAME", 15: "MX", 2: "NS", 16: "TXT", 6: "SOA", 33: "SRV" };
     return map[type] || String(type);
   }
+
+  const fireToolComplete = useToolComplete("dns-lookup");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    domain; recordType; results; loading; error; requestId; recent;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

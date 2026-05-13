@@ -3,6 +3,7 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getWebrtcLeakTest } from '../i18n/components';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -111,6 +112,14 @@
   const disclaimerBody = $derived(lang === 'es'
     ? '"Sin fugas detectadas" puede significar que tu VPN funciona correctamente O que WebRTC está bloqueado en tu navegador. Verifica con una herramienta independiente como ipleak.net si usas VPN.'
     : '"No leak detected" can mean either your VPN is working OR that WebRTC is blocked by your browser. Verify with an independent tool like ipleak.net if you use a VPN.');
+
+  const fireToolComplete = useToolComplete("webrtc-leak-test");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    results; hasLeak; testing; error; supported;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

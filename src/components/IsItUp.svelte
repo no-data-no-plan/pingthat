@@ -6,6 +6,7 @@
   import { isValidUrl, getValidationError } from '../lib/validation';
   import { readQuery, updateQuery } from '../lib/share-state';
   import type { CheckSiteResult } from '../lib/api-types';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -76,6 +77,14 @@
     if (ms < 1000) return t.moderate;
     return t.slow;
   }
+
+  const fireToolComplete = useToolComplete("is-it-up");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    url; loading; error; result; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

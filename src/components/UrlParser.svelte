@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getUrlParser } from '../i18n/components';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -47,6 +48,14 @@
     { label: "search", value: parsed.search || t.none },
     { label: "hash", value: parsed.hash || t.none },
   ] : []);
+
+  const fireToolComplete = useToolComplete("url-parser");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    input; parsed; error;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

@@ -3,6 +3,7 @@
   import type { Lang } from '../i18n/index';
   import { getCaaLookup } from '../i18n/components';
   import { readQuery, updateQuery } from '../lib/share-state';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -189,6 +190,14 @@
     else if (issueCheck.empty) reason = t.reasonNoIssueRecords;
     else reason = t.reasonNotListed;
     return { ca, allowed, allowedWildcard, reason };
+  });
+
+  const fireToolComplete = useToolComplete("caa-lookup");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    domain; state; loading; error; requestId; selectedCa;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
   });
 </script>
 

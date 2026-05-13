@@ -7,6 +7,7 @@
   import { readQuery, updateQuery } from '../lib/share-state';
   import type { RedirectCheckerResult } from '../lib/api-types';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -82,6 +83,14 @@
     if (status >= 200 && status < 300) return "var(--color-accent)";
     return "var(--color-red)";
   }
+
+  const fireToolComplete = useToolComplete("redirect-checker");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    url; loading; error; result; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

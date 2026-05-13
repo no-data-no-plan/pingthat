@@ -6,6 +6,7 @@
   import { isValidDomain, getValidationError } from '../lib/validation';
   import type { EmailAuthResult } from '../lib/api-types';
   import { readQuery, updateQuery } from '../lib/share-state';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -76,6 +77,14 @@
       if (myId === requestId) loading = false;
     }
   }
+
+  const fireToolComplete = useToolComplete("email-auth");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    domain; loading; error; result; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

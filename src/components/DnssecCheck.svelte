@@ -3,6 +3,7 @@
   import type { Lang } from '../i18n/index';
   import { getDnssecCheck } from '../i18n/components';
   import { readQuery, updateQuery } from '../lib/share-state';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -179,6 +180,14 @@
     if (o === "partial") return t.explainPartial;
     return t.explainInsecure;
   }
+
+  const fireToolComplete = useToolComplete("dnssec-check");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    domain; state; loading; error; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

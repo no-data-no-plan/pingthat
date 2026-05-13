@@ -4,6 +4,7 @@
   import { getResolverCompare } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { readQuery, updateQuery } from '../lib/share-state';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -64,6 +65,14 @@
     if (ms <= 400) return "var(--color-yellow, #eab308)";
     return "var(--color-red, #ef4444)";
   }
+
+  const fireToolComplete = useToolComplete("resolver-compare");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    domain; recordType; loading; error; result; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

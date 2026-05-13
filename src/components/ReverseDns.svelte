@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getReverseDns } from '../i18n/components';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -120,6 +121,14 @@
       if (myId === requestId) loading = false;
     }
   }
+
+  const fireToolComplete = useToolComplete("reverse-dns");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    input; loading; error; result; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

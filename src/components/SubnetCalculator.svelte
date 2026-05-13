@@ -2,6 +2,7 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getSubnetCalculator } from '../i18n/components';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -130,6 +131,14 @@
     { cidr: "/16", mask: "255.255.0.0", hosts: 65534 },
     { cidr: "/8", mask: "255.0.0.0", hosts: 16777214 },
   ];
+
+  const fireToolComplete = useToolComplete("subnet-calculator");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    ipInput; cidr;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

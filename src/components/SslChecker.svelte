@@ -7,6 +7,7 @@
   import type { SslCheckerResult } from '../lib/api-types';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
   import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -103,6 +104,14 @@
     if (days >= 365) return `${(days / 365).toFixed(1)}y (${seconds.toLocaleString()}s)`;
     return `${days}d (${seconds.toLocaleString()}s)`;
   }
+
+  const fireToolComplete = useToolComplete("ssl-checker");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    domain; loading; error; result; requestId; recent;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

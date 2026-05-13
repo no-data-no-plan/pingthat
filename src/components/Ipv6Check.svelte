@@ -3,6 +3,7 @@
   import type { Lang } from '../i18n/index';
   import { getIpv6Check } from '../i18n/components';
   import { readQuery, updateQuery } from '../lib/share-state';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -130,6 +131,14 @@
     if (score >= 1) return t.ratingMinimal;
     return t.ratingNone;
   }
+
+  const fireToolComplete = useToolComplete("ipv6-check");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    domain; state; loading; error; requestId;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">

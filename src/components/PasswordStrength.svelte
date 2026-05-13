@@ -2,6 +2,7 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getPasswordStrength } from '../i18n/components';
+  import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -188,6 +189,14 @@
     copiedGenerated = true;
     setTimeout(() => (copiedGenerated = false), 1500);
   }
+
+  const fireToolComplete = useToolComplete("password-strength");
+  let __ftcFirstRun = true;
+  $effect(() => {
+    password; showPassword; copiedGenerated;
+    if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    fireToolComplete();
+  });
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
