@@ -100,8 +100,10 @@
   const fireToolComplete = useToolComplete("my-ip");
   let __ftcFirstRun = true;
   $effect(() => {
-    ip; city; region; country; isp; timezone; org; asn; loading; error; copied; language; online; platform; userAgent;
+    ip; loading; error;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    if (error) { fireToolComplete('error'); return; }
+    if (loading || !ip) return;
     fireToolComplete();
   });
 </script>

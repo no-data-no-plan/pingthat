@@ -189,8 +189,9 @@
   const fireToolComplete = useToolComplete("privacy-check");
   let __ftcFirstRun = true;
   $effect(() => {
-    checks; loading; copied;
+    checks; loading;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    if (loading || checks.length === 0) return;
     fireToolComplete();
   });
 </script>

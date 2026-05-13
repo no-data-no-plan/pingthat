@@ -116,8 +116,10 @@
   const fireToolComplete = useToolComplete("webrtc-leak-test");
   let __ftcFirstRun = true;
   $effect(() => {
-    results; hasLeak; testing; error; supported;
+    results; testing; error; supported;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
+    if (error) { fireToolComplete('error'); return; }
+    if (!supported || testing || results.length === 0) return;
     fireToolComplete();
   });
 </script>
