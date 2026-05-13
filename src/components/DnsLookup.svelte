@@ -86,7 +86,7 @@
   $effect(() => {
     domain; recordType; results; loading; error; requestId; recent;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
-    if (error) return;
+    if (error) { fireToolComplete('error'); return; }
     if (!results) return;
     fireToolComplete();
   });

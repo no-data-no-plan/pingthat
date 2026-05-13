@@ -186,7 +186,7 @@
   $effect(() => {
     domain; state; loading; error; requestId;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
-    if (error) return;
+    if (error) { fireToolComplete('error'); return; }
     if (!state) return;
     fireToolComplete();
   });

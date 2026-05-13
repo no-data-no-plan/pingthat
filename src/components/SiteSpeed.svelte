@@ -124,7 +124,7 @@
   $effect(() => {
     url; formFactor; loading; error; result; requestId;
     if (__ftcFirstRun) { __ftcFirstRun = false; return; }
-    if (error) return;
+    if (error) { fireToolComplete('error'); return; }
     if (!result) return;
     fireToolComplete();
   });

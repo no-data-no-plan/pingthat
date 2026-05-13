@@ -1,36 +1,52 @@
 /**
- * Fire a single `tool_complete` gtag event per session per tool, debounced.
+ * Fire `tool_complete` gtag events per session per tool, debounced.
  *
- * Designed for reactive calculators ($derived / $effect — no explicit submit
- * button) — fires after `debounceMs` of input stability, meaning the user
- * stopped adjusting inputs and is now consuming the result. Marco's master-plan
- * P1.1 / Sprint 3 instrumentation pattern adapted for Svelte 5 runes.
+ * Emits `outcome: 'success' | 'error'`. The first outcome to settle wins —
+ * subsequent fires (of either outcome) are no-ops once a session has fired
+ * once for this tool. This is intentional: GA4 scorecard signal S11 only
+ * needs ONE event per tool per session; the outcome tells us whether the
+ * user's first settled attempt succeeded or failed.
  *
- * GA4 scorecard signal S11 ("tool_complete event tracked per tool"). Once per
- * page load is sufficient — not once per keystroke.
+ * If `window.gtag` is missing (consent CMP not granted, adblocker dropped
+ * the snippet, script not loaded yet), the call is NOT marked as fired —
+ * a later $effect re-run will retry. To stay observable in that case, the
+ * util increments `window.__toolCompleteMissedFires[toolId]` so the
+ * operator can read measurement-loss counts from DevTools.
  *
  * Usage in a Svelte 5 component:
  *   import { useToolComplete } from '../lib/tool-complete.svelte';
- *   const fireToolComplete = useToolComplete('compound-interest');
- *   $effect(() => {
- *     // Reference each reactive input inside the effect so Svelte tracks them
- *     principal; monthly; rate; years;
- *     fireToolComplete();
- *   });
+ *   const fire = useToolComplete('bmi-calculator');
+ *   // happy path:
+ *   $effect(() => { weight; height; fire(); });
+ *   // error path (when the component has a clear failure mode):
+ *   if (validationError) fire('error');
  */
+type Outcome = 'success' | 'error';
+
+interface ToolCompleteWindow extends Window {
+  gtag?: (...args: unknown[]) => void;
+  __toolCompleteMissedFires?: Record<string, number>;
+}
+
 export function useToolComplete(toolId: string, debounceMs = 1500) {
   let fired = false;
   let timer: ReturnType<typeof setTimeout> | undefined;
-  return function fire() {
+  return function fire(outcome: Outcome = 'success') {
     if (fired || typeof window === 'undefined') return;
     clearTimeout(timer);
     timer = setTimeout(() => {
       if (fired) return;
+      const w = window as ToolCompleteWindow;
+      if (typeof w.gtag !== 'function') {
+        w.__toolCompleteMissedFires = w.__toolCompleteMissedFires || {};
+        const key = `${toolId}:${outcome}`;
+        w.__toolCompleteMissedFires[key] = (w.__toolCompleteMissedFires[key] || 0) + 1;
+        return;
+      }
       fired = true;
-      const w = window as Window & { gtag?: (...args: unknown[]) => void };
-      w.gtag?.('event', 'tool_complete', {
+      w.gtag('event', 'tool_complete', {
         tool_id: toolId,
-        outcome: 'success',
+        outcome,
       });
     }, debounceMs);
   };
