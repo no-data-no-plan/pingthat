@@ -391,7 +391,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
       )}
 
       <!-- Content -->
-      <main id="main-content" class="flex-1">
+      <main id="main-content" tabindex="-1" class="flex-1">
         <slot />
         {activeToolId && activeToolId !== "home" && activeToolId !== "compare" && activeToolId !== "docs" && !isLegalPage && (
           <RelatedDocs toolId={activeToolId} lang={lang} />
