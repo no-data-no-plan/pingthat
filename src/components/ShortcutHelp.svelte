@@ -6,6 +6,9 @@
   let { lang = "en" }: Props = $props();
 
   let open = $state(false);
+  let dialog: HTMLDivElement | undefined = $state();
+  let closeBtn: HTMLButtonElement | undefined = $state();
+  let lastFocused: HTMLElement | null = null;
 
   const labels = $derived(
     lang === "es"
@@ -41,24 +44,53 @@
     return false;
   }
 
+  function show() {
+    if (open) return;
+    lastFocused = document.activeElement as HTMLElement | null;
+    open = true;
+    // Focus the close button on next paint so screen readers announce
+    // the dialog instead of the previously-focused element.
+    setTimeout(() => closeBtn?.focus(), 0);
+  }
+
+  function close() {
+    open = false;
+    lastFocused?.focus();
+    lastFocused = null;
+  }
+
   function handleKey(e: KeyboardEvent) {
     if (e.key === "?" && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      // Don't intercept while user is typing into a real input
       if (isTypingTarget(e.target)) return;
       e.preventDefault();
-      open = true;
+      show();
       return;
     }
-    if (e.key === "Escape" && open) {
+    if (open && e.key === "Escape") {
       e.preventDefault();
-      open = false;
+      close();
+      return;
+    }
+    // Tab trap inside dialog when open.
+    if (open && e.key === "Tab" && dialog) {
+      const focusables = dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
       return;
     }
     if (e.key === "/" && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      // Same input-guard as ?: only fires on a "page" focus context.
       if (isTypingTarget(e.target)) return;
-      // Forward to a focusable search input when one exists. Common
-      // selectors used across the AY tool pages + home.
       const search = document.querySelector<HTMLInputElement>(
         "input[id=sidebar-search], input[type=search], input[placeholder*=Search]",
       );
@@ -82,20 +114,25 @@
   <div
     class="shortcut-modal-backdrop"
     role="presentation"
-    onclick={() => (open = false)}
-    onkeydown={(e) => { if (e.key === "Escape") open = false; }}
+    onclick={close}
   >
     <div
       class="shortcut-modal"
       role="dialog"
       aria-modal="true"
       aria-labelledby="shortcut-modal-title"
+      bind:this={dialog}
       onclick={(e) => e.stopPropagation()}
-      onkeydown={(e) => e.stopPropagation()}
     >
       <div class="shortcut-modal-head">
         <h2 id="shortcut-modal-title">{labels.title}</h2>
-        <button type="button" class="shortcut-modal-close" onclick={() => (open = false)} aria-label={labels.close}>×</button>
+        <button
+          type="button"
+          class="shortcut-modal-close"
+          onclick={close}
+          aria-label={labels.close}
+          bind:this={closeBtn}
+        >×</button>
       </div>
       <ul class="shortcut-list">
         {#each labels.shortcuts as item}
@@ -155,6 +192,11 @@
     cursor: pointer;
     padding: 0 0.4rem;
     border-radius: 4px;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
   .shortcut-modal-close:hover {
     color: var(--color-text-primary, #e8e8e8);
@@ -212,5 +254,10 @@
     text-align: center;
     border-top: 1px solid var(--color-border, #2a2a2d);
     padding-top: 0.75rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shortcut-modal-close {
+      transition: none;
+    }
   }
 </style>
