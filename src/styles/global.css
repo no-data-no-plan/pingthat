@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* ── Global `prefers-reduced-motion` contract ──
+   User-agent-level opt-out: any element under a user with
+   reduced-motion will get all CSS animations + transitions
+   collapsed to effectively instant. Overrides scoped animations
+   in individual components. WCAG 2.3.3. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ══════════════════════════════════════════════
    PingThat Design System
    Dark network-tool aesthetic
