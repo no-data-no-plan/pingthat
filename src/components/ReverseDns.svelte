@@ -137,7 +137,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="rdns-input" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.ipLabel}</label>
-      <input id="rdns-input" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={input} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && lookup()} style="width: 100%;" />
+      <input id="rdns-input" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={input} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && !loading && lookup()} style="width: 100%;" />
       <div style="font-size: 11px; color: var(--color-text-muted);">{t.hint}</div>
       <button class="btn-primary" onclick={lookup} disabled={loading || !input.trim()}>
         {loading ? t.looking : t.lookup}

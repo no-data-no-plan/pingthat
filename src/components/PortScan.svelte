@@ -139,10 +139,10 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="port-host" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.hostLabel}</label>
-      <input id="port-host" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={host} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && scan()} style="width: 100%;" />
+      <input id="port-host" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={host} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && !loading && scan()} style="width: 100%;" />
 
       <label for="port-custom" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.customPortsLabel}</label>
-      <input id="port-custom" type="text" bind:value={customPorts} placeholder={t.customPortsPlaceholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && scan()} style="width: 100%;" />
+      <input id="port-custom" type="text" bind:value={customPorts} placeholder={t.customPortsPlaceholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && !loading && scan()} style="width: 100%;" />
       <div style="font-size: 11px; color: var(--color-text-muted);">{t.customPortsHint}</div>
 
       <button class="btn-primary" onclick={scan} disabled={loading || !host.trim()}>

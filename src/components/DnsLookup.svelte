@@ -96,7 +96,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="dns-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
-      <input id="dns-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && lookup()} style="width: 100%;" />
+      <input id="dns-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && !loading && lookup()} style="width: 100%;" />
       {#if recent.length > 0}
         <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;" aria-label={lang === 'es' ? 'Consultas recientes' : 'Recent queries'}>
           <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{lang === 'es' ? 'Recientes' : 'Recent'}</span>

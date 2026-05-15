@@ -134,7 +134,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="speed-url" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.urlLabel}</label>
-      <input id="speed-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={url} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && check()} style="width: 100%;" />
+      <input id="speed-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={url} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && !loading && check()} style="width: 100%;" />
       <div style="display: flex; gap: 8px;" role="group" aria-label={t.formFactor}>
         <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em; align-self: center;">{t.formFactor}</span>
         <button type="button" class={formFactor === "PHONE" ? "btn-primary" : "btn-secondary"} style="padding: 6px 14px; font-size: 12px;" onclick={() => { formFactor = "PHONE"; }}>{t.mobile}</button>
