@@ -84,7 +84,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="whois-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
-      <input id="whois-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && lookup()} style="width: 100%;" />
+      <input id="whois-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && lookup()} style="width: 100%;" />
       <button class="btn-primary" onclick={lookup} disabled={loading || !domain.trim()}>{loading ? t.looking : t.lookup}</button>
     </div>
   </div>

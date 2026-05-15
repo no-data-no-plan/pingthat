@@ -81,7 +81,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="rc-domain" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.domainLabel}</label>
-      <input id="rc-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && compare()} style="width: 100%;" />
+      <input id="rc-domain" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={domain} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && compare()} style="width: 100%;" />
       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;" role="group" aria-label={t.recordType}>
         <span style="font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.recordType}</span>
         {#each types as rt}

@@ -62,7 +62,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="urlparser-url" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.urlLabel}</label>
-      <input id="urlparser-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={input} placeholder={t.placeholder} oninput={handleInput} onkeydown={(e) => e.key === 'Enter' && parse()} style="width: 100%;" />
+      <input id="urlparser-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={input} placeholder={t.placeholder} oninput={handleInput} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && parse()} style="width: 100%;" />
       <div style="display: flex; gap: 8px;">
         <button class="btn-secondary" onclick={copySample} style="font-size: 12px;">{t.sample}</button>
         <button class="btn-secondary" onclick={() => { input = ""; parsed = null; error = ""; }} style="font-size: 12px;">{t.clear}</button>

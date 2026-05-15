@@ -99,7 +99,7 @@
   <div class="card">
     <div class="card-body space-y-3">
       <label for="redirect-url" style="display: block; font-size: 9px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{t.urlLabel}</label>
-      <input id="redirect-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={url} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && check()} style="width: 100%;" />
+      <input id="redirect-url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" bind:value={url} placeholder={t.placeholder} onkeydown={(e) => e.key === 'Enter' && !e.isComposing && check()} style="width: 100%;" />
       <div style="display: flex; gap: 8px;">
         <button class="btn-primary" onclick={check} disabled={loading || !url.trim()} style="flex: 1;">{loading ? t.checking : t.check}</button>
         {#if loading}
