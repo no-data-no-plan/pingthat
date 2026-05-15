@@ -2,11 +2,14 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getJwtDecoder } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
   import { verifyJwt, type VerifyResult, type JwtAlg } from '../lib/jwt-verify';
+  import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
+  const c = $derived(getCommon(lang as 'en' | 'es'));
   const t = $derived(getJwtDecoder(lang));
 
   let token = $state("");
