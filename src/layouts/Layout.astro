@@ -60,7 +60,7 @@ const esUrl = `https://pingthat.dev${withSlash('/es' + toolPath)}`;
 const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/es" || Astro.url.pathname === "/es/";
 // Page-type detection for schema-appropriate markup.
 const normalizedPath = Astro.url.pathname.replace(/^\/es\//, '/').replace(/\/$/, '');
-const isLegalPage = normalizedPath === "/privacy-policy";
+const isLegalPage = normalizedPath === "/privacy";
 const isComparePage = normalizedPath.startsWith("/vs-");
 const isDocsArticle = schemaType === "Article" && !!docsPublishedAt;
 const isDocsHub = activeToolId === "docs" && !isDocsArticle;
@@ -419,7 +419,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
             <span style="color: var(--color-border);">&middot;</span>
             <a href={lang === "es" ? "/es/contact/" : "/contact/"} class="hover:text-[var(--color-accent)] transition-colors inline-block py-1">{lang === "es" ? "Contacto" : "Contact"}</a>
             <span style="color: var(--color-border);">&middot;</span>
-            <a href={lang === "es" ? "/es/privacy-policy/" : "/privacy-policy/"} class="hover:text-[var(--color-accent)] transition-colors inline-block py-1">{lang === "es" ? "Privacidad" : "Privacy"}</a>
+            <a href={lang === "es" ? "/es/privacy/" : "/privacy/"} class="hover:text-[var(--color-accent)] transition-colors inline-block py-1">{lang === "es" ? "Privacidad" : "Privacy"}</a>
             <a href={lang === "es" ? "/es/methodology/" : "/methodology/"} class="hover:text-[var(--color-accent)] transition-colors inline-block py-1">{c.footerMethodology}</a>
             <span style="color: var(--color-border);">&middot;</span>
             <a href={lang === "es" ? "/es/terms/" : "/terms/"} class="hover:text-[var(--color-accent)] transition-colors inline-block py-1">{lang === "es" ? "Términos" : "Terms"}</a>

@@ -97,7 +97,7 @@ https://pingthat.dev/sitemap.xml
 
 ## Policies
 
-- [Privacy Policy](https://pingthat.dev/privacy-policy/)
+- [Privacy Policy](https://pingthat.dev/privacy/)
 
 ## Related
 
@@ -872,7 +872,7 @@ No. Un responsible disclosure o fichero security.txt te dice cómo reportar una 
 Para inmediatamente, preserva tus logs (qué escaneaste, cuándo, bajo qué autorización) y no discutas el punto técnico con el quejante. La pregunta legal nunca es '¿fue el escaneo dañino?' sino '¿estaba autorizado?' — discutir lo contrario solo crea más registro. Si la queja viene de un proveedor cloud, responde brevemente acusando recibo y para de escanear desde esa fuente. Si escala a un cease-and-desist o contacto de fuerzas del orden, consigue un abogado antes de responder más. Mantener registros limpios de autorización de antemano es la mejor defensa.
 
 
-## https://pingthat.dev/privacy-policy/
+## https://pingthat.dev/privacy/
 
 **Privacy Policy**
 

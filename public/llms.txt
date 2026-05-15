@@ -97,7 +97,7 @@ https://pingthat.dev/sitemap.xml
 
 ## Policies
 
-- [Privacy Policy](https://pingthat.dev/privacy-policy/)
+- [Privacy Policy](https://pingthat.dev/privacy/)
 
 ## Related
 

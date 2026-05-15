@@ -32,7 +32,7 @@
     ? 'Tu IP pública se envía a ipapi.co y api.ipify.org (EE.UU.) para obtener la geolocalización. '
     : 'Your public IP is sent to ipapi.co and api.ipify.org (US) to retrieve geolocation. ');
   const privacyLinkText = $derived(lang === 'es' ? 'Política de privacidad' : 'Privacy policy');
-  const privacyHref = $derived(lang === 'es' ? '/es/privacy-policy' : '/privacy-policy');
+  const privacyHref = $derived(lang === 'es' ? '/es/privacy' : '/privacy');
 
   onMount(async () => {
     language = navigator.language || t.unknown;

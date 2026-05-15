@@ -1,4 +1,12 @@
 
+# Portfolio URL convention unified 2026-05-15: /privacy/ is canonical
+# across CV/AY/OI/JC/PT/OP (previously split 3-3). PT flipped from
+# /privacy-policy/ to /privacy/ on this date.
+/privacy-policy    /privacy/      301
+/privacy-policy/   /privacy/      301
+/es/privacy-policy /es/privacy/   301
+/es/privacy-policy/ /es/privacy/  301
+
 # vs-* comparison pages removed 2026-05-05 (Path A — see /methodology/).
 # Pages didn't meet the factual bar required for competitor reviews,
 # so they were deleted rather than maintained at half-quality.

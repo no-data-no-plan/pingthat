@@ -195,10 +195,10 @@
   </url>
   
   <url>
-    <loc>https://pingthat.dev/privacy-policy/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-policy/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-policy/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-policy/" />
+    <loc>https://pingthat.dev/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy/" />
     <lastmod>2026-05-13</lastmod>
   </url>
   
@@ -347,10 +347,10 @@
   </url>
   
   <url>
-    <loc>https://pingthat.dev/es/privacy-policy/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy-policy/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy-policy/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy-policy/" />
+    <loc>https://pingthat.dev/es/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/privacy/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/privacy/" />
     <lastmod>2026-05-13</lastmod>
   </url>
 
