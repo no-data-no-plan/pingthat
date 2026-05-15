@@ -166,13 +166,6 @@ export async function onRequest(context) {
     });
   }
 
-  if (url.pathname === '/privacy/' || url.pathname === '/privacy') {
-    return Response.redirect('https://pingthat.dev/privacy-policy/' + url.search, 301);
-  }
-  if (url.pathname === '/es/privacy/' || url.pathname === '/es/privacy') {
-    return Response.redirect('https://pingthat.dev/es/privacy-policy/' + url.search, 301);
-  }
-
   // Spanish-preference geo redirect (CW audit 2026-05-03 finding B):
   // 24/51 PT users 28d are Spain landing on EN URLs because GSC ranks the
   // EN canonical for queries like "calculadora subneteo". A 302 (not 301)
