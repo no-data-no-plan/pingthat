@@ -6,6 +6,7 @@ import LangToggle from "../components/LangToggle.astro";
 import CrossLinks from "../components/CrossLinks.astro";
 import CookieConsent from "../components/CookieConsent.astro";
 import ShortcutHelp from "../components/ShortcutHelp.svelte";
+import NotifyToast from "../components/NotifyToast.svelte";
 import { tools } from "../lib/tools";
 import type { Lang } from "../i18n/index";
 import { getCommon } from "../i18n/common";
@@ -503,7 +504,9 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
     });
   </script>
 
-  <!-- Feedback form: AJAX submit + toast (no page reload) -->
+  <!-- Feedback form: AJAX submit + dispatch toast event (no page reload).
+       Toast UI is rendered by the <NotifyToast> island below; this script
+       just dispatches `pt-toast` events. -->
   <script>
     (function () {
       const form = document.getElementById('feedback-form');
@@ -515,46 +518,8 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
         error: isEs ? 'Error al enviar. Inténtalo más tarde.' : 'Error sending. Please try again later.',
       };
 
-      function showToast(text, isError) {
-        const toast = document.createElement('div');
-        toast.setAttribute('role', 'status');
-        toast.setAttribute('aria-live', 'polite');
-        toast.textContent = text;
-        Object.assign(toast.style, {
-          position: 'fixed',
-          bottom: '24px',
-          left: '50%',
-          transform: 'translate(-50%, 20px)',
-          padding: '12px 20px',
-          borderRadius: '8px',
-          background: isError ? '#dc2626' : '#059669',
-          color: '#fff',
-          fontSize: '13px',
-          fontWeight: '500',
-          fontFamily: 'Inter, sans-serif',
-          zIndex: '9999',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
-          opacity: '0',
-          transition: 'opacity .25s ease, transform .25s ease',
-          cursor: 'pointer',
-          maxWidth: '90vw',
-        });
-        toast.title = isEs ? 'Clic para cerrar' : 'Click to dismiss';
-        document.body.appendChild(toast);
-        requestAnimationFrame(() => {
-          toast.style.opacity = '1';
-          toast.style.transform = 'translate(-50%, 0)';
-        });
-        let dismissed = false;
-        const dismiss = () => {
-          if (dismissed) return;
-          dismissed = true;
-          toast.style.opacity = '0';
-          toast.style.transform = 'translate(-50%, 20px)';
-          setTimeout(() => toast.remove(), 300);
-        };
-        toast.addEventListener('click', dismiss);
-        setTimeout(dismiss, 5000);
+      function toast(message, kind) {
+        window.dispatchEvent(new CustomEvent('pt-toast', { detail: { message, kind } }));
       }
 
       form.addEventListener('submit', async (e) => {
@@ -572,13 +537,13 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
             headers: { Accept: 'application/json' },
           });
           if (res.ok) {
-            showToast(MSG.success, false);
+            toast(MSG.success, 'success');
             form.reset();
           } else {
-            showToast(MSG.error, true);
+            toast(MSG.error, 'error');
           }
         } catch {
-          showToast(MSG.error, true);
+          toast(MSG.error, 'error');
         } finally {
           if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;
         }
@@ -590,5 +555,10 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
        Same pattern shipped to AY/JC. client:only because the listener
        attaches to document at onMount. -->
   <ShortcutHelp client:only="svelte" lang={lang} />
+
+  <!-- Global post-action feedback toast (P3.4 Phase 5 — 2026-05-15).
+       Tools call `notify()` from src/lib/notify.ts. client:only because
+       the component attaches a window event listener at mount. -->
+  <NotifyToast client:only="svelte" lang={lang} />
 </body>
 </html>

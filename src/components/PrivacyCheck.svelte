@@ -3,10 +3,13 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getPrivacyCheck } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
+  import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
+  const c = $derived(getCommon(lang as 'en' | 'es'));
   const t = $derived(getPrivacyCheck(lang));
 
   interface CheckItem {
@@ -179,11 +182,12 @@
     ? 'Esta página muestra qué APIs del navegador están disponibles y podrían usarse para fingerprinting. "Detectable" no significa que te estén rastreando — solo que la capacidad existe.'
     : 'This page shows which browser APIs are available and could be used for fingerprinting. "Detectable" does not mean you are being tracked — only that the capability exists.');
 
-  function copyReport() {
+  async function copyReport() {
     const text = checks.map((c) => `${c.label}: ${c.value} [${c.status.toUpperCase()}]`).join("\n");
-    navigator.clipboard.writeText(`${t.clipboardTitle}\n${"=".repeat(40)}\n${text}`);
-    copied = true;
-    setTimeout(() => (copied = false), 1500);
+    if (await copyAndNotify(`${t.clipboardTitle}\n${"=".repeat(40)}\n${text}`, c.copied, c.copyFailed)) {
+      copied = true;
+      setTimeout(() => (copied = false), 1500);
+    }
   }
 
   const fireToolComplete = useToolComplete("privacy-check");

@@ -93,10 +93,11 @@
     }
   });
 
-  function copySection(text: string, section: string) {
-    navigator.clipboard.writeText(text);
-    copiedSection = section;
-    setTimeout(() => (copiedSection = ""), 1500);
+  async function copySection(text: string, section: string) {
+    if (await copyAndNotify(text, c.copied, c.copyFailed)) {
+      copiedSection = section;
+      setTimeout(() => (copiedSection = ""), 1500);
+    }
   }
 
   const sampleJwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE1MTYyNDI2MjIsInJvbGUiOiJhZG1pbiJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";

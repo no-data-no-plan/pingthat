@@ -3,10 +3,13 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getMyIp } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
+  import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
+  const c = $derived(getCommon(lang as 'en' | 'es'));
   const t = $derived(getMyIp(lang));
 
   let ip = $state("");
@@ -90,11 +93,12 @@
     loading = false;
   });
 
-  function copyIp() {
+  async function copyIp() {
     if (!ip) return;
-    navigator.clipboard.writeText(ip);
-    copied = true;
-    setTimeout(() => (copied = false), 1500);
+    if (await copyAndNotify(ip, c.copied, c.copyFailed)) {
+      copied = true;
+      setTimeout(() => (copied = false), 1500);
+    }
   }
 
   const fireToolComplete = useToolComplete("my-ip");

@@ -2,10 +2,13 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getIpConverter } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
+  import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
+  const c = $derived(getCommon(lang as 'en' | 'es'));
   const t = $derived(getIpConverter(lang));
 
   let input = $state("192.168.1.1");
@@ -112,10 +115,11 @@
   );
   let ipv6Mapped = $derived(parsed ? `::ffff:${parsed.octets.join(".")}` : "");
 
-  function copy(value: string, field: string) {
-    navigator.clipboard.writeText(value);
-    copiedField = field;
-    setTimeout(() => (copiedField = ""), 1500);
+  async function copy(value: string, field: string) {
+    if (await copyAndNotify(value, c.copied, c.copyFailed)) {
+      copiedField = field;
+      setTimeout(() => (copiedField = ""), 1500);
+    }
   }
 
   const fireToolComplete = useToolComplete("ip-converter");

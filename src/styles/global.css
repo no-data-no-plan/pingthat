@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* ── Z-index scale ──
+   Centralised toast layer so NotifyToast reasons about stacking from
+   one place. Tailwind 4 accepts as arbitrary values: `z-[var(--z-toast)]`. */
+:root {
+  --z-toast: 90;
+}
+
 /* ── Global `prefers-reduced-motion` contract ──
    User-agent-level opt-out: any element under a user with
    reduced-motion will get all CSS animations + transitions

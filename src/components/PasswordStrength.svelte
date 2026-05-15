@@ -2,10 +2,13 @@
   import InfoTip from './InfoTip.svelte';
   import type { Lang } from '../i18n/index';
   import { getPasswordStrength } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
+  import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
+  const c = $derived(getCommon(lang as 'en' | 'es'));
   const t = $derived(getPasswordStrength(lang));
 
   let password = $state("");
@@ -183,11 +186,12 @@
     password = pwArr.join("");
   }
 
-  function copyGenerated() {
+  async function copyGenerated() {
     if (!password) return;
-    navigator.clipboard.writeText(password);
-    copiedGenerated = true;
-    setTimeout(() => (copiedGenerated = false), 1500);
+    if (await copyAndNotify(password, c.copied, c.copyFailed)) {
+      copiedGenerated = true;
+      setTimeout(() => (copiedGenerated = false), 1500);
+    }
   }
 
   const fireToolComplete = useToolComplete("password-strength");

@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { Lang } from '../i18n/index';
   import { getUrlParser } from '../i18n/components';
+  import { getCommon } from '../i18n/common';
+  import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
+  const c = $derived(getCommon(lang as 'en' | 'es'));
   const t = $derived(getUrlParser(lang));
 
   let input = $state("");
@@ -35,7 +38,7 @@
 
   function copySample() { input = "https://example.com:8080/path/to/page?name=john&age=30&tags=a&tags=b#section-2"; parse(); }
 
-  function copy(val: string) { navigator.clipboard.writeText(val); }
+  async function copy(val: string) { await copyAndNotify(val, c.copied, c.copyFailed); }
 
   const fields = $derived(parsed ? [
     { label: "href", value: parsed.href },

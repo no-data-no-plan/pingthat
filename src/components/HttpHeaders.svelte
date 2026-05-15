@@ -7,6 +7,7 @@
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
   import { onMount } from 'svelte';
   import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
+  import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
 
   interface Props { lang?: Lang; }
@@ -80,7 +81,7 @@
     abortController?.abort(USER_CANCELLED_REASON);
   }
 
-  function copy(val: string) { navigator.clipboard.writeText(val); }
+  async function copy(val: string) { await copyAndNotify(val, c.copied, c.copyFailed); }
 
   const securityLabels: Record<string, string> = {
     hsts: "Strict-Transport-Security",
