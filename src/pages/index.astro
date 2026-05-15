@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { tools, groups } from "../lib/tools";
 import { getCommon } from "../i18n/common";
 import CookieConsent from "../components/CookieConsent.astro";
+import CrossLinks from "../components/CrossLinks.astro";
 import LangToggle from "../components/LangToggle.astro";
 
 const c = getCommon("en");
@@ -293,6 +294,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           {c.bottomCtaText}
         </p>
       </div>
+    <CrossLinks exclude="PingThat" lang="en" />
     </main>
     <!-- Footer (Nielsen audit 2026-04-30, PT F3 + F17): match tool-page
          chrome. Pre-fix /about/, /docs/, BMC, and Formspree feedback were

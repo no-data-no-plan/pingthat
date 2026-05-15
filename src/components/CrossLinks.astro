@@ -27,7 +27,14 @@ const categories = [
   ]},
 ];
 
-const visible = categories.filter(c => c.id !== exclude);
+// 2026-05-15 fix: filter by app NAME, not category id. Previous logic
+// dropped entire categories — broke JC↔PT cross-linking (both share
+// the "dev" category, so excluding "dev" hid BOTH apps). Now we exclude
+// only the current site's own app entry and drop categories that
+// become empty as a result.
+const visible = categories
+  .map(c => ({ ...c, apps: c.apps.filter(a => a.name !== exclude) }))
+  .filter(c => c.apps.length > 0);
 ---
 
 <nav aria-label={lang === "es" ? "Más herramientas gratuitas" : "More free tools"} class="px-6 py-4">

@@ -2,6 +2,7 @@
 import "../../styles/global.css";
 import { tools, groups } from "../../lib/tools";
 import CookieConsent from "../../components/CookieConsent.astro";
+import CrossLinks from "../../components/CrossLinks.astro";
 import LangToggle from "../../components/LangToggle.astro";
 import { getCommon } from "../../i18n/common";
 import { toolNamesI18n, toolDescriptionsI18n, groupLabelsI18n } from "../../i18n/pages";
@@ -288,6 +289,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           {c.bottomCtaText}
         </p>
       </div>
+    <CrossLinks exclude="PingThat" lang="es" />
     </main>
     <!-- Footer (Nielsen audit 2026-04-30, PT F3 + F17). -->
     <footer class="px-6 py-4 border-t border-[var(--color-border)] text-[11px]" style="color: var(--color-text-dim);">
