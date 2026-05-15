@@ -120,34 +120,33 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if loading}
-    <div class="card">
-      <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-text-muted); font-size: 13px;">{t.detectingIp}</p>
-      </div>
-    </div>
-  {:else if error}
+  {#if error}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
         <p style="color: var(--color-red); font-size: 13px;">{error}</p>
       </div>
     </div>
   {:else}
-    <!-- IP Display -->
+    <!-- IP Display — render skeleton immediately so LCP fires on the
+         32px placeholder text, NOT on the API response. Detected
+         2026-05-15 CWV audit: LCP was 3.95s (P1) because the LCP element
+         only mounted after ipapi.co round-trip. Skeleton-then-swap brings
+         LCP to ~sub-2s; IP value swaps in seamlessly when fetch resolves. -->
     <div class="card">
       <div class="card-header">
         <span class="card-title">{t.yourPublicIp} <InfoTip text={t.publicIpTip} /></span>
-        <button class="btn-secondary" onclick={copyIp}>
+        <button class="btn-secondary" onclick={copyIp} disabled={loading || !ip}>
           {copied ? t.copied : t.copyIp}
         </button>
       </div>
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
-        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent-fg); letter-spacing: -0.02em; font-family: 'Inter', monospace;">
-          {ip}
+        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent-fg); letter-spacing: -0.02em; font-family: 'Inter', monospace;{loading ? ' opacity: 0.5;' : ''}">
+          {loading ? t.detectingIp : ip}
         </p>
       </div>
     </div>
 
+    {#if !loading}
     <!-- Location & Network -->
     <div class="metrics-grid cols-2">
       <div class="metric">
@@ -211,6 +210,7 @@
         </div>
       </div>
     </div>
+    {/if}
   {/if}
   </div>
 </div>
