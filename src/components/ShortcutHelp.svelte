@@ -48,6 +48,10 @@
     if (open) return;
     lastFocused = document.activeElement as HTMLElement | null;
     open = true;
+    // Mark page content inert for legacy screen readers that don't honor
+    // aria-modal="true" (NVDA <2021, older VoiceOver). aria-modal stays on
+    // the dialog as the primary contract; this is belt-and-suspenders.
+    document.querySelector('main')?.setAttribute('aria-hidden', 'true');
     // Focus the close button on next paint so screen readers announce
     // the dialog instead of the previously-focused element.
     setTimeout(() => closeBtn?.focus(), 0);
@@ -55,6 +59,7 @@
 
   function close() {
     open = false;
+    document.querySelector('main')?.removeAttribute('aria-hidden');
     lastFocused?.focus();
     lastFocused = null;
   }
