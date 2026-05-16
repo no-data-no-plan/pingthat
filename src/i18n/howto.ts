@@ -195,9 +195,9 @@ export const howtoSteps: Record<string, HowToByLang> = {
       name: "Cómo comprobar registros SPF, DKIM y DMARC",
       steps: [
         { name: "Introduce tu dominio", text: "Escribe el dominio que quieras auditar (p.ej. tuempresa.com) en el verificador." },
-        { name: "Revisa SPF", text: "PingThat muestra el TXT, mecanismos parseados, cadena de include y avisa si superas el límite de 10 lookups." },
+        { name: "Revisa SPF", text: "PingThat muestra el TXT, mecanismos analizados, cadena de include y avisa si superas el límite de 10 lookups." },
         { name: "Comprueba selectores DKIM", text: "Prueba selectores comunes (default, google, mailgun) y mira la longitud de la clave pública y el algoritmo." },
-        { name: "Inspecciona la política DMARC", text: "Mira tu DMARC con tags parseados — política (none/quarantine/reject), porcentaje, direcciones de informes." },
+        { name: "Inspecciona la política DMARC", text: "Mira tu DMARC con tags analizados — política (none/quarantine/reject), porcentaje, direcciones de informes." },
       ],
     },
   },
@@ -217,7 +217,7 @@ export const howtoSteps: Record<string, HowToByLang> = {
       steps: [
         { name: "Introduce host o IP", text: "Escribe el host objetivo — tu propio dominio, un servidor que administres o cualquier host que tengas autorización para probar." },
         { name: "Elige el conjunto de puertos", text: "Selecciona puertos comunes (HTTP, HTTPS, SSH, FTP, SMTP, bases de datos) o introduce los tuyos." },
-        { name: "Ejecuta el escaneo", text: "PingThat comprueba alcance desde internet público y reporta estados abierto, cerrado y filtrado." },
+        { name: "Ejecuta el escaneo", text: "PingThat comprueba alcance desde internet público y muestra estados abierto, cerrado y filtrado." },
         { name: "Revisa y endurece", text: "Cierra puertos innecesarios, actualiza reglas de firewall y vuelve a escanear. Solo escanea hosts que te pertenezcan o tengas permiso." },
       ],
     },
@@ -258,7 +258,7 @@ export const howtoSteps: Record<string, HowToByLang> = {
       name: "Cómo comprobar si una web está caída",
       steps: [
         { name: "Introduce la URL", text: "Escribe la URL completa (o solo el dominio) del sitio que crees que puede estar caído." },
-        { name: "Ejecuta la comprobación", text: "PingThat hace una petición HTTP en vivo y reporta código de estado, tiempo de respuesta y cualquier cadena de redirecciones." },
+        { name: "Ejecuta la comprobación", text: "PingThat hace una petición HTTP en vivo y muestra código de estado, tiempo de respuesta y cualquier cadena de redirecciones." },
         { name: "Interpreta el resultado", text: "200-299 significa up, 3xx redirect, 4xx/5xx error. Errores de red indican caída global probable." },
         { name: "Contrasta", text: "Si PingThat ve up pero tú no llegas, el problema es local (ISP, DNS, firewall). Si PingThat también ve caída, es global." },
       ],
@@ -339,7 +339,7 @@ export const howtoSteps: Record<string, HowToByLang> = {
       ],
     },
     es: {
-      name: "Cómo parsear una URL en sus componentes",
+      name: "Cómo analizar una URL en sus componentes",
       steps: [
         { name: "Pega una URL", text: "Pega cualquier URL en el parser — simple o compleja, con query strings y fragmentos." },
         { name: "Revisa los componentes", text: "PingThat divide la URL en protocolo, host, puerto, ruta, parámetros query y fragmento — cada uno en su fila." },
@@ -362,7 +362,7 @@ export const howtoSteps: Record<string, HowToByLang> = {
     es: {
       name: "Cómo verificar si un servicio está online",
       steps: [
-        { name: "Introduce URL o host", text: "Escribe la URL o hostname del servicio que quieras verificar que está accesible." },
+        { name: "Introduce URL o host", text: "Escribe la URL o hostname del servicio que quieras comprobar que está accesible." },
         { name: "Ejecuta la prueba", text: "PingThat realiza una comprobación HTTP en vivo y un check de conectividad TCP contra el objetivo." },
         { name: "Revisa estado y latencia", text: "Mira el código HTTP, tiempo de respuesta en ms y si hay redirecciones antes de llegar a un 200." },
         { name: "Debuggea si falla", text: "5xx intermitentes o timeouts suelen indicar problemas upstream o de capacidad. Repite varias veces para caracterizar el patrón." },
