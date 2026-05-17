@@ -2,7 +2,7 @@
 import { tools } from "../lib/tools";
 import type { Lang } from "../i18n/index";
 import { getCommon } from "../i18n/common";
-import { toolNamesI18n } from "../i18n/pages";
+import { toolNamesI18n, toolDescriptionsI18n } from "../i18n/pages";
 
 interface Props {
   heading: string;
@@ -23,16 +23,72 @@ const relatedTools = relatedToolIds
   <h2 class="text-[10px] uppercase tracking-[0.12em] mb-2" style="color: var(--color-accent-fg);">{heading}</h2>
   <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">{text}</p>
   {relatedTools.length > 0 && (
-    <div class="flex flex-wrap gap-2 mt-3">
-      <span class="text-[10px]" style="color: var(--color-text-dim);">{c.related}</span>
-      {relatedTools.map((tool) => (
-        <a href={`${prefix}${tool.path}`} class="text-[10px] underline" data-related-tool style="color: var(--color-accent-fg);">
-          {toolNamesI18n[tool.id]?.[lang] ?? tool.name}
-        </a>
-      ))}
+    <div class="related-tools-card mt-5 pt-4 border-t" style="border-color: var(--color-border);">
+      <h3 class="text-[11px] uppercase tracking-[0.12em] mb-3" style="color: var(--color-accent-fg);">{c.related}</h3>
+      <div class="related-tools-grid">
+        {relatedTools.map((tool) => (
+          <a
+            href={`${prefix}${tool.path}`}
+            class="related-tool-chip"
+            data-related-tool
+          >
+            <strong class="related-tool-name">{toolNamesI18n[tool.id]?.[lang] ?? tool.name}</strong>
+            <span class="related-tool-desc">{toolDescriptionsI18n[tool.id]?.[lang] ?? tool.description}</span>
+          </a>
+        ))}
+      </div>
     </div>
   )}
 </section>
+
+<style>
+  /* 2026-05-17 — upgraded related-tools card from 10px inline links to a
+     scannable 2-column chip grid with name + description per tool. Reason:
+     GA4 referrer data showed PT had 0 internal cross-pollination despite
+     46 pages already using relatedToolIds — the old 10px underline links
+     were too subtle (collapsed at the bottom of SeoContent into a single
+     prose-style line). Chips give clear tap targets (~min 56px tall on
+     mobile per WCAG 2.5.5) + the 1-line description tells the user WHY
+     they'd want to follow the link, not just WHERE it goes. */
+  .related-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  @media (min-width: 600px) {
+    .related-tools-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .related-tool-chip {
+    display: block;
+    padding: 10px 12px;
+    background: var(--color-surface2);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+    min-height: 56px;
+  }
+  .related-tool-chip:hover,
+  .related-tool-chip:focus-visible {
+    border-color: var(--color-accent);
+    background: var(--color-surface);
+  }
+  .related-tool-name {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-accent-fg);
+    margin-bottom: 2px;
+  }
+  .related-tool-desc {
+    display: block;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+  }
+</style>
 
 <script>
   // Carry shareable query params (domain/host/url) into related-tool links so
