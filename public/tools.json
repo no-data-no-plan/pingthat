@@ -16,6 +16,8 @@
         "description": "Check CAA records for any domain. See which Certificate Authorities can issue SSL certificates. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -33,6 +35,8 @@
         "description": "Query DNS records for any domain. A, AAAA, MX, CNAME, TXT, NS, SOA. Uses Cloudflare DNS. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -50,6 +54,8 @@
         "description": "Validate DNSSEC signing, DS chain of trust, and resolver validation for any domain. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -67,6 +73,8 @@
         "description": "Check SPF, DKIM, and DMARC records for any domain. Verify email authentication, troubleshoot deliverability, and audit your domain's email security.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -84,6 +92,8 @@
         "description": "Consulta registros DNS de cualquier dominio. A, AAAA, MX, CNAME, TXT, NS, SOA. Usa Cloudflare DNS. Gratis, instantáneo.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -101,6 +111,8 @@
         "description": "Verifica registros SPF, DKIM y DMARC de cualquier dominio. Comprueba la configuracion de autenticacion de email. Gratis, instantaneo.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -118,6 +130,8 @@
         "description": "Inspecciona cabeceras HTTP de respuesta y verifica cabeceras de seguridad de cualquier URL. Gratis, instantáneo.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -135,6 +149,8 @@
         "description": "Convierte direcciones IPv4 entre formatos decimal, binario, hexadecimal, octal y entero. Conversor gratuito — 100% en tu navegador.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -152,6 +168,8 @@
         "description": "Comprueba si un sitio web está caído para todos o solo para ti. Verificación instantánea. Gratis.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -169,6 +187,8 @@
         "description": "Verifica estado del sitio web, tiempo de respuesta, info del servidor. Informe detallado. Gratis.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -186,6 +206,8 @@
         "description": "Decodifica e inspecciona JSON Web Tokens — cabecera, payload y firma. 100% en el cliente, tu token nunca sale de tu navegador.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -203,6 +225,8 @@
         "description": "Consulta tu dirección IPv4 e IPv6 pública, geolocalización, ISP y ASN en tiempo real. Gratis, instantáneo, sin rastreo ni registro.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -220,6 +244,8 @@
         "description": "Analiza entropía de contraseñas, tiempo de descifrado y fortaleza. 100% en el cliente — tu contraseña nunca sale de tu navegador.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -237,6 +263,8 @@
         "description": "Escanea puertos comunes de cualquier host. Comprueba que servicios son accesibles -- HTTP, HTTPS, SSH, FTP y mas. Gratis, instantaneo.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -254,6 +282,8 @@
         "description": "Comprueba la privacidad del navegador: protección contra rastreo, cookies y huella digital. Gratis, instantáneo y 100% en el cliente.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -271,6 +301,8 @@
         "description": "Traza la cadena completa de redirecciones de cualquier URL. Ve cada 301, 302 con códigos de estado. Gratis.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -288,6 +320,8 @@
         "description": "Verifica el estado SSL/TLS, cabeceras HSTS y detalles del certificado de cualquier dominio. Gratis, instantáneo.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -305,6 +339,8 @@
         "description": "Calcula dirección de red, broadcast, rango de hosts, máscara y wildcard desde cualquier CIDR. Planificador IPv4 gratuito en tu navegador.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -322,6 +358,8 @@
         "description": "Analiza y descompone cualquier URL en sus componentes: protocolo, host, ruta, parámetros, hash. Gratis.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -339,6 +377,8 @@
         "description": "Comprueba si WebRTC está filtrando tu dirección IP real. Detecta IPs locales y públicas expuestas a través de candidatos ICE.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -356,6 +396,8 @@
         "description": "Consulta detalles de registro de dominio, registrador, nameservers y fechas de expiración. WHOIS gratuito vía RDAP.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "es-ES",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -373,6 +415,8 @@
         "description": "Inspect HTTP response headers and check security headers for any URL. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -390,6 +434,8 @@
         "description": "Convert IPv4 addresses between decimal, binary, hexadecimal, octal, and integer formats. Free and instant — runs 100% in your browser.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -407,6 +453,8 @@
         "description": "Check if a domain is IPv6-ready. Tests AAAA records for apex, www, nameservers, and mail. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -424,6 +472,8 @@
         "description": "Check if a website is down for everyone or just you. Instant status check. Free.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -441,6 +491,8 @@
         "description": "Check website status, response time, server info. Detailed uptime report. Free.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -458,6 +510,8 @@
         "description": "Decode and inspect JSON Web Tokens — header, payload, and signature. Browser-side decoding.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -475,6 +529,8 @@
         "description": "See your public IPv4 and IPv6 address, geolocation, ISP, and ASN details in real time. Free, instant lookup with.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -492,6 +548,8 @@
         "description": "Analyze password entropy, crack time estimation, and strength rating. Browser-side analysis.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -509,6 +567,8 @@
         "description": "Scan common ports on any host: HTTP, HTTPS, SSH, FTP, SMTP, databases and more. Check which services are reachable from the public internet.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -526,6 +586,8 @@
         "description": "Check your browser's privacy settings, tracking protection, cookies, and fingerprint exposure. Free, instant, runs 100% client-side.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -543,6 +605,8 @@
         "description": "Trace the full redirect chain of any URL. See every 301, 302 redirect with status codes. Free.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -560,6 +624,8 @@
         "description": "Compare DNS answers and latency across Cloudflare, Google, AdGuard, and NextDNS. Detect propagation lag. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -577,6 +643,8 @@
         "description": "Resolve PTR records for any IPv4 or IPv6 address. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -594,6 +662,8 @@
         "description": "Check LCP, INP, CLS, FCP, and TTFB from real Chrome users. Backed by the Chrome UX Report. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -611,6 +681,8 @@
         "description": "Check SSL/TLS status, HSTS headers, and certificate details for any domain. Free, instant.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -628,6 +700,8 @@
         "description": "Calculate network address, broadcast address, host range, subnet mask, and wildcard from any CIDR block. Free IPv4 subnet planner in browser.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -645,6 +719,8 @@
         "description": "Parse and break down any URL into its components: protocol, host, path, query parameters, hash. Free.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -662,6 +738,8 @@
         "description": "Check if WebRTC is leaking your real IP behind a VPN. Detects local and public IPs exposed through ICE candidates. Free, runs in your browser.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -679,6 +757,8 @@
         "description": "Look up domain registration details, registrar, nameservers, and expiration dates. Free WHOIS via RDAP.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
           "price": "0",
