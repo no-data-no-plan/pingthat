@@ -223,6 +223,12 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    // [PW-GUARD-V1] Skip GA4 init when running under browser automation
+    // (Playwright, Selenium, Puppeteer). Diagnosed 2026-05-20: 6047 fake
+    // "real" PV on CV /pro/ Apr 22-25 were our own Playwright e2e tests,
+    // geoIP'd to "Parla" (Madrid POP). gtag() stays defined as no-op so
+    // other call sites (tool-complete.svelte.ts etc.) don't crash.
+    if (!(window.__PW_TEST__ || navigator.webdriver)) {
     gtag('consent', 'default', {
       ad_storage: 'denied',
       ad_user_data: 'denied',
@@ -243,8 +249,9 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
       }).catch(function(){});
     gtag('js', new Date());
     gtag('config', 'G-MRBSLR79JG', { anonymize_ip: true });
+    var _s=document.createElement('script');_s.async=true;_s.src='https://www.googletagmanager.com/gtag/js?id=G-MRBSLR79JG';document.head.appendChild(_s);
+    }
   </script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRBSLR79JG"></script>
 
   <!-- Preconnect to AdSense origins to shave ~50-100ms off the first ad request -->
   <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
