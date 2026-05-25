@@ -17,6 +17,10 @@ interface Props {
   title: string;
   description: string;
   activeToolId: string;
+  /** PT-sweep2 2026-05-25 — opt-in clean H1 override. Layout auto-cleans
+   * title for the visible <h1> by stripping after first separator; pass
+   * h1={title} explicitly to preserve full stuffed H1 (rarely needed). */
+  h1?: string;
   lang?: Lang;
   schemaType?: "SoftwareApplication" | "Article" | "CollectionPage";
   docsPublishedAt?: Date;
@@ -25,7 +29,21 @@ interface Props {
   docsTags?: string[];
 }
 
-const { title, description, activeToolId, lang = "en", schemaType = "SoftwareApplication", docsPublishedAt, docsUpdatedAt, docsCategory, docsTags } = Astro.props;
+const { title, description, activeToolId, h1: h1Prop, lang = "en", schemaType = "SoftwareApplication", docsPublishedAt, docsUpdatedAt, docsCategory, docsTags } = Astro.props;
+
+// PT-sweep2 2026-05-25 — auto-clean H1 for AEO keyword_stuffing detector.
+// 7/66 PT pages flagged stuffed (17%). Strip after first separator; <title>
+// remains full for SEO long-tail. Per-page opt-out: pass h1={title}.
+function cleanH1PT(t: string): string {
+  for (const sep of [" — ", " | ", " · "]) {
+    const i = t.indexOf(sep);
+    if (i > 0) return t.slice(0, i);
+  }
+  const dash = t.indexOf(" - ");
+  if (dash > 0 && t.length - dash > 5) return t.slice(0, dash);
+  return t;
+}
+const visibleH1 = h1Prop ?? cleanH1PT(title);
 const c = getCommon(lang);
 
 // Build-time month for "Last verified" footer + per-tool stamp (Bloque 1b —
@@ -363,7 +381,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           {isComparePage || isLegalPage || isDocsHub || isDocsArticle ? (
             <span class="text-sm font-medium text-[var(--color-text)] truncate">{title}</span>
           ) : (
-            <h1 class="text-sm font-medium text-[var(--color-text)] truncate">{title}</h1>
+            <h1 class="text-sm font-medium text-[var(--color-text)] truncate">{visibleH1}</h1>
           )}
         </div>
         <div class="flex items-center gap-2 shrink-0" style="min-height: 28px;">

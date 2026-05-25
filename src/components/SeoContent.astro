@@ -17,6 +17,35 @@ const prefix = lang === "en" ? "" : `/${lang}`;
 const relatedTools = relatedToolIds
   .map((id) => tools.find((t) => t.id === id))
   .filter(Boolean) as typeof tools;
+
+// PT-sweep6 2026-05-25 — auto-pad to ≥6 cross-links. Detector +10 AEO at
+// ≥5 vs +5 at 3-4. tools.ts groups: Network 9, Security 6, Calculators 5,
+// Speed&Uptime 3 — same-group pad preferred, any-group fallback.
+const CROSS_LINK_TARGET = 6;
+if (relatedTools.length > 0 && relatedTools.length < CROSS_LINK_TARGET) {
+  const groupCounts = new Map<string, number>();
+  for (const rt of relatedTools) {
+    groupCounts.set(rt.group, (groupCounts.get(rt.group) || 0) + 1);
+  }
+  const primaryGroup = [...groupCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+  const existingIds = new Set(relatedTools.map((rt) => rt.id));
+  const sameGroupPad = tools.filter(
+    (rt) => rt.group === primaryGroup && !existingIds.has(rt.id),
+  );
+  for (const rt of sameGroupPad) {
+    if (relatedTools.length >= CROSS_LINK_TARGET) break;
+    relatedTools.push(rt);
+    existingIds.add(rt.id);
+  }
+  if (relatedTools.length < CROSS_LINK_TARGET) {
+    for (const rt of tools) {
+      if (existingIds.has(rt.id)) continue;
+      relatedTools.push(rt);
+      existingIds.add(rt.id);
+      if (relatedTools.length >= CROSS_LINK_TARGET) break;
+    }
+  }
+}
 ---
 
 <section class="px-8 py-5 border-t border-[var(--color-border)]" style="background: var(--color-surface);">
