@@ -21,12 +21,17 @@ const LAST_UPDATED = "2026-05-26";
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">Where each tool runs</h2>
-      <p>PingThat tools fall into four execution buckets. We name them up front because the privacy implications differ:</p>
+      <p>PingThat tools fall into five execution buckets. We name them up front because the privacy implications differ:</p>
       <ul class="list-disc pl-6 space-y-2">
         <li>
-          <strong>Pure client (7 tools)</strong> — no network call at all. Everything happens in your browser tab, including the WebRTC-based leak and privacy checks that probe your local browser state (no external lookup involved).
+          <strong>Pure client (5 tools)</strong> — no network call at all. Everything happens in your browser tab.
           <br />
-          <span class="text-xs" style="color: var(--color-text-dim);">subnet-calculator, ip-converter, password-strength, jwt-decoder, url-parser, webrtc-leak-test, privacy-check</span>
+          <span class="text-xs" style="color: var(--color-text-dim);">subnet-calculator, ip-converter, password-strength, jwt-decoder, url-parser</span>
+        </li>
+        <li>
+          <strong>Browser → public STUN server (2 tools)</strong> — the WebRTC leak and privacy checks open an <code>RTCPeerConnection</code> against Google's public STUN endpoint (<code>stun.l.google.com:19302</code>) to gather ICE candidates. Surfacing what your browser reveals to a STUN server is the entire point of the test — without the STUN query there is nothing to detect. No application data is sent, only standard ICE-gathering UDP packets.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">webrtc-leak-test, privacy-check</span>
         </li>
         <li>
           <strong>Browser → Cloudflare DNS-over-HTTPS (5 tools)</strong> — your browser sends a DoH query to <code>cloudflare-dns.com/dns-query</code>. The query goes from <em>your IP</em> to Cloudflare, not through a PingThat server. We never see the lookup.
@@ -44,7 +49,7 @@ const LAST_UPDATED = "2026-05-26";
           <span class="text-xs" style="color: var(--color-text-dim);">whois-lookup, ssl-checker, port-scan, http-headers, site-speed, email-auth, redirect-checker, resolver-compare, is-it-down, is-it-up</span>
         </li>
       </ul>
-      <p>For tools in the fourth bucket, the target you type does leave your device — that is the entire point of the tool. If that is a deal-breaker, stick to the first three buckets or run the equivalent CLI locally (<code>dig</code>, <code>openssl s_client</code>, <code>whois</code>).</p>
+      <p>For tools in the fifth bucket, the target you type does leave your device — that is the entire point of the tool. If that is a deal-breaker, stick to the first four buckets or run the equivalent CLI locally (<code>dig</code>, <code>openssl s_client</code>, <code>whois</code>).</p>
     </section>
 
     <section class="space-y-2">

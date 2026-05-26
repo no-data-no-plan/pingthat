@@ -22,12 +22,17 @@ const LAST_UPDATED = "2026-05-26";
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">Dónde se ejecuta cada herramienta</h2>
-      <p>Las herramientas de PingThat se reparten en cuatro tipos de ejecución. Los nombramos sin rodeos porque las implicaciones de privacidad son distintas:</p>
+      <p>Las herramientas de PingThat se reparten en cinco tipos de ejecución. Los nombramos sin rodeos porque las implicaciones de privacidad son distintas:</p>
       <ul class="list-disc pl-6 space-y-2">
         <li>
-          <strong>Cliente puro (7 herramientas)</strong> — sin llamada de red. Todo ocurre en la pestaña de tu navegador, incluyendo los tests de leak y privacidad basados en WebRTC que examinan el estado de tu navegador (sin consulta externa).
+          <strong>Cliente puro (5 herramientas)</strong> — sin llamada de red. Todo ocurre en la pestaña de tu navegador.
           <br />
-          <span class="text-xs" style="color: var(--color-text-dim);">subnet-calculator, ip-converter, password-strength, jwt-decoder, url-parser, webrtc-leak-test, privacy-check</span>
+          <span class="text-xs" style="color: var(--color-text-dim);">subnet-calculator, ip-converter, password-strength, jwt-decoder, url-parser</span>
+        </li>
+        <li>
+          <strong>Navegador → servidor STUN público (2 herramientas)</strong> — los tests de leak y privacidad WebRTC abren una <code>RTCPeerConnection</code> contra el endpoint STUN público de Google (<code>stun.l.google.com:19302</code>) para reunir candidatos ICE. Sacar a la luz lo que tu navegador revela a un servidor STUN es el sentido entero del test — sin la consulta STUN no hay nada que detectar. No se envían datos de aplicación, solo paquetes UDP estándar de recolección ICE.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">webrtc-leak-test, privacy-check</span>
         </li>
         <li>
           <strong>Navegador → Cloudflare DNS-over-HTTPS (5 herramientas)</strong> — tu navegador envía una consulta DoH a <code>cloudflare-dns.com/dns-query</code>. La consulta va de <em>tu IP</em> a Cloudflare, no pasa por un servidor de PingThat. Nosotros no vemos la consulta.
@@ -45,7 +50,7 @@ const LAST_UPDATED = "2026-05-26";
           <span class="text-xs" style="color: var(--color-text-dim);">whois-lookup, ssl-checker, port-scan, http-headers, site-speed, email-auth, redirect-checker, resolver-compare, is-it-down, is-it-up</span>
         </li>
       </ul>
-      <p>Para herramientas del cuarto bloque, el objetivo que escribes sale de tu dispositivo — ese es el sentido entero de la herramienta. Si eso es un dealbreaker, quédate con los tres primeros bloques o usa la CLI equivalente en local (<code>dig</code>, <code>openssl s_client</code>, <code>whois</code>).</p>
+      <p>Para herramientas del quinto bloque, el objetivo que escribes sale de tu dispositivo — ese es el sentido entero de la herramienta. Si eso es un dealbreaker, quédate con los cuatro primeros bloques o usa la CLI equivalente en local (<code>dig</code>, <code>openssl s_client</code>, <code>whois</code>).</p>
     </section>
 
     <section class="space-y-2">
