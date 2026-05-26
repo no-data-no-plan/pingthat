@@ -1,34 +1,82 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-const LAST_UPDATED = "2026-04-27";
+const LAST_UPDATED = "2026-05-26";
 ---
 
 <Layout
   title="Acerca de — PingThat"
-  description="Acerca de PingThat: quiénes somos, por qué existen estas herramientas de red, cómo se financia el sitio."
+  description="Acerca de PingThat: qué herramientas se ejecutan íntegramente en tu navegador, cuáles consultan DNS de Cloudflare directamente, cuáles pasan por un backend, qué datos guardamos y cómo se financia el sitio."
   activeToolId=""
+  lang="es"
 >
   <article class="p-6 sm:p-8 max-w-3xl mx-auto space-y-8 text-sm" style="color: var(--color-text-muted);">
     <header class="space-y-1">
       <h1 class="text-2xl font-bold" style="color: var(--color-text);">Acerca de PingThat</h1>
-      <p class="text-xs" style="color: var(--color-text-dim);">Última actualización: 2026-04-27</p>
+      <p class="text-xs" style="color: var(--color-text-dim);">Última actualización: {LAST_UPDATED}</p>
     </header>
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">Qué es</h2>
-      <p>PingThat es un conjunto de 23 herramientas de red gratuitas que se ejecutan íntegramente en tu navegador. 23 herramientas de red y seguridad privadas — DNS, SSL, WHOIS, cabeceras HTTP, decodificador JWT, calc subred. Ningún archivo que cargues ni ningún valor que escribas se envía a un servidor — cada cálculo, conversión o transformación ocurre localmente en tu dispositivo, y el resultado sólo lo ves tú.</p>
+      <p>PingThat es un conjunto de 23 herramientas gratuitas de red y seguridad — consultas DNS, WHOIS, inspección de certificados SSL, cabeceras HTTP, decodificador JWT, calculadora de subredes, port scan, traza de redirecciones y varias comprobaciones de privacidad. Algunas herramientas se ejecutan íntegramente en tu navegador; otras necesariamente consultan DNS o piden datos a un host remoto y por tanto requieren acceso a red (el de tu navegador, o un pequeño backend que actúa en tu nombre). La siguiente sección detalla exactamente qué hace cada herramienta — sin afirmaciones de "todo ocurre localmente" cuando una consulta DNS obviamente no puede.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Dónde se ejecuta cada herramienta</h2>
+      <p>Las herramientas de PingThat se reparten en cuatro tipos de ejecución. Los nombramos sin rodeos porque las implicaciones de privacidad son distintas:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>
+          <strong>Cliente puro (7 herramientas)</strong> — sin llamada de red. Todo ocurre en la pestaña de tu navegador, incluyendo los tests de leak y privacidad basados en WebRTC que examinan el estado de tu navegador (sin consulta externa).
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">subnet-calculator, ip-converter, password-strength, jwt-decoder, url-parser, webrtc-leak-test, privacy-check</span>
+        </li>
+        <li>
+          <strong>Navegador → Cloudflare DNS-over-HTTPS (5 herramientas)</strong> — tu navegador envía una consulta DoH a <code>cloudflare-dns.com/dns-query</code>. La consulta va de <em>tu IP</em> a Cloudflare, no pasa por un servidor de PingThat. Nosotros no vemos la consulta.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">dns-lookup, reverse-dns, caa-lookup, dnssec-check, ipv6-check</span>
+        </li>
+        <li>
+          <strong>Navegador → API HTTP de terceros (1 herramienta)</strong> — <code>my-ip</code> hace fetch a <code>ipapi.co</code> y <code>api.ipify.org</code> para identificar tu IP pública más unos cuantos campos de geo/ISP. La petición HTTP va de tu navegador directamente a esos endpoints (sin proxy de PingThat), pero el flujo de datos es hacia un servicio distinto al del bucket DoH de arriba. Listado aparte para que la distinción de privacidad sea explícita.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">my-ip</span>
+        </li>
+        <li>
+          <strong>A través de un backend de PingThat (10 herramientas)</strong> — un pequeño Worker de Cloudflare hace el trabajo de red en tu nombre. El backend es inevitable cuando la operación no puede ejecutarse en el sandbox del navegador (TCP raw para port-scan, handshake SSL, protocolo WHOIS, medición server-side del fetch HTTP). El Worker recibe el hostname/IP que indicas, ejecuta la consulta, devuelve el resultado y no registra inputs. La lista completa de endpoints vive en <code>functions/api/</code> del repositorio abierto.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">whois-lookup, ssl-checker, port-scan, http-headers, site-speed, email-auth, redirect-checker, resolver-compare, is-it-down, is-it-up</span>
+        </li>
+      </ul>
+      <p>Para herramientas del cuarto bloque, el objetivo que escribes sale de tu dispositivo — ese es el sentido entero de la herramienta. Si eso es un dealbreaker, quédate con los tres primeros bloques o usa la CLI equivalente en local (<code>dig</code>, <code>openssl s_client</code>, <code>whois</code>).</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Fuentes de datos y servicios de terceros</h2>
+      <p>Las herramientas que consultan la red dependen de los siguientes servicios upstream:</p>
+      <ul class="list-disc pl-6 space-y-1">
+        <li><strong>Cloudflare DNS-over-HTTPS</strong> (<code>1.1.1.1</code>) — para todas las consultas DNS (A/AAAA/MX/TXT/CAA/DNSSEC/PTR). El navegador consulta DoH directamente, sin proxy de PingThat en medio.</li>
+        <li><strong>Varios resolvers DNS públicos</strong> — <code>resolver-compare</code> consulta Cloudflare, Google (<code>8.8.8.8</code>), Quad9 (<code>9.9.9.9</code>) y OpenDNS en paralelo para detectar inconsistencias. La lista y las respuestas actuales son visibles en la salida de la herramienta.</li>
+        <li><strong>Protocolo WHOIS (puerto 43) y RDAP</strong> — <code>whois-lookup</code> consulta el servidor de registro correspondiente al TLD. El Worker maneja el protocolo porque los navegadores no hablan WHOIS raw.</li>
+        <li><strong>TCP/TLS directo al host objetivo</strong> — <code>ssl-checker</code>, <code>port-scan</code>, <code>http-headers</code>, <code>site-speed</code>, <code>is-it-down</code>/<code>is-it-up</code>, <code>redirect-checker</code> conectan todos al host que indicas. El Worker es la parte solicitante desde la perspectiva del objetivo.</li>
+        <li><strong>No usamos APIs comerciales de pago</strong> — no hay <code>shodan.io</code>, <code>censys.io</code>, <code>maxmind</code>, <code>ipinfo.io</code> ni servicios de enriquecimiento similares en la ruta. Si alguna vez una herramienta necesita uno, se documenta aquí primero.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Precisión, caché y límites de ratio</h2>
+      <p>El backend Worker aplica caché de TTL corto (típicamente 30–60 segundos) para reducir carga upstream y absorber ráfagas del botón de refrescar. Eso significa que un resultado que veas en el segundo <em>t</em> puede coincidir con una consulta hecha en <em>t − 30s</em>, lo cual importa cuando estás depurando un host activamente. Fuerza una consulta fresca añadiendo un query param de cache-bust o esperando un minuto.</p>
+      <p>PingThat no aplica un rate limit por usuario más allá del que el edge de Cloudflare aplica a patrones abusivos. Los servicios upstream pueden limitar de forma independiente (los registros WHOIS son especialmente estrictos — típicamente 1 consulta por segundo por IP origen, y la IP del Worker se comparte entre todos los usuarios de PingThat, así que uso intenso de WHOIS puede toparse ocasionalmente con un throttle del registro). Cuando eso pasa, la herramienta muestra el error tal cual en lugar de disfrazarlo de éxito.</p>
+      <p>Los números que PingThat reporta vienen directos de los protocolos upstream y son tan precisos como la fuente: fechas del certificado SSL del propio certificado, TTLs DNS de la respuesta autoritativa, timing HTTP del reloj del Worker. No ajustamos, promediamos ni suavizamos valores.</p>
     </section>
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">Por qué existe</h2>
-      <p>La mayoría de herramientas de red online siguen el mismo patrón: una página lenta llena de anuncios intrusivos, un muro de pago que esconde las funciones realmente útiles, un registro forzado y un paso de subida que pone tus datos en el servidor de otro. Tras tropezar una vez de más con eso, el operador (un desarrollador independiente afincado en España) empezó a construir alternativas autónomas, una herramienta cada vez. PingThat es el resultado para la categoría de red.</p>
-      <p>La filosofía de diseño no ha cambiado desde el primer commit: cada herramienta debe funcionar sin cuenta, sin subir nada sensible y sin esconder la función obvia tras un botón "Pro". Si una función necesita realmente cómputo en servidor, se documenta como tal y se ofrece la alternativa.</p>
+      <p>La mayoría de sitios de herramientas de red online siguen el mismo patrón: una página lenta llena de anuncios intrusivos, un muro de pago que esconde las funciones realmente útiles, un registro forzado y guardan logs de consultas que luego se venden o consultan a posteriori. Tras tropezar una vez de más con eso, el operador (un desarrollador independiente afincado en España) empezó a construir alternativas autónomas, una herramienta cada vez. PingThat es el resultado para la categoría de red.</p>
+      <p>La filosofía de diseño: cada herramienta que técnicamente puede correr en cliente, debe correr en cliente. Cuando un backend es inevitable (TCP, WHOIS, timing HTTP raw), es un Worker fino que no registra consultas. Si una función necesita realmente una API de pago de terceros, se documenta de entrada y se ofrece la alternativa.</p>
     </section>
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">Cómo se financia</h2>
       <p>PingThat es gratis, sin registro, sin nivel premium y sin upsells. El sitio se financia con anuncios de Google AdSense alrededor de las herramientas, y con propinas ocasionales en Buy Me a Coffee de personas a las que el resultado les sirvió.</p>
-      <p>Esto permite que el sitio sea sostenible sin recolectar tus datos, sin esconder herramientas tras pago y sin empujarte a una app de escritorio. Si una de las herramientas te resulta genuinamente útil y quieres apoyar el desarrollo, el enlace Buy Me a Coffee del pie de página es la vía más directa.</p>
+      <p>Esto permite que el sitio sea sostenible sin recolectar tus consultas, sin esconder herramientas tras pago y sin empujarte a una app de escritorio. Si una de las herramientas te resulta genuinamente útil y quieres apoyar el desarrollo, el enlace Buy Me a Coffee del pie de página es la vía más directa.</p>
     </section>
 
     <section class="space-y-2">
@@ -38,13 +86,19 @@ const LAST_UPDATED = "2026-04-27";
     </section>
 
     <section class="space-y-2">
-      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Stack y apertura</h2>
-      <p>El sitio está construido con Astro, Svelte 5 y Tailwind CSS 4, desplegado en Cloudflare Pages, y no usa trackers de terceros más allá de Google Analytics 4 agregado (con consentimiento UE/UK puesto en "denegado" por defecto). Las entradas de las herramientas nunca salen de tu navegador, así que no hay nada en un servidor sobre lo que preguntar bajo el Artículo 15 del RGPD — pero si quieres saber qué recopilamos, la <a href="/es/privacy/" class="underline" style="color: var(--color-accent);">Política de Privacidad</a> lo detalla.</p>
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Independencia editorial</h2>
+      <p>La red publicitaria (Google AdSense) no influye en qué herramientas se construyen ni cómo funcionan. No hay artículos patrocinados, ni listas "los mejores de" empujando enlaces de afiliado, ni referral kickbacks por recomendaciones de VPN u hosting, ni decisiones editoriales tomadas para favorecer a un anunciante. Si una herramienta existe en el sitio, es porque fue suficientemente útil al operador como para construirla.</p>
     </section>
 
-    <section class="space-y-2">
-      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Independencia editorial</h2>
-      <p>La red publicitaria (Google AdSense) no influye en qué herramientas se construyen ni cómo funcionan. No hay artículos patrocinados, ni listas "los mejores de" empujando enlaces de afiliado, ni decisiones editoriales tomadas para favorecer a un anunciante. Si una herramienta existe en el sitio, es porque fue suficientemente útil al operador como para construirla.</p>
-    </section>
+    <nav aria-label="Más herramientas gratuitas" class="border-t pt-6 mt-2" style="border-color: var(--color-border);">
+      <p class="text-[11px] uppercase tracking-wider mb-3" style="color: var(--color-text-dim);">Más herramientas gratuitas del mismo operador</p>
+      <ul class="space-y-2 list-none p-0 text-xs">
+        <li><a href="https://openpdf.app/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">OpenPDF</strong></a> — combina, divide, firma, marca de agua y comprime PDFs en tu navegador</li>
+        <li><a href="https://compoundvision.app/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">CompoundVision</strong></a> — 36 calculadoras financieras (interés compuesto, FIRE, DCA, APY, asignación)</li>
+        <li><a href="https://jsoncraft.dev/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">JSONCraft</strong></a> — JSON, YAML, regex, base64, hashes, expresiones cron</li>
+        <li><a href="https://openimages.app/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">OpenImages</strong></a> — convierte, comprime, redimensiona y vectoriza imágenes</li>
+        <li><a href="https://allyouneed.dev/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">AllYouNeed</strong></a> — más de 90 utilidades, calculadoras y conversores gratuitos</li>
+      </ul>
+    </nav>
   </article>
 </Layout>

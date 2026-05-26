@@ -434,6 +434,9 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           </div>
         </div>
         <CrossLinks exclude="PingThat" lang={lang} />
+        <p class="text-center text-xs text-[var(--color-text-muted)] px-6 py-4 mt-2 border-t border-[var(--color-border)]">
+          {lang === "es" ? "Por" : "By"} <a href={authorUrl} rel="author" class="underline hover:text-[var(--color-text)]">Marco B.</a> · <time datetime={buildDate.toISOString().slice(0, 10)}>{lastVerifiedTool}</time>
+        </p>
       </main>
 
       <!-- Footer -->

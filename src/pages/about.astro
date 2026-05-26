@@ -1,34 +1,81 @@
 ---
 import Layout from "../layouts/Layout.astro";
-const LAST_UPDATED = "2026-04-27";
+const LAST_UPDATED = "2026-05-26";
 ---
 
 <Layout
   title="About — PingThat"
-  description="About PingThat: who we are, why these network tools exist, how the site is funded."
+  description="About PingThat: which tools run entirely in your browser, which ones query Cloudflare DNS directly, which ones go through a backend on your behalf, what data we keep, and how the site is funded."
   activeToolId=""
 >
   <article class="p-6 sm:p-8 max-w-3xl mx-auto space-y-8 text-sm" style="color: var(--color-text-muted);">
     <header class="space-y-1">
       <h1 class="text-2xl font-bold" style="color: var(--color-text);">About PingThat</h1>
-      <p class="text-xs" style="color: var(--color-text-dim);">Last updated: 2026-04-27</p>
+      <p class="text-xs" style="color: var(--color-text-dim);">Last updated: {LAST_UPDATED}</p>
     </header>
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">What this is</h2>
-      <p>PingThat is a suite of 17 free network tools that run entirely in your browser. 17 privacy-first network and security tools — dns, ssl, whois, http headers, jwt decoder, subnet calc. No file you load and no value you type is uploaded to a server — every calculation, conversion or transformation happens locally on your device, and the result is visible only to you.</p>
+      <p>PingThat is a suite of 23 free network and security tools — DNS lookups, WHOIS, SSL certificate inspection, HTTP headers, JWT decoder, subnet calculator, port scan, redirect tracing and a handful of privacy checks. Some tools run entirely in your browser; others necessarily query DNS or fetch a remote host and therefore need network access (your browser's, or a small backend acting on your behalf). The next section spells out exactly which tool does which — no hand-waving claims about "everything happens locally" when a DNS query obviously cannot.</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Where each tool runs</h2>
+      <p>PingThat tools fall into four execution buckets. We name them up front because the privacy implications differ:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>
+          <strong>Pure client (7 tools)</strong> — no network call at all. Everything happens in your browser tab, including the WebRTC-based leak and privacy checks that probe your local browser state (no external lookup involved).
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">subnet-calculator, ip-converter, password-strength, jwt-decoder, url-parser, webrtc-leak-test, privacy-check</span>
+        </li>
+        <li>
+          <strong>Browser → Cloudflare DNS-over-HTTPS (5 tools)</strong> — your browser sends a DoH query to <code>cloudflare-dns.com/dns-query</code>. The query goes from <em>your IP</em> to Cloudflare, not through a PingThat server. We never see the lookup.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">dns-lookup, reverse-dns, caa-lookup, dnssec-check, ipv6-check</span>
+        </li>
+        <li>
+          <strong>Browser → third-party HTTP probe (1 tool)</strong> — <code>my-ip</code> fetches from <code>ipapi.co</code> and <code>api.ipify.org</code> to identify your public IP plus a few geo/ISP fields. The HTTP request goes from your browser directly to those endpoints (no PingThat proxy), but the data flow is to a different service than the DoH bucket above. Listed separately so the privacy distinction is explicit.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">my-ip</span>
+        </li>
+        <li>
+          <strong>Through a PingThat backend (10 tools)</strong> — a small Cloudflare Worker function does the network work on your behalf. We need a backend when the operation cannot run in a browser sandbox (raw TCP for port-scan, SSL handshake, WHOIS protocol, server-side timing of an HTTP fetch). The Worker receives the target hostname/IP from you, runs the query, returns the result, and does not log inputs. The full list of endpoints lives at <code>functions/api/</code> in the open repository.
+          <br />
+          <span class="text-xs" style="color: var(--color-text-dim);">whois-lookup, ssl-checker, port-scan, http-headers, site-speed, email-auth, redirect-checker, resolver-compare, is-it-down, is-it-up</span>
+        </li>
+      </ul>
+      <p>For tools in the fourth bucket, the target you type does leave your device — that is the entire point of the tool. If that is a deal-breaker, stick to the first three buckets or run the equivalent CLI locally (<code>dig</code>, <code>openssl s_client</code>, <code>whois</code>).</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Data sources and third-party services</h2>
+      <p>Tools that query the network rely on the following upstream services:</p>
+      <ul class="list-disc pl-6 space-y-1">
+        <li><strong>Cloudflare DNS-over-HTTPS</strong> (<code>1.1.1.1</code>) — for all DNS-related lookups (A/AAAA/MX/TXT/CAA/DNSSEC/PTR). Browser queries DoH directly, no PingThat proxy in the path.</li>
+        <li><strong>Multiple public DNS resolvers</strong> — <code>resolver-compare</code> queries Cloudflare, Google (<code>8.8.8.8</code>), Quad9 (<code>9.9.9.9</code>) and OpenDNS in parallel to surface inconsistencies. The list and current responses are visible in the tool output.</li>
+        <li><strong>WHOIS protocol (port 43) and RDAP</strong> — <code>whois-lookup</code> queries the appropriate registry server based on TLD. Backend Worker handles the protocol since browsers cannot speak raw WHOIS.</li>
+        <li><strong>Direct TCP/TLS to the target host</strong> — <code>ssl-checker</code>, <code>port-scan</code>, <code>http-headers</code>, <code>site-speed</code>, <code>is-it-down</code>/<code>is-it-up</code>, <code>redirect-checker</code> all connect to the host you specify. The Worker is the requesting party from the target's perspective.</li>
+        <li><strong>No paid commercial APIs</strong> — no <code>shodan.io</code>, <code>censys.io</code>, <code>maxmind</code>, <code>ipinfo.io</code> or similar enrichment services are in the request path. If a tool ever needs one of those, it will be disclosed here first.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Accuracy, caching and rate limits</h2>
+      <p>The backend Worker applies short-TTL caching (typically 30–60 seconds) to reduce upstream load and absorb refresh-button bursts. That means a result you see at second <em>t</em> may match a query made at <em>t − 30s</em>, which matters for tools probing a host you are actively troubleshooting. Force a fresh query by adding a cache-busting query parameter or waiting a minute.</p>
+      <p>PingThat does not impose a per-user rate limit beyond what Cloudflare's edge applies to abusive traffic patterns. Upstream services may rate-limit independently (WHOIS registries are notoriously strict — typically 1 query per second per source IP, and the Worker's IP is shared across all PingThat users, so heavy WHOIS use can occasionally hit a registry-side throttle). When that happens the tool surfaces the error verbatim rather than masking it as a success.</p>
+      <p>Numbers PingThat reports come straight from the upstream protocols and are as accurate as the source: SSL certificate dates from the certificate itself, DNS TTLs from the authoritative answer, HTTP timing from the Worker's clock. We do not adjust, average or smooth values.</p>
     </section>
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">Why it exists</h2>
-      <p>Most network tools online today follow the same pattern: a slow page filled with intrusive ads, a paywall hiding the actually useful features, a forced signup, and an upload step that puts your data on someone else's server. After running into one too many of those, the operator (an independent developer based in Spain) started building self-contained alternatives one tool at a time. PingThat is the result for the network category.</p>
-      <p>The design philosophy has stayed the same since the first commit: every tool must work without an account, without uploading anything sensitive, and without locking the obvious feature behind a "Pro" button. If a feature genuinely needs server-side computation, it is documented as such and the alternative is offered.</p>
+      <p>Most network-tool sites online today follow the same pattern: a slow page filled with intrusive ads, a paywall hiding the actually useful features, a forced signup, and they keep query logs that are then sold or queried later. After running into one too many of those, the operator (an independent developer based in Spain) started building self-contained alternatives one tool at a time. PingThat is the result for the network category.</p>
+      <p>The design philosophy: every tool that can technically run client-side must run client-side. Where a backend is unavoidable (TCP, WHOIS, raw HTTP timing), it is a thin Worker that does not log queries. If a feature genuinely needs a paid third-party API, that is documented up front and an alternative is offered.</p>
     </section>
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold" style="color: var(--color-text);">How it is funded</h2>
       <p>PingThat is free, with no signup, no premium tier and no upsell. The site is funded by display ads (Google AdSense) shown around the tools, and by occasional Buy Me a Coffee tips from people who liked the result and wanted to say thanks.</p>
-      <p>This means the site is sustainable without harvesting your data, gating tools behind a paywall, or pushing you toward a desktop app. If you find one of the tools genuinely useful and want to support continued development, the Buy Me a Coffee link in the footer is the most direct way.</p>
+      <p>This means the site is sustainable without harvesting your queries, gating tools behind a paywall, or pushing you toward a desktop app. If you find one of the tools genuinely useful and want to support continued development, the Buy Me a Coffee link in the footer is the most direct way.</p>
     </section>
 
     <section class="space-y-2">
@@ -38,13 +85,19 @@ const LAST_UPDATED = "2026-04-27";
     </section>
 
     <section class="space-y-2">
-      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Stack and openness</h2>
-      <p>The site is built with Astro, Svelte 5 and Tailwind CSS 4, deployed on Cloudflare Pages, and uses no third-party trackers beyond aggregate Google Analytics 4 (with EU/UK consent gated to "denied" by default). Tool inputs never leave your browser, so there is nothing on a server to ask about under GDPR Article 15 — but if you want to know what we collect, the <a href="/privacy/" class="underline" style="color: var(--color-accent);">Privacy Policy</a> spells it out fully.</p>
+      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Editorial independence</h2>
+      <p>The advertising network (Google AdSense) does not influence which tools are built or how they work. There are no sponsored articles, no "best of" lists pushing affiliate links, no referral kickbacks for VPN or hosting recommendations, and no editorial choices made to favour an advertiser. If a tool exists on the site, it is because it was useful enough to the operator to build and ship it.</p>
     </section>
 
-    <section class="space-y-2">
-      <h2 class="text-lg font-semibold" style="color: var(--color-text);">Editorial independence</h2>
-      <p>The advertising network (Google AdSense) does not influence which tools are built or how they work. There are no sponsored articles, no "best of" lists pushing affiliate links, and no editorial choices made to favour an advertiser. If a tool exists on the site, it is because it was useful enough to the operator to build and ship it.</p>
-    </section>
+    <nav aria-label="More free tools" class="border-t pt-6 mt-2" style="border-color: var(--color-border);">
+      <p class="text-[11px] uppercase tracking-wider mb-3" style="color: var(--color-text-dim);">More free tools from the same operator</p>
+      <ul class="space-y-2 list-none p-0 text-xs">
+        <li><a href="https://openpdf.app/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">OpenPDF</strong></a> — merge, split, sign, watermark, compress PDFs in your browser</li>
+        <li><a href="https://compoundvision.app/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">CompoundVision</strong></a> — 36 financial calculators (compound interest, FIRE, DCA, APY, allocation)</li>
+        <li><a href="https://jsoncraft.dev/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">JSONCraft</strong></a> — JSON, YAML, regex, base64, hashes, cron expressions</li>
+        <li><a href="https://openimages.app/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">OpenImages</strong></a> — convert, compress, resize, vectorize images</li>
+        <li><a href="https://allyouneed.dev/" class="underline" style="color: var(--color-text-muted);"><strong style="color: var(--color-text);">AllYouNeed</strong></a> — 90+ free utility tools, calculators, converters</li>
+      </ul>
+    </nav>
   </article>
 </Layout>
