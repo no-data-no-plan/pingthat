@@ -140,7 +140,7 @@
         </button>
       </div>
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
-        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent-fg); letter-spacing: -0.02em; font-family: 'Inter', monospace;{loading ? ' opacity: 0.65;' : ''}">
+        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent-fg); letter-spacing: -0.02em; font-family: 'JetBrains Mono', monospace;{loading ? ' opacity: 0.65;' : ''}">
           {loading ? t.detectingIp : ip}
         </p>
       </div>
