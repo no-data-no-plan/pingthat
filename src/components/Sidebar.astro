@@ -23,12 +23,21 @@ const langPrefix = lang === "es" ? "/es" : "";
   class="fixed lg:sticky top-0 left-0 z-50 h-screen w-64 flex flex-col border-r border-[var(--color-border)] -translate-x-full lg:translate-x-0 transition-transform"
   style="background: var(--color-bg);"
 >
-  <!-- Brand -->
+  <!-- Brand — our signal-bars mark (favicon), inlined so it tracks the
+       theme accent via currentColor instead of the favicon's own
+       prefers-color-scheme media query. Name in fg-1, mark in accent. -->
   <div class="px-5 py-4 border-b border-[var(--color-border)]">
-    <a href={`${langPrefix}/`} class="flex items-center gap-2">
-      <span class="text-lg font-bold" style="color: var(--color-accent-fg);">PingThat</span>
+    <a href={`${langPrefix}/`} class="flex items-center gap-2.5" aria-label="PingThat — home">
+      <svg viewBox="0 0 32 32" width="22" height="22" fill="none" aria-hidden="true" style="color: var(--color-accent-fg); flex: none;">
+        <rect fill="currentColor" x="2" y="4" width="3" height="3" rx="0.5" opacity="0.15"/><rect fill="currentColor" x="2" y="9" width="3" height="3" rx="0.5" opacity="0.3"/><rect fill="currentColor" x="2" y="14" width="3" height="3" rx="0.5" opacity="0.55"/><rect fill="currentColor" x="2" y="19" width="3" height="3" rx="0.5" opacity="0.8"/><rect fill="currentColor" x="2" y="24" width="3" height="3" rx="0.5" opacity="1"/>
+        <rect fill="currentColor" x="8" y="1" width="3" height="3" rx="0.5" opacity="0.1"/><rect fill="currentColor" x="8" y="6" width="3" height="3" rx="0.5" opacity="0.2"/><rect fill="currentColor" x="8" y="11" width="3" height="3" rx="0.5" opacity="0.35"/><rect fill="currentColor" x="8" y="16" width="3" height="3" rx="0.5" opacity="0.55"/><rect fill="currentColor" x="8" y="21" width="3" height="3" rx="0.5" opacity="0.8"/><rect fill="currentColor" x="8" y="26" width="3" height="3" rx="0.5" opacity="1"/>
+        <rect fill="currentColor" x="14" y="8" width="3" height="3" rx="0.5" opacity="0.2"/><rect fill="currentColor" x="14" y="13" width="3" height="3" rx="0.5" opacity="0.4"/><rect fill="currentColor" x="14" y="18" width="3" height="3" rx="0.5" opacity="0.7"/><rect fill="currentColor" x="14" y="23" width="3" height="3" rx="0.5" opacity="1"/>
+        <rect fill="currentColor" x="20" y="3" width="3" height="3" rx="0.5" opacity="0.1"/><rect fill="currentColor" x="20" y="8" width="3" height="3" rx="0.5" opacity="0.2"/><rect fill="currentColor" x="20" y="13" width="3" height="3" rx="0.5" opacity="0.4"/><rect fill="currentColor" x="20" y="18" width="3" height="3" rx="0.5" opacity="0.6"/><rect fill="currentColor" x="20" y="23" width="3" height="3" rx="0.5" opacity="0.85"/><rect fill="currentColor" x="20" y="28" width="3" height="3" rx="0.5" opacity="1"/>
+        <rect fill="currentColor" x="27" y="6" width="3" height="3" rx="0.5" opacity="0.2"/><rect fill="currentColor" x="27" y="11" width="3" height="3" rx="0.5" opacity="0.45"/><rect fill="currentColor" x="27" y="16" width="3" height="3" rx="0.5" opacity="0.7"/><rect fill="currentColor" x="27" y="21" width="3" height="3" rx="0.5" opacity="1"/>
+      </svg>
+      <span class="text-lg font-bold" style="color: var(--color-text); letter-spacing: -0.02em;">PingThat</span>
     </a>
-    <p class="text-[10px] mt-1" style="color: var(--color-text-dim); letter-spacing: 0.1em;">{c.networkToolsUppercase}</p>
+    <p class="text-[10px] mt-1 ml-8" style="color: var(--color-text-dim); letter-spacing: 0.1em;">{c.networkToolsUppercase}</p>
   </div>
 
   <!-- Search -->
@@ -51,7 +60,7 @@ const langPrefix = lang === "es" ? "/es" : "";
       class:list={[
         "flex items-center gap-2 px-3 py-2 text-xs font-medium rounded transition-colors",
         activeToolId === "docs"
-          ? "text-[var(--color-accent-fg)] bg-[var(--color-accent-dim)]"
+          ? "text-[var(--color-accent-fg)] bg-[var(--color-accent-dim)] shadow-[inset_2px_0_0_var(--color-accent)]"
           : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[rgba(255,255,255,0.03)]",
       ]}
     >
@@ -90,7 +99,7 @@ const langPrefix = lang === "es" ? "/es" : "";
                 class:list={[
                   "sidebar-link flex items-center gap-3 px-5 py-2 text-xs transition-colors",
                   isActive
-                    ? "text-[var(--color-accent-fg)] bg-[var(--color-accent-dim)]"
+                    ? "text-[var(--color-accent-fg)] bg-[var(--color-accent-dim)] shadow-[inset_2px_0_0_var(--color-accent)]"
                     : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[rgba(255,255,255,0.03)]",
                 ]}
                 data-tool-name={(toolNamesI18n[tool.id]?.[lang] ?? tool.name).toLowerCase()}
