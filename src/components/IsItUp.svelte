@@ -76,8 +76,8 @@
   });
 
   function ratingColor(ms: number): string {
-    if (ms < 300) return "var(--color-accent)";
-    if (ms < 1000) return "#f59e0b";
+    if (ms < 300) return "var(--color-ok)";
+    if (ms < 1000) return "var(--color-warn)";
     return "var(--color-bad)";
   }
 
