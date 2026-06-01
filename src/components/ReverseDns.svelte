@@ -147,11 +147,11 @@
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}
-    <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
+    <div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>
   {/if}
 
   {#if result}
-    <div class="card" style="border-left: 3px solid {result.ptrs.length > 0 ? 'var(--color-green)' : 'var(--color-yellow)'};">
+    <div class="card" style="border-left: 3px solid {result.ptrs.length > 0 ? 'var(--color-ok)' : 'var(--color-warn)'};">
       <div class="card-body space-y-3">
         <div style="font-size: 12px; color: var(--color-text-muted);">
           <span>{t.resolving}:</span>
@@ -170,7 +170,7 @@
             </div>
           </div>
         {:else}
-          <div style="color: var(--color-yellow); font-weight: 600;">{t.noPtr}</div>
+          <div style="color: var(--color-warn); font-weight: 600;">{t.noPtr}</div>
           <div style="font-size: 12px; color: var(--color-text-muted);">{t.noPtrHint}</div>
         {/if}
       </div>
