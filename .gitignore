@@ -34,3 +34,4 @@ functions/_es-paths.gen.js
 test-results/
 playwright-report/
 .playwright/
+.superpowers/
