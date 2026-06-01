@@ -1,7 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import InfoTip from './InfoTip.svelte';
+  import StatusBadge from './ui/StatusBadge.svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getPrivacyCheck } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { copyAndNotify } from '../lib/notify';
@@ -21,6 +23,18 @@
   let checks = $state<CheckItem[]>([]);
   let loading = $state(true);
   let copied = $state(false);
+
+  function itemLevel(status: CheckItem['status']): Level {
+    if (status === 'safe') return 'ok';
+    if (status === 'exposed') return 'bad';
+    return 'info';
+  }
+
+  const overallLevel = $derived.by<Level>(() => {
+    if (checks.some(c => c.status === 'exposed')) return 'bad';
+    if (checks.some(c => c.status === 'note')) return 'info';
+    return 'ok';
+  });
 
   function getStatus(label: string, value: string): "safe" | "exposed" | "note" {
     const lower = value.toLowerCase();
@@ -208,12 +222,15 @@
       </div>
     </div>
   {:else}
-    <div class="card">
+    <div class="card sev-accent is-{overallLevel}">
       <div class="card-header">
         <span class="card-title">{t.privacyReport}</span>
-        <button class="btn-secondary" onclick={copyReport}>
-          {copied ? t.copied : t.copyReport}
-        </button>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <StatusBadge level={overallLevel} {lang} />
+          <button class="btn-secondary" onclick={copyReport}>
+            {copied ? t.copied : t.copyReport}
+          </button>
+        </div>
       </div>
     </div>
 
@@ -235,13 +252,7 @@
                 {#if check.label === t.webrtcLeak}<InfoTip text={t.webrtcTip} />{/if}
                 {#if check.label === t.doNotTrack}<InfoTip text={t.dntTip} />{/if}
               </span>
-              {#if check.status === "safe"}
-                <span class="badge badge-green">{t.safe}</span>
-              {:else if check.status === "exposed"}
-                <span class="badge badge-amber">{t.exposed}</span>
-              {:else}
-                <span class="badge badge-amber">{t.note}</span>
-              {/if}
+              <StatusBadge level={itemLevel(check.status)} size="sm" label={check.status === 'safe' ? t.safe : check.status === 'exposed' ? t.exposed : t.note} {lang} />
             </div>
             <div style="font-size: 13px; font-weight: 500; color: var(--color-text); word-break: break-word;">
               {check.value}
