@@ -1,12 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getIsItUp } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidUrl, getValidationError } from '../lib/validation';
   import { readQuery, updateQuery } from '../lib/share-state';
   import type { CheckSiteResult } from '../lib/api-types';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -66,10 +68,17 @@
     }
   }
 
+  const level = $derived.by<Level>(() => {
+    if (!result) return 'info';
+    if (!result.up) return 'bad';
+    if (result.responseTime >= 1000) return 'warn';
+    return 'ok';
+  });
+
   function ratingColor(ms: number): string {
     if (ms < 300) return "var(--color-accent)";
     if (ms < 1000) return "#f59e0b";
-    return "var(--color-red)";
+    return "var(--color-bad)";
   }
 
   function ratingLabel(ms: number): string {
@@ -99,16 +108,15 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
+  {#if error}<div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
-    <div class="card">
-      <div class="card-header"><span class="card-title">{t.statusReport}</span></div>
+    <div class="card sev-accent is-{level}">
+      <div class="card-header" style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="card-title">{t.statusReport}</span>
+        <StatusBadge {level} size="sm" label={result.up ? t.online : t.offline} {lang} />
+      </div>
       <div class="card-body space-y-3">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 20px;" role="img" aria-label={result.up ? (lang === 'es' ? 'Activo' : 'Up') : (lang === 'es' ? 'Caído' : 'Down')}>{result.up ? "\u2705" : "\u274C"}</span>
-          <span style="font-size: 16px; font-weight: 600;">{result.up ? t.online : t.offline}</span>
-        </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div class="card" style="padding: 12px; text-align: center;">
             <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;">{t.responseTime}</div>
