@@ -977,6 +977,8 @@ export const emailAuthI18n = {
     tipDkim: "DKIM adds a cryptographic signature to outgoing emails, allowing receivers to verify the message was not altered in transit.",
     checkFailed: "Email authentication check failed. Try again.",
     invalidDomain: "Invalid domain format. Enter a domain like example.com.",
+    bannerTitle: "Domain can be spoofed",
+    bannerExp: "No SPF and no DMARC enforcement — anyone can forge mail from this domain.",
   },
   es: {
     domainLabel: "Dominio",
@@ -999,6 +1001,8 @@ export const emailAuthI18n = {
     tipDkim: "DKIM agrega una firma criptográfica a los emails salientes, permitiendo a los receptores comprobar que el mensaje no fue alterado en tránsito.",
     checkFailed: "La verificación de autenticación de email falló. Inténtalo de nuevo.",
     invalidDomain: "Formato de dominio no valido. Introduce un dominio como ejemplo.com.",
+    bannerTitle: "El dominio puede ser suplantado",
+    bannerExp: "Sin SPF ni DMARC: cualquiera puede falsificar correo de este dominio.",
   },
 } as const;
 export function getEmailAuth(lang: Lang) { return emailAuthI18n[lang]; }

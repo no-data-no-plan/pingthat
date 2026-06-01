@@ -7,6 +7,9 @@
   import type { EmailAuthResult } from '../lib/api-types';
   import { readQuery, updateQuery } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
+  import VerdictBanner from './ui/VerdictBanner.svelte';
+  import type { Level } from '../lib/severity';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -28,10 +31,10 @@
   let result = $state<EmailAuthResult | null>(null);
   let requestId = $state(0);
 
-  function badgeColor(assessment: "pass" | "warning" | "fail"): string {
-    if (assessment === "pass") return "var(--color-green, #22c55e)";
-    if (assessment === "warning") return "var(--color-yellow, #eab308)";
-    return "var(--color-red, #ef4444)";
+  function assessToLevel(assessment: "pass" | "warning" | "fail"): Level {
+    if (assessment === "pass") return "ok";
+    if (assessment === "warning") return "warn";
+    return "bad";
   }
 
   function badgeLabel(assessment: "pass" | "warning" | "fail"): string {
@@ -39,6 +42,17 @@
     if (assessment === "warning") return t.assessWarning;
     return t.assessFail;
   }
+
+  const verdict = $derived.by<{ level: Level; escalate: boolean; label: string }>(() => {
+    if (!result) return { level: 'info', escalate: false, label: '' };
+    const spf = result.spf?.assessment, dmarc = result.dmarc?.assessment, dkim = result.dkim?.assessment;
+    const spoofable = spf === 'fail' && dmarc === 'fail';
+    if (spoofable) return { level: 'bad', escalate: true, label: t.bannerTitle };
+    const anyBad = [spf, dmarc, dkim].includes('fail');
+    const anyWarn = [spf, dmarc, dkim].includes('warning');
+    if (anyBad || anyWarn) return { level: 'warn', escalate: false, label: t.assessWarning };
+    return { level: 'ok', escalate: false, label: t.assessPass };
+  });
 
   async function check() {
     if (!domain.trim()) return;
@@ -99,23 +113,34 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
+  {#if error}<div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
-    <div class="card-header" style="padding: 12px 16px;"><span class="card-title">{t.results} &mdash; {result.domain}</span></div>
+    <div class="card sev-accent is-{verdict.level}" style="margin-bottom: 16px;">
+      <div class="card-header" style="padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+        <span class="card-title">{t.results} &mdash; {result.domain}</span>
+        {#if verdict.escalate}
+          <VerdictBanner level={verdict.level} title={t.bannerTitle} explanation={t.bannerExp}>
+            <StatusBadge level={verdict.level} label={verdict.label} size="sm" {lang} />
+          </VerdictBanner>
+        {:else}
+          <StatusBadge level={verdict.level} label={verdict.label} {lang} />
+        {/if}
+      </div>
+    </div>
 
     <!-- SPF -->
     <div class="card" style="margin-bottom: 16px;">
       <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
         <span class="card-title">{t.spfTitle}</span>
-        <span style="display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; color: #fff; background: {badgeColor(result.spf.assessment)};">{badgeLabel(result.spf.assessment)}</span>
+        <StatusBadge level={assessToLevel(result.spf.assessment)} label={badgeLabel(result.spf.assessment)} size="sm" {lang} />
       </div>
       <div class="card-body space-y-2">
         {#if result.spf.found}
-          <div style="font-size: 13px; font-weight: 600; color: var(--color-green, #22c55e);">{t.recordFound}</div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-ok);">{t.recordFound}</div>
           <div style="font-family: monospace; font-size: 12px; word-break: break-all; padding: 8px; background: var(--color-bg-secondary, #f9fafb); border-radius: 6px;">{result.spf.record}</div>
         {:else}
-          <div style="font-size: 13px; font-weight: 600; color: var(--color-red);">{t.recordMissing}</div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-bad);">{t.recordMissing}</div>
         {/if}
         <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 6px;">{t.tipSpf}</div>
       </div>
@@ -125,17 +150,17 @@
     <div class="card" style="margin-bottom: 16px;">
       <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
         <span class="card-title">{t.dmarcTitle}</span>
-        <span style="display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; color: #fff; background: {badgeColor(result.dmarc.assessment)};">{badgeLabel(result.dmarc.assessment)}</span>
+        <StatusBadge level={assessToLevel(result.dmarc.assessment)} label={badgeLabel(result.dmarc.assessment)} size="sm" {lang} />
       </div>
       <div class="card-body space-y-2">
         {#if result.dmarc.found}
-          <div style="font-size: 13px; font-weight: 600; color: var(--color-green, #22c55e);">{t.recordFound}</div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-ok);">{t.recordFound}</div>
           <div style="font-family: monospace; font-size: 12px; word-break: break-all; padding: 8px; background: var(--color-bg-secondary, #f9fafb); border-radius: 6px;">{result.dmarc.record}</div>
           {#if result.dmarc.policy}
             <div style="font-size: 13px;">{t.policy}: <strong>{result.dmarc.policy}</strong></div>
           {/if}
         {:else}
-          <div style="font-size: 13px; font-weight: 600; color: var(--color-red);">{t.recordMissing}</div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-bad);">{t.recordMissing}</div>
         {/if}
         <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 6px;">{t.tipDmarc}</div>
       </div>
@@ -145,11 +170,11 @@
     <div class="card" style="margin-bottom: 16px;">
       <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
         <span class="card-title">{t.dkimTitle}</span>
-        <span style="display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; color: #fff; background: {badgeColor(result.dkim.assessment)};">{badgeLabel(result.dkim.assessment)}</span>
+        <StatusBadge level={assessToLevel(result.dkim.assessment)} label={badgeLabel(result.dkim.assessment)} size="sm" {lang} />
       </div>
       <div class="card-body space-y-2">
         {#if result.dkim.found}
-          <div style="font-size: 13px; font-weight: 600; color: var(--color-green, #22c55e);">{t.selectors}: {result.dkim.selectors.length}</div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-ok);">{t.selectors}: {result.dkim.selectors.length}</div>
           {#each result.dkim.selectors as sel}
             <div style="padding: 8px; background: var(--color-bg-secondary, #f9fafb); border-radius: 6px; margin-bottom: 6px;">
               <div style="font-size: 12px; font-weight: 600; color: var(--color-accent-fg);">{sel.selector}._domainkey</div>
@@ -157,7 +182,7 @@
             </div>
           {/each}
         {:else}
-          <div style="font-size: 13px; font-weight: 600; color: var(--color-red);">{t.recordMissing}</div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-bad);">{t.recordMissing}</div>
         {/if}
         <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 6px;">{t.tipDkim}</div>
       </div>
