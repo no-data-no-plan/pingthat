@@ -4,6 +4,9 @@
   import type { Lang } from '../i18n/index';
   import { getWebrtcLeakTest } from '../i18n/components';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
+  import VerdictBanner from './ui/VerdictBanner.svelte';
+  import type { Level } from '../lib/severity';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -108,6 +111,12 @@
 
   onMount(runTest);
 
+  const verdict = $derived.by<{ level: Level; escalate: boolean; label: string }>(() => {
+    if (testing) return { level: 'info', escalate: false, label: '' };
+    if (hasLeak) return { level: 'bad', escalate: true, label: t.leakDetected };
+    return { level: 'info', escalate: false, label: t.noLeak };
+  });
+
   const disclaimerTitle = $derived(lang === 'es' ? 'Sobre este resultado' : 'About this result');
   const disclaimerBody = $derived(lang === 'es'
     ? '"Sin fugas detectadas" puede significar que tu VPN funciona correctamente O que WebRTC está bloqueado en tu navegador. Verifica con una herramienta independiente como ipleak.net si usas VPN.'
@@ -138,29 +147,26 @@
       </div>
     </div>
   {:else if error}
-    <div class="card">
+    <div class="card" style="border-left: 3px solid var(--color-bad);">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-red); font-size: 13px;">{error}</p>
+        <p style="color: var(--color-bad); font-size: 13px;">{error}</p>
       </div>
     </div>
   {:else}
     <!-- Result Banner -->
-    <div class="card" style="border-color: {hasLeak ? 'var(--color-red)' : 'var(--color-green)'};">
-      <div class="card-body" style="text-align: center; padding: 32px 20px;">
-        {#if hasLeak}
-          <p style="font-size: 24px; font-weight: 700; color: var(--color-red); margin-bottom: 8px;">
-            {t.leakDetected}
-          </p>
-          <p style="font-size: 13px; color: var(--color-text-muted);">
-            {t.leakDescription}
-          </p>
+    <div class="card sev-accent is-{verdict.level}" aria-live="polite" aria-atomic="true">
+      <div class="card-body">
+        {#if verdict.escalate}
+          <VerdictBanner level={verdict.level} title={t.leakDetected} explanation={t.leakDescription}>
+            <StatusBadge level={verdict.level} label={verdict.label} size="sm" {lang} />
+          </VerdictBanner>
         {:else}
-          <p style="font-size: 24px; font-weight: 700; color: var(--color-green); margin-bottom: 8px;">
-            {t.noLeak}
-          </p>
-          <p style="font-size: 13px; color: var(--color-text-muted);">
-            {t.noLeakDescription} {results.length === 0 ? t.noIpsFound : ""}
-          </p>
+          <StatusBadge level={verdict.level} label={verdict.label} {lang} />
+          {#if !hasLeak}
+            <p style="font-size: 13px; color: var(--color-text-muted); margin-top: 8px;">
+              {t.noLeakDescription} {results.length === 0 ? t.noIpsFound : ""}
+            </p>
+          {/if}
         {/if}
       </div>
     </div>
