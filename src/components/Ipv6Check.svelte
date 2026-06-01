@@ -172,7 +172,6 @@
         <div style="font-size: 32px; font-weight: 700; color: {scoreColor(state.score, state.maxScore)};">{state.score}/{state.maxScore}</div>
         <div>
           <div style="font-weight: 600; display: flex; gap: 10px; align-items: center;">
-            {scoreLabel(state.score)}
             <StatusBadge level={verdictLevel} size="sm" label={scoreLabel(state.score)} {lang} />
           </div>
           <div style="font-size: 12px; color: var(--color-text-muted);">{t.scoreExplanation}</div>

@@ -226,7 +226,7 @@
       <div class="card-header">
         <span class="card-title">{t.privacyReport}</span>
         <div style="display: flex; gap: 10px; align-items: center;">
-          <StatusBadge level={overallLevel} {lang} />
+          <StatusBadge level={overallLevel} label={overallLevel === 'bad' ? t.exposed : overallLevel === 'info' ? t.note : t.safe} {lang} />
           <button class="btn-secondary" onclick={copyReport}>
             {copied ? t.copied : t.copyReport}
           </button>
