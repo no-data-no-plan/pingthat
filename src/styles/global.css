@@ -401,6 +401,23 @@ input[type="number"] { -moz-appearance: textfield; }
 .text-muted { color: var(--color-text-muted); }
 .text-dim { color: var(--color-text-dim); }
 
+/* Stage-2 severity (G4): screen-reader-only text + result-card accent bar.
+   Accent uses the class-map (not inline style) for strict-CSP safety. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.sev-accent { border-left: 3px solid transparent; }
+.sev-accent.is-ok   { border-left-color: var(--color-ok); }
+.sev-accent.is-warn { border-left-color: var(--color-warn); }
+.sev-accent.is-bad  { border-left-color: var(--color-bad); }
+.sev-accent.is-info { border-left-color: var(--color-info); }
+
 /* ── Grids ── */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
