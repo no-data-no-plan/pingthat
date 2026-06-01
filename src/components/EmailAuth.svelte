@@ -47,7 +47,7 @@
     if (!result) return { level: 'info', escalate: false, label: '' };
     const spf = result.spf?.assessment, dmarc = result.dmarc?.assessment, dkim = result.dkim?.assessment;
     const spoofable = spf === 'fail' && dmarc === 'fail';
-    if (spoofable) return { level: 'bad', escalate: true, label: t.bannerTitle };
+    if (spoofable) return { level: 'bad', escalate: true, label: t.assessFail };
     const anyBad = [spf, dmarc, dkim].includes('fail');
     const anyWarn = [spf, dmarc, dkim].includes('warning');
     if (anyBad || anyWarn) return { level: 'warn', escalate: false, label: t.assessWarning };
@@ -117,8 +117,10 @@
 
   {#if result}
     <div class="card sev-accent is-{verdict.level}" style="margin-bottom: 16px;">
-      <div class="card-header" style="padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+      <div class="card-header" style="padding: 12px 16px;">
         <span class="card-title">{t.results} &mdash; {result.domain}</span>
+      </div>
+      <div class="card-body">
         {#if verdict.escalate}
           <VerdictBanner level={verdict.level} title={t.bannerTitle} explanation={t.bannerExp}>
             <StatusBadge level={verdict.level} label={verdict.label} size="sm" {lang} />
