@@ -21,7 +21,7 @@
     if (!result) return { level: 'info', escalate: false, label: '' };
     const days = result.activeCertificate?.daysRemaining ?? null;
     if (!result.httpsOk || (days !== null && days < 0)) return { level: 'bad', escalate: true, label: t.insecure };
-    if (days !== null && days <= 30) return { level: 'warn', escalate: false, label: t.secure };
+    if (days !== null && days <= 30) return { level: 'warn', escalate: false, label: expiryLabel(result.activeCertificate?.daysRemaining ?? null) };
     return { level: 'ok', escalate: false, label: t.secure };
   });
 

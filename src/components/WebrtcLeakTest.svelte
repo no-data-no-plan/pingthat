@@ -143,7 +143,7 @@
   {:else if !supported}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-amber); font-size: 13px;">{t.notSupported}</p>
+        <p style="color: var(--color-warn); font-size: 13px;">{t.notSupported}</p>
       </div>
     </div>
   {:else if error}

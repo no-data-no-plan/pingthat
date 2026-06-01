@@ -39,7 +39,7 @@
     if (status === "open") return "info";
     if (status === "closed") return "ok";
     if (status === "filtered") return "warn";
-    return "ok"; // unverifiable: neutral, treated as ok (dot won't mislead)
+    return "info"; // unverifiable: neutral, NOT confirmed-closed → info not ok
   }
 
   function statusLabel(status: PortStatus): string {
@@ -212,10 +212,7 @@
                 <td style="padding: 8px 16px; font-family: monospace; font-weight: 600;">{entry.port}</td>
                 <td style="padding: 8px 16px; color: var(--color-text-muted);">{entry.service}</td>
                 <td style="padding: 8px 16px;">
-                  <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600;">
-                    <StatusBadge level={portLevel(entry.status)} dotOnly size="sm" label={statusLabel(entry.status)} {lang} />
-                    {statusLabel(entry.status)}
-                  </span>
+                  <StatusBadge level={portLevel(entry.status)} size="sm" label={statusLabel(entry.status)} {lang} />
                 </td>
               </tr>
             {/each}

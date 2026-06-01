@@ -26,12 +26,12 @@
 
   function itemLevel(status: CheckItem['status']): Level {
     if (status === 'safe') return 'ok';
-    if (status === 'exposed') return 'bad';
+    if (status === 'exposed') return 'warn';
     return 'info';
   }
 
   const overallLevel = $derived.by<Level>(() => {
-    if (checks.some(c => c.status === 'exposed')) return 'bad';
+    if (checks.some(c => c.status === 'exposed')) return 'warn';
     if (checks.some(c => c.status === 'note')) return 'info';
     return 'ok';
   });
