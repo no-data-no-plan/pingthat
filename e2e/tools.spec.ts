@@ -85,4 +85,21 @@ test.describe("Tool flows (pure-client)", () => {
     // descriptively (e.g. "weaker than this number suggests").
     await expect(page.getByText(/Very weak/i).first()).toBeVisible({ timeout: 5_000 });
   });
+
+  test("password-strength: weak vs strong shows correct severity badge class-map", async ({ page }) => {
+    await page.goto("/password-strength/");
+
+    // Use the password input identified by its placeholder (avoids search bar).
+    const input = page.getByPlaceholder(/Type or paste a password/i);
+
+    // "123" → digits only, length 3, entropy ≈ 9.97 bits (< 25 threshold),
+    // length < 6 clamps score to 0 → level "bad".
+    await input.fill("123");
+    await expect(page.locator(".sev-badge.is-bad")).toBeVisible({ timeout: 5_000 });
+
+    // Long passphrase: length 42, upper+lower+digits+special → charset 95,
+    // entropy ≈ 275 bits (≥ 80 threshold) → score 4 → level "ok".
+    await input.fill("Tr0ub4dour&3-correct-horse-battery-staple");
+    await expect(page.locator(".sev-badge.is-ok")).toBeVisible({ timeout: 5_000 });
+  });
 });
