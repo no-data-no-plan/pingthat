@@ -113,7 +113,7 @@
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
-  <div class="card" style="border-color: var(--color-warn); background: rgba(234,179,8,0.05);">
+  <div class="card" style="border-color: var(--color-warn); background: var(--color-warn-dim);">
     <div class="card-body" style="color: var(--color-text-muted); font-size: 12px; line-height: 1.5;">
       &#8505;&#65039; {privacyNoteText}<a href={privacyHref} class="underline hover:text-[var(--color-accent)]">{privacyLinkText}</a>.
     </div>

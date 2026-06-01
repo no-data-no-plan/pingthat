@@ -218,14 +218,14 @@
     {:else}
       <!-- Expiry badge -->
       {#if decoded.isExpired}
-        <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--color-red-dim); border: 1px solid rgba(255, 107, 107, 0.2);">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--color-bad-dim); border: 1px solid var(--color-bad-edge);">
           <span style="font-size: 12px; color: var(--color-bad);">{t.tokenExpired}</span>
         </div>
       {/if}
 
       <!-- alg:none warning -->
       {#if decoded?.header?.alg && String(decoded.header.alg).toLowerCase() === 'none'}
-        <div class="card" style="border-color: var(--color-bad); background: rgba(239,68,68,0.05);">
+        <div class="card" style="border-color: var(--color-bad); background: var(--color-bad-dim);">
           <div class="card-body" style="color: var(--color-bad); font-size: 13px; line-height: 1.5;">
             <strong>⚠ {noneAlgTitle}</strong>
             <br />
@@ -266,8 +266,8 @@
       </div>
 
       <!-- Signature -->
-      <div class="card" style="border-color: rgba(255, 107, 107, 0.3);">
-        <div class="card-header" style="border-bottom-color: rgba(255, 107, 107, 0.15);">
+      <div class="card" style="border-color: var(--color-bad-edge);">
+        <div class="card-header" style="border-bottom-color: var(--color-bad-dim);">
           <span class="card-title" style="color: var(--color-red);">{t.signature} <InfoTip text={t.signatureTip} /></span>
           <button class="btn-secondary" onclick={() => copySection(decoded!.signature, "sig")}>
             {copiedSection === "sig" ? t.copied : t.copy}
@@ -331,7 +331,7 @@
             <p style="font-size: 11px; color: var(--color-text-muted); margin: 4px 0 0;">{t.verifyValidNote}</p>
           </div>
         {:else}
-          <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-red-dim); border: 1px solid rgba(255, 107, 107, 0.35);">
+          <div role="status" aria-live="polite" style="padding: 12px 16px; border-radius: 8px; background: var(--color-bad-dim); border: 1px solid var(--color-bad-edge);">
             <p style="font-size: 13px; color: var(--color-bad); margin: 0; font-weight: 500;">{verifyMessage(verifyResult)}</p>
           </div>
         {/if}

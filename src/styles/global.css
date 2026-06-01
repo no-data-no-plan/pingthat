@@ -198,9 +198,9 @@ body {
   min-height: 28px;
 }
 
-.badge-green { background: var(--color-green-dim); color: var(--color-green); border: 1px solid rgba(62, 207, 142, 0.2); }
-.badge-red { background: var(--color-red-dim); color: var(--color-red); border: 1px solid rgba(255, 107, 107, 0.2); }
-.badge-amber { background: var(--color-amber-dim); color: var(--color-amber); border: 1px solid rgba(245, 166, 35, 0.2); }
+.badge-green { background: var(--color-ok-dim); color: var(--color-ok); border: 1px solid var(--color-ok-edge); }
+.badge-red { background: var(--color-bad-dim); color: var(--color-bad); border: 1px solid var(--color-bad-edge); }
+.badge-amber { background: var(--color-warn-dim); color: var(--color-warn); border: 1px solid var(--color-warn-edge); }
 .badge-blue { background: var(--color-blue-dim); color: var(--color-blue); border: 1px solid rgba(74, 143, 255, 0.2); }
 .badge-accent { background: var(--color-accent-dim); color: var(--color-accent-fg); border: 1px solid rgba(16, 185, 129, 0.2); }
 .badge-purple { background: var(--color-purple-dim); color: var(--color-purple); border: 1px solid rgba(167, 139, 250, 0.2); }

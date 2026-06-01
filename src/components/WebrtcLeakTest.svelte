@@ -203,7 +203,7 @@
 
     <!-- False-negative disclaimer -->
     {#if !testing}
-      <div class="card" style="border-color: var(--color-amber); background: rgba(234,179,8,0.05);">
+      <div class="card" style="border-color: var(--color-warn); background: var(--color-warn-dim);">
         <div class="card-body" style="color: var(--color-text-muted); font-size: 12px; line-height: 1.5;">
           <strong style="color: var(--color-text);">{disclaimerTitle}</strong>
           <br />
