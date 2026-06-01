@@ -920,8 +920,8 @@ export function getIsItUp(lang: Lang) { return isItUpI18n[lang]; }
 // ─── HttpHeaders ────────────────────────────────────────────────────────────
 
 export const httpHeadersI18n = {
-  en: { urlLabel: "Website URL", placeholder: "example.com", check: "Check Headers", checking: "Checking...", checkFailed: "Check failed. Try again.", securityScore: "Security Score", allHeaders: "All Headers", copy: "Copy" },
-  es: { urlLabel: "URL del Sitio Web", placeholder: "ejemplo.com", check: "Verificar Cabeceras", checking: "Verificando...", checkFailed: "La verificaci\u00f3n fall\u00f3. Int\u00e9ntalo de nuevo.", securityScore: "Puntuaci\u00f3n de Seguridad", allHeaders: "Todas las Cabeceras", copy: "Copiar" },
+  en: { urlLabel: "Website URL", placeholder: "example.com", check: "Check Headers", checking: "Checking...", checkFailed: "Check failed. Try again.", securityScore: "Security Score", allHeaders: "All Headers", copy: "Copy", bannerTitle: "Weak security headers", bannerExp: "Critical response headers are missing \u2014 this widens the attack surface." },
+  es: { urlLabel: "URL del Sitio Web", placeholder: "ejemplo.com", check: "Verificar Cabeceras", checking: "Verificando...", checkFailed: "La verificaci\u00f3n fall\u00f3. Int\u00e9ntalo de nuevo.", securityScore: "Puntuaci\u00f3n de Seguridad", allHeaders: "Todas las Cabeceras", copy: "Copiar", bannerTitle: "Cabeceras de seguridad d\u00e9biles", bannerExp: "Faltan cabeceras de respuesta cr\u00edticas; eso ampl\u00eda la superficie de ataque." },
 } as const;
 export function getHttpHeaders(lang: Lang) { return httpHeadersI18n[lang]; }
 
