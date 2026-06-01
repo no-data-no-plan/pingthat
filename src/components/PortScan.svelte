@@ -1,12 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getPortScan } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidDomain, getValidationError } from '../lib/validation';
   import type { PortScanResult, PortScanEntry } from '../lib/api-types';
   import { readQuery, updateQuery } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -33,11 +35,11 @@
 
   type PortStatus = "open" | "closed" | "filtered" | "unverifiable";
 
-  function statusColor(status: PortStatus): string {
-    if (status === "open") return "var(--color-green, #22c55e)";
-    if (status === "closed") return "var(--color-red, #ef4444)";
-    if (status === "unverifiable") return "var(--color-text-muted, #64748b)";
-    return "var(--color-yellow, #eab308)";
+  function portLevel(status: PortStatus): Level {
+    if (status === "open") return "info";
+    if (status === "closed") return "ok";
+    if (status === "filtered") return "warn";
+    return "ok"; // unverifiable: neutral, treated as ok (dot won't mislead)
   }
 
   function statusLabel(status: PortStatus): string {
@@ -124,6 +126,12 @@
     return { open, closed, filtered, unverifiable };
   }
 
+  const summaryLevel = $derived.by<Level>(() => {
+    if (!result) return 'info';
+    const s = summary(result.results);
+    return s.open > 0 ? 'info' : 'ok';
+  });
+
   const fireToolComplete = useToolComplete("port-scan");
   let __ftcFirstRun = true;
   $effect(() => {
@@ -152,7 +160,7 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
+  {#if error}<div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
     {@const stats = summary(result.results)}
@@ -161,26 +169,29 @@
     </div>
 
     <!-- Summary -->
-    <div class="card" style="margin-bottom: 16px;">
-      <div class="card-body" style="display: flex; gap: 24px; flex-wrap: wrap;">
+    <div class="card sev-accent is-{summaryLevel}" style="margin-bottom: 16px;">
+      <div class="card-body" style="display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-end;">
         <div style="text-align: center;">
-          <div style="font-size: 24px; font-weight: 700; color: var(--color-green, #22c55e);">{stats.open}</div>
+          <div style="font-size: 24px; font-weight: 700; color: var(--color-info);">{stats.open}</div>
           <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;">{t.statusOpen}</div>
         </div>
         <div style="text-align: center;">
-          <div style="font-size: 24px; font-weight: 700; color: var(--color-red, #ef4444);">{stats.closed}</div>
+          <div style="font-size: 24px; font-weight: 700; color: var(--color-ok);">{stats.closed}</div>
           <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;">{t.statusClosed}</div>
         </div>
         <div style="text-align: center;">
-          <div style="font-size: 24px; font-weight: 700; color: var(--color-yellow, #eab308);">{stats.filtered}</div>
+          <div style="font-size: 24px; font-weight: 700; color: var(--color-warn);">{stats.filtered}</div>
           <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;">{t.statusFiltered}</div>
         </div>
         {#if stats.unverifiable > 0}
         <div style="text-align: center;">
-          <div style="font-size: 24px; font-weight: 700; color: var(--color-text-muted, #64748b);">{stats.unverifiable}</div>
+          <div style="font-size: 24px; font-weight: 700; color: var(--color-text-muted);">{stats.unverifiable}</div>
           <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;">{t.statusUnverifiable}</div>
         </div>
         {/if}
+        <div style="margin-left: auto;">
+          <StatusBadge level={summaryLevel} size="sm" {lang} />
+        </div>
       </div>
     </div>
 
@@ -201,7 +212,10 @@
                 <td style="padding: 8px 16px; font-family: monospace; font-weight: 600;">{entry.port}</td>
                 <td style="padding: 8px 16px; color: var(--color-text-muted);">{entry.service}</td>
                 <td style="padding: 8px 16px;">
-                  <span style="display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; color: #fff; background: {statusColor(entry.status)};">{statusLabel(entry.status)}</span>
+                  <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600;">
+                    <StatusBadge level={portLevel(entry.status)} dotOnly size="sm" label={statusLabel(entry.status)} {lang} />
+                    {statusLabel(entry.status)}
+                  </span>
                 </td>
               </tr>
             {/each}
