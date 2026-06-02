@@ -288,7 +288,7 @@
 
   <!-- Verify Signature — always rendered so the workflow is discoverable
        even before a token is pasted. CW-PT-01 + CW-PT-02 (2026-05-02). -->
-  <div class="card" style={verifyEnabled ? "" : "opacity: 0.6;"}>
+  <div class="card">
     <div class="card-header">
       <span class="card-title">{t.verifyTitle} <InfoTip text={t.verifyTip} /></span>
       {#if verifyEnabled && detectedAlg}

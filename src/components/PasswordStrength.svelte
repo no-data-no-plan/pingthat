@@ -231,8 +231,9 @@
   <div class="card">
     <div class="card-header">
       <span class="card-title">{t.enterPassword}</span>
-      <div style="display: flex; gap: 8px;">
-        <button class="btn-secondary" onclick={generatePassword}>{t.generateStrong} <InfoTip text={t.generateTip} /></button>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button class="btn-secondary" onclick={generatePassword}>{t.generateStrong}</button>
+        <InfoTip text={t.generateTip} />
         {#if password}
           <button class="btn-secondary" onclick={copyGenerated}>{copiedGenerated ? t.copied : t.copy}</button>
         {/if}
