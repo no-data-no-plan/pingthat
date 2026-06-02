@@ -211,9 +211,7 @@
     <div class="card sev-accent is-{verdict.level}" style="margin-bottom: 16px;">
       <div class="card-body">
         {#if verdict.escalate}
-          <VerdictBanner level={verdict.level} title={t.statusBogus} explanation={t.explainBogus}>
-            <StatusBadge level={verdict.level} label={verdict.label} size="sm" {lang} />
-          </VerdictBanner>
+          <VerdictBanner level={verdict.level} title={t.statusBogus} explanation={t.explainBogus} />
         {:else}
           <StatusBadge level={verdict.level} label={verdict.label} {lang} />
           <div style="font-size:12px; color: var(--color-text-muted); margin-top:4px;">{overallExplanation(state.overall)}</div>

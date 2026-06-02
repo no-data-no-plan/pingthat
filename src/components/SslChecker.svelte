@@ -167,9 +167,7 @@
       <div class="card-header"><span class="card-title">{t.sslStatus}</span></div>
       <div class="card-body space-y-2">
         {#if verdict.escalate}
-          <VerdictBanner level={verdict.level} title={t.insecure} explanation={expiryLabel(result.activeCertificate?.daysRemaining ?? null)}>
-            <StatusBadge level={verdict.level} label={verdict.label} size="sm" {lang} />
-          </VerdictBanner>
+          <VerdictBanner level={verdict.level} title={t.insecure} explanation={expiryLabel(result.activeCertificate?.daysRemaining ?? null)} />
         {:else}
           <StatusBadge level={verdict.level} label={verdict.label} {lang} />
         {/if}

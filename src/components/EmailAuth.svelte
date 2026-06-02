@@ -122,9 +122,7 @@
       </div>
       <div class="card-body">
         {#if verdict.escalate}
-          <VerdictBanner level={verdict.level} title={t.bannerTitle} explanation={t.bannerExp}>
-            <StatusBadge level={verdict.level} label={verdict.label} size="sm" {lang} />
-          </VerdictBanner>
+          <VerdictBanner level={verdict.level} title={t.bannerTitle} explanation={t.bannerExp} />
         {:else}
           <StatusBadge level={verdict.level} label={verdict.label} {lang} />
         {/if}

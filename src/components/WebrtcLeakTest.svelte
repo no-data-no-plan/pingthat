@@ -157,9 +157,7 @@
     <div class="card sev-accent is-{verdict.level}" aria-live="polite" aria-atomic="true">
       <div class="card-body">
         {#if verdict.escalate}
-          <VerdictBanner level={verdict.level} title={t.leakDetected} explanation={t.leakDescription}>
-            <StatusBadge level={verdict.level} label={verdict.label} size="sm" {lang} />
-          </VerdictBanner>
+          <VerdictBanner level={verdict.level} title={t.leakDetected} explanation={t.leakDescription} />
         {:else}
           <StatusBadge level={verdict.level} label={verdict.label} {lang} />
           {#if !hasLeak}
