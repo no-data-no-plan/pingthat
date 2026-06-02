@@ -113,7 +113,7 @@
 </script>
 
 <div class="px-6 sm:px-8 py-6 space-y-6" style="max-width: 48rem; margin: 0 auto;">
-  <div class="card" style="border-color: var(--color-yellow); background: rgba(234,179,8,0.05);">
+  <div class="card" style="border-color: var(--color-warn); background: var(--color-warn-dim);">
     <div class="card-body" style="color: var(--color-text-muted); font-size: 12px; line-height: 1.5;">
       &#8505;&#65039; {privacyNoteText}<a href={privacyHref} class="underline hover:text-[var(--color-accent)]">{privacyLinkText}</a>.
     </div>
@@ -123,7 +123,7 @@
   {#if error}
     <div class="card">
       <div class="card-body" style="text-align: center; padding: 48px 20px;">
-        <p style="color: var(--color-red); font-size: 13px;">{error}</p>
+        <p style="color: var(--color-bad); font-size: 13px;">{error}</p>
       </div>
     </div>
   {:else}
@@ -140,7 +140,7 @@
         </button>
       </div>
       <div class="card-body" style="text-align: center; padding: 32px 20px;">
-        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent-fg); letter-spacing: -0.02em; font-family: 'Inter', monospace;{loading ? ' opacity: 0.65;' : ''}">
+        <p style="font-size: 32px; font-weight: 700; color: var(--color-accent-fg); letter-spacing: -0.02em; font-family: 'JetBrains Mono', monospace;{loading ? ' opacity: 0.65;' : ''}">
           {loading ? t.detectingIp : ip}
         </p>
       </div>

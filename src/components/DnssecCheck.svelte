@@ -4,6 +4,9 @@
   import { getDnssecCheck } from '../i18n/components';
   import { readQuery, updateQuery } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
+  import VerdictBanner from './ui/VerdictBanner.svelte';
+  import type { Level } from '../lib/severity';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -30,6 +33,16 @@
   let loading = $state(false);
   let error = $state("");
   let requestId = $state(0);
+
+  const verdict = $derived.by<{ level: Level; escalate: boolean; label: string }>(() => {
+    if (!state) return { level: 'info', escalate: false, label: '' };
+    switch (state.overall) {
+      case 'secure':   return { level: 'ok',   escalate: false, label: t.statusSecure };
+      case 'partial':  return { level: 'warn', escalate: false, label: t.statusPartial };
+      case 'bogus':    return { level: 'bad',  escalate: true,  label: t.statusBogus };
+      default:         return { level: 'info', escalate: false, label: t.statusInsecure }; // insecure
+    }
+  });
 
   const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -160,20 +173,6 @@
     }
   }
 
-  function overallColor(o: Overall): string {
-    if (o === "secure") return "var(--color-green, #22c55e)";
-    if (o === "bogus") return "var(--color-red, #ef4444)";
-    if (o === "partial") return "var(--color-yellow, #eab308)";
-    return "var(--color-text-muted, #64748b)";
-  }
-
-  function overallLabel(o: Overall): string {
-    if (o === "secure") return t.statusSecure;
-    if (o === "bogus") return t.statusBogus;
-    if (o === "partial") return t.statusPartial;
-    return t.statusInsecure;
-  }
-
   function overallExplanation(o: Overall): string {
     if (o === "secure") return t.explainSecure;
     if (o === "bogus") return t.explainBogus;
@@ -205,18 +204,18 @@
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}
-    <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
+    <div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>
   {/if}
 
   {#if state}
-    <div class="card" style="border-left: 3px solid {overallColor(state.overall)}; margin-bottom: 16px;">
+    <div class="card sev-accent is-{verdict.level}" style="margin-bottom: 16px;">
       <div class="card-body">
-        <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
-          <div>
-            <div style="font-weight: 700; font-size: 16px; color: {overallColor(state.overall)};">{overallLabel(state.overall)}</div>
-            <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">{overallExplanation(state.overall)}</div>
-          </div>
-        </div>
+        {#if verdict.escalate}
+          <VerdictBanner level={verdict.level} title={t.statusBogus} explanation={t.explainBogus} />
+        {:else}
+          <StatusBadge level={verdict.level} label={verdict.label} {lang} />
+          <div style="font-size:12px; color: var(--color-text-muted); margin-top:4px;">{overallExplanation(state.overall)}</div>
+        {/if}
       </div>
     </div>
 
@@ -228,7 +227,7 @@
             <div style="font-weight: 600; font-size: 13px;">{t.dnskeyLabel}</div>
             <div style="font-size: 11px; color: var(--color-text-muted);">{t.dnskeyHint}</div>
           </div>
-          <div style="font-family: monospace; font-weight: 600; color: {state.dnskeyCount > 0 ? 'var(--color-green)' : 'var(--color-text-muted)'};">
+          <div style="font-family: monospace; font-weight: 600; color: {state.dnskeyCount > 0 ? 'var(--color-ok)' : 'var(--color-text-muted)'};">
             {state.dnskeyCount > 0 ? `\u2713 ${state.dnskeyCount}` : t.none}
           </div>
         </div>
@@ -237,7 +236,7 @@
             <div style="font-weight: 600; font-size: 13px;">{t.dsLabel}</div>
             <div style="font-size: 11px; color: var(--color-text-muted);">{t.dsHint}</div>
           </div>
-          <div style="font-family: monospace; font-weight: 600; color: {state.dsCount > 0 ? 'var(--color-green)' : 'var(--color-text-muted)'};">
+          <div style="font-family: monospace; font-weight: 600; color: {state.dsCount > 0 ? 'var(--color-ok)' : 'var(--color-text-muted)'};">
             {state.dsCount > 0 ? `\u2713 ${state.dsCount}` : t.none}
           </div>
         </div>
@@ -246,7 +245,7 @@
             <div style="font-weight: 600; font-size: 13px;">{t.validationLabel}</div>
             <div style="font-size: 11px; color: var(--color-text-muted);">{t.validationHint}</div>
           </div>
-          <div style="font-family: monospace; font-weight: 600; color: {state.bogus ? 'var(--color-red)' : state.validated ? 'var(--color-green)' : 'var(--color-text-muted)'};">
+          <div style="font-family: monospace; font-weight: 600; color: {state.bogus ? 'var(--color-bad)' : state.validated ? 'var(--color-ok)' : 'var(--color-text-muted)'};">
             {state.bogus ? t.bogus : state.validated ? t.validated : t.notValidated}
           </div>
         </div>

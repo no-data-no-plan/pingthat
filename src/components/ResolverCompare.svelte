@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getResolverCompare } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { readQuery, updateQuery } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -60,10 +62,12 @@
     }
   }
 
+  const consistencyLevel = $derived<Level>(result?.consistent ? 'ok' : 'info');
+
   function latencyColor(ms: number): string {
-    if (ms <= 150) return "var(--color-green, #22c55e)";
-    if (ms <= 400) return "var(--color-yellow, #eab308)";
-    return "var(--color-red, #ef4444)";
+    if (ms <= 150) return "var(--color-ok)";
+    if (ms <= 400) return "var(--color-warn)";
+    return "var(--color-bad)";
   }
 
   const fireToolComplete = useToolComplete("resolver-compare");
@@ -96,13 +100,15 @@
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}
-    <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
+    <div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>
   {/if}
 
   {#if result}
-    <div class="card" style="border-left: 3px solid {result.consistent ? 'var(--color-green)' : 'var(--color-yellow)'}; margin-bottom: 16px;">
+    <div class="card sev-accent is-{consistencyLevel}" style="margin-bottom: 16px;">
       <div class="card-body">
-        <div style="font-weight: 700;">{result.consistent ? t.consistent : t.inconsistent}</div>
+        <div style="font-weight: 700; display: flex; gap: 10px; align-items: center;">
+          <StatusBadge level={consistencyLevel} size="sm" label={result.consistent ? t.consistent : t.inconsistent} {lang} />
+        </div>
         <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">
           {result.consistent ? t.consistentHint : t.inconsistentHint.replace("{n}", String(result.divergentCount))}
         </div>
@@ -124,7 +130,7 @@
                   <div style="font-family: monospace; font-weight: 700; color: {latencyColor(r.responseMs)};">{r.responseMs} ms</div>
                   <div style="font-size: 10px; color: var(--color-text-muted);">{r.answers.length} {r.answers.length === 1 ? t.record : t.records}</div>
                 {:else}
-                  <div style="color: var(--color-red); font-weight: 600; font-size: 12px;">{r.error || "error"}</div>
+                  <div style="color: var(--color-bad); font-weight: 600; font-size: 12px;">{r.error || "error"}</div>
                   <div style="font-size: 10px; color: var(--color-text-muted);">{r.responseMs} ms</div>
                 {/if}
               </div>

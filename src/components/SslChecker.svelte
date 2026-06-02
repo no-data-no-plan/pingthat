@@ -8,11 +8,22 @@
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
   import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
+  import VerdictBanner from './ui/VerdictBanner.svelte';
+  import type { Level } from '../lib/severity';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
   const t = $derived(getSslChecker(lang));
   const c = $derived(getCommon(lang));
+
+  const verdict = $derived.by<{ level: Level; escalate: boolean; label: string }>(() => {
+    if (!result) return { level: 'info', escalate: false, label: '' };
+    const days = result.activeCertificate?.daysRemaining ?? null;
+    if (!result.httpsOk || (days !== null && days < 0)) return { level: 'bad', escalate: true, label: t.insecure };
+    if (days !== null && days <= 30) return { level: 'warn', escalate: false, label: expiryLabel(result.activeCertificate?.daysRemaining ?? null) };
+    return { level: 'ok', escalate: false, label: t.secure };
+  });
 
   let domain = $state("");
   let loading = $state(false);
@@ -83,11 +94,11 @@
   }
 
   function expiryColor(days: number | null): string {
-    if (days === null) return "var(--color-text-muted, #64748b)";
-    if (days < 0) return "var(--color-red, #ef4444)";
-    if (days <= 7) return "var(--color-red, #ef4444)";
-    if (days <= 30) return "var(--color-yellow, #eab308)";
-    return "var(--color-green, #22c55e)";
+    if (days === null) return "var(--color-text-muted)";
+    if (days < 0) return "var(--color-bad)";
+    if (days <= 7) return "var(--color-bad)";
+    if (days <= 30) return "var(--color-warn)";
+    return "var(--color-ok)";
   }
 
   function expiryLabel(days: number | null): string {
@@ -149,16 +160,17 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
+  {#if error}<div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
     <div class="card">
       <div class="card-header"><span class="card-title">{t.sslStatus}</span></div>
       <div class="card-body space-y-2">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 20px;" role="img" aria-label={result.httpsOk ? (lang === 'es' ? 'Seguro' : 'Secure') : (lang === 'es' ? 'No seguro' : 'Not secure')}>{result.httpsOk ? "\u2705" : "\u274C"}</span>
-          <span style="font-size: 16px; font-weight: 600;">{result.httpsOk ? t.secure : t.insecure}</span>
-        </div>
+        {#if verdict.escalate}
+          <VerdictBanner level={verdict.level} title={t.insecure} explanation={expiryLabel(result.activeCertificate?.daysRemaining ?? null)} />
+        {:else}
+          <StatusBadge level={verdict.level} label={verdict.label} {lang} />
+        {/if}
         <div style="font-size: 13px; color: var(--color-text-muted);">
           <div>HTTPS Status: {result.httpsStatus} &middot; {result.responseTime}ms</div>
           {#if result.server}<div>Server: {result.server}</div>{/if}
@@ -167,7 +179,7 @@
     </div>
 
     {#if result.ctError && !result.activeCertificate}
-      <div class="card" style="border-left: 3px solid var(--color-yellow);">
+      <div class="card" style="border-left: 3px solid var(--color-warn);">
         <div class="card-body" style="font-size: 13px; color: var(--color-text-muted);">
           {result.ctError}
         </div>
@@ -176,7 +188,7 @@
 
     {#if result.activeCertificate}
       {@const ac = result.activeCertificate}
-      <div class="card" style="border-left: 3px solid {expiryColor(ac.daysRemaining)};">
+      <div class="card sev-accent is-{verdict.level}">
         <div class="card-header"><span class="card-title">{t.activeCertificate}</span></div>
         <div class="card-body space-y-2">
           <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
@@ -211,7 +223,7 @@
       <div class="card-body space-y-2">
         {#if result.hstsDetails}
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="color: var(--color-green);">\u2713</span>
+            <span style="color: var(--color-ok);">\u2713</span>
             <span style="font-weight: 600;">{t.hstsEnabled}</span>
           </div>
           <div style="font-size: 12px; color: var(--color-text-muted); display: grid; grid-template-columns: auto 1fr; gap: 4px 12px;">
@@ -219,7 +231,7 @@
             <span>includeSubDomains:</span><span>{result.hstsDetails.includeSubDomains ? "\u2713" : "\u2717"}</span>
             <span>preload:</span><span>{result.hstsDetails.preload ? "\u2713" : "\u2717"}</span>
             <span>{t.preloadEligible}:</span>
-            <span style="color: {result.hstsDetails.preloadEligible ? 'var(--color-green)' : 'var(--color-yellow)'};">
+            <span style="color: {result.hstsDetails.preloadEligible ? 'var(--color-ok)' : 'var(--color-warn)'};">
               {result.hstsDetails.preloadEligible ? t.yes : t.no}
               {#if !result.hstsDetails.preloadEligible}
                 <span style="color: var(--color-text-muted); font-size: 11px; margin-left: 6px;">{t.preloadNeeds}</span>
@@ -228,7 +240,7 @@
           </div>
           <div style="font-family: monospace; font-size: 11px; color: var(--color-text-muted); word-break: break-all; padding-top: 4px; border-top: 1px solid var(--color-border);">{result.hstsDetails.raw}</div>
         {:else}
-          <div style="color: var(--color-red); font-weight: 600;">{t.notSet}</div>
+          <div style="color: var(--color-bad); font-weight: 600;">{t.notSet}</div>
         {/if}
       </div>
     </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getRedirectChecker } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidUrl, getValidationError } from '../lib/validation';
@@ -8,6 +9,7 @@
   import type { RedirectCheckerResult } from '../lib/api-types';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -78,11 +80,24 @@
     abortController?.abort(USER_CANCELLED_REASON);
   }
 
-  function statusColor(status: number): string {
-    if (status >= 300 && status < 400) return "#f59e0b";
-    if (status >= 200 && status < 300) return "var(--color-accent)";
-    return "var(--color-red)";
+  function hopLevel(status: number): Level {
+    if (status >= 200 && status < 300) return 'ok';
+    if (status >= 300 && status < 400) return 'info';
+    return 'bad';
   }
+
+  const overallLevel = $derived.by<Level>(() => {
+    if (!result) return 'info';
+    const chain = result.chain;
+    if (chain.length === 0) return 'info';
+    // Any 4xx/5xx in chain → bad
+    if (chain.some(s => s.status >= 400)) return 'bad';
+    const final = chain[chain.length - 1];
+    // Final hop 2xx → ok
+    if (final.status >= 200 && final.status < 300) return 'ok';
+    // Still redirecting at end (shouldn't happen normally) → info
+    return 'info';
+  });
 
   const fireToolComplete = useToolComplete("redirect-checker");
   let __ftcFirstRun = true;
@@ -120,18 +135,22 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
+  {#if error}<div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
+    <div class="card sev-accent is-{overallLevel}" style="margin-bottom: 16px;">
+      <div class="card-body" style="display: flex; align-items: center; gap: 10px;">
+        <StatusBadge level={overallLevel} size="sm" label="{t.redirectChain} ({result.redirectCount} {result.redirectCount === 1 ? t.redirect : t.redirects})" {lang} />
+      </div>
+    </div>
+
     <div class="card">
-      <div class="card-header"><span class="card-title">{t.redirectChain} ({result.redirectCount} {result.redirectCount === 1 ? t.redirect : t.redirects})</span></div>
       <div class="card-body">
         {#each result.chain as step, i}
           <div style="padding: 10px 0; border-bottom: 1px solid var(--color-border);">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
               <span style="font-size: 11px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 4px; padding: 2px 6px;">#{i + 1}</span>
-              <span style="font-size: 14px; font-weight: 700; color: {statusColor(step.status)};">{step.status}</span>
-              <span style="font-size: 12px; color: var(--color-text-muted);">{step.statusText}</span>
+              <StatusBadge level={hopLevel(step.status)} size="sm" label="{step.status} {step.statusText}" {lang} />
             </div>
             <div style="font-family: monospace; font-size: 12px; word-break: break-all; color: var(--color-text-muted);">{step.url}</div>
             {#if step.location}

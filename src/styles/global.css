@@ -27,41 +27,59 @@
    ══════════════════════════════════════════════ */
 
 @theme {
-  /* Backgrounds — dark slate palette */
-  --color-bg: #0f172a;
-  --color-surface: #1e293b;
-  --color-surface2: #334155;
-  --color-surface3: #475569;
+  /* ── Warm-dark surfaces (charcoal, hue ~70, very low chroma) ──
+     Migrated from cold slate 2026-05-29 (stage-2 redesign). Token NAMES
+     are preserved so all 30+ components inherit the new palette without
+     any per-component churn — only the VALUES change here. */
+  --color-bg: #141311;        /* page / deepest */
+  --color-surface: #232120;   /* card surface */
+  --color-surface2: #2c2a27;  /* raised / hover */
+  --color-surface3: #3a3833;  /* lightest interactive (slider track,
+                                 scrollbar thumb). Do NOT place muted text
+                                 (--color-text-dim) on this surface — it
+                                 only clears AA on the darker content
+                                 surfaces (bg/surface/surface2). */
 
-  /* Borders */
-  --color-border: rgba(255, 255, 255, 0.07);
-  --color-border2: rgba(255, 255, 255, 0.12);
+  /* Borders — warm hairlines (opaque, replaces translucent-white) */
+  --color-border: #34322e;
+  --color-border2: #423f3a;
 
-  /* Text */
-  --color-text: #e8e6e0;
-  /* muted + dim unified to #b6c0cf for WCAG 4.5:1 on dark surfaces.
-     Old #9ca3af failed on surface3 (2.98), old #6b7280 failed all. */
-  --color-text-muted: #b6c0cf;
-  --color-text-dim: #b6c0cf;
+  /* Text (warm off-white). muted = secondary, dim = muted.
+     dim lifted from the design board's #847e73 (measured 3.98 — FAILS AA)
+     to #9c958a so it clears 4.5:1 on every content surface (5.40 on
+     surface, 4.82 on surface2). */
+  --color-text: #f4f1ea;       /* 14.2:1 on surface */
+  --color-text-muted: #b7b1a5; /* 7.5:1 on surface */
+  --color-text-dim: #9c958a;   /* 4.82:1+ on content surfaces */
 
-  /* Accent — emerald */
-  /* Accent split: --color-accent for bg (white text needs ≥4.5 — old
-     #10b981 was 2.54, #047857 passes at 5.48). --color-accent-fg for
-     text on dark backgrounds (bright green passes 11.71/9.60/6.79/4.97
-     on the 4 dark surfaces). */
-  --color-accent: #047857;
-  --color-accent-fg: #6ee7b7;
-  --color-accent-dim: rgba(16, 185, 129, 0.10);
+  /* Accent — single emerald family. --color-accent is the FILL (dark ink
+     on top); --color-accent-fg is the bright text/icon tone on dark
+     (8.7:1); --color-accent-ink is text on an accent fill (6.6:1). The
+     new accent also reads at 5.66:1 as hover-text on dark — an upgrade
+     over the old #047857 which was only 2.67:1 there. */
+  --color-accent: #1fae7e;
+  --color-accent-fg: #43d6a3;
+  --color-accent-ink: #07140f;
+  --color-accent-dim: rgba(67, 214, 163, 0.12);
+  --color-accent-edge: rgba(67, 214, 163, 0.28);
 
-  /* Semantic colors */
-  --color-blue: #4a8fff;
-  --color-blue-dim: rgba(74, 143, 255, 0.12);
-  --color-green: #3ecf8e;
-  --color-green-dim: rgba(62, 207, 142, 0.10);
-  --color-red: #ff6b6b;
-  --color-red-dim: rgba(255, 107, 107, 0.10);
-  --color-amber: #f5a623;
-  --color-amber-dim: rgba(245, 166, 35, 0.10);
+  /* Semantic status — drives tool-result severity (LED + badge). Light
+     variants, all AA on dark. */
+  --color-ok: #43d6a3;   --color-ok-dim: rgba(67, 214, 163, 0.12);   --color-ok-edge: rgba(67, 214, 163, 0.28);
+  --color-warn: #e8b13d; --color-warn-dim: rgba(232, 177, 61, 0.12); --color-warn-edge: rgba(232, 177, 61, 0.28);
+  --color-bad: #f0776a;  --color-bad-dim: rgba(240, 119, 106, 0.13); --color-bad-edge: rgba(240, 119, 106, 0.30);
+  --color-info: #5fa8f0; --color-info-dim: rgba(95, 168, 240, 0.12); --color-info-edge: rgba(95, 168, 240, 0.30);
+
+  /* Legacy semantic aliases — remapped to the warm status set so existing
+     components referencing --color-green/red/amber/blue inherit it. */
+  --color-blue: #5fa8f0;
+  --color-blue-dim: rgba(95, 168, 240, 0.12);
+  --color-green: #43d6a3;
+  --color-green-dim: rgba(67, 214, 163, 0.12);
+  --color-red: #f0776a;
+  --color-red-dim: rgba(240, 119, 106, 0.13);
+  --color-amber: #e8b13d;
+  --color-amber-dim: rgba(232, 177, 61, 0.12);
   --color-purple: #a78bfa;
   --color-purple-dim: rgba(167, 139, 250, 0.10);
   --color-teal: #2dd4bf;
@@ -77,8 +95,9 @@ main > astro-island {
 * { box-sizing: border-box; }
 
 html {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Geist', system-ui, -apple-system, sans-serif;
   font-weight: 400;
+  letter-spacing: -0.011em;
   scrollbar-color: var(--color-surface3) var(--color-bg);
   scrollbar-width: thin;
   scrollbar-gutter: stable;
@@ -98,7 +117,7 @@ body {
 ::-webkit-scrollbar-corner { background: var(--color-bg); }
 
 /* ── Typography classes ── */
-.font-mono { font-family: 'Inter', monospace; }
+.font-mono { font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace; }
 
 /* ── Card ── */
 .card {
@@ -179,9 +198,9 @@ body {
   min-height: 28px;
 }
 
-.badge-green { background: var(--color-green-dim); color: var(--color-green); border: 1px solid rgba(62, 207, 142, 0.2); }
-.badge-red { background: var(--color-red-dim); color: var(--color-red); border: 1px solid rgba(255, 107, 107, 0.2); }
-.badge-amber { background: var(--color-amber-dim); color: var(--color-amber); border: 1px solid rgba(245, 166, 35, 0.2); }
+.badge-green { background: var(--color-ok-dim); color: var(--color-ok); border: 1px solid var(--color-ok-edge); }
+.badge-red { background: var(--color-bad-dim); color: var(--color-bad); border: 1px solid var(--color-bad-edge); }
+.badge-amber { background: var(--color-warn-dim); color: var(--color-warn); border: 1px solid var(--color-warn-edge); }
 .badge-blue { background: var(--color-blue-dim); color: var(--color-blue); border: 1px solid rgba(74, 143, 255, 0.2); }
 .badge-accent { background: var(--color-accent-dim); color: var(--color-accent-fg); border: 1px solid rgba(16, 185, 129, 0.2); }
 .badge-purple { background: var(--color-purple-dim); color: var(--color-purple); border: 1px solid rgba(167, 139, 250, 0.2); }
@@ -299,7 +318,7 @@ input[type="number"] { -moz-appearance: textfield; }
 /* ── Buttons ── */
 .btn-primary {
   background: var(--color-accent);
-  color: #0f172a;
+  color: var(--color-accent-ink);
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
@@ -381,6 +400,23 @@ input[type="number"] { -moz-appearance: textfield; }
 .text-blue { color: var(--color-blue); }
 .text-muted { color: var(--color-text-muted); }
 .text-dim { color: var(--color-text-dim); }
+
+/* Stage-2 severity (G4): screen-reader-only text + result-card accent bar.
+   Accent uses the class-map (not inline style) for strict-CSP safety. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.sev-accent { border-left: 3px solid transparent; }
+.sev-accent.is-ok   { border-left-color: var(--color-ok); }
+.sev-accent.is-warn { border-left-color: var(--color-warn); }
+.sev-accent.is-bad  { border-left-color: var(--color-bad); }
+.sev-accent.is-info { border-left-color: var(--color-info); }
 
 /* ── Grids ── */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }

@@ -1,6 +1,8 @@
 <script lang="ts">
   import InfoTip from './InfoTip.svelte';
+  import StatusBadge from './ui/StatusBadge.svelte';
   import type { Lang } from '../i18n/index';
+  import { type Level } from '../lib/severity';
   import { getPasswordStrength } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { copyAndNotify } from '../lib/notify';
@@ -157,11 +159,27 @@
 
   let analysis = $derived(analyzePassword(password));
 
+  // score → severity level (level-1: user's own input)
+  // 0,1 → bad | 2 → warn | 3,4 → ok
+  const strengthLevel = $derived<Level>(
+    analysis === null ? 'bad'
+    : analysis.strength <= 1 ? 'bad'
+    : analysis.strength === 2 ? 'warn'
+    : 'ok'
+  );
+
   const entropyDisclaimer = $derived(lang === 'es'
     ? 'Esta entropía asume caracteres aleatorios. Las contraseñas basadas en palabras del diccionario, patrones de teclado o fechas son mucho más débiles de lo que sugiere este número.'
     : 'This entropy assumes random characters. Passwords based on dictionary words, keyboard patterns, or dates are far weaker than this number suggests.');
 
-  const strengthColors = ["var(--color-red)", "#f97316", "var(--color-amber)", "var(--color-green)", "var(--color-accent)"];
+  // Semantic meter colors: score 0,1 → bad | 2 → warn | 3,4 → ok
+  const strengthColors = [
+    "var(--color-bad)",   // 0 – very weak
+    "var(--color-bad)",   // 1 – weak
+    "var(--color-warn)",  // 2 – fair
+    "var(--color-ok)",    // 3 – strong
+    "var(--color-ok)",    // 4 – very strong
+  ];
 
   function generatePassword() {
     const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;:,.<>?";
@@ -244,9 +262,7 @@
     <div class="card">
       <div class="card-header">
         <span class="card-title">{t.strength}</span>
-        <span class="badge" style="background: {strengthColors[analysis.strength]}20; color: {strengthColors[analysis.strength]}; border: 1px solid {strengthColors[analysis.strength]}33;">
-          {analysis.strengthLabel}
-        </span>
+        <StatusBadge level={strengthLevel} label={analysis.strengthLabel} {lang} />
       </div>
       <div class="card-body">
         <!-- Visual bar -->
@@ -341,7 +357,7 @@
           <ul style="list-style: none; padding: 0; margin: 0;">
             {#each analysis.tips as tip}
               <li style="font-size: 13px; color: var(--color-text-muted); padding: 4px 0; display: flex; align-items: baseline; gap: 8px;">
-                <span style="color: var(--color-amber); flex-shrink: 0;">&#x25B8;</span>
+                <span style="color: var(--color-warn); flex-shrink: 0;">&#x25B8;</span>
                 {tip}
               </li>
             {/each}

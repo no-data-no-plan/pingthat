@@ -1,9 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getCaaLookup } from '../i18n/components';
   import { readQuery, updateQuery } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -192,6 +194,14 @@
     return { ca, allowed, allowedWildcard, reason };
   });
 
+  const overallLevel = $derived.by<Level>(() => {
+    if (!state) return 'info';
+    if (state.noPolicy) return 'warn';
+    // Any record with critical flag → bad
+    if (state.records.some(r => r.critical)) return 'bad';
+    return 'ok';
+  });
+
   const fireToolComplete = useToolComplete("caa-lookup");
   let __ftcFirstRun = true;
   $effect(() => {
@@ -216,21 +226,25 @@
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}
-    <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
+    <div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>
   {/if}
 
   {#if state}
     {#if state.noPolicy}
-      <div class="card" style="border-left: 3px solid var(--color-yellow, #eab308);">
+      <div class="card sev-accent is-warn">
         <div class="card-body">
-          <div style="font-weight: 600; margin-bottom: 4px;">{t.noPolicyTitle}</div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+            <StatusBadge level="warn" size="sm" label={t.noPolicyTitle} {lang} />
+          </div>
           <div style="font-size: 13px; color: var(--color-text-muted);">{t.noPolicyExplanation}</div>
         </div>
       </div>
     {:else}
-      <div class="card" style="border-left: 3px solid var(--color-green, #22c55e); margin-bottom: 16px;">
+      <div class="card sev-accent is-{overallLevel}" style="margin-bottom: 16px;">
         <div class="card-body">
-          <div style="font-weight: 600; margin-bottom: 4px;">{t.policyFoundTitle}</div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+            <StatusBadge level={overallLevel} size="sm" label={t.policyFoundTitle} {lang} />
+          </div>
           {#if state.resolvedFrom && state.resolvedFrom !== domain.trim().toLowerCase()}
             <div style="font-size: 13px; color: var(--color-text-muted);">{t.inheritedFrom} <code>{state.resolvedFrom}</code></div>
           {/if}
@@ -248,13 +262,14 @@
           </div>
           <input type="text" bind:value={selectedCa} placeholder={t.caCheckPlaceholder} style="width: 100%;" spellcheck="false" autocapitalize="off" autocorrect="off" />
           {#if caResult}
-            <div style="padding: 10px 14px; border-radius: 6px; border-left: 3px solid {caResult.allowed ? 'var(--color-green)' : 'var(--color-red)'}; background: var(--color-bg-muted, #f1f5f9);">
-              <div style="font-weight: 700; color: {caResult.allowed ? 'var(--color-green)' : 'var(--color-red)'};">
-                {caResult.allowed ? t.allowed : t.notAllowed}: <span style="font-family: monospace;">{caResult.ca}</span>
+            {@const caLevel = caResult.allowed ? 'ok' : 'bad'}
+            <div class="sev-accent is-{caLevel}" style="padding: 10px 14px; border-radius: 6px; background: var(--color-bg-muted, #f1f5f9);">
+              <div style="font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <StatusBadge level={caLevel} size="sm" label="{caResult.allowed ? t.allowed : t.notAllowed}: {caResult.ca}" {lang} />
               </div>
               <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">{caResult.reason}</div>
               {#if caResult.allowed && !caResult.allowedWildcard}
-                <div style="font-size: 12px; color: var(--color-yellow); margin-top: 4px;">{t.wildcardBlocked}</div>
+                <div style="font-size: 12px; color: var(--color-warn); margin-top: 4px;">{t.wildcardBlocked}</div>
               {/if}
             </div>
           {/if}
@@ -286,7 +301,7 @@
                   <td style="padding: 6px;">
                     {r.flags}
                     {#if r.critical}
-                      <span style="display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 9999px; font-size: 10px; font-weight: 700; color: #fff; background: var(--color-red, #ef4444);">{t.critical}</span>
+                      <StatusBadge level="bad" size="sm" label={t.critical} {lang} />
                     {/if}
                   </td>
                   <td style="padding: 6px; color: var(--color-text-muted);">{r.ttl}s</td>

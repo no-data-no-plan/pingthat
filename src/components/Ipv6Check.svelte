@@ -1,9 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getIpv6Check } from '../i18n/components';
   import { readQuery, updateQuery } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -25,6 +27,13 @@
   let loading = $state(false);
   let error = $state("");
   let requestId = $state(0);
+
+  const verdictLevel = $derived.by<Level>(() => {
+    if (!state) return 'info';
+    if (state.score === state.maxScore) return 'ok';
+    if (state.score >= 1) return 'warn';
+    return 'info';
+  });
 
   const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -118,10 +127,10 @@
     }
   }
 
-  function scoreColor(score: number): string {
-    if (score >= 3) return "var(--color-green, #22c55e)";
-    if (score >= 2) return "var(--color-yellow, #eab308)";
-    return "var(--color-red, #ef4444)";
+  function scoreColor(score: number, max: number): string {
+    if (score === max) return "var(--color-ok)";
+    if (score >= 1) return "var(--color-warn)";
+    return "var(--color-info)";
   }
 
   function scoreLabel(score: number): string {
@@ -154,15 +163,17 @@
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}
-    <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
+    <div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>
   {/if}
 
   {#if state}
-    <div class="card" style="border-left: 3px solid {scoreColor(state.score)}; margin-bottom: 16px;">
+    <div class="card sev-accent is-{verdictLevel}" style="margin-bottom: 16px;">
       <div class="card-body" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
-        <div style="font-size: 32px; font-weight: 700; color: {scoreColor(state.score)};">{state.score}/{state.maxScore}</div>
+        <div style="font-size: 32px; font-weight: 700; color: {scoreColor(state.score, state.maxScore)};">{state.score}/{state.maxScore}</div>
         <div>
-          <div style="font-weight: 600;">{scoreLabel(state.score)}</div>
+          <div style="font-weight: 600; display: flex; gap: 10px; align-items: center;">
+            <StatusBadge level={verdictLevel} size="sm" label={scoreLabel(state.score)} {lang} />
+          </div>
           <div style="font-size: 12px; color: var(--color-text-muted);">{t.scoreExplanation}</div>
         </div>
       </div>
@@ -183,13 +194,13 @@
             <tr style="border-bottom: 1px solid var(--color-border);">
               <td style="padding: 6px; font-family: monospace;">{state.apex.host}</td>
               <td style="padding: 6px; font-family: monospace; color: var(--color-text-muted);">{state.apex.ipv4.join(", ") || "—"}</td>
-              <td style="padding: 6px; font-family: monospace; color: {state.apex.ipv6.length > 0 ? 'var(--color-green)' : 'var(--color-red)'};">{state.apex.ipv6.join(", ") || t.noAaaa}</td>
+              <td style="padding: 6px; font-family: monospace; color: {state.apex.ipv6.length > 0 ? 'var(--color-ok)' : 'var(--color-bad)'};">{state.apex.ipv6.join(", ") || t.noAaaa}</td>
             </tr>
             {#if state.www}
               <tr style="border-bottom: 1px solid var(--color-border);">
                 <td style="padding: 6px; font-family: monospace;">{state.www.host}</td>
                 <td style="padding: 6px; font-family: monospace; color: var(--color-text-muted);">{state.www.ipv4.join(", ") || "—"}</td>
-                <td style="padding: 6px; font-family: monospace; color: {state.www.ipv6.length > 0 || state.www.ipv4.length === 0 ? 'var(--color-green)' : 'var(--color-yellow)'};">{state.www.ipv6.join(", ") || (state.www.ipv4.length === 0 ? "—" : t.noAaaa)}</td>
+                <td style="padding: 6px; font-family: monospace; color: {state.www.ipv6.length > 0 || state.www.ipv4.length === 0 ? 'var(--color-ok)' : 'var(--color-warn)'};">{state.www.ipv6.join(", ") || (state.www.ipv4.length === 0 ? "—" : t.noAaaa)}</td>
               </tr>
             {/if}
           </tbody>
@@ -205,7 +216,7 @@
             <div style="font-weight: 600; font-size: 13px;">{t.nameservers}</div>
             <div style="font-size: 11px; color: var(--color-text-muted); font-family: monospace;">{state.nameservers.records.join(", ") || "—"}</div>
           </div>
-          <div style="font-family: monospace; font-weight: 600; color: {state.nameservers.total === 0 ? 'var(--color-text-muted)' : state.nameservers.hasIpv6 === state.nameservers.total ? 'var(--color-green)' : state.nameservers.hasIpv6 > 0 ? 'var(--color-yellow)' : 'var(--color-red)'};">
+          <div style="font-family: monospace; font-weight: 600; color: {state.nameservers.total === 0 ? 'var(--color-text-muted)' : state.nameservers.hasIpv6 === state.nameservers.total ? 'var(--color-ok)' : state.nameservers.hasIpv6 > 0 ? 'var(--color-warn)' : 'var(--color-bad)'};">
             {state.nameservers.hasIpv6}/{state.nameservers.total}
           </div>
         </div>
@@ -214,7 +225,7 @@
             <div style="font-weight: 600; font-size: 13px;">{t.mailServers}</div>
             <div style="font-size: 11px; color: var(--color-text-muted); font-family: monospace;">{state.mail.records.join(", ") || t.noMail}</div>
           </div>
-          <div style="font-family: monospace; font-weight: 600; color: {state.mail.total === 0 ? 'var(--color-text-muted)' : state.mail.hasIpv6 === state.mail.total ? 'var(--color-green)' : state.mail.hasIpv6 > 0 ? 'var(--color-yellow)' : 'var(--color-red)'};">
+          <div style="font-family: monospace; font-weight: 600; color: {state.mail.total === 0 ? 'var(--color-text-muted)' : state.mail.hasIpv6 === state.mail.total ? 'var(--color-ok)' : state.mail.hasIpv6 > 0 ? 'var(--color-warn)' : 'var(--color-bad)'};">
             {state.mail.total === 0 ? "—" : `${state.mail.hasIpv6}/${state.mail.total}`}
           </div>
         </div>

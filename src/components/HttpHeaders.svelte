@@ -9,6 +9,9 @@
   import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
   import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
+  import VerdictBanner from './ui/VerdictBanner.svelte';
+  import type { Level } from '../lib/severity';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -20,6 +23,15 @@
   let error = $state("");
   let result = $state<HttpHeadersResult | null>(null);
   let requestId = $state(0);
+
+  const verdict = $derived.by<{ level: Level; escalate: boolean; label: string }>(() => {
+    if (!result || !result.maxScore) return { level: 'info', escalate: false, label: '' };
+    const r = result.securityScore / result.maxScore;
+    const label = `${result.securityScore}/${result.maxScore}`;
+    if (r < 0.5) return { level: 'bad', escalate: true, label };
+    if (r < 0.8) return { level: 'warn', escalate: false, label };
+    return { level: 'ok', escalate: false, label };
+  });
   // User-cancellable abort handle (Phase 6.5 — propagating SslChecker pattern).
   let abortController: AbortController | null = null;
   let recent = $state<string[]>([]);
@@ -136,12 +148,17 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
+  {#if error}<div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
-    <div class="card">
-      <div class="card-header"><span class="card-title">{t.securityScore}: {result.securityScore}/{result.maxScore}</span></div>
+    <div class="card sev-accent is-{verdict.level}">
+      <div class="card-header"><span class="card-title">{t.securityScore}</span></div>
       <div class="card-body">
+        {#if verdict.escalate}
+          <VerdictBanner level={verdict.level} title={t.bannerTitle} explanation={t.bannerExp} />
+        {:else}
+          <StatusBadge level={verdict.level} label={verdict.label} {lang} />
+        {/if}
         {#each Object.entries(result.security) as [key, present]}
           <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--color-border);">
             <span style="font-size: 14px;" role="img" aria-label={present ? (lang === 'es' ? 'Presente' : 'Present') : (lang === 'es' ? 'Ausente' : 'Missing')}>{present ? "\u2705" : "\u274C"}</span>

@@ -6,6 +6,8 @@
   import { readQuery, updateQuery } from '../lib/share-state';
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
+  import type { Level } from '../lib/severity';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -99,11 +101,11 @@
     experimental_time_to_first_byte: { label: "TTFB", unit: "ms", desc: { en: "Time to First Byte", es: "Time to First Byte" } },
   } as const;
 
-  function ratingColor(r: Rating | null): string {
-    if (r === "good") return "var(--color-green, #22c55e)";
-    if (r === "needs-improvement") return "var(--color-yellow, #eab308)";
-    if (r === "poor") return "var(--color-red, #ef4444)";
-    return "var(--color-text-muted, #64748b)";
+  function ratingLevel(r: Rating | null): Level {
+    if (r === "good") return "ok";
+    if (r === "needs-improvement") return "warn";
+    if (r === "poor") return "bad";
+    return "info";
   }
 
   function ratingLabel(r: Rating | null): string {
@@ -112,6 +114,15 @@
     if (r === "poor") return t.ratingPoor;
     return t.ratingNoData;
   }
+
+  const overallLevel = $derived.by<Level>(() => {
+    if (!result) return "info";
+    const ratings = Object.values(result.metrics).map(m => m.rating);
+    if (ratings.some(r => r === "poor")) return "bad";
+    if (ratings.some(r => r === "needs-improvement")) return "warn";
+    if (ratings.every(r => r === "good")) return "ok";
+    return "info";
+  });
 
   function formatValue(key: keyof typeof METRIC_META, v: number | null): string {
     if (v === null) return "—";
@@ -163,12 +174,12 @@
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
   {#if error}
-    <div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>
+    <div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>
   {/if}
 
   {#if result}
     {#if result.notEnoughData}
-      <div class="card" style="border-left: 3px solid var(--color-yellow);">
+      <div class="card sev-accent is-warn">
         <div class="card-body">
           <div style="font-weight: 600;">{t.notEnoughDataTitle}</div>
           <div style="font-size: 13px; color: var(--color-text-muted);">{t.notEnoughDataExplanation}</div>
@@ -179,8 +190,11 @@
         {t.scope}: <span style="font-family: monospace;">{result.scope}</span> · {t.formFactor}: <span style="font-family: monospace;">{result.formFactor}</span>
       </div>
 
-      <div class="card">
-        <div class="card-header"><span class="card-title">{t.coreWebVitals}</span></div>
+      <div class="card sev-accent is-{overallLevel}">
+        <div class="card-header" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span class="card-title">{t.coreWebVitals}</span>
+          <StatusBadge level={overallLevel} {lang} />
+        </div>
         <div class="card-body">
           {#each ["largest_contentful_paint","interaction_to_next_paint","cumulative_layout_shift"] as const as key}
             {@const m = result.metrics[key]}
@@ -190,9 +204,9 @@
                 <div style="font-weight: 700; font-size: 14px;">{meta.label}</div>
                 <div style="font-size: 11px; color: var(--color-text-muted);">{lang === 'es' ? meta.desc.es : meta.desc.en}</div>
               </div>
-              <div style="text-align: right;">
-                <div style="font-family: monospace; font-size: 16px; font-weight: 700; color: {ratingColor(m.rating)};">{formatValue(key, m.p75)}</div>
-                <div style="font-size: 10px; color: {ratingColor(m.rating)}; text-transform: uppercase; font-weight: 700;">{ratingLabel(m.rating)}</div>
+              <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                <div style="font-family: monospace; font-size: 16px; font-weight: 700;">{formatValue(key, m.p75)}</div>
+                <StatusBadge level={ratingLevel(m.rating)} label={ratingLabel(m.rating)} size="sm" {lang} />
               </div>
             </div>
           {/each}
@@ -210,9 +224,9 @@
                 <div style="font-weight: 700; font-size: 14px;">{meta.label}</div>
                 <div style="font-size: 11px; color: var(--color-text-muted);">{lang === 'es' ? meta.desc.es : meta.desc.en}</div>
               </div>
-              <div style="text-align: right;">
-                <div style="font-family: monospace; font-size: 15px; font-weight: 700; color: {ratingColor(m.rating)};">{formatValue(key, m.p75)}</div>
-                <div style="font-size: 10px; color: {ratingColor(m.rating)}; text-transform: uppercase; font-weight: 700;">{ratingLabel(m.rating)}</div>
+              <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                <div style="font-family: monospace; font-size: 15px; font-weight: 700;">{formatValue(key, m.p75)}</div>
+                <StatusBadge level={ratingLevel(m.rating)} label={ratingLabel(m.rating)} size="sm" {lang} />
               </div>
             </div>
           {/each}

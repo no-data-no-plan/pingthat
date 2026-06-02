@@ -1,12 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Lang } from '../i18n/index';
+  import type { Level } from '../lib/severity';
   import { getIsItDown } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { isValidUrl, getValidationError } from '../lib/validation';
   import { readQuery, updateQuery } from '../lib/share-state';
   import type { CheckSiteResult } from '../lib/api-types';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import StatusBadge from './ui/StatusBadge.svelte';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -18,6 +20,11 @@
   let error = $state("");
   let result = $state<CheckSiteResult | null>(null);
   let requestId = $state(0);
+
+  const level = $derived.by<Level>(() => {
+    if (!result) return 'info';
+    return result.up ? 'ok' : 'bad';
+  });
 
   // CW-PT-04 / Theme A (2026-05-03): Hydrate from URL.
   onMount(() => {
@@ -87,17 +94,19 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-  {#if error}<div class="card" style="border-left: 3px solid var(--color-red);"><div class="card-body" style="color: var(--color-red);">{error}</div></div>{/if}
+  {#if error}<div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
-    <div class="card" style="text-align: center; padding: 24px;">
-      <div class="card-body">
-        <div style="font-size: 48px; margin-bottom: 12px;" role="img" aria-label={result.up ? (lang === 'es' ? 'Activo' : 'Up') : (lang === 'es' ? 'Caído' : 'Down')}>{result.up ? "\u2705" : "\u274C"}</div>
-        <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">{result.up ? t.itsUp : t.itsDown}</div>
+    <div class="card sev-accent is-{level}">
+      <div class="card-header" style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="card-title">{result.up ? t.itsUp : t.itsDown}</span>
+        <StatusBadge {level} size="sm" label={result.up ? t.itsUp : t.itsDown} {lang} />
+      </div>
+      <div class="card-body space-y-2">
         <div style="font-size: 14px; color: var(--color-text-muted);">
           {#if result.up}{t.siteResponding}{:else}{result.error || t.siteNotResponding}{/if}
         </div>
-        <div style="margin-top: 16px; font-size: 13px; color: var(--color-text-muted);">
+        <div style="font-size: 13px; color: var(--color-text-muted);">
           {t.status}: {result.status} {result.statusText} &middot; {result.responseTime}ms
           {#if result.server} &middot; {result.server}{/if}
         </div>
