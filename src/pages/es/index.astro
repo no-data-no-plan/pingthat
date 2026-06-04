@@ -290,7 +290,9 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
     .pt-tool:hover .ico { background: var(--color-accent-dim); color: var(--color-accent-fg); border-color: var(--color-accent-edge); }
 
     /* Featured group (Network) — leads the page with larger stacked cards */
-    .pt-cat.featured { background: radial-gradient(120% 100% at 0% 0%, var(--color-accent-dim), transparent 50%); }
+    /* Soft glow fading to transparent on all sides (peak below the top edge) —
+       avoids the hard "starts abruptly at the corner" edge of the old 0% 0% radial. */
+    .pt-cat.featured { background: radial-gradient(62% 66% at 50% 46%, var(--color-accent-dim), transparent 64%); }
     .pt-cat.featured .pt-tool { flex-direction: column; gap: 14px; padding: 20px; }
     .pt-cat.featured .pt-tool .ico { width: 44px; height: 44px; background: var(--color-accent-dim);
       color: var(--color-accent-fg); border-color: var(--color-accent-edge); }
