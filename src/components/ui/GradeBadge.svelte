@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Lang } from '../../i18n/index';
   import type { Level } from '../../lib/severity';
   import type { Letter } from '../../lib/grade';
 
@@ -8,7 +7,6 @@
     level: Level;
     ratio?: string;      // e.g. "4/6"; omitted for SSL
     ariaLabel?: string;  // full localized accessible name
-    lang?: Lang;
   }
   let { letter, level, ratio = '', ariaLabel = '' }: Props = $props();
 </script>

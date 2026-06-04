@@ -164,7 +164,7 @@
         {#if grade}
           <div style="display:flex; align-items:center; gap:14px;">
             <GradeBadge letter={grade.letter} level={grade.level}
-              ariaLabel={t.gradeAriaTpl.replace('{letter}', grade.letter)} {lang} />
+              ariaLabel={t.gradeAriaTpl.replace('{letter}', grade.letter)} />
             <div>
               <div style="font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--color-text-dim);">
                 {t.sslStatus} <InfoTip text={t.gradeTip} {lang} />

@@ -154,7 +154,7 @@
         {#if grade}
           <div style="display:flex; align-items:center; gap:14px;">
             <GradeBadge letter={grade.letter} level={grade.level} ratio={`${result.securityScore}/${result.maxScore}`}
-              ariaLabel={t.gradeAriaTpl.replace('{letter}', grade.letter).replace('{score}', String(result.securityScore))} {lang} />
+              ariaLabel={t.gradeAriaTpl.replace('{letter}', grade.letter).replace('{score}', String(result.securityScore))} />
             <div>
               <div style="font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--color-text-dim);">
                 {t.securityScore} <InfoTip text={t.gradeTip} {lang} />
