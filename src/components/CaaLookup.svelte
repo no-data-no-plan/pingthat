@@ -263,7 +263,7 @@
           <input type="text" bind:value={selectedCa} placeholder={t.caCheckPlaceholder} style="width: 100%;" spellcheck="false" autocapitalize="off" autocorrect="off" />
           {#if caResult}
             {@const caLevel = caResult.allowed ? 'ok' : 'bad'}
-            <div class="sev-accent is-{caLevel}" style="padding: 10px 14px; border-radius: 6px; background: var(--color-bg-muted, #f1f5f9);">
+            <div class="sev-accent is-{caLevel}" style="padding: 10px 14px; border-radius: 6px; background: var(--color-surface2);">
               <div style="font-weight: 700; display: flex; align-items: center; gap: 8px;">
                 <StatusBadge level={caLevel} size="sm" label="{caResult.allowed ? t.allowed : t.notAllowed}: {caResult.ca}" {lang} />
               </div>

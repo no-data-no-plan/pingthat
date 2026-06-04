@@ -213,7 +213,7 @@
               <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">{t.sans} ({ac.sans.length})</div>
               <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                 {#each ac.sans.slice(0, 30) as san}
-                  <span style="font-family: monospace; font-size: 11px; padding: 2px 8px; background: var(--color-bg-muted, #f1f5f9); border-radius: 4px; word-break: break-all;">{san}</span>
+                  <span style="font-family: monospace; font-size: 11px; padding: 2px 8px; background: var(--color-surface2); border-radius: 4px; word-break: break-all;">{san}</span>
                 {/each}
                 {#if ac.sans.length > 30}
                   <span style="font-size: 11px; color: var(--color-text-muted); padding: 2px 8px;">+{ac.sans.length - 30} {t.more}</span>
