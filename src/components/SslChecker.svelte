@@ -8,28 +8,24 @@
   import { isAbortError, isUserCancelled, USER_CANCELLED_REASON } from '../lib/cancel-discriminator';
   import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
   import { useToolComplete } from "../lib/tool-complete.svelte";
-  import StatusBadge from './ui/StatusBadge.svelte';
+  import GradeBadge from './ui/GradeBadge.svelte';
   import VerdictBanner from './ui/VerdictBanner.svelte';
-  import type { Level } from '../lib/severity';
+  import InfoTip from './InfoTip.svelte';
+  import { gradeFromSsl } from '../lib/grade';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
   const t = $derived(getSslChecker(lang));
   const c = $derived(getCommon(lang));
 
-  const verdict = $derived.by<{ level: Level; escalate: boolean; label: string }>(() => {
-    if (!result) return { level: 'info', escalate: false, label: '' };
-    const days = result.activeCertificate?.daysRemaining ?? null;
-    if (!result.httpsOk || (days !== null && days < 0)) return { level: 'bad', escalate: true, label: t.insecure };
-    if (days !== null && days <= 30) return { level: 'warn', escalate: false, label: expiryLabel(result.activeCertificate?.daysRemaining ?? null) };
-    return { level: 'ok', escalate: false, label: t.secure };
-  });
-
   let domain = $state("");
   let loading = $state(false);
   let error = $state("");
   let result = $state<SslCheckerResult | null>(null);
   let requestId = $state(0);
+
+  const grade = $derived(result ? gradeFromSsl(result) : null);
+  const escalate = $derived(grade?.letter === 'F');
   // User-cancellable abort handle (Nielsen audit Phase 6, PT F7). Pre-fix
   // we relied on AbortSignal.timeout(30s); now we own the AbortController
   // so the Cancel button can abort imperatively.
@@ -163,13 +159,24 @@
   {#if error}<div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
-    <div class="card">
-      <div class="card-header"><span class="card-title">{t.sslStatus}</span></div>
+    <div class="card sev-accent is-{grade?.level ?? 'info'}">
       <div class="card-body space-y-2">
-        {#if verdict.escalate}
-          <VerdictBanner level={verdict.level} title={t.insecure} explanation={expiryLabel(result.activeCertificate?.daysRemaining ?? null)} />
-        {:else}
-          <StatusBadge level={verdict.level} label={verdict.label} {lang} />
+        {#if grade}
+          <div style="display:flex; align-items:center; gap:14px;">
+            <GradeBadge letter={grade.letter} level={grade.level}
+              ariaLabel={t.gradeAriaTpl.replace('{letter}', grade.letter)} {lang} />
+            <div>
+              <div style="font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--color-text-dim);">
+                {t.sslStatus} <InfoTip text={t.gradeTip} {lang} />
+              </div>
+              <div style="font-size:13px; color:var(--color-text-muted);">
+                {result.httpsOk ? t.secure : t.insecure} · {expiryLabel(result.activeCertificate?.daysRemaining ?? null)}
+              </div>
+            </div>
+          </div>
+          {#if escalate}
+            <VerdictBanner level="bad" title={t.insecure} explanation={expiryLabel(result.activeCertificate?.daysRemaining ?? null)} />
+          {/if}
         {/if}
         <div style="font-size: 13px; color: var(--color-text-muted);">
           <div>HTTPS Status: {result.httpsStatus} &middot; {result.responseTime}ms</div>
@@ -188,7 +195,7 @@
 
     {#if result.activeCertificate}
       {@const ac = result.activeCertificate}
-      <div class="card sev-accent is-{verdict.level}">
+      <div class="card sev-accent is-{grade?.level ?? 'info'}">
         <div class="card-header"><span class="card-title">{t.activeCertificate}</span></div>
         <div class="card-body space-y-2">
           <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
