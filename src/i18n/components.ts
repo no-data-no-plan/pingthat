@@ -874,6 +874,8 @@ export const sslCheckerI18n = {
     preloadNeeds: "(needs max-age \u2265 1y + includeSubDomains + preload)",
     yes: "Yes",
     no: "No",
+    gradeTip: "The grade reflects HTTPS reachability, certificate validity/expiry and HSTS \u2014 not a full TLS cipher/protocol audit.",
+    gradeAriaTpl: "Grade {letter}, HTTPS hardening",
   },
   es: {
     domainLabel: "Dominio", placeholder: "ejemplo.com", check: "Verificar SSL", checking: "Verificando...",
@@ -894,6 +896,8 @@ export const sslCheckerI18n = {
     preloadNeeds: "(necesita max-age \u2265 1a\u00f1o + includeSubDomains + preload)",
     yes: "S\u00ed",
     no: "No",
+    gradeTip: "La nota refleja accesibilidad HTTPS, validez/caducidad del certificado y HSTS \u2014 no es un audit completo de cifrado/protocolo TLS.",
+    gradeAriaTpl: "Grado {letter}, endurecimiento HTTPS",
   },
 } as const;
 export function getSslChecker(lang: Lang) { return sslCheckerI18n[lang]; }
@@ -920,8 +924,8 @@ export function getIsItUp(lang: Lang) { return isItUpI18n[lang]; }
 // ─── HttpHeaders ────────────────────────────────────────────────────────────
 
 export const httpHeadersI18n = {
-  en: { urlLabel: "Website URL", placeholder: "example.com", check: "Check Headers", checking: "Checking...", checkFailed: "Check failed. Try again.", securityScore: "Security Score", allHeaders: "All Headers", copy: "Copy", bannerTitle: "Weak security headers", bannerExp: "Critical response headers are missing \u2014 this widens the attack surface." },
-  es: { urlLabel: "URL del Sitio Web", placeholder: "ejemplo.com", check: "Verificar Cabeceras", checking: "Verificando...", checkFailed: "La verificaci\u00f3n fall\u00f3. Int\u00e9ntalo de nuevo.", securityScore: "Puntuaci\u00f3n de Seguridad", allHeaders: "Todas las Cabeceras", copy: "Copiar", bannerTitle: "Cabeceras de seguridad d\u00e9biles", bannerExp: "Faltan cabeceras de respuesta cr\u00edticas; eso ampl\u00eda la superficie de ataque." },
+  en: { urlLabel: "Website URL", placeholder: "example.com", check: "Check Headers", checking: "Checking...", checkFailed: "Check failed. Try again.", securityScore: "Security Score", allHeaders: "All Headers", copy: "Copy", bannerTitle: "Weak security headers", bannerExp: "Critical response headers are missing \u2014 this widens the attack surface.", gradeTip: "The grade reflects how many of 6 recommended security headers are present \u2014 see the list below.", gradeAriaTpl: "Grade {letter}, {score} of 6 security headers present" },
+  es: { urlLabel: "URL del Sitio Web", placeholder: "ejemplo.com", check: "Verificar Cabeceras", checking: "Verificando...", checkFailed: "La verificaci\u00f3n fall\u00f3. Int\u00e9ntalo de nuevo.", securityScore: "Puntuaci\u00f3n de Seguridad", allHeaders: "Todas las Cabeceras", copy: "Copiar", bannerTitle: "Cabeceras de seguridad d\u00e9biles", bannerExp: "Faltan cabeceras de respuesta cr\u00edticas; eso ampl\u00eda la superficie de ataque.", gradeTip: "La nota refleja cu\u00e1ntas de las 6 cabeceras de seguridad recomendadas est\u00e1n presentes \u2014 mira la lista de abajo.", gradeAriaTpl: "Grado {letter}, {score} de 6 cabeceras de seguridad presentes" },
 } as const;
 export function getHttpHeaders(lang: Lang) { return httpHeadersI18n[lang]; }
 
