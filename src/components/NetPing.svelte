@@ -50,8 +50,11 @@
       if (myId !== requestId) return;
       if (!res.ok || (data.error && !data.samples?.length)) { error = data?.error || t.checkFailed; }
       else result = data;
-    } catch { if (myId === requestId) error = t.checkFailed; }
-    finally { if (myId === requestId) loading = false; }
+    } catch (e: any) {
+      if (myId === requestId) {
+        error = (e?.name === 'AbortError' || e?.name === 'TimeoutError') ? c.requestTimeout : t.checkFailed;
+      }
+    } finally { if (myId === requestId) loading = false; }
   }
 
   const fireToolComplete = useToolComplete('net-ping');
@@ -90,7 +93,7 @@
             </div>
             <div role="img" aria-label={`${t.samplesLabel}: ${result.samples.join(', ')} ms`} style="display:flex; align-items:flex-end; gap:6px; height:48px;">
               {#each result.samples as s}
-                <div class="sev-bar is-{verdict.level}" title={`${s}ms`} style="flex:1; min-height:8px; height:{Math.max(8, Math.round((s / stats.max) * 100))}%;"></div>
+                <div class="sev-bar is-{verdict.level}" title={`${s}ms`} style="flex:1; min-height:8px; height:{stats.max > 0 ? Math.max(8, Math.round((s / stats.max) * 100)) : 100}%;"></div>
               {/each}
             </div>
           {/if}
