@@ -165,7 +165,7 @@
             <div style="font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px;">{t.ptrFound} ({result.ptrs.length})</div>
             <div style="display: flex; flex-direction: column; gap: 4px;">
               {#each result.ptrs as ptr}
-                <div style="font-family: monospace; font-size: 13px; padding: 6px 10px; background: var(--color-bg-muted, #f1f5f9); border-radius: 4px; word-break: break-all;">{ptr}</div>
+                <div style="font-family: monospace; font-size: 13px; padding: 6px 10px; background: var(--color-surface2); border-radius: 4px; word-break: break-all;">{ptr}</div>
               {/each}
             </div>
           </div>

@@ -9,9 +9,10 @@
   import { readQuery, updateQuery, pushRecent, getRecent } from '../lib/share-state';
   import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
-  import StatusBadge from './ui/StatusBadge.svelte';
+  import GradeBadge from './ui/GradeBadge.svelte';
   import VerdictBanner from './ui/VerdictBanner.svelte';
-  import type { Level } from '../lib/severity';
+  import InfoTip from './InfoTip.svelte';
+  import { gradeFromHeaders } from '../lib/grade';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
@@ -24,14 +25,11 @@
   let result = $state<HttpHeadersResult | null>(null);
   let requestId = $state(0);
 
-  const verdict = $derived.by<{ level: Level; escalate: boolean; label: string }>(() => {
-    if (!result || !result.maxScore) return { level: 'info', escalate: false, label: '' };
-    const r = result.securityScore / result.maxScore;
-    const label = `${result.securityScore}/${result.maxScore}`;
-    if (r < 0.5) return { level: 'bad', escalate: true, label };
-    if (r < 0.8) return { level: 'warn', escalate: false, label };
-    return { level: 'ok', escalate: false, label };
+  const grade = $derived.by(() => {
+    if (!result || !result.maxScore) return null;
+    return gradeFromHeaders(result.securityScore, result.maxScore);
   });
+  const escalate = $derived(grade?.letter === 'F');
   // User-cancellable abort handle (Phase 6.5 — propagating SslChecker pattern).
   let abortController: AbortController | null = null;
   let recent = $state<string[]>([]);
@@ -151,13 +149,22 @@
   {#if error}<div class="card" style="border-left: 3px solid var(--color-bad);"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
   {#if result}
-    <div class="card sev-accent is-{verdict.level}">
-      <div class="card-header"><span class="card-title">{t.securityScore}</span></div>
+    <div class="card sev-accent is-{grade?.level ?? 'info'}">
       <div class="card-body">
-        {#if verdict.escalate}
-          <VerdictBanner level={verdict.level} title={t.bannerTitle} explanation={t.bannerExp} />
-        {:else}
-          <StatusBadge level={verdict.level} label={verdict.label} {lang} />
+        {#if grade}
+          <div style="display:flex; align-items:center; gap:14px;">
+            <GradeBadge letter={grade.letter} level={grade.level} ratio={`${result.securityScore}/${result.maxScore}`}
+              ariaLabel={t.gradeAriaTpl.replace('{letter}', grade.letter).replace('{score}', String(result.securityScore))} />
+            <div>
+              <div style="font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--color-text-dim);">
+                {t.securityScore} <InfoTip text={t.gradeTip} {lang} />
+              </div>
+              <div style="font-size:13px; color:var(--color-text-muted);">{result.securityScore} / {result.maxScore}</div>
+            </div>
+          </div>
+          {#if escalate}
+            <VerdictBanner level="bad" title={t.bannerTitle} explanation={t.bannerExp} />
+          {/if}
         {/if}
         {#each Object.entries(result.security) as [key, present]}
           <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--color-border);">
