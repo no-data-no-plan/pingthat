@@ -417,6 +417,11 @@ input[type="number"] { -moz-appearance: textfield; }
 .sev-accent.is-warn { border-left-color: var(--color-warn); }
 .sev-accent.is-bad  { border-left-color: var(--color-bad); }
 .sev-accent.is-info { border-left-color: var(--color-info); }
+.sev-bar { background: var(--color-text-dim); border-radius: 3px 3px 0 0; }
+.sev-bar.is-ok   { background: var(--color-ok); }
+.sev-bar.is-warn { background: var(--color-warn); }
+.sev-bar.is-bad  { background: var(--color-bad); }
+.sev-bar.is-info { background: var(--color-info); }
 
 /* ── Grids ── */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
