@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { tools, groups } from './tools';
 
 describe('tools registry', () => {
-  it('has exactly 23 tools', () => {
-    expect(tools.length).toBe(23);
+  it('has exactly 24 tools', () => {
+    expect(tools.length).toBe(24);
   });
 
   it('all tools have unique IDs', () => {

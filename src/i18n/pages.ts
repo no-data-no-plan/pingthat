@@ -1046,6 +1046,80 @@ export const pageI18n: Record<
       ],
     },
   },
+  "net-ping": {
+    en: {
+      title: "HTTP Ping — Latency Test",
+      description: "Measure HTTP(S) response time from Cloudflare's global edge to any host. Min, avg, max, jitter, and reachability across 5 samples. Free.",
+      seoHeading: "HTTP Ping — Latency & Jitter Test from Cloudflare's Edge",
+      seoText: "HTTP ping measures round-trip response time by sending a series of HTTP(S) requests from Cloudflare's global edge network to the target host and recording the elapsed time for each. This is not an ICMP echo (ping per RFC 792, Postel 1981) — it operates at the application layer (HTTP/1.1 per RFC 9112, HTTP/2 per RFC 9113) rather than the network layer, and it includes TLS handshake time (RFC 8446 TLS 1.3, Rescorla 2018) plus the server's own processing time in every sample. The measurement runs from Cloudflare's anycast network (RFC 4786 BCP 126, Abley & Lindqvist 2006), meaning the probe originates close to the target from an infrastructure perspective, not from your device or your ISP. Minimum latency reflects the best-case edge-to-server path under favourable conditions. Average and maximum show the typical range and worst case. Jitter — the variance between consecutive samples — indicates stability: low jitter means consistent performance; high jitter suggests queue fluctuations, CDN origin routing variability, or server-side processing inconsistency. A fast rating corresponds to average response times under 300 ms; moderate to under 1 s; slow beyond that. These thresholds align with HTTP response time guidelines from RFC 9110 §15 context and general web performance research. Reachability reports the fraction of samples that received a valid HTTP response — 100 % means all probes succeeded, lower values indicate intermittent timeouts or connection failures.",
+      seoBlockHeading: "HTTP ping vs ICMP ping — what the latency numbers actually mean",
+      seoBlockText: "ICMP ping (RFC 792, Postel 1981) sends echo request/reply datagrams at the IP layer and measures pure network round-trip time without involving any application, TCP, or TLS overhead. The OS ping command is the canonical tool for this. HTTP ping operates at the application layer: it opens a TCP connection, performs a TLS handshake (on HTTPS), sends an HTTP GET or HEAD request per RFC 9110 (Fielding, Nottingham & Reschke 2022), and records the time until the first response byte or connection close. This means HTTP latency includes TCP SYN-ACK round-trip (typically close to ICMP RTT), TLS handshake (one or two additional round-trips under TLS 1.2; one under TLS 1.3 with 0-RTT, Rescorla 2018 RFC 8446), and server processing (database queries, application logic, content generation). For the first sample, TLS session resumption is not possible, so the handshake cost is always present — subsequent samples may benefit from keep-alive reuse depending on server configuration. In practice, the minimum across five samples approximates the edge-to-server network latency plus a single TLS 1.3 handshake. Jitter matters for API reliability and real-time workloads: a server that responds in 80 ms half the time and 800 ms the other half has high jitter even if the average looks acceptable. Compare multiple targets to diagnose whether high latency is origin-side (same host, multiple paths) or network-path-side (different hosts, same pattern). Because the probe originates from Cloudflare's network — not from your device — the numbers reflect infrastructure-level latency between Cloudflare's edge and the target, which is relevant for serverless, CDN, and API latency budgets but does not include your own last-mile connection.",
+      seoFeatures: [
+        "5 HTTP(S) samples — min, avg, max, and jitter reported",
+        "Reachability percentage across all samples",
+        "Latency rated: Fast (<300 ms avg) / Moderate (<1 s) / Slow",
+        "Honest ICMP vs HTTP distinction — TLS + server processing included",
+        "Probe originates from Cloudflare's anycast edge (RFC 4786 BCP 126)",
+      ],
+      howHeading: "How to use the HTTP ping tool",
+      howSteps: [
+        "Enter a hostname or full URL (e.g. github.com or https://api.example.com/health).",
+        "Click Ping — the tool sends 5 HTTP(S) requests from Cloudflare's edge and records response time for each.",
+        "Read min/avg/max/jitter: min is the best-case path latency; avg the typical; max the worst; jitter the variance between samples.",
+        "Check Reachability — if below 100 %, some probes timed out or failed, indicating intermittent connectivity issues at the edge-to-origin path.",
+      ],
+      useCasesHeading: "Common use cases",
+      useCases: [
+        "Comparing HTTP response times of two API endpoints or CDN origins to choose the faster one.",
+        "Spotting high jitter that causes inconsistent API response times even when the average looks fine.",
+        "Verifying that a newly deployed server is reachable from Cloudflare's edge before wiring it into production.",
+        "Checking whether a third-party dependency (payment gateway, auth provider) is responding within budget.",
+      ],
+      faqHeading: "Frequently asked questions",
+      faqs: [
+        { q: "Is this a real (ICMP) ping?", a: "No. ICMP ping (RFC 792) operates at the IP layer and measures pure network round-trip time with no TLS or application overhead. This tool sends HTTP(S) requests from Cloudflare's global edge and measures application-layer response time — it includes TCP connection setup, TLS handshake (RFC 8446 TLS 1.3), and the server's own processing time. For a true ICMP ping from your device, use your OS command: ping github.com in a terminal." },
+        { q: "Why is the first sample often slower?", a: "The first sample establishes a fresh TCP connection and completes a full TLS handshake (RFC 8446), which adds one to two round-trips of overhead. Subsequent samples may reuse an existing connection depending on the server's keep-alive settings, reducing that overhead. The minimum across all samples is typically the best approximation of the steady-state latency." },
+        { q: "Does this measure latency from my device?", a: "No. The probe runs from Cloudflare's anycast edge network (RFC 4786 BCP 126), not from your browser or ISP. The numbers reflect the latency between Cloudflare's infrastructure and the target — useful for understanding infrastructure-level performance, but it does not include your own last-mile connection time." },
+        { q: "What does high jitter indicate?", a: "Jitter is the variance between consecutive samples. Low jitter means the server responds consistently. High jitter suggests queue fluctuations, origin routing variability behind a CDN, garbage-collection pauses, or overloaded server resources. Even a good average response time can mask high jitter, which is what makes APIs feel unreliable." },
+      ],
+    },
+    es: {
+      title: "HTTP Ping — Test de Latencia",
+      description: "Mide el tiempo de respuesta HTTP(S) desde el edge global de Cloudflare a cualquier host. Mín, media, máx, jitter y alcanzabilidad en 5 muestras. Gratis.",
+      seoHeading: "HTTP Ping — Test de Latencia y Jitter desde el Edge de Cloudflare",
+      seoText: "El ping HTTP mide el tiempo de respuesta de ida y vuelta enviando una serie de peticiones HTTP(S) desde la red edge global de Cloudflare al host destino y registrando el tiempo transcurrido en cada una. No es un eco ICMP (ping según RFC 792, Postel 1981) — opera a nivel de aplicación (HTTP/1.1 según RFC 9112, HTTP/2 según RFC 9113) en lugar del nivel de red, e incluye el tiempo de handshake TLS (RFC 8446 TLS 1.3, Rescorla 2018) más el tiempo de procesado del propio servidor en cada muestra. La medición se ejecuta desde la red anycast de Cloudflare (RFC 4786 BCP 126, Abley y Lindqvist 2006), lo que significa que la sonda se origina cerca del destino desde el punto de vista de la infraestructura, no desde tu dispositivo ni tu ISP. La latencia mínima refleja el mejor caso de la ruta edge-servidor en condiciones favorables. La media y el máximo muestran el rango típico y el peor caso. El jitter — la varianza entre muestras consecutivas — indica estabilidad: jitter bajo significa rendimiento consistente; jitter alto sugiere fluctuaciones en cola, variabilidad de enrutamiento del origen CDN o inconsistencia en el procesado del servidor. Una calificación de rápido corresponde a tiempos medios de respuesta inferiores a 300 ms; moderado a menos de 1 s; lento por encima. La alcanzabilidad informa la fracción de muestras que recibieron una respuesta HTTP válida — 100 % significa que todas las sondas tuvieron éxito; valores menores indican timeouts o fallos de conexión intermitentes.",
+      seoBlockHeading: "Ping HTTP vs ping ICMP — qué significan los números de latencia",
+      seoBlockText: "El ping ICMP (RFC 792, Postel 1981) envía datagramas de echo request/reply a nivel IP y mide el tiempo de ida y vuelta de red puro sin involucrar ninguna aplicación, TCP ni TLS. El comando ping del sistema operativo es la herramienta canónica para esto. El ping HTTP opera a nivel de aplicación: abre una conexión TCP, realiza un handshake TLS (en HTTPS), envía una petición HTTP GET o HEAD según RFC 9110 (Fielding, Nottingham y Reschke 2022), y registra el tiempo hasta el primer byte de respuesta o cierre de conexión. Esto significa que la latencia HTTP incluye el RTT del SYN-ACK TCP (típicamente cercano al RTT ICMP), el handshake TLS (uno o dos RTT adicionales bajo TLS 1.2; uno bajo TLS 1.3 con 0-RTT, Rescorla 2018 RFC 8446) y el procesado del servidor (consultas a base de datos, lógica de aplicación, generación de contenido). Para la primera muestra, no es posible la reanudación de sesión TLS, por lo que el coste del handshake siempre está presente; muestras posteriores pueden beneficiarse de la reutilización keep-alive según la configuración del servidor. En la práctica, el mínimo a lo largo de cinco muestras aproxima la latencia de red edge-servidor más un handshake TLS 1.3. El jitter importa para la fiabilidad de APIs y cargas de trabajo en tiempo real: un servidor que responde en 80 ms la mitad del tiempo y en 800 ms la otra mitad tiene jitter alto aunque la media parezca aceptable. Compara varios destinos para diagnosticar si la latencia alta es del lado del origen (mismo host, múltiples rutas) o del camino de red (distintos hosts, mismo patrón). Dado que la sonda se origina desde la red de Cloudflare — no desde tu dispositivo — los números reflejan la latencia a nivel de infraestructura entre el edge de Cloudflare y el destino.",
+      seoFeatures: [
+        "5 muestras HTTP(S) — mín, media, máx y jitter",
+        "Porcentaje de alcanzabilidad sobre todas las muestras",
+        "Calificación de latencia: Rápido (<300 ms media) / Moderado (<1 s) / Lento",
+        "Distinción honesta ICMP vs HTTP — incluye TLS y procesado del servidor",
+        "Sonda desde el edge anycast de Cloudflare (RFC 4786 BCP 126)",
+      ],
+      howHeading: "Cómo usar la herramienta de ping HTTP",
+      howSteps: [
+        "Introduce un hostname o URL completa (p.ej. github.com o https://api.ejemplo.com/health).",
+        "Pulsa Ping — la herramienta envía 5 peticiones HTTP(S) desde el edge de Cloudflare y registra el tiempo de respuesta de cada una.",
+        "Lee mín/media/máx/jitter: el mínimo es la latencia de mejor caso; la media, la típica; el máximo, el peor; el jitter, la varianza entre muestras.",
+        "Comprueba la alcanzabilidad — si está por debajo del 100 %, algunas sondas agotaron el tiempo o fallaron, lo que indica problemas de conectividad intermitente en la ruta edge-origen.",
+      ],
+      useCasesHeading: "Casos de uso comunes",
+      useCases: [
+        "Comparar tiempos de respuesta HTTP de dos endpoints de API u orígenes CDN para elegir el más rápido.",
+        "Detectar jitter alto que provoca tiempos de respuesta inconsistentes incluso cuando la media parece correcta.",
+        "Verificar que un servidor recién desplegado es alcanzable desde el edge de Cloudflare antes de conectarlo a producción.",
+        "Comprobar si una dependencia de terceros (pasarela de pago, proveedor de auth) responde dentro del presupuesto de latencia.",
+      ],
+      faqHeading: "Preguntas frecuentes",
+      faqs: [
+        { q: "¿Es esto un ping ICMP real?", a: "No. El ping ICMP (RFC 792) opera a nivel IP y mide el RTT de red puro sin overhead de TLS ni de aplicación. Esta herramienta envía peticiones HTTP(S) desde el edge global de Cloudflare y mide el tiempo de respuesta a nivel de aplicación — incluye la apertura de conexión TCP, el handshake TLS (RFC 8446 TLS 1.3) y el tiempo de procesado del propio servidor. Para un ping ICMP real desde tu dispositivo, usa el comando de tu sistema operativo: ping github.com en una terminal." },
+        { q: "¿Por qué la primera muestra suele ser más lenta?", a: "La primera muestra establece una conexión TCP nueva y completa un handshake TLS completo (RFC 8446), lo que añade uno o dos RTT de overhead. Las muestras siguientes pueden reutilizar la conexión existente según la configuración keep-alive del servidor, reduciendo ese overhead. El mínimo entre todas las muestras es normalmente la mejor aproximación a la latencia en estado estacionario." },
+        { q: "¿Mide la latencia desde mi dispositivo?", a: "No. La sonda se ejecuta desde la red edge anycast de Cloudflare (RFC 4786 BCP 126), no desde tu navegador ni tu ISP. Los números reflejan la latencia entre la infraestructura de Cloudflare y el destino — útil para entender el rendimiento a nivel de infraestructura, pero no incluye el tiempo de tu propia conexión de último kilómetro." },
+        { q: "¿Qué indica jitter alto?", a: "El jitter es la varianza entre muestras consecutivas. Jitter bajo significa que el servidor responde de forma consistente. Jitter alto sugiere fluctuaciones en cola, variabilidad de enrutamiento del origen detrás de un CDN, pausas de garbage collection o recursos del servidor sobrecargados. Incluso una buena media de respuesta puede enmascarar jitter alto, que es lo que hace que las APIs se perciban como poco fiables." },
+      ],
+    },
+  },
   "http-headers": {
     en: {
       title: "HTTP Header Checker Online Free",
@@ -1839,6 +1913,7 @@ export const toolNamesI18n: Record<string, Record<Lang, string>> = {
   "site-speed": { en: "Site Speed", es: "Velocidad del Sitio" },
   "dnssec-check": { en: "DNSSEC Check", es: "Verificador DNSSEC" },
   "url-parser": { en: "URL Parser", es: "Analizador de URL" },
+  "net-ping": { en: "HTTP Ping", es: "HTTP Ping" },
 };
 
 export const toolDescriptionsI18n: Record<string, Record<Lang, string>> = {
@@ -1886,6 +1961,7 @@ export const toolDescriptionsI18n: Record<string, Record<Lang, string>> = {
   "site-speed": { en: "Check Core Web Vitals (LCP, INP, CLS, FCP, TTFB) from real Chrome user data", es: "Comprueba Core Web Vitals (LCP, INP, CLS, FCP, TTFB) desde datos reales de Chrome" },
   "dnssec-check": { en: "Validate DNSSEC signing, DS chain, and resolver validation for a domain", es: "Valida la firma DNSSEC, la cadena DS y la validaci\u00f3n del resolver para un dominio" },
   "url-parser": { en: "Parse and break down URLs into protocol, host, path, query params, and hash", es: "Analiza y descompone URLs en protocolo, host, ruta, par\u00e1metros y hash" },
+  "net-ping": { en: "Measure HTTP(S) response time from Cloudflare's global edge \u2014 latency, jitter, and reachability across 5 samples", es: "Mide el tiempo de respuesta HTTP(S) desde el edge global de Cloudflare \u2014 latencia, jitter y alcanzabilidad en 5 muestras" },
 };
 
 export const groupLabelsI18n: Record<string, Record<Lang, string>> = {

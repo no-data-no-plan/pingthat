@@ -11,7 +11,7 @@ export interface Tool {
 export const groups = [
   { label: "Network", ids: ["my-ip", "privacy-check", "webrtc-leak-test", "dns-lookup", "email-auth", "port-scan", "ipv6-check", "reverse-dns", "resolver-compare"] },
   { label: "Security", ids: ["ssl-checker", "http-headers", "whois-lookup", "redirect-checker", "caa-lookup", "dnssec-check"] },
-  { label: "Speed & Uptime", ids: ["is-it-up", "is-it-down", "site-speed"] },
+  { label: "Speed & Uptime", ids: ["is-it-up", "is-it-down", "site-speed", "net-ping"] },
   { label: "Calculators", ids: ["subnet-calculator", "ip-converter", "password-strength", "jwt-decoder", "url-parser"] },
 ];
 
@@ -222,5 +222,14 @@ export const tools: Tool[] = [
     icon: "Ur",
     keywords: ["url parser", "url decoder", "parse url", "url breakdown"],
     group: "Calculators",
+  },
+  {
+    id: "net-ping",
+    name: "HTTP Ping",
+    path: "/net-ping",
+    description: "Measure HTTP(S) response time from Cloudflare's global edge — latency, jitter, and reachability",
+    icon: "Np",
+    keywords: ["http ping", "latency test", "ping test", "response time", "jitter", "reachability"],
+    group: "Speed & Uptime",
   },
 ];
