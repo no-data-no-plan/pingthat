@@ -114,6 +114,16 @@ export interface PortScanResult {
   error?: string;
 }
 
+/** Returned by /api/ping */
+export interface PingResult {
+  host: string;
+  sent: number;
+  received: number;
+  samples: number[];   // per-successful-request latency in ms (from CF edge)
+  status: number;      // final HTTP status (0 if all failed)
+  error?: string;
+}
+
 /** Returned by /api/whois-lookup */
 export interface WhoisLookupResult {
   domain: string;
