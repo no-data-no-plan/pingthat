@@ -228,7 +228,7 @@ export const tools: Tool[] = [
     name: "HTTP Ping",
     path: "/net-ping",
     description: "Measure HTTP(S) response time from Cloudflare's global edge — latency, jitter, and reachability",
-    icon: "Np",
+    icon: "Pg",
     keywords: ["http ping", "latency test", "ping test", "response time", "jitter", "reachability"],
     group: "Speed & Uptime",
   },
