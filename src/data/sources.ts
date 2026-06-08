@@ -164,6 +164,11 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "Belshe, M., Peon, R., & Thomson, M. (Ed.)", year: "2015", title: "Hypertext Transfer Protocol Version 2 (HTTP/2)", venue: "RFC 7540, IETF" },
     { authors: "Bishop, M. (Ed.)", year: "2022", title: "HTTP/3", venue: "RFC 9114, IETF (HTTP semantics over QUIC)" },
   ],
+  "net-ping": [
+    { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Semantics", venue: "RFC 9110, IETF (June 2022 — STD 97; §15 status code classes; the tool measures HTTP(S) round-trip time from Cloudflare's edge to the target, including TLS handshake and server processing time — this is NOT an ICMP ping and does NOT measure latency from the user's device)" },
+    { authors: "Rescorla, E.", year: "2018", title: "The Transport Layer Security (TLS) Protocol Version 1.3", venue: "RFC 8446, IETF (August 2018 — TLS 1.3 handshake latency is included in the measured response time; 1-RTT full handshake + optional 0-RTT on resumption)" },
+    { authors: "Postel, J.", year: "1981", title: "Internet Control Message Protocol (ICMP)", venue: "RFC 792, IETF (September 1981 — defines ICMP Echo Request/Reply; this tool does NOT use ICMP: it issues an HTTP(S) request, which traverses TCP+TLS+application layers rather than raw network-layer RTT)" },
+  ],
 };
 
 export function getSources(slug: string): Source[] {
