@@ -27,8 +27,8 @@
     if (!result) return null;
     if (result.received === 0) return { level: 'bad', label: t.unreachableLabel };
     const a = stats!.avg;
-    if (a < 100) return { level: 'ok', label: t.ratingFast };
-    if (a <= 400) return { level: 'warn', label: t.ratingModerate };
+    if (a < 300) return { level: 'ok', label: t.ratingFast };
+    if (a <= 1000) return { level: 'warn', label: t.ratingModerate };
     return { level: 'bad', label: t.ratingSlow };
   });
 
