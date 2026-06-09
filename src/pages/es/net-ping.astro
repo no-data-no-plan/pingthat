@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NetPing from "../../components/NetPing.svelte";
+import SeoContent from "../../components/SeoContent.astro";
+import SeoBlock from "../../components/SeoBlock.astro";
+import SourcesBlock from "../../components/SourcesBlock.astro";
+import ToolContent from "../../components/ToolContent.astro";
+import { pageI18n } from "../../i18n/pages";
+const p = pageI18n["net-ping"].es;
+---
+<Layout title={p.title} description={p.description} activeToolId="net-ping" lang="es">
+  <NetPing client:only="svelte" lang="es" />
+  <SeoContent heading={p.seoHeading} text={p.seoText} relatedToolIds={["is-it-up", "is-it-down", "site-speed", "dns-lookup"]} lang="es" />
+  <ToolContent howHeading={p.howHeading} howSteps={p.howSteps} useCasesHeading={p.useCasesHeading} useCases={p.useCases} faqHeading={p.faqHeading} faqs={p.faqs} lang="es" />
+  <SeoBlock heading={p.seoBlockHeading} text={p.seoBlockText} features={p.seoFeatures} lang="es" />
+  <SourcesBlock slug="net-ping" lang="es" />
+</Layout>

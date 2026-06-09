@@ -1057,3 +1057,12 @@ export const portScanI18n = {
   },
 } as const;
 export function getPortScan(lang: Lang) { return portScanI18n[lang]; }
+
+
+// ─── NetPing ─────────────────────────────────────────────────────────────────
+
+export const netPingI18n = {
+  en: { domainLabel: "Host or URL", placeholder: "github.com", check: "Ping", checking: "Pinging…", caveat: "Measures HTTP(S) response time from Cloudflare’s global edge to the target — not an ICMP ping, and not from your device. Includes the TLS handshake and the server’s processing time.", min: "Min", avg: "Avg", max: "Max", jitter: "Jitter", reachability: "Reachability", samplesLabel: "Samples", ratingFast: "Fast", ratingModerate: "Moderate", ratingSlow: "Slow", unreachableLabel: "Unreachable", checkFailed: "Ping failed. Check the host and try again." },
+  es: { domainLabel: "Host o URL", placeholder: "github.com", check: "Ping", checking: "Haciendo ping…", caveat: "Mide el tiempo de respuesta HTTP(S) desde el edge global de Cloudflare al destino — no es un ping ICMP, ni desde tu dispositivo. Incluye el handshake TLS y el procesado del servidor.", min: "Mín", avg: "Media", max: "Máx", jitter: "Jitter", reachability: "Alcanzabilidad", samplesLabel: "Muestras", ratingFast: "Rápido", ratingModerate: "Moderado", ratingSlow: "Lento", unreachableLabel: "Inalcanzable", checkFailed: "El ping falló. Revisa el host e inténtalo de nuevo." },
+} as const;
+export function getNetPing(lang: Lang) { return netPingI18n[lang]; }
