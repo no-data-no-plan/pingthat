@@ -73,7 +73,7 @@
   </div>
 
   <div aria-live="polite" aria-atomic="true" aria-busy={loading}>
-    {#if error && !result}<div class="card" style="border-left:3px solid var(--color-bad);"><div class="card-body" style="color:var(--color-bad);">{error}</div></div>{/if}
+    {#if error && !result}<div class="card sev-accent is-bad"><div class="card-body" style="color: var(--color-bad);">{error}</div></div>{/if}
 
     {#if result && verdict}
       <div class="card sev-accent is-{verdict.level}">
