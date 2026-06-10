@@ -18,8 +18,7 @@ User-agent: ChatGPT-User
 Allow: /
 
 # ClaudeBot is the user-facing citation bot for Claude (mirrors
-# PerplexityBot / ChatGPT-User). Training opt-out is preserved via
-# anthropic-ai + Google-Extended below.
+# PerplexityBot / ChatGPT-User).
 User-agent: ClaudeBot
 Allow: /
 
@@ -42,19 +41,22 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
-# AI training bots — blocked (training only, no user-facing citation)
+# AI training bots — allowed since 2026-06-10. Decision: ChatGPT referrals
+# are the portfolio's top traffic source; presence in training corpora feeds
+# future AI-assistant recommendations.
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
 User-agent: Google-Extended
-Disallow: /
+Allow: /
 
 User-agent: CCBot
-Disallow: /
+Allow: /
 
 User-agent: anthropic-ai
-Disallow: /
+Allow: /
 
+# Aggressive scrapers with no relevant assistant — still blocked
 User-agent: Bytespider
 Disallow: /
 

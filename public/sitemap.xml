@@ -305,7 +305,55 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ssl-checker/" />
     <lastmod>2026-06-09</lastmod>
   </url>
-  
+
+  <url>
+    <loc>https://pingthat.dev/es/caa-lookup/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/caa-lookup/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/caa-lookup/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/caa-lookup/" />
+    <lastmod>2026-06-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/ipv6-check/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/ipv6-check/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/ipv6-check/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/ipv6-check/" />
+    <lastmod>2026-06-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/dnssec-check/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/dnssec-check/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/dnssec-check/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/dnssec-check/" />
+    <lastmod>2026-06-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/reverse-dns/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/reverse-dns/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/reverse-dns/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/reverse-dns/" />
+    <lastmod>2026-06-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/site-speed/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/site-speed/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/site-speed/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/site-speed/" />
+    <lastmod>2026-06-09</lastmod>
+  </url>
+
+  <url>
+    <loc>https://pingthat.dev/es/resolver-compare/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/resolver-compare/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pingthat.dev/es/resolver-compare/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pingthat.dev/resolver-compare/" />
+    <lastmod>2026-06-09</lastmod>
+  </url>
+
   <url>
     <loc>https://pingthat.dev/es/is-it-down/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://pingthat.dev/is-it-down/" />
