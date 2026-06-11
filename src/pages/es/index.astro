@@ -2,6 +2,7 @@
 import "../../styles/global.css";
 import { tools, groups } from "../../lib/tools";
 import CookieConsent from "../../components/CookieConsent.astro";
+import CmdkPalette from "../../components/CmdkPalette.astro";
 import CrossLinks from "../../components/CrossLinks.astro";
 import LangToggle from "../../components/LangToggle.astro";
 import { getCommon } from "../../i18n/common";
@@ -448,6 +449,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   </footer>
 
   <CookieConsent lang="es" />
+  <CmdkPalette lang="es" />
 
   <!-- Feedback form: AJAX submit + toast (Nielsen audit code-review 2026-04-30). -->
   <script>
@@ -548,9 +550,6 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
         const ae = document.activeElement as HTMLElement | null;
         const typing = ae && ['INPUT', 'TEXTAREA'].includes(ae.tagName);
         if (e.key === '/' && !typing) { e.preventDefault(); heroInput.focus(); }
-        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-          e.preventDefault(); heroInput.focus(); heroInput.select();
-        }
       });
     }
   </script>

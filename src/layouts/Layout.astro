@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
+import CmdkPalette from "../components/CmdkPalette.astro";
 import RelatedDocs from "../components/RelatedDocs.astro";
 import LangToggle from "../components/LangToggle.astro";
 import CrossLinks from "../components/CrossLinks.astro";
@@ -369,6 +370,7 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   <div class="flex min-h-screen">
     <!-- Sidebar -->
     <Sidebar activeToolId={activeToolId} lang={lang} />
+    <CmdkPalette lang={lang} />
 
     <!-- Main content -->
     <div class="flex-1 flex flex-col min-w-0">
@@ -385,6 +387,9 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           )}
         </div>
         <div class="flex items-center gap-2 shrink-0" style="min-height: 28px;">
+          <button id="cmdk-open" hidden aria-haspopup="dialog" aria-label={c.paletteOpen}>
+            <span data-cmdk-kbd>Ctrl K</span>
+          </button>
           <LangToggle
             lang={lang}
             enPath={withSlash(toolPath)}
@@ -399,6 +404,13 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
         @media (max-width: 639px) {
           .header-badge { display: none !important; }
         }
+        #cmdk-open { display: none; align-items: center; min-height: 28px; padding: 0 10px;
+          border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface);
+          color: var(--color-text-muted); cursor: pointer; }
+        #cmdk-open:not([hidden]) { display: inline-flex; }
+        #cmdk-open:hover { color: var(--color-text); }
+        #cmdk-open [data-cmdk-kbd] { font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+        @media (max-width: 639px) { #cmdk-open { display: none !important; } }
       </style>
 
       <!--

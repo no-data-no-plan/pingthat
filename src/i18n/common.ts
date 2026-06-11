@@ -21,6 +21,14 @@ const common = {
     hide: "Hide",
     cancel: "Cancel",
     cancelled: "Cancelled",
+    // Cmd+K palette (stage-3 #4)
+    paletteLabel: "Command palette",
+    paletteOpen: "Open command palette",
+    palettePlaceholder: "Jump to a tool…",
+    paletteEmpty: "No tools match",
+    paletteNavigate: "navigate",
+    paletteGo: "open",
+    paletteClose: "close",
 
     // Errors
     requestTimeout: "Request timed out. Please try again.",
@@ -99,6 +107,14 @@ const common = {
     hide: "Ocultar",
     cancel: "Cancelar",
     cancelled: "Cancelado",
+    // Cmd+K palette (stage-3 #4)
+    paletteLabel: "Paleta de comandos",
+    paletteOpen: "Abrir la paleta de comandos",
+    palettePlaceholder: "Salta a una herramienta…",
+    paletteEmpty: "Ninguna herramienta coincide",
+    paletteNavigate: "navegar",
+    paletteGo: "abrir",
+    paletteClose: "cerrar",
 
     // Errors
     requestTimeout: "La petici\u00f3n ha tardado demasiado. Int\u00e9ntalo de nuevo.",
