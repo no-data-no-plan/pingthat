@@ -45,7 +45,7 @@ const langPrefix = lang === "es" ? "/es" : "";
                 aria-selected="false"
                 data-cmdk-item
                 data-path={`${langPrefix}${tool.path}`}
-                data-haystack={[name, tool.name, ...tool.keywords, group.label].join("|")}
+                data-haystack={[name, tool.name, ...tool.keywords, group.label, groupLabelsI18n[group.label]?.[lang] ?? group.label].join("|")}
               >
                 <span class="cmdk-ico" aria-hidden="true">{tool.icon}</span>
                 <span class="cmdk-name">{name}</span>
