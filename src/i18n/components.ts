@@ -358,6 +358,25 @@ export const privacyCheckI18n = {
     cores: "cores",
     points: "points",
     unknown: "Unknown",
+    // Fonts signal (stage-3 #3)
+    fontsDetected: "Fonts Detected",
+    fontsOf: "of",
+    fontsChecked: "checked",
+    showAllFonts: "Show all",
+    hideAllFonts: "Hide list",
+    fontsTip: "Sites can probe installed fonts by measuring text widths. The full system font list is one of the strongest fingerprinting signals: 13.9 bits of entropy (EFF Panopticlick, 2010) and 0.497 normalized entropy (AmIUnique, 2016). Those are published estimates for the full list — this tool width-tests a ~120-font subset, and nothing is measured about you personally.",
+    // Identifiability tier chip + tooltips
+    identifies: "Identifies",
+    tierHigh: "High",
+    tierMedium: "Medium",
+    tierLow: "Low",
+    tierTipNorm: "Published population estimate: {norm} normalized entropy out of 1.0 (AmIUnique dataset, 118,934 fingerprints — Laperdrix et al., IEEE S&P 2016). It rates this signal class in general, not you specifically.",
+    tierTipNone: "No comparable published estimate for this check — it exposes only a few possible values, so its identifying power is low.",
+    // Summary banner
+    bannerNone: "No high-identifiability signals exposed",
+    bannerHighOne: "Your browser exposes 1 high-identifiability signal",
+    bannerHighMany: "Your browser exposes {n} high-identifiability signals",
+    bannerExp: "The more distinctive signals your browser exposes, the easier it is to recognize across visits — even without cookies. Tiers are based on published estimates (EFF 2010, AmIUnique 2016), not on a measurement of you.",
   },
   es: {
     runningChecks: "Ejecutando comprobaciones de privacidad...",
@@ -398,6 +417,25 @@ export const privacyCheckI18n = {
     cores: "n\u00facleos",
     points: "puntos",
     unknown: "Desconocido",
+    // Fonts signal (stage-3 #3)
+    fontsDetected: "Fuentes Detectadas",
+    fontsOf: "de",
+    fontsChecked: "comprobadas",
+    showAllFonts: "Ver todas",
+    hideAllFonts: "Ocultar lista",
+    fontsTip: "Los sitios pueden sondear las fuentes instaladas midiendo anchos de texto. La lista completa de fuentes del sistema es una de las se\u00f1ales de fingerprinting m\u00e1s potentes: 13.9 bits de entrop\u00eda (EFF Panopticlick, 2010) y 0.497 de entrop\u00eda normalizada (AmIUnique, 2016). Son estimaciones publicadas sobre la lista completa \u2014 esta herramienta comprueba por medici\u00f3n un subconjunto de ~120 fuentes, y no se mide nada sobre ti personalmente.",
+    // Identifiability tier chip + tooltips
+    identifies: "Identifica",
+    tierHigh: "Alta",
+    tierMedium: "Media",
+    tierLow: "Baja",
+    tierTipNorm: "Estimaci\u00f3n poblacional publicada: {norm} de entrop\u00eda normalizada sobre 1.0 (dataset AmIUnique, 118.934 huellas \u2014 Laperdrix et al., IEEE S&P 2016). Clasifica esta se\u00f1al en general, no a ti en concreto.",
+    tierTipNone: "No hay una estimaci\u00f3n publicada comparable para esta comprobaci\u00f3n \u2014 expone pocos valores posibles, as\u00ed que su capacidad identificadora es baja.",
+    // Summary banner
+    bannerNone: "Sin se\u00f1ales de alta capacidad identificadora expuestas",
+    bannerHighOne: "Tu navegador expone 1 se\u00f1al de alta capacidad identificadora",
+    bannerHighMany: "Tu navegador expone {n} se\u00f1ales de alta capacidad identificadora",
+    bannerExp: "Cuantas m\u00e1s se\u00f1ales distintivas expone tu navegador, m\u00e1s f\u00e1cil es reconocerlo entre visitas \u2014 incluso sin cookies. Los niveles se basan en estimaciones publicadas (EFF 2010, AmIUnique 2016), no en una medici\u00f3n sobre ti.",
   },
 } as const;
 
