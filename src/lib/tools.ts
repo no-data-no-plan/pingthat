@@ -31,7 +31,7 @@ export const tools: Tool[] = [
     path: "/privacy-check",
     description: "Check your browser's privacy settings, tracking protection, and fingerprint exposure",
     icon: "Pv",
-    keywords: ["browser privacy check", "privacy test", "tracking protection", "fingerprint test"],
+    keywords: ["browser privacy check", "privacy test", "tracking protection", "fingerprint test", "font fingerprint", "browser entropy"],
     group: "Network",
   },
   {

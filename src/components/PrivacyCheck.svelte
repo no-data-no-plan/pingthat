@@ -2,27 +2,35 @@
   import { onMount } from "svelte";
   import InfoTip from './InfoTip.svelte';
   import StatusBadge from './ui/StatusBadge.svelte';
+  import VerdictBanner from './ui/VerdictBanner.svelte';
   import type { Lang } from '../i18n/index';
   import type { Level } from '../lib/severity';
   import { getPrivacyCheck } from '../i18n/components';
   import { getCommon } from '../i18n/common';
   import { copyAndNotify } from '../lib/notify';
   import { useToolComplete } from "../lib/tool-complete.svelte";
+  import { TIERS, NORMALIZED, summarizeIdentifiability, type SignalKey, type IdentTier } from '../lib/fp-tiers';
+  import { detectFonts, createCanvasMeasure } from '../lib/font-detect';
 
   interface Props { lang?: Lang; }
   let { lang = "en" }: Props = $props();
   const c = $derived(getCommon(lang as 'en' | 'es'));
   const t = $derived(getPrivacyCheck(lang));
 
+  type CheckStatus = "safe" | "exposed" | "note";
+
   interface CheckItem {
+    key: SignalKey;
     label: string;
     value: string;
-    status: "safe" | "exposed" | "note";
+    status: CheckStatus;
   }
 
   let checks = $state<CheckItem[]>([]);
   let loading = $state(true);
   let copied = $state(false);
+  let fontsDetected = $state<string[]>([]);
+  let fontsOpen = $state(false);
 
   function itemLevel(status: CheckItem['status']): Level {
     if (status === 'safe') return 'ok';
@@ -36,18 +44,38 @@
     return 'ok';
   });
 
-  function getStatus(label: string, value: string): "safe" | "exposed" | "note" {
+  const ident = $derived(summarizeIdentifiability(checks));
+  const bannerTitle = $derived(
+    ident.highExposed === 0 ? t.bannerNone
+    : ident.highExposed === 1 ? t.bannerHighOne
+    : t.bannerHighMany.replace('{n}', String(ident.highExposed)));
+
+  const tierWord = $derived<Record<IdentTier, string>>({
+    high: t.tierHigh, medium: t.tierMedium, low: t.tierLow,
+  });
+  const TIER_DOT: Record<IdentTier, string> = {
+    high: 'var(--color-warn)', medium: 'var(--color-info)', low: 'var(--color-ok)',
+  };
+  function tierTip(key: SignalKey): string {
+    const norm = NORMALIZED[key];
+    if (norm === undefined) return t.tierTipNone;
+    // es-ES decimal comma — the static copy around the figure uses it too
+    const formatted = lang === 'es' ? norm.toFixed(3).replace('.', ',') : norm.toFixed(3);
+    return t.tierTipNorm.replace('{norm}', formatted);
+  }
+
+  function getStatus(key: SignalKey, value: string): CheckStatus {
     const lower = value.toLowerCase();
-    if (label === t.doNotTrack) return lower === t.enabled.toLowerCase() ? "safe" : "note";
-    if (label === t.cookiesEnabled) return lower === t.yes.toLowerCase() ? "note" : "safe";
-    if (label === t.webrtcLeak) return lower.includes(t.noLeakDetected.toLowerCase()) ? "safe" : "exposed";
-    if (label === t.canvasFingerprint) return "exposed";
-    if (label === t.audioFingerprint) return lower === t.notSupported.toLowerCase() ? "safe" : "exposed";
-    if (label === t.webglVendor) return lower === t.notAvailable.toLowerCase() ? "safe" : "exposed";
-    if (label === t.hardwareConcurrency) return "note";
-    if (label === t.deviceMemory) return lower === t.notAvailable.toLowerCase() ? "safe" : "exposed";
-    if (label === t.touchSupport) return "note";
-    return "note";
+    switch (key) {
+      case 'dnt': return lower === t.enabled.toLowerCase() ? "safe" : "note";
+      case 'cookies': return lower === t.yes.toLowerCase() ? "note" : "safe";
+      case 'webrtc': return lower.includes(t.noLeakDetected.toLowerCase()) ? "safe" : "exposed";
+      case 'canvas': return "exposed";
+      case 'audio': return lower === t.notSupported.toLowerCase() ? "safe" : "exposed";
+      case 'webgl': return lower === t.notAvailable.toLowerCase() ? "safe" : "exposed";
+      case 'memory': return lower === t.notAvailable.toLowerCase() ? "safe" : "exposed";
+      default: return "note";
+    }
   }
 
   async function checkWebRTC(): Promise<string> {
@@ -151,42 +179,56 @@
     const items: CheckItem[] = [];
 
     const dnt = navigator.doNotTrack === "1" ? t.enabled : t.disabled;
-    items.push({ label: t.doNotTrack, value: dnt, status: getStatus(t.doNotTrack, dnt) });
+    items.push({ key: 'dnt', label: t.doNotTrack, value: dnt, status: getStatus('dnt', dnt) });
 
     const cookies = navigator.cookieEnabled ? t.yes : t.no;
-    items.push({ label: t.cookiesEnabled, value: cookies, status: getStatus(t.cookiesEnabled, cookies) });
+    items.push({ key: 'cookies', label: t.cookiesEnabled, value: cookies, status: getStatus('cookies', cookies) });
 
     const webrtc = await checkWebRTC();
-    items.push({ label: t.webrtcLeak, value: webrtc, status: getStatus(t.webrtcLeak, webrtc) });
+    items.push({ key: 'webrtc', label: t.webrtcLeak, value: webrtc, status: getStatus('webrtc', webrtc) });
 
     const canvas = getCanvasFingerprint();
-    items.push({ label: t.canvasFingerprint, value: canvas, status: getStatus(t.canvasFingerprint, canvas) });
+    items.push({ key: 'canvas', label: t.canvasFingerprint, value: canvas, status: getStatus('canvas', canvas) });
+
+    const measure = createCanvasMeasure();
+    if (measure) {
+      const { detected, tested } = detectFonts(measure);
+      fontsDetected = detected;
+      items.push({
+        key: 'fonts',
+        label: t.fontsDetected,
+        value: `${detected.length} ${t.fontsOf} ${tested} ${t.fontsChecked}`,
+        status: detected.length > 0 ? 'exposed' : 'note',
+      });
+    } else {
+      items.push({ key: 'fonts', label: t.fontsDetected, value: t.notAvailable, status: 'note' });
+    }
 
     const audio = getAudioFingerprint();
-    items.push({ label: t.audioFingerprint, value: audio, status: getStatus(t.audioFingerprint, audio) });
+    items.push({ key: 'audio', label: t.audioFingerprint, value: audio, status: getStatus('audio', audio) });
 
     const webgl = getWebGLVendor();
-    items.push({ label: t.webglVendor, value: webgl, status: getStatus(t.webglVendor, webgl) });
+    items.push({ key: 'webgl', label: t.webglVendor, value: webgl, status: getStatus('webgl', webgl) });
 
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    items.push({ label: t.timezone, value: tz, status: "note" });
+    items.push({ key: 'timezone', label: t.timezone, value: tz, status: "note" });
 
     const screen = `${window.screen.width} x ${window.screen.height}`;
-    items.push({ label: t.screenResolution, value: screen, status: "note" });
+    items.push({ key: 'screen', label: t.screenResolution, value: screen, status: "note" });
 
-    items.push({ label: t.language, value: navigator.language || t.unknown, status: "note" });
+    items.push({ key: 'language', label: t.language, value: navigator.language || t.unknown, status: "note" });
 
     const cores = navigator.hardwareConcurrency?.toString() || t.unknown;
-    items.push({ label: t.hardwareConcurrency, value: `${cores} ${t.cores}`, status: getStatus(t.hardwareConcurrency, cores) });
+    items.push({ key: 'cores', label: t.hardwareConcurrency, value: `${cores} ${t.cores}`, status: getStatus('cores', cores) });
 
     const mem = (navigator as any).deviceMemory;
     const memStr = mem ? `${mem} GB` : t.notAvailable;
-    items.push({ label: t.deviceMemory, value: memStr, status: getStatus(t.deviceMemory, memStr) });
+    items.push({ key: 'memory', label: t.deviceMemory, value: memStr, status: getStatus('memory', memStr) });
 
     const touch = navigator.maxTouchPoints;
-    items.push({ label: t.touchSupport, value: touch > 0 ? `${t.yes} (${touch} ${t.points})` : t.no, status: "note" });
+    items.push({ key: 'touch', label: t.touchSupport, value: touch > 0 ? `${t.yes} (${touch} ${t.points})` : t.no, status: "note" });
 
-    items.push({ label: t.platform, value: navigator.platform || t.unknown, status: "note" });
+    items.push({ key: 'platform', label: t.platform, value: navigator.platform || t.unknown, status: "note" });
 
     checks = items;
     loading = false;
@@ -197,8 +239,12 @@
     : 'This page shows which browser APIs are available and could be used for fingerprinting. "Detectable" does not mean you are being tracked — only that the capability exists.');
 
   async function copyReport() {
-    const text = checks.map((c) => `${c.label}: ${c.value} [${c.status.toUpperCase()}]`).join("\n");
-    if (await copyAndNotify(`${t.clipboardTitle}\n${"=".repeat(40)}\n${text}`, c.copied, c.copyFailed)) {
+    const text = checks.map((chk) => {
+      const tier = TIERS[chk.key];
+      const tag = tier ? ` {${t.identifies.toUpperCase()}: ${tierWord[tier].toUpperCase()}}` : '';
+      return `${chk.label}: ${chk.value} [${chk.status.toUpperCase()}]${tag}`;
+    }).join("\n");
+    if (await copyAndNotify(`${t.clipboardTitle}\n${bannerTitle}\n${"=".repeat(40)}\n${text}`, c.copied, c.copyFailed)) {
       copied = true;
       setTimeout(() => (copied = false), 1500);
     }
@@ -234,6 +280,8 @@
       </div>
     </div>
 
+    <VerdictBanner level={ident.level} title={bannerTitle} explanation={t.bannerExp} />
+
     <!-- Explanatory note -->
     <div class="card" style="border-color: var(--color-border); background: var(--color-surface);">
       <div class="card-body" style="color: var(--color-text-muted); font-size: 12px; line-height: 1.5;">
@@ -248,15 +296,41 @@
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
               <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted);">
                 {check.label}
-                {#if check.label === t.canvasFingerprint}<InfoTip text={t.canvasTip} />{/if}
-                {#if check.label === t.webrtcLeak}<InfoTip text={t.webrtcTip} />{/if}
-                {#if check.label === t.doNotTrack}<InfoTip text={t.dntTip} />{/if}
+                {#if check.key === 'canvas'}<InfoTip text={t.canvasTip} {lang} />{/if}
+                {#if check.key === 'fonts'}<InfoTip text={t.fontsTip} {lang} />{/if}
+                {#if check.key === 'webrtc'}<InfoTip text={t.webrtcTip} {lang} />{/if}
+                {#if check.key === 'dnt'}<InfoTip text={t.dntTip} {lang} />{/if}
               </span>
               <StatusBadge level={itemLevel(check.status)} size="sm" label={check.status === 'safe' ? t.safe : check.status === 'exposed' ? t.exposed : t.note} {lang} />
             </div>
             <div style="font-size: 13px; font-weight: 500; color: var(--color-text); word-break: break-word;">
               {check.value}
             </div>
+            {#if check.key === 'fonts' && fontsDetected.length > 0}
+              <button
+                class="btn-secondary"
+                style="margin-top: 8px; font-size: 11px;"
+                aria-expanded={fontsOpen}
+                onclick={() => (fontsOpen = !fontsOpen)}
+              >
+                {fontsOpen ? t.hideAllFonts : `${t.showAllFonts} (${fontsDetected.length})`}
+              </button>
+              {#if fontsOpen}
+                <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 8px; line-height: 1.7; word-break: break-word;">
+                  {fontsDetected.join(' · ')}
+                </div>
+              {/if}
+            {/if}
+            {#if TIERS[check.key]}
+              {@const tier = TIERS[check.key] as IdentTier}
+              <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--color-border); display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 10px; color: var(--color-text-muted); border: 1px solid var(--color-border2); border-radius: 999px; padding: 2px 8px;">
+                  <span style="color: {TIER_DOT[tier]};" aria-hidden="true">●</span>
+                  {t.identifies}: {tierWord[tier]}
+                </span>
+                <InfoTip text={tierTip(check.key)} {lang} />
+              </div>
+            {/if}
           </div>
         </div>
       {/each}
