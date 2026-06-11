@@ -1,43 +1,30 @@
-# Astro Starter Kit: Minimal
+# PingThat
+
+**[pingthat.dev](https://pingthat.dev)** — 24 free network & security tools that run in your browser or at the edge. No signup, no tracking of query content, EN + ES.
+
+## Tools
+
+DNS lookup · DNSSEC check · CAA lookup · reverse DNS · resolver compare · email auth (SPF/DKIM/DMARC) · SSL checker with A–F grade · security-headers grade · HTTP headers · HTTP ping · port scan · WHOIS · redirect checker · is-it-down/up · site speed · subnet calculator · IP converter · IPv6 check · my IP · privacy check · WebRTC leak test · JWT decoder · password strength · URL parser
+
+## Architecture
+
+- **Astro + Svelte 5** static build on **Cloudflare Pages**; interactive tools are islands.
+- **Edge middleware** (`functions/_middleware.js`): per-request nonce CSP (no `unsafe-inline`), strict security headers, locale geo-redirect with search-bot exemption, `304` pass-through guard so cached HTML never desyncs from its CSP nonces.
+- **Server-side probes** (`functions/api/`): tools that reach user-supplied hosts (HTTP ping, port scan…) run as Pages Functions behind a shared SSRF guard — internal ranges and cloud metadata IPs blocked, every redirect hop re-validated.
+- **Honest tooling**: each tool states its method and limits (e.g. HTTP ping is edge-HTTP latency, not ICMP — with an RFC-cited FAQ explaining the difference).
+- **Quality gates**: axe-core accessibility sweeps (0 serious issues), Lighthouse 100/100/96/100, W3C-valid markup, per-URL honest `lastmod` derived from git history.
+
+## Development
 
 ```sh
-npm create astro@latest -- --template minimal
+npm ci
+npm run dev        # local dev server
+npm run build      # static build + sitemap lastmod from git history
+npm test           # vitest unit tests
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Node ≥ 22.12. Clone with full history (the sitemap step reads per-file git dates).
 
-## 🚀 Project Structure
+## Status
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Actively maintained. Built and operated by [Marco B.](https://pingthat.dev/about/)
