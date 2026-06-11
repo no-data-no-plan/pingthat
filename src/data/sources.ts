@@ -128,6 +128,7 @@ const SOURCES: Record<string, Source[]> = {
     { authors: "W3C / WICG", year: "2021", title: "User-Agent Client Hints", venue: "wicg.github.io/ua-client-hints (shipped Chrome 89, March 2021)" },
     { authors: "European Parliament & Council", year: "2016", title: "Regulation (EU) 2016/679 (General Data Protection Regulation)", venue: "Article 6 lawful basis for processing, eur-lex.europa.eu" },
     { authors: "European Parliament & Council", year: "2002", title: "Directive 2002/58/EC (ePrivacy Directive), amended by Directive 2009/136/EC", venue: "Article 5(3) terminal device data consent, eur-lex.europa.eu" },
+    { authors: "Laperdrix, P., Rudametkin, W., & Baudry, B.", year: "2016", title: "Beauty and the Beast: Diverting Modern Web Browsers to Build Unique Browser Fingerprints", venue: "IEEE Symposium on Security and Privacy (S&P) 2016, pp. 878–894 — AmIUnique dataset, N = 118,934 fingerprints" },
   ],
   "redirect-checker": [
     { authors: "Fielding, R., Nottingham, M., & Reschke, J. (Eds.)", year: "2022", title: "HTTP Semantics", venue: "RFC 9110, IETF (§15.4 Redirection 3xx — 301/302/303/307/308 method preservation)" },

@@ -136,6 +136,7 @@ export const pageI18n: Record<
         { q: "How can I reduce my browser fingerprint exposure?", a: "Firefox privacy.resistFingerprinting (v67+, May 2019, Tor Uplift project), Safari ITP (since Safari 11, September 2017), Chrome Privacy Sandbox + UA-Client Hints (Chrome 89, March 2021)." },
         { q: "What is UA-Client Hints?", a: "A W3C draft replacing the legacy User-Agent header. Chrome 89 (3 March 2021) sends Sec-CH-UA and Sec-CH-UA-Mobile by default; sites must request browser version/platform via Accept-CH opt-in." },
         { q: "Cookies vs fingerprints — what consent applies?", a: "Cookies fall under EU ePrivacy Directive Art. 5(3) requiring informed consent + GDPR Art. 6 lawful basis. Fingerprints are passive but the 2009 ePrivacy amendment extended Art. 5(3) to cover 'access of information' too." },
+        { q: "What does the 'Identifies' tier mean?", a: "A qualitative rating (High / Medium / Low) of how much each signal narrows you down, derived from published population studies — Eckersley's Panopticlick (PETS 2010) and the AmIUnique dataset (IEEE S&P 2016). PingThat keeps no visitor dataset, so unlike EFF's Cover Your Tracks it cannot honestly say you are '1 in X' — the tiers rate the signal class, not you personally." },
       ],
     },
     es: {
@@ -174,6 +175,7 @@ export const pageI18n: Record<
         { q: "¿Cómo puedo reducir mi exposición al fingerprinting?", a: "privacy.resistFingerprinting de Firefox (v67+, mayo 2019, proyecto Tor Uplift), ITP de Safari (desde Safari 11, septiembre 2017), Privacy Sandbox de Chrome + UA-Client Hints (Chrome 89, marzo 2021)." },
         { q: "¿Qué es UA-Client Hints?", a: "Un borrador del W3C que reemplaza la cabecera User-Agent heredada. Chrome 89 (3 de marzo de 2021) envía Sec-CH-UA y Sec-CH-UA-Mobile por defecto; los sitios deben solicitar versión/plataforma vía Accept-CH por adhesión explícita." },
         { q: "Cookies vs fingerprints — ¿qué consentimiento aplica?", a: "Las cookies caen bajo el Art. 5(3) de la Directiva ePrivacy UE requiriendo consentimiento informado + Art. 6 del RGPD. Los fingerprints son pasivos pero la modificación de 2009 extendió el Art. 5(3) para cubrir también 'acceso a información'." },
+        { q: "¿Qué significa el nivel 'Identifica'?", a: "Una clasificación cualitativa (Alta / Media / Baja) de cuánto te acota cada señal, derivada de estudios poblacionales publicados — el Panopticlick de Eckersley (PETS 2010) y el dataset AmIUnique (IEEE S&P 2016). PingThat no guarda ningún dataset de visitantes, así que a diferencia del Cover Your Tracks de la EFF no puede decir honestamente que eres '1 entre X' — los niveles clasifican la señal en general, no a ti en concreto." },
       ],
     },
   },
