@@ -1,33 +1,64 @@
-# Badge: ![CI](https://github.com/USER/REPO/actions/workflows/ci.yml/badge.svg)
+# pingthat CI — the local gate set on every push: vitest → full build
+# (prebuild incl. git-derived sitemap lastmod) → Playwright e2e against
+# the built dist (astro preview). Deploys stay manual from the dev box —
+# CI is a safety net for pushes, not a deploy pipeline.
+#
+# Badge: ![CI](https://github.com/no-data-no-plan/pingthat/actions/workflows/ci.yml/badge.svg)
 name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [master]
   pull_request:
-    branches: [ main ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
+          # Full history: scripts/update-sitemap-lastmod.sh derives
+          # per-URL <lastmod> from git log and distrusts shallow clones.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Security audit
-        run: npm audit --audit-level=high
-
-      - name: Run tests
+      - name: Unit tests (vitest)
         run: npm test
+
+      - name: a11y static guards (WCAG regression rules)
+        run: bash scripts/check-a11y.sh
 
       - name: Build
         run: npm run build
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E (Playwright vs astro preview on dist)
+        run: npx playwright test
+
+      - name: Upload traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          if-no-files-found: ignore
