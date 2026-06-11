@@ -58,9 +58,10 @@
   };
   function tierTip(key: SignalKey): string {
     const norm = NORMALIZED[key];
-    return norm !== undefined
-      ? t.tierTipNorm.replace('{norm}', norm.toFixed(3))
-      : t.tierTipNone;
+    if (norm === undefined) return t.tierTipNone;
+    // es-ES decimal comma — the static copy around the figure uses it too
+    const formatted = lang === 'es' ? norm.toFixed(3).replace('.', ',') : norm.toFixed(3);
+    return t.tierTipNorm.replace('{norm}', formatted);
   }
 
   function getStatus(key: SignalKey, value: string): CheckStatus {

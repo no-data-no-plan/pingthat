@@ -423,13 +423,13 @@ export const privacyCheckI18n = {
     fontsChecked: "comprobadas",
     showAllFonts: "Ver todas",
     hideAllFonts: "Ocultar lista",
-    fontsTip: "Los sitios pueden sondear las fuentes instaladas midiendo anchos de texto. La lista completa de fuentes del sistema es una de las se\u00f1ales de fingerprinting m\u00e1s potentes: 13.9 bits de entrop\u00eda (EFF Panopticlick, 2010) y 0.497 de entrop\u00eda normalizada (AmIUnique, 2016). Son estimaciones publicadas sobre la lista completa \u2014 esta herramienta comprueba por medici\u00f3n un subconjunto de ~120 fuentes, y no se mide nada sobre ti personalmente.",
+    fontsTip: "Los sitios pueden sondear las fuentes instaladas midiendo anchos de texto. La lista completa de fuentes del sistema es una de las se\u00f1ales de fingerprinting m\u00e1s potentes: 13,9 bits de entrop\u00eda (EFF Panopticlick, 2010) y 0,497 de entrop\u00eda normalizada (AmIUnique, 2016). Son estimaciones publicadas sobre la lista completa \u2014 esta herramienta comprueba por medici\u00f3n un subconjunto de ~120 fuentes, y no se mide nada sobre ti personalmente.",
     // Identifiability tier chip + tooltips
     identifies: "Identifica",
     tierHigh: "Alta",
     tierMedium: "Media",
     tierLow: "Baja",
-    tierTipNorm: "Estimaci\u00f3n poblacional publicada: {norm} de entrop\u00eda normalizada sobre 1.0 (dataset AmIUnique, 118.934 huellas \u2014 Laperdrix et al., IEEE S&P 2016). Clasifica esta se\u00f1al en general, no a ti en concreto.",
+    tierTipNorm: "Estimaci\u00f3n poblacional publicada: {norm} de entrop\u00eda normalizada sobre 1,0 (dataset AmIUnique, 118.934 huellas \u2014 Laperdrix et al., IEEE S&P 2016). Clasifica esta se\u00f1al en general, no a ti en concreto.",
     tierTipNone: "No hay una estimaci\u00f3n publicada comparable para esta comprobaci\u00f3n \u2014 expone pocos valores posibles, as\u00ed que su capacidad identificadora es baja.",
     // Summary banner
     bannerNone: "Sin se\u00f1ales de alta capacidad identificadora expuestas",
