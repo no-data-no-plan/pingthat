@@ -1,0 +1,228 @@
+---
+import { tools, groups } from "../lib/tools";
+import type { Lang } from "../i18n/index";
+import { getCommon } from "../i18n/common";
+import { toolNamesI18n, groupLabelsI18n } from "../i18n/pages";
+
+interface Props { lang?: Lang; }
+const { lang = "en" } = Astro.props;
+const c = getCommon(lang);
+const langPrefix = lang === "es" ? "/es" : "";
+---
+
+<dialog id="cmdk" aria-label={c.paletteLabel}>
+  <div class="cmdk-box">
+    <div class="cmdk-head">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input
+        id="cmdk-input"
+        type="text"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="cmdk-list"
+        aria-activedescendant=""
+        aria-autocomplete="list"
+        aria-label={c.paletteLabel}
+        placeholder={c.palettePlaceholder}
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <span class="cmdk-kbd" aria-hidden="true">esc</span>
+    </div>
+    <div id="cmdk-list" role="listbox" aria-label={c.paletteLabel}>
+      {groups.map((group) => (
+        <div class="cmdk-group" data-cmdk-group>
+          <div class="cmdk-group-label" aria-hidden="true">{groupLabelsI18n[group.label]?.[lang] ?? group.label}</div>
+          {group.ids.map((id) => {
+            const tool = tools.find((t) => t.id === id);
+            if (!tool) return null;
+            const name = toolNamesI18n[tool.id]?.[lang] ?? tool.name;
+            return (
+              <div
+                role="option"
+                id={`cmdk-opt-${tool.id}`}
+                class="cmdk-item"
+                aria-selected="false"
+                data-cmdk-item
+                data-path={`${langPrefix}${tool.path}`}
+                data-haystack={[name, tool.name, ...tool.keywords, group.label].join("|")}
+              >
+                <span class="cmdk-ico" aria-hidden="true">{tool.icon}</span>
+                <span class="cmdk-name">{name}</span>
+                <span class="cmdk-enter" aria-hidden="true">↵</span>
+              </div>
+            );
+          })}
+        </div>
+      ))}
+      <div id="cmdk-empty" role="status" hidden>{c.paletteEmpty}</div>
+    </div>
+    <div class="cmdk-foot" aria-hidden="true">
+      <span>↑↓ {c.paletteNavigate}</span>
+      <span>↵ {c.paletteGo}</span>
+      <span>esc {c.paletteClose}</span>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  dialog#cmdk {
+    margin: 12vh auto auto;
+    width: min(560px, calc(100vw - 32px));
+    padding: 0;
+    border: 1px solid var(--color-border2);
+    border-radius: 12px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  }
+  dialog#cmdk::backdrop { background: rgba(10, 9, 8, 0.65); }
+  @media (prefers-reduced-motion: no-preference) {
+    dialog#cmdk[open] { animation: cmdk-in 120ms ease-out; }
+    @keyframes cmdk-in { from { opacity: 0; transform: translateY(-6px); } }
+  }
+  .cmdk-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 16px; border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+  .cmdk-head input {
+    flex: 1; min-width: 0; background: none; border: none; outline: none;
+    font-size: 14px; color: var(--color-text);
+  }
+  .cmdk-head input::placeholder { color: var(--color-text-dim); }
+  .cmdk-kbd {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--color-text-muted); border: 1px solid var(--color-border2);
+    border-radius: 5px; padding: 2px 6px;
+  }
+  #cmdk-list { max-height: min(320px, 50vh); overflow-y: auto; padding: 6px 0; }
+  .cmdk-group-label {
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-text-dim); padding: 8px 16px 4px;
+  }
+  .cmdk-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 16px; cursor: pointer;
+    border-left: 2px solid transparent;
+    color: var(--color-text-muted); font-size: 13px;
+  }
+  .cmdk-item[aria-selected="true"] {
+    background: var(--color-surface2);
+    border-left-color: var(--color-accent);
+    color: var(--color-text);
+  }
+  .cmdk-item .cmdk-ico {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
+    color: var(--color-text-muted); border: 1px solid var(--color-border);
+    border-radius: 5px; padding: 3px 5px; background: var(--color-bg);
+  }
+  .cmdk-item[aria-selected="true"] .cmdk-ico { color: var(--color-accent-fg); }
+  .cmdk-item .cmdk-enter { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-dim); visibility: hidden; }
+  .cmdk-item[aria-selected="true"] .cmdk-enter { visibility: visible; }
+  #cmdk-empty { padding: 18px 16px; font-size: 12px; color: var(--color-text-muted); }
+  .cmdk-foot {
+    display: flex; gap: 14px; padding: 9px 16px;
+    border-top: 1px solid var(--color-border);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--color-text-dim);
+  }
+</style>
+
+<script>
+  import { matchTool } from "../lib/palette-match";
+
+  const dialog = document.getElementById("cmdk") as HTMLDialogElement | null;
+  const input = document.getElementById("cmdk-input") as HTMLInputElement | null;
+  const list = document.getElementById("cmdk-list");
+  const empty = document.getElementById("cmdk-empty");
+  const openBtn = document.getElementById("cmdk-open");
+
+  if (dialog && input && list && typeof dialog.showModal === "function") {
+    const items = Array.from(list.querySelectorAll<HTMLElement>("[data-cmdk-item]"));
+    const groupEls = Array.from(list.querySelectorAll<HTMLElement>("[data-cmdk-group]"));
+    let selected: HTMLElement | null = null;
+
+    const visibleItems = () => items.filter((el) => !el.hidden);
+
+    function select(el: HTMLElement | null) {
+      if (selected) selected.setAttribute("aria-selected", "false");
+      selected = el;
+      if (el) {
+        el.setAttribute("aria-selected", "true");
+        input!.setAttribute("aria-activedescendant", el.id);
+        el.scrollIntoView({ block: "nearest" });
+      } else {
+        input!.setAttribute("aria-activedescendant", "");
+      }
+    }
+
+    function applyFilter() {
+      const q = input!.value;
+      for (const el of items) {
+        el.hidden = matchTool(q, (el.dataset.haystack || "").split("|")) === null;
+      }
+      for (const g of groupEls) {
+        g.hidden = g.querySelectorAll("[data-cmdk-item]:not([hidden])").length === 0;
+      }
+      const vis = visibleItems();
+      if (empty) empty.hidden = vis.length > 0;
+      select(vis[0] ?? null);
+    }
+
+    function openPalette() {
+      input!.value = "";
+      applyFilter();
+      dialog!.showModal();
+      input!.focus();
+    }
+
+    function go(el: HTMLElement | null) {
+      const path = el?.dataset.path;
+      if (path) {
+        dialog!.close();
+        window.location.href = path;
+      }
+    }
+
+    input.addEventListener("input", applyFilter);
+    input.addEventListener("keydown", (e) => {
+      const vis = visibleItems();
+      if (!vis.length) return;
+      const idx = selected ? vis.indexOf(selected) : -1;
+      if (e.key === "ArrowDown") { e.preventDefault(); select(vis[(idx + 1) % vis.length]); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); select(vis[(idx - 1 + vis.length) % vis.length]); }
+      else if (e.key === "Enter") { e.preventDefault(); go(selected); }
+    });
+
+    list.addEventListener("click", (e) => {
+      const item = (e.target as HTMLElement).closest<HTMLElement>("[data-cmdk-item]");
+      if (item) go(item);
+    });
+    list.addEventListener("mousemove", (e) => {
+      const item = (e.target as HTMLElement).closest<HTMLElement>("[data-cmdk-item]");
+      if (item && item !== selected) select(item);
+    });
+
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog) dialog.close(); // backdrop click
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        if (dialog!.open) dialog!.close();
+        else openPalette();
+      }
+    });
+
+    // Header trigger button (rendered hidden in Layout; absent on home — guard).
+    if (openBtn) {
+      openBtn.hidden = false;
+      const plat = navigator.platform || "";
+      const kbd = openBtn.querySelector("[data-cmdk-kbd]");
+      if (kbd) kbd.textContent = /mac|iphone|ipad/i.test(plat) ? "⌘K" : "Ctrl K";
+      openBtn.addEventListener("click", openPalette);
+    }
+  }
+</script>
