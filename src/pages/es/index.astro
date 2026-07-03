@@ -270,6 +270,26 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
     .pt-pill:hover { background: var(--color-surface2); border-color: var(--color-border2); transform: translateY(-1px); }
     @media (max-width: 600px) { .pt-pill-lead { display: none; } }
 
+    /* Live readout — data strip in the site's mono register. dt/dd inline;
+       the LED reuses the eyebrow dot language. Wraps gracefully on phones. */
+    .pt-readout { display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+      gap: 6px 18px; margin: 26px auto 0; padding: 10px 18px; max-width: fit-content;
+      border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-surface); }
+    .pt-ro-lead { display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--color-text-dim);
+      text-transform: uppercase; letter-spacing: 0.13em; }
+    .pt-ro-lead .dot { width: 6px; height: 6px; border-radius: 50%;
+      background: var(--color-ok); box-shadow: 0 0 0 3px var(--color-ok-dim); }
+    .pt-ro-item { display: inline-flex; align-items: baseline; gap: 7px; margin: 0; }
+    .pt-ro-item dt { font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+      color: var(--color-text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+    .pt-ro-item dd { margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      color: var(--color-text); }
+    .pt-ro-link { font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--color-accent-fg); text-decoration: none; border-bottom: 1px solid var(--color-border2); }
+    .pt-ro-link:hover { border-color: var(--color-accent-fg); }
+    @media (max-width: 600px) { .pt-readout { gap: 6px 14px; padding: 10px 14px; } }
+
     .pt-main { max-width: 1140px; margin: 0 auto; padding: 8px 24px 0; }
     .pt-cat { padding: 40px 0; border-bottom: 1px solid var(--color-border); }
     .pt-cat-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
@@ -356,6 +376,20 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
           <a class="pt-pill" href={`/es${tool!.path}`}><span class="ico" aria-hidden="true">{tool!.icon}</span>{toolNamesI18n[tool!.id]?.es ?? tool!.name}</a>
         ))}
       </div>
+
+      <!-- Live readout (hero stage-3). Oculto hasta que /cdn-cgi/trace responde:
+           progressive enhancement — en preview/local o fallo del fetch el hero
+           queda exactamente como antes. Solo same-origin; ningún tercero conoce
+           la IP del visitante (la tool /my-ip con sus APIs de geo externas
+           sigue siendo opt-in tras un clic). -->
+      <dl class="pt-readout" id="live-readout" hidden>
+        <span class="pt-ro-lead"><span class="dot" aria-hidden="true"></span>{c.readoutLive}</span>
+        <div class="pt-ro-item"><dt>{c.readoutIp}</dt><dd id="ro-ip">—</dd></div>
+        <div class="pt-ro-item"><dt>{c.readoutCountry}</dt><dd id="ro-loc">—</dd></div>
+        <div class="pt-ro-item"><dt>{c.readoutEdge}</dt><dd id="ro-colo">—</dd></div>
+        <div class="pt-ro-item"><dt>{c.readoutTls}</dt><dd id="ro-tls">—</dd></div>
+        <a class="pt-ro-link" href="/es/my-ip/">{c.readoutDetail} →</a>
+      </dl>
     </div>
   </header>
 
@@ -519,6 +553,26 @@ const FONTS_CSS = fs.readFileSync(path.resolve("public/fonts/fonts.css"), "utf-8
   <!-- Filtro de búsqueda del hero (Nielsen audit PT F8). Filtra .home-tool-card
        por data-tool-search; oculta grupos vacíos + la fila de pills; actualiza contadores. -->
   <script>
+    // Live readout: same-origin CF trace (<100ms). Hidden unless we got an IP.
+    fetch('/cdn-cgi/trace')
+      .then((r) => r.text())
+      .then((t) => {
+        const get = (k: string) => (t.match(new RegExp('^' + k + '=(.+)$', 'm')) || [])[1] || '';
+        const ip = get('ip');
+        if (!ip) return;
+        const set = (id: string, v: string) => {
+          const el = document.getElementById(id);
+          if (el && v) el.textContent = v;
+        };
+        set('ro-ip', ip);
+        set('ro-loc', get('loc'));
+        set('ro-colo', get('colo'));
+        set('ro-tls', get('tls'));
+        const strip = document.getElementById('live-readout');
+        if (strip) strip.hidden = false;
+      })
+      .catch(() => {});
+
     const heroInput = document.getElementById('home-search') as HTMLInputElement | null;
     const heroNoResults = document.getElementById('home-no-results');
     const pillRow = document.getElementById('pill-row');

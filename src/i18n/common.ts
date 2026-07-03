@@ -63,6 +63,15 @@ const common = {
     heroHeadingPrefix: "Ping, check, ",
     heroHeadingEm: "analyze",
     heroText: "Network diagnostics and developer tools. Some run entirely in your browser (subnet math, JWT decoding, password strength); others query public APIs (Cloudflare DoH, RDAP, certificate logs) when they need real internet data. No accounts. See /methodology/ for the per-tool breakdown.",
+    // Live readout (stage-3 hero): same-origin /cdn-cgi/trace only — the CDN
+    // already serves you this page, so NO third party learns your IP here
+    // (unlike /my-ip, which asks consent-adjacent external geo APIs).
+    readoutLive: "Live",
+    readoutIp: "your IP",
+    readoutCountry: "country",
+    readoutEdge: "edge",
+    readoutTls: "TLS",
+    readoutDetail: "Full IP details",
     bottomCtaLabel: "More tools coming soon",
     bottomCtaText: "DNS lookup, port scanner, SSL checker, HTTP headers, and more.",
     footerTagline: "PingThat \u2014 Network tools for developers",
@@ -149,6 +158,15 @@ const common = {
     heroHeadingPrefix: "Analiza, comprueba, ",
     heroHeadingEm: "diagnostica",
     heroText: "Herramientas de diagn\u00f3stico de red y desarrollo. Algunas se ejecutan en tu navegador (c\u00e1lculo de subred, decodificaci\u00f3n JWT, fuerza de contrase\u00f1a); otras consultan APIs p\u00fablicas (Cloudflare DoH, RDAP, registros de certificados) cuando necesitan datos reales de internet. Sin cuentas. Detalle por herramienta en /es/methodology/.",
+    // Live readout (hero stage-3): solo /cdn-cgi/trace same-origin \u2014 el CDN ya
+    // te sirve esta p\u00e1gina, as\u00ed que aqu\u00ed NING\u00daN tercero conoce tu IP (a
+    // diferencia de /my-ip, que consulta APIs de geolocalizaci\u00f3n externas).
+    readoutLive: "En vivo",
+    readoutIp: "tu IP",
+    readoutCountry: "pa\u00eds",
+    readoutEdge: "nodo",
+    readoutTls: "TLS",
+    readoutDetail: "Detalles de tu IP",
     bottomCtaLabel: "M\u00e1s herramientas pr\u00f3ximamente",
     bottomCtaText: "B\u00fasqueda DNS, esc\u00e1ner de puertos, comprobador SSL, cabeceras HTTP y m\u00e1s.",
     footerTagline: "PingThat \u2014 Herramientas de red para desarrolladores",
